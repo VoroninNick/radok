@@ -1,0 +1,10 @@
+.platform ng-class="commentable ? 'commentable' : '' "
+  .svg-wrap ng-include="image_path"
+  .human-svg-wrap ng-include="'/assets/user.svg'"
+  .name
+    |{{name}}
+  /.yield
+  .platform-content ng-transclude="" ng-if="!show_full"
+  .platform-content ng-show="show_full"
+    option-count html-id="platform-{{platform_id}}-subitem-{{$index + 1}}" ng-repeat="option_count in model.platform_subitems track by $index" ng-model="option_count"
+    comment-with-price model-comment="model.comment" model-price="model.price" ng-show="commentable"

@@ -1,0 +1,119 @@
+.page.dashboard-page-content ng-controller="DashboardController"
+  .page-banner-wrap ng-include="'/assets/partials/_page_banner.html'"
+  #dashboard-content
+    #dashboard-projects
+      .drafts ng-show="drafts && drafts.length"
+        .row
+          .columns.large-12.header
+            |Drafted projects
+          .items.columns.large-12
+            .row
+              .columns.large-4.item ng-repeat="project in drafts"
+                .inner
+                  .project-status
+                    |Draft
+                  .my-row
+                    .my-column
+                      .content
+                        .type-of-test-logo ng-include="project.type_of_test_logo"
+                        .project-name
+                          |{{project.pi__project_name}}
+                        /steps-progress items="{{range(project.steps_completed[1])}}"
+                        .steps-completed
+                          .progress
+                            .step ng-repeat="step in project.state.configuration_steps track by $index" style="width: {{100 / project.state.configuration_steps.length}}%;" ng-class="[(step.proceeded ? 'proceeded' : 'unproceeded' )]"
+                              .inner
+                        .type-of-test-wrap
+                          .type-of-test-icon
+                            .svg-wrap ng-include="project.type_of_product_logo_path"
+                          .type-of-test
+                            |{{project.type_of_test}}
+                          .testing-type ng-show="project.testing_type && project.testing_type.length"
+                            |({{project.testing_type}})
+                          .clearfix
+                        .testers-and-hours
+                          .testers
+                            .testers-icon ng-include="'/assets/user.svg'"
+                            .total-testers-count
+                              |{{count = project.state.total_testers_count;  count ? count + ' testers' : 'Not specified' }}
+                          .hours
+                            .hours-icon ng-include="'/assets/clock.svg'"
+                            .hours-count
+                              |{{project.ps__hours}}
+                  .actions
+                    .delete-draft-button ng-click="deleteDraft(project)"
+                      |Delete draft
+                    rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
+
+
+
+
+
+
+
+
+
+      .in-process-tests ng-show="in_progress_tests && in_progress_tests.length"
+        .row
+          .columns.large-12.header
+            |In process
+          .items.columns.large-12
+            .row
+              .columns.large-4.item ng-repeat="project in in_progress_tests"
+                .inner
+                  .project-status
+                    |Testing
+                  .my-row
+                    .my-column
+                      .content
+                        .type-of-test-logo ng-include="project.type_of_test_logo"
+                        .project-name
+                          |{{project.project_name}}
+                        .progress-block
+                          .progress-wrap
+                            .progress-counter
+                              |{{project.percent_completed_counter}}
+                              span.percent
+                                |%
+                              span.completed
+                                |Completed
+                            div round-progress="" max="100" current="project.percent_completed_counter" color="#ffaa2d" bgcolor="#d1d3d4" radius="75" stroke="5" rounded="true" clockwise="true" iterations="50" animation="easeInOutQuart"
+                        /.steps-completed
+                          .progress
+                            .step ng-repeat="i in range(project.steps_completed[1]) track by $index" style="width: {{100 / project.steps_completed[1]}}%;" ng-class="[($index <= project.steps_completed[0] - 1 ? 'proceeded' : 'unproceeded' )]"
+                              .inner
+                        /.type-of-test-wrap
+                          .type-of-test-icon
+                            img src="{{project.type_of_test_icon}}"
+                          .type-of-test
+                            |{{project.type_of_test}}
+                          .testing-type ng-show="project.testing_type && project.testing_type.length"
+                            |({{project.testing_type}})
+                          .clearfix
+                        /.testers-and-hours
+                          .testers
+                            .testers-icon ng-include="'/assets/user.svg'"
+                            .total-testers-count
+                              |{{project.total_testers_count_string}}
+                          .hours
+                            .hours-icon ng-include="'/assets/clock.svg'"
+                            .hours-count
+                              |{{project.hours_per_tester}}
+                  /.actions
+                    .delete-draft
+                      |Some action
+                    button.view-project-button title="Details"
+
+      .finished-tests ng-show="finished_projects && finished_projects.length"
+        .row
+          .columns.large-12.header
+            |Finished projects
+          .items
+            .columns.large-6.item ng-repeat="project in finished_projects"
+              .inner
+                .project-name
+                  |{{project.project_name}}
+                .project-status ng-class="(project.project_status ? 'success' : 'failure' )"
+                  .success-svg-wrap ng-show="project.project_status" ng-include="'/assets/rf-icon-ok.svg'"
+
+

@@ -9,17 +9,32 @@ $dark-gray-color: #818286
 $light-gray-color: #a7a9ac
 $gray-text-color: #bcbec0
 $light-gray-text-color: #d1d3d4
+$inactive-button-text-color: #ddd
+$home-text-header-color: #939598
+
+$description-text-gray-color: #75706b
 
 $white-color: #f2f2f2
 
+$font-size-200: rem-calc(200)
+$font-size-100: rem-calc(100)
+$font-size-50: rem-calc(50)
+$font-size-60: rem-calc(60)
+$font-size-48: rem-calc(48)
+$font-size-40: rem-calc(40)
 $font-size-36: rem-calc(36)
+$font-size-32: rem-calc(32)
 $font-size-30: rem-calc(30)
 $font-size-28: rem-calc(28)
+$font-size-26: rem-calc(26)
 $font-size-21: rem-calc(21)
 $font-size-18: rem-calc(18)
+$font-size-16: rem-calc(16)
 $font-size-14: rem-calc(14)
 $font-size-12: rem-calc(12)
 
+= normal
+  font-weight: 400
 = light
   font-weight: 300
 = semibold
@@ -30,13 +45,60 @@ $font-size-12: rem-calc(12)
   font-style: italic
 
 
+= font-200
+  font-size: $font-size-200
+= font-200-semibold
+  +font-200
+  +semibold
+= font-100
+  font-size: $font-size-100
+= font-100-semibold
+  +font-100
+  +semibold
+= font-50
+  font-size: $font-size-50
+
+
+
+= font-50-semibold
+  +font-50
+  +semibold
+= font-60
+  font-size: $font-size-60
+= font-60-semibold
+  +font-60
+  +semibold
+= font-48
+  font-size: $font-size-48
+
+= font-40
+  font-size: $font-size-40
+= font-40-semibold
+  +font-40
+  +semibold
 = font-36
   font-size: $font-size-36
+= font-32
+  font-size: $font-size-32
+= font-32-semibold
+  +font-32
+  +semibold
+
 = font-30
   font-size: $font-size-30
-= font-28-bold
+= font-28
   font-size: $font-size-28
+= font-28-bold
+  +font-28
   +bold
+= font-28-semibold
+  +font-28
+  +semibold
+= font-26
+  font-size: $font-size-26
+= font-26-semibold
+  +font-26
+  +semibold
 = font-21
   font-size: $font-size-21
 = font-21-semibold
@@ -44,15 +106,31 @@ $font-size-12: rem-calc(12)
   +semibold
 = font-18
   font-size: $font-size-18
+= font-18-light
+  +font-18
+  +light
 = font-18-light-italic
-  font-size: $font-size-18
+  +font-18
   +light
   +italic
+= font-16
+  font-size: $font-size-16
+= font-16-light
+  +font-16
+  +light
+= font-16-semibold
+  +font-16
+  +semibold
 = font-18-semibold
   font-size: $font-size-18
-  +bold
-= font-12-light-italic
+  +semibold
+= font-12
   font-size: $font-size-12
+= font-12-light
+  +font-12
+  +light
+= font-12-light-italic
+  +font-12
   +light
   +italic
 = font-14
@@ -60,9 +138,33 @@ $font-size-12: rem-calc(12)
 = font-14-light
   +light
   font-size: $font-size-14
+= font-14-light-italic
+  +light
+  +font-14
+  +italic
 = font-14-semibold
   +semibold
-  font-size: $font-size-14
+  +font-14
+
+
+
+.font-14-semibold
+  +font-14-semibold
+
+
+= h2
+  +font-50-semibold
+  color: $light-black-color
+  line-height: 1
+
+= h4
+  +font-21-semibold
+  color: $light-black-color
+  line-height: 1
+
+
+
+
 
 
 = placeholder
@@ -74,3 +176,97 @@ $font-size-12: rem-calc(12)
     @content
   &::-ms-input-placeholder
     @content
+
+
+.text-center
+  text-align: center
+
+
+= button-with-subtitle
+  position: relative
+  display: block
+  float: left
+  width: 100%
+  margin-top: 10px
+  padding-left: 50px
+  background-image: none
+  //background-color: $white-color
+  opacity: 1
+
+= button-title
+  font-weight: 500
+  font-size: 28px
+  text-transform: uppercase
+= button-svg-wrap
+  position: absolute
+  left: 13px
+  top: 10px
+= button-subtitle
+  text-transform: none
+  position: relative
+  top: -5px
+= button-svg
+  height: 40px
+
+= ul-with-blue-markers
+  padding-left: 0
+  list-style: none
+  li
+    position: relative
+    padding-left: 16px
+    padding-bottom: 6px
+    padding-top: 6px
+    color: $description-text-gray-color
+    //line-height: 1.7
+    &:before
+      left: 0
+      //content: "\2014"
+      content: "●"
+      color: $sky-blue-color
+      //margin-right: 5px
+      position: absolute
+      display: inline-block
+      font-weight: 400
+
+
+
+
+%ul-with-blue-markers
+  +ul-with-blue-markers
+
+  &.outside-markers
+    li
+      padding-left: 0
+
+
+      &:before
+        left: -16px
+
+ul.with-blue-markers
+  @extend %ul-with-blue-markers
+
+= large-section-header-text
+  +h2
+  //line-height: 95px
+  line-height: 1
+
+= section-subheader-text
+  +font-18-light
+  color: $sky-blue-color
+
+%large-section-header-text
+  +large-section-header-text
+%section-subheader-text
+  +section-subheader-text
+
+= content-text
+  color: $home-text-header-color
+  +font-16-light
+
+
+
+h2
+  +h2
+
+h4, .h4
+  +h4

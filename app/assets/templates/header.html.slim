@@ -1,0 +1,94 @@
+/#header
+  ul
+    li
+      a href="/"
+        |home
+    li
+      a href="/wizard"
+        |wizard
+header#header  ng-controller="NavigationController" ng-class="headerClass()"
+  #fixed-header
+    #header-row
+      #header-logo
+        a ui-sref="home" ng-class="navClass('home')"
+          img src="/assets/logo.png"
+      #header-menu
+        top-nav menu="menu_items" item-class="header-menu-item" off-click="closeMobileMenu()" off-click-filter="'#header-mobile-menu-button-wrap'"
+        #header-user ng-class="headerUserClass()"
+          .user-icon ng-show="!logged_in" ng-click="openSignInDialog()"
+            div angular-ripple=""
+              .inner
+                .svg-wrap ng-include="'/assets/rf-unlogged.svg'"
+                span.subtitle
+                  |Sign in
+          .user-icon ng-show="logged_in" ng-click="toggleUserDropdown()" off-click="closeUserDropdown()"
+            div angular-ripple=""
+              .inner
+                .svg-wrap ng-include="'/assets/no_avatar.svg'"
+          .dropdown ng-show="logged_in && show_user_dropdown"
+            rf-button size="small" title="My dashboard" svg="/assets/rf-icon-configure.svg" class="my-dashboard-button-link" ng-click="goToDashboard()"
+            .links
+              a.left ui-sref="profile"
+                |Edit my profile
+              a.right.logout-link ng-click="logoutUser()"
+                |Sign out
+        #header-mobile-menu-button-wrap ng-class="mobileMenuButtonClass()" ng-click="toggleMobileMenu()"
+          .inner
+
+
+
+        /.header-menu-item.has-dropdown ng-class="openedDropdownClass()" ng-click="toggleDropdown()" ng-repeat="menu_item in menu_items"
+        /.header-menu-item ng-class="navClass('wizard')"
+          a ui-sref="wizard"
+            |Wizard
+        /.header-menu-item.has-dropdown ng-class="openedDropdownClass()" ng-click="toggleDropdown()"
+          a href="#"
+            |For clients
+          .dropdown
+            ul
+              li
+                a href="#"
+                  |Testing services
+              /li
+                a href=""
+                  |How it works
+              li
+                a href=""
+                  |Pricing
+              li
+                a ui-sref="faq"
+                  |FAQ
+
+        /.header-menu-item ng-class="navClass('how_it_works')"
+          a ui-sref="how_it_works"
+            |How it works
+        /.header-menu-item ng-class="navClass('about')"
+          a ui-sref="about"
+            |About us
+        /.header-menu-item ng-class="navClass('contact')"
+          a ui-sref="contact"
+            |Contact us
+
+      #header-user
+
+
+
+/header#header
+  #fixed-header
+    #header-row
+      #header-logo
+        a ui-sref="#"
+          img src="/assets/logo.png"
+      #header-menu
+        /.header-menu-item
+          a ui-sref="#"
+            |For clients
+        /.header-menu-item
+          a ui-sref="#"
+            |How it works
+        .header-menu-item
+          a ui-sref="about"
+            |About us
+        .header-menu-item
+          a ui-sref="contact"
+            |Contact us

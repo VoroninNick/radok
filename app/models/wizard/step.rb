@@ -1,0 +1,3 @@
+class Wizard::Step
+
+end

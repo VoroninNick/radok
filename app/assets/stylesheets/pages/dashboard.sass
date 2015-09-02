@@ -1,0 +1,231 @@
+
+.drafts, .in-process-tests, .finished-tests
+  margin-bottom: 60px
+  .header
+    color: $home-text-header-color
+    +font-16-light
+    text-align: center
+    height: 75px
+    line-height: 90px
+#dashboard-projects
+  .item
+    margin-bottom: 15px
+    margin-top: 15px
+    &.columns
+      &:last-child
+        float: left
+
+
+    .progress-block
+      text-align: center
+      position: relative
+      .progress-wrap
+        display: inline-block
+        .progress-counter
+
+          color: $fire-orange-color
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-50%, -50%)
+          +font-60-semibold
+          .percent
+            +font-18
+          .completed
+            +font-14-light
+            display: block
+            top: -23px
+            position: relative
+            text-align: center
+            color: $light-gray-text-color
+
+
+
+    > .inner
+      position: relative
+      background: $white-color
+      > .my-row
+        +grid-row
+        > .my-column
+          +grid-column(12)
+    .content
+      color: $home-text-header-color
+      +font-14-semibold
+
+      .type-of-test-wrap
+        line-height: 24px
+        text-align: center
+      .testers, .hours
+        line-height: 18px
+      .type-of-test-icon, .hours-icon
+        margin-right: 10px
+      .testers-icon
+        margin-right: 15px
+      .type-of-test-icon, .testers-icon, .hours-icon
+        svg
+          fill: $home-text-header-color
+      .type-of-test-icon
+        img
+          width: 24px
+          height: 24px
+      .testers-icon, .hours-icon
+        svg
+          width: 18px
+          height: 18px
+
+      .type-of-test-icon, .type-of-test, .testing-type, .testers-icon, .total-testers-count, .hours-icon, .hours-count
+        display: inline-block
+        vertical-align: top
+
+      .testers, .hours
+        width: 50%
+        display: inline-block
+        float: left
+
+      .type-of-test-logo
+        //display: inline-block
+        text-align: center
+        margin: 10px 0 0 0
+        svg
+          width: 100px
+          height: 100px
+          display: inline-block
+
+      .project-name
+        text-align: center
+
+      .testers-and-hours
+        padding-top: 1rem
+
+    .actions
+      margin-top: 50px
+      height: 50px
+      > *:first-child
+        width: calc(100% - 165px)
+        display: inline-block
+        text-align: center
+        color: $sky-blue-color
+        height: 50px
+        line-height: 50px
+        cursor: pointer
+
+
+  .project-name
+    color: $sky-blue-color
+    +font-18-semibold
+    text-transform: uppercase
+
+  .drafts, .in-process-tests
+    .project-status
+      position: absolute
+      right: -4px
+      top: 20px
+      display: block
+      background: $sky-blue-color
+      color: #FFF
+      width: 70px
+      height: 30px
+      line-height: 30px
+      text-align: center
+
+  .in-process-tests
+    .project-name
+      margin-top: 70px
+      margin-bottom: 35px
+
+  .finished-tests
+    .item
+      margin-top: 1px
+      margin-bottom: 1px
+      padding-right: 65px
+      padding-left: 15px
+      .inner
+        background: $white-color
+        position: static
+        padding: 0 15px
+
+    .project-status
+      position: absolute
+      width: 50px
+      height: 50px
+      right: 15px
+      top: 0
+
+      .success-svg-wrap
+        width: 50px
+        height: 50px
+        svg
+          width: 26px
+          height: 26px
+          position: relative
+          top: 12px
+          left: 12px
+          polygon
+            fill: $sky-blue-color
+      &.failure
+        &:after
+          content: '\00D7'
+          top: 17px
+          left: 17px
+          height: 50px
+          width: 50px
+          font-size: 60px
+          line-height: 50px
+          color: $fire-orange-color
+          text-align: center
+          display: block
+
+    .project-name
+      height: 50px
+      line-height: 50px
+
+
+
+
+
+
+.rf-button
+  &.rf-button-raised
+    &.complete-draft-button
+      vertical-align: top
+      width: 160px
+      height: 50px
+      position: relative
+      padding-left: 46px
+      .svg-wrap
+        margin-left: 0
+        margin-right: 0
+        svg
+          position: absolute
+          width: 24px
+          height: 24px
+          left: 14px
+          top: 13px
+
+          path.my-color
+            fill: white
+          line.my-color
+            stroke: white
+          .stroke-my-color
+            stroke: white
+            stroke-width: 3px
+
+      .button-text-wrap
+        .inner
+          top: 0
+
+      .button-title
+        +font-18-semibold
+        text-align: left
+        padding-top: 4px
+      .button-subtitle
+        +font-14-light
+        text-transform: none
+        text-align: left
+        //top: -8px
+
+        position: relative
+
+.delete-draft-button
+  +font-14-light
+

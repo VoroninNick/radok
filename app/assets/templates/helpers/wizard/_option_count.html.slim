@@ -1,0 +1,9 @@
+.option-count ng-class="model.count == 0 ? 'empty' : ''"
+  label for="{{html_id}}"
+    |{{name}}
+  .input-wrap
+
+    input ng-click="focus();$event.stopPropagation();" id="{{html_id}}" ng-model="model.count" pattern="[0-9]*" type="text" ng-class="focused ? 'focus' : '' "
+    label.decrement for="{{html_id}}" ng-click="focus();decrement();$event.stopPropagation();"
+    label.increment for="{{html_id}}" ng-click="focus();increment();$event.stopPropagation();"
+

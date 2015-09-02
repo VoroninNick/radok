@@ -1,0 +1,95 @@
+.form-partial.sign-up
+  .header
+    .title
+      |Sign up
+  .content
+    .oauth-login
+      .header
+        |Sign up using social networks
+      .social-auth-links
+        ul
+          li
+            a
+              .social-icon-wrap ng-include="'/assets/rf-social-google-plus.svg'"
+          li
+            a
+              .social-icon-wrap ng-include="'/assets/rf-social-facebook.svg'"
+          li
+            a
+              .social-icon-wrap ng-include="'/assets/rf-social-twitter.svg'"
+          li
+            a
+              .social-icon-wrap ng-include="'/assets/rf-social-linked-in.svg'"
+          li
+            a
+              .social-icon-wrap ng-include="'/assets/github.svg'"
+      .or
+        |or
+    form.form.login-form
+      .caps-lock-warning ng-show="isCapsLockOn"
+        |Warning: Caps-lock is on
+      .inputs
+        .input
+          label for="sign_up__username"
+            |Username
+          input#sign_up__username placeholder="Your username" ng-model="credentials.username"
+        .input
+          label for="sign_up__email"
+            |Email address
+          input#login__email type="text" placeholder="Your email" ng-model="credentials.email"
+        .input.password
+          label for="sign_up__password"
+            |Password
+          .input-wrap
+            input#sign_up__password type="{{passwordInputType()}}" placeholder="●●●●●●●●" ng-model="credentials.password"
+            label.show-password-button ng-include="'/assets/eye.svg'" ng-click="showPassword()" ng-show="!passwordShowed()" for="sign_up__password"
+            label.hide-password-button ng-include="'/assets/eye-hidden.svg'" ng-click="hidePassword()" ng-show="passwordShowed()" for="sign_up__password"
+        .input.password.password-confirmation
+          label for="sign_up__password_confirmation"
+            |Password confirmation
+          .input-wrap
+            input#sign_up__password_confirmation type="{{passwordInputType()}}" placeholder="●●●●●●●●" ng-model="credentials.password_confirmation"
+            label.show-password-button ng-include="'/assets/eye.svg'" ng-click="showPassword()" ng-show="!passwordShowed()" for="sign_up__password_confirmation"
+            label.hide-password-button ng-include="'/assets/eye-hidden.svg'" ng-click="hidePassword()" ng-show="passwordShowed()" for="sign_up__password_confirmation"
+        .additional-information-slider ng-click="show_more = true" ng-class="{opened: show_more == true}"
+          |Additional information (not necessary)
+        .additional-inputs ng-show="show_more"
+          .row
+            .columns.large-6
+              .input
+                label for="sign-up__first-name"
+                  |First name
+                input#sign-up__first-name placeholder="First name" ng-model="credentials.first_name"
+              .input
+                label for="sign-up__last-name"
+                  |Last name
+                input#sign-up__last-name placeholder="Last name" ng-model="credentials.last_name"
+            .columns.large-6
+              .input
+                label for="sign-up__country"
+                  |Country
+                select#sign-up__country ng-model="credentials.country"
+                  option ng-repeat="country in country_list" value="{{country}}"
+                    |{{country}}
+              .input
+                label for="sign-up__company-url"
+                  |Company URL
+                input#sign-up__company-url ng-model="credentials.company_url"
+
+
+
+
+      .actions
+        .sign-in-link-wrap
+          a ng-click="openSignInPopup()"
+            |I have an account
+        .sign-up-button ng-click="createAccount()"
+          button title="Create account"
+  .out-of-popup
+    .terms-of-use-info
+      |By clicking "Create account" you agree our terms and conditions including our Cookie Policy.&nbsp;
+      a ui-sref="terms_of_use"
+        |Terms of use
+
+
+

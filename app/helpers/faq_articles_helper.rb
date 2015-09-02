@@ -1,0 +1,2 @@
+module FaqArticlesHelper
+end

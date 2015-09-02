@@ -1,0 +1,48 @@
+div ng-app="radok"
+  div ng-controller="WizardController"
+    form novalidate="" class="simple-form"
+      .input data-attr="first_name"
+        label
+          |First name
+        input type="text" ng-model="user.first_name"
+
+      .input data-attr="last_name"
+        label
+          |Last name
+        input type="text" ng-model="user.last_name"
+      .input data-attr="color"
+        label
+          |Color
+        .radio-collection
+          .radio
+            input id="user_color_red" type="radio" value="red" ng-model="user.color"
+            label for="user_color_red"
+              |red
+          .radio
+            input id="user_color_green" type="radio" value="green" ng-model="user.color"
+            label for="user_color_green"
+              |green
+          .radio
+            input id="user_color_blue" type="radio" value="blue" ng-model="user.color"
+            label for="user_color_blue"
+              |blue
+
+    .report
+      |user: {{user | json}}
+      |master: {{master | json}}
+    .title ng-if="!user.color || user.color == 'red'" ng-class="[(1 == 2 ? 'hello' : 'anotherHello'), (1 == 2 ? 'case2' : 'case2another')]"
+      |{{title}}
+coffee:
+  app = angular.module("radok", [])
+  app.controller "WizardController", [
+    "$scope", ($scope)->
+      $scope.master = {}
+      $scope.user = {}
+      $scope.title = "Hello world"
+      $scope.update = (user)->
+        $scope.master = angular.copy(user)
+
+
+      $scope.reset = ()->
+        $scope.user = angular.copy($scope.master)
+  ]

@@ -1,0 +1,127 @@
+.popup.payment
+  .form-partial.payment
+    .header
+      .title
+        |Payment
+    .content
+      /.oauth-login
+        .header
+          |Login using social networks
+        .social-auth-links
+          ul
+            li
+              a
+                .social-icon-wrap ng-include="'/assets/rf-social-google-plus.svg'"
+            li
+              a ng-click="authenticate_via_social('facebook')"
+                .social-icon-wrap ng-include="'/assets/rf-social-facebook.svg'"
+            li
+              a
+                .social-icon-wrap ng-include="'/assets/rf-social-twitter.svg'"
+            li
+              a
+                .social-icon-wrap ng-include="'/assets/rf-social-linked-in.svg'"
+            li
+              a ng-click="authenticate_via_social('github')"
+                .social-icon-wrap ng-include="'/assets/github.svg'"
+        .or
+          |or
+      form.form.payment-form novalidate="" name="payment_form"
+        .row
+          label.columns.large-12
+            |Choose payment method below or schedule a call by "Pay later"
+          label.payment-type ng-model="payment_type" ng-click="payment_type = 'visa_and_master_card'" ng-class="{active: payment_type == 'visa_and_master_card'}"
+            .image-wrap
+              .master-card-svg-wrap ng-include="'/assets/master_card.svg'"
+              .visa-card-svg-wrap ng-include="'/assets/visa.svg'"
+            .title
+              |Pay with credit card
+          .payment-type-separator
+            |Or
+          label.payment-type ng-model="payment_type" ng-click="payment_type = 'paypal'" ng-class="{active: payment_type == 'paypal'}"
+            .image-wrap
+              .paypal-card-svg-wrap ng-include="'/assets/paypal.svg'"
+            .title
+              |Pay with PayPal
+          .payment-type-separator
+            |Or
+          label.payment-type ng-model="payment_type" ng-click="payment_type = 'pay_later'" ng-class="{active: payment_type == 'pay_later'}"
+            .image-wrap
+              .pay-later-svg-wrap ng-include="'/assets/rf-icon-time.svg'"
+            .title
+              |Pay later
+        .row.field-groups-row
+
+          / pay later
+          .fields-group ng-show="payment_type == 'pay_later'"
+            .header
+              |Contact information
+            .columns.large-6.left-column
+              .inputs
+                rf-input ng-model="payment.full_name" name="full_name" required=""
+                rf-input ng-model="payment.phone" name="phone"
+                rf-input ng-model="payment.email" name="full_name" required="" is-email=""  n-inputs-height="2"
+            .columns.large-6.left-column
+              rf-input type="text" name="comment" ng-model="" label="Your comments..."  n-inputs-height="2"
+
+
+          / pay now
+          .columns.large-6.fields-group ng-show="payment_type != 'pay_later'"
+            .header
+              |Billing info
+            rf-input ng-model="payment.full_name" name="full_name" required=""
+            rf-input ng-model="payment.billing_address" name="billing_address" required=""
+            .row
+              .columns.large-6
+                rf-input ng-model="payment.city" name="city" required=""
+              .columns.large-6
+                rf-input ng-model="payment.zip_code" name="zip_code" required=""
+            rf-input ng-model="payment.country" name="country" required=""
+
+
+          .columns.large-6.fields-group ng-show="payment_type != 'pay_later'"
+            .header
+              |Credit card info
+            rf-input ng-model="payment.cardholder_name" name="cardholder_name"
+            rf-input ng-model="payment.card_number" name=""
+            .row
+              .columns.large-6
+                rf-input ng-model="payment.card_expire_month" name="card_expire_month" label="Ex month"
+              .columns.large-6
+                rf-input ng-model="payment.card_expire_year" name="card_expire_year" label="Exp. year"
+            rf-input ng-model="payment.cvv2_number" name="cvv2_number" label="CVV2/CVC2 number"
+
+
+        /.caps-lock-warning ng-show="isCapsLockOn"
+          |Warning: Caps-lock is on
+        /.inputs
+          rf-input ng-model="credentials.login" label="Username or email"
+
+          /.input
+            label for="login__email"
+              |Email address
+            input#login__email type="email" placeholder="Your email" ng-model="credentials.email"
+          .input.password
+            /label for="login__password"
+              |Password
+            .input-wrap
+              input#login__password type="{{passwordInputType()}}" placeholder="password" ng-model="credentials.password"
+              label.show-password-button ng-include="'/assets/eye.svg'" ng-click="showPassword()" ng-show="!passwordShowed()" for="login__password"
+              label.hide-password-button ng-include="'/assets/eye-hidden.svg'" ng-click="hidePassword()" ng-show="passwordShowed()" for="login__password"
+          .forgot-password-link-wrap
+            a href="" ng-click="openForgotPasswordPopup()"
+              |Forgot your password?
+        .actions
+          .columns.large-6.text-right
+            rf-button align-content="left" raised="false" title="< Return to Wizard"
+          .columns.large-6.text-right
+            .price-wrap
+            rf-button align-content="left"  title="Pay" svg="/assets/rf-rocket-up-right.svg"
+
+
+
+
+
+
+
+

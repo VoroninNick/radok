@@ -1,0 +1,6 @@
+.checkbox-input-collection
+  .input ng-repeat="language in model_available track by $index"
+    input id="{{name}}-{{$index}}" type="checkbox" name="{{name}}[]" value="{{language}}"
+    label for="{{name}}-{{$index}}"
+    label for="{{name}}-{{$index}}"
+      |{{language}}

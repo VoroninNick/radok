@@ -1,0 +1,19 @@
+.top-nav
+  .dropdowns ng-show="dropdowns().length"
+    .dropdown.ng-hide-animate ng-repeat="menu_item in menu" ng-show="menu_item.opened"
+      ul
+        li ng-repeat="subitem in menu_item.subitems"
+          a ui-sref="{{menuItemSref(subitem)}}"
+            |{{subitem.title}}
+
+  .menu
+    .menu-item ng-class="menuItemClass(menu_item)" ng-repeat="menu_item in menu" off-click="closeDropdown(menu_item, $event)"
+      a ui-sref="{{menuItemSref(menu_item)}}" ng-click="toggleDropdown(menu_item, $event)" angular-ripple=""
+        span
+          |{{menu_item.title}}
+      .dropdown ng-show="menu_item.subitems && menu_item.subitems.length"
+        ul
+          li ng-repeat="subitem in menu_item.subitems"
+            a ui-sref="{{menuItemSref(subitem)}}"
+              |{{subitem.title}}
+

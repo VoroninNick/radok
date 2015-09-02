@@ -1,8 +1,35 @@
 Rails.application.routes.draw do
-  get "/svg_images", to: "home#svg_images"
-  root to: 'home#index'
+  get "geo", to: "application#geo"
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+                                        registrations: "users/registrations",
+                                        omniauth_callbacks: "users/omniauth_callbacks"
+                                    }
 
+  #devise_for :users, controllers: {registrations: "users/registrations"}
+  mount Ckeditor::Engine => '/ckeditor'
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  root to: 'home#index'
+  get "about/leaders", to: "about#leaders"
+  post "contact_request", to: "contact#contact_request"
+  post "faq_request", to: "faq_articles#request_question"
+  get "faq_articles", to: "faq_articles#articles"
+
+  post "/delete_dashboard_project", to: "wizard#delete_dashboard_project"
+  get "/dashboard_projects", to: "wizard#dashboard_projects"
+  get "wizard/new_test_available_steps"
+  get "wizard/available_platforms_by_product_type/:product_type", to: "wizard#available_platforms_by_product_type"
+
+  scope "ng" do
+    root to: "angular#index", as: :ng_root
+    get 'wizard', to: "angular#wizard"
+  end
+
+  get "/svg_images", to: "home#svg_images"
+
+
+  post "/save_project", to: "wizard#save_project"
   get 'wizard', to: "wizard#index"
+  get "ng_wizard", to: "wizard#ng_wizard"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -59,3 +86,9 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 end
+
+
+# add_column :users, :first_name, :string
+# add_column :users, :last_name, :string
+# add_column :users, :country, :string
+# add_column :users, :company_url, :string

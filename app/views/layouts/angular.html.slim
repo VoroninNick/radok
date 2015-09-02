@@ -1,0 +1,29 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+    title
+      = content_for?(:title) ? yield(:title) : "angular"
+
+    /= stylesheet_link_tag    "application"
+    = javascript_include_tag "modernizr"
+    = javascript_include_tag "angular_app"
+
+    /= javascript_include_tag 'ckeditor/ckeditor.js'
+    = csrf_meta_tags
+
+  body
+    /header#header
+      = render 'header'
+    main
+      /= content_for?(:admin_layout) ? yield(:admin_layout) : yield
+      = yield
+
+    /footer#footer
+      = render 'footer'
+
+
+    /javascript:
+      $.getJSON("/svg_images", function(data){DATA = data})

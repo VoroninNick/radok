@@ -1,0 +1,13 @@
+.row
+  .columns.large-12.section-header ng-show="ctrl == 'home'"
+    |How it works?
+
+  .item ng-repeat="item in three_images_in_row_model"
+    /= svg_placeholder(item[:svg])
+    .svg-wrap ng-include="item.img"
+    .header
+      |{{item.title}}
+    .time
+      |[ {{item.time}} ]
+    .description
+      |{{item.description}}

@@ -40,7 +40,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  #gem 'spring'
 end
 
 gem "slim-rails"
@@ -48,3 +48,38 @@ gem "bower-rails"
 gem 'simple_form'
 
 gem "htmlcompressor"
+
+gem 'json_schema_builder'
+
+gem 'angular-rails-templates'
+
+gem 'thin'
+
+gem 'ancestry'
+
+gem "rails_admin"
+
+gem "ckeditor"
+
+gem "protected_attributes"
+
+gem "paperclip"
+
+gem 'devise'
+
+gem 'responders'
+
+gem 'devise_token_auth'#, '~> 0.1.31.beta9'
+gem 'omniauth'
+
+gem 'omniauth-github'
+gem 'omniauth-facebook'
+
+gem 'ruby-debug-ide'
+gem 'debase'
+
+gem 'global_config'
+
+gem 'geo_ip'
+
+gem "omniauth-gplus"

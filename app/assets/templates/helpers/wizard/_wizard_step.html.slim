@@ -1,0 +1,14 @@
+.wizard-step ng-class="[(!step_number ? 'intro-step' : ''), (active ? 'active' : 'inactive'), (proceeded ? 'proceeded' : '' )]"
+  .wizard-step-edit-tooltip ng-show="!active && step_number && proceeded && wizard.ready_go_to_step" ng-click="wizard.go_to_step(step_id)"
+    /|edit this step
+    .svg-container ng-include="'/assets/pen.svg'"
+  .wizard-step-line ng-if="step_number"
+  .wizard-step-counter data-number="{{step_number}}" ng-show="step_number" ng-click="wizard.go_to_step(step_id)"
+  .wizard-step-content
+    .wizard-step-content-overlay ng-if="!(active)"
+
+    .wizard-step-header.text-center ng-if="step_title"
+      |{{step_title}}
+
+    /.wizard-step-content-content.transcluded-content
+    .wizard-step-content-content ng-transclude=""

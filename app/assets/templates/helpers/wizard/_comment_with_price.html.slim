@@ -1,0 +1,8 @@
+label.comment-label ng-class="[(empty ? 'empty' : 'filled' ), ( in_edit ? 'in-edit' : '' ), (in_new ? 'in-new' : '')]" ng-click="edit_or_create()"
+  |{{model_comment && model_comment.length ? 'Edit a comment' : 'Add a comment' }}
+.platform-price
+  .currency
+    |$
+  .price
+    |{{model_price}}
+textarea.comment-textarea ng-model="model_comment"  ng-class="[(empty ? 'empty' : 'filled' ), ( in_edit ? 'in-edit' : '' ), (in_new ? 'in-new' : ''), ((!in_new || !in_edit) ? 'hide' : '')]"

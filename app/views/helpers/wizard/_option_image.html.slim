@@ -1,7 +1,7 @@
 .option-image class="large-#{columns_count}"
-  input.option-image-input type="radio" name=name value=value id="#{name}__#{value}"
+  input.option-image-input type="radio" name=name value=value id="#{name}__#{value}" ng-model=ng_model
   label for="#{name}__#{value}"
-    img src=image_path
+    = svg_placeholder image_path
     span.name
       = label
     - if description.present?

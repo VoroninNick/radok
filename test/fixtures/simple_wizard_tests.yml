@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tot__type_of_test: MyString
+  top__type_of_product: MyString
+  ps__platforms: MyText
+  ps__hours: MyString
+  pi__project_name: MyString
+  pi__project_version: MyString
+  pi__project_languages: MyText
+  pi__report_languages: MyText
+  tp__type_of_testing: MyString
+  tp__exploratory_instructions: MyText
+  tp__test_case_attachment: 
+  pa__access_instructions_url: MyString
+  pa__access_instructions_attachment: 
+  pa__access_user_name: MyString
+  pa__access_password: MyString
+  pa__need_authorization: false
+
+two:
+  tot__type_of_test: MyString
+  top__type_of_product: MyString
+  ps__platforms: MyText
+  ps__hours: MyString
+  pi__project_name: MyString
+  pi__project_version: MyString
+  pi__project_languages: MyText
+  pi__report_languages: MyText
+  tp__type_of_testing: MyString
+  tp__exploratory_instructions: MyText
+  tp__test_case_attachment: 
+  pa__access_instructions_url: MyString
+  pa__access_instructions_attachment: 
+  pa__access_user_name: MyString
+  pa__access_password: MyString
+  pa__need_authorization: false

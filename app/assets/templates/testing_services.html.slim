@@ -1,0 +1,75 @@
+.page.testing_services-page-content ng-controller="TestingServicesController"
+  .page-banner-wrap ng-include="'/assets/partials/_page_banner.html'"
+  #testing_services-page-content-rows.page-content-rows
+    #testing_services__what-we-do.page-content-row-wrap
+      .row
+        .columns.large-5.medium-5.small-12
+          .header
+            |What we do?
+          .subheader
+            |More than 1500 certified testers are ready to instantly start testing your piece of software.
+        .columns.large-7.medium-7.small-12
+          .description
+            p
+              |Are you a startup founder who wants to ensure the long-expected product release doesn’t turn out to be customers’ disappointment?
+            p
+              |Are you a manager who wants to get instant testing services without hiring additional people to your company?
+            p
+              |Are you seeking to have your app tested really, really fast?
+            p
+              |Radok Force comes to rescue every time you need to make certain your product’s performance is rock solid and smooth, on each platform and every device.
+    #testing_services__test-types.page-content-row-wrap
+      .three-images-in-row-wrap ng-include="'/assets/partials/_three_images_in_row.html'"
+
+    #testing_services__what-we-test.page-content-row-wrap
+      .row
+        .columns.large-6.large-centered.medium-10.medium-centered.small-12.section-header.with-subheader
+          .header
+            |What we test?
+          .subheader
+            |&mdash;&nbsp;we carefully test your application, service, web-page or game by thousands of professionally trained testers.
+
+      .two-horizontal-items-per-row
+        .columns.large-6.medium-6.item ng-repeat="item in two_horizontal_items_per_row_model"
+          .row
+            .columns.large-4.large-uncentered.medium-8.medium-centered.small-4.image-wrap-outer
+              .image-wrap ng-include="item.img"
+            .columns.large-8.large-uncentered.medium-12.medium-centered.small-8.text-outer
+              .header
+                |{{item.title}}
+              .description
+                |{{item.description}}
+
+    #testing_services__reasons.page-content-row-wrap
+      .row
+        .columns.large-6.medium-6.small-10.small-centered.medium-uncentered.large-uncentered
+          .header
+            .row
+              .columns.large-3.medium-4.small-2.count
+                |{{reasons.length}}
+              .columns.large-8.medium-7.text
+                |Reasons to use our software testing services
+        .columns.large-6.medium-6
+          .item data-number="{{$index + 1}}" ng-repeat="reason in reasons track by $index"
+            .title
+              |{{reason.name}}
+            .description
+              |{{reason.description}}
+
+    #testing-services__what-next.page-content-row-wrap
+      .row
+        .columns.large-7.text
+          .header
+            |What next?
+          .description
+            |I am greatly pleased with the experience with Radok Force. I have contacted them to get a functional and usability testing before a release of our peace of software. The reports guys created were very professional and did exceed my expectations, and also they caught a number of bugs we missed internally. Our release was so much smoother thanks to Radok Force.
+          .links
+            a ui-sref="how_it_works"
+              |How it works
+            a ui-sref="pricing"
+              |What it costs?
+        .columns.large-5.button-column
+          .button-outer
+            rf-button title="Start now!" subtitle="no registration required" svg="/assets/rf-rocket-up-right.svg" class="start-now-button"  sref="wizard"
+            /.subbutton-text
+              |Define your needs in terms of testers and platforms

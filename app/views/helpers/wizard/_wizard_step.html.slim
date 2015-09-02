@@ -1,10 +1,12 @@
-#step-type-of-tests.wizard-step
-  .wizard-step-line
-  /.wizard-step-line-overlay
-    .round
-    .line
-    .round
-  .wizard-step-counter data-number=step_number
+- intro_step = step_number.nil?
+#step-type-of-tests.wizard-step class=("intro-step" if intro_step)
+  - unless intro_step
+    .wizard-step-line
+    /.wizard-step-line-overlay
+      .round
+      .line
+      .round
+    .wizard-step-counter data-number=step_number
   .wizard-step-content
     .wizard-step-content-overlay
     - if step_title

@@ -1,0 +1,46 @@
+.page.pricing-page-content ng-controller="PricingController"
+  .page-banner-wrap ng-include="'/assets/partials/_page_banner.html'"
+  #pricing-page-content-rows.page-content-rows
+    .page-content-row-wrap
+      #pricing__plans ng-include="'/assets/partials/_plans.html'"
+    .page-content-row-wrap
+      #pricing__features
+        .section-header
+          |Our plans’ advantages
+        .features
+          .row
+            .item.columns.large-6.medium-6
+              .image-wrap-outer
+                .image-wrap ng-include="'/assets/rf-functional-test.svg'"
+              .header
+                |Personalised
+              .description
+                |All of our services are on demand, and it’s only up to you whether to choose full-package or just a few of them.
+
+            .item.columns.large-6.medium-6
+              .image-wrap-outer
+                .image-wrap ng-include="'/assets/rf-functional-test.svg'"
+              .header
+                |Budget-friendly
+              .description
+                |You stay in charge of your budget by being able to see the total cost right away. No hidden fees, we promise.
+
+          .row
+            .item.columns.large-6.medium-6
+              .image-wrap-outer
+                .image-wrap ng-include="'/assets/rf-functional-test.svg'"
+              .header
+                |Risk-free
+              .description
+                |Guaranteed money back if you are dissatisfied with our service. No questions asked.
+
+            .item.columns.large-6.medium-6
+              .image-wrap-outer
+                .image-wrap ng-include="'/assets/rf-functional-test.svg'"
+              .header
+                |Flexible packages
+              .description
+                |We’re best in what we do, that’s why you’ll get your results in 48 hours. If you are a lucky owner or manager of a complex product, we’ll take a little more time to make you happy. Our testers will provide you with clear and comprehensive reports in the convenient form, using the same bug-tracking system you do.
+
+    .page-content-row-wrap
+      #pricing__feedbacks ng-include="'/assets/partials/_feedbacks_carousel.html'"

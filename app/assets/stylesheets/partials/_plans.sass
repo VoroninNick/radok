@@ -1,0 +1,143 @@
+#home-plans
+  padding-bottom: 115px
+
+.home-plan
+  .black-bg
+    background-color: $light-black-color
+    height: 145px
+    padding: 0 24px
+
+
+    .currency
+      color: $yellow-orange-color
+      display: inline
+      font-size: 48px
+      vertical-align: 32px
+    .price
+      color: $yellow-orange-color
+      +font-100
+      display: inline
+
+    @media #{$screen} and (max-width: 450px)
+      //.price
+        font-size: 4rem
+        line-height: 4rem
+        vertical-align: top
+
+    @media #{$screen} and (max-width: 900px) and (min-width: 641px), #{$screen} and (max-width: 450px)
+      &
+        +flexbox
+      .price-and-text
+        //padding-top: 35px
+      .currency
+        vertical-align: top
+      .price
+        line-height: 4rem
+        font-size: 4rem
+        vertical-align: top
+      .price-per, .not-certain
+        font-size: 1.1rem
+      .question-symbol, .not-certain, .currency, .price, .price-and-text
+        +align-self(center)
+
+    @media #{$screen} and (max-width: 675px) and (min-width: 641px)
+      .price
+        font-size: 3.3rem
+
+
+  .question-symbol
+    +font-100
+    color: $yellow-orange-color
+    display: inline
+  .price-per, .not-certain
+    display: inline-block
+    +font-26
+    color: white
+    line-height: 32px
+    text-transform: uppercase
+
+  .not-certain
+    padding-top: 15px
+
+  .content
+    height: 380px
+    background-color: $white-color
+    padding: 0 24px
+
+    .text-content
+      height: 245px
+      position: relative
+
+  &:first-child
+    .content
+      .text-center
+        padding-bottom: 32px
+        padding-top: 20px
+      .header
+      .header
+        color: $light-black-color
+        text-transform: uppercase
+        +font-16
+      .text-content
+        .header
+          +font-16-semibold
+        .description
+          +font-16-light
+  &:nth-child(2)
+    .text-content
+      .columns
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+
+
+  .learn-more
+    //+font-12-light
+    //color: $sky-blue-color
+    //display: bloc
+    //text-decoration: none
+    //text-align: left
+
+
+  @media #{$medium-down}
+    margin-bottom: 30px
+    .price-and-text
+      text-align: center
+    .price-per
+      text-align: left
+
+    &:last-child
+      margin-bottom: 0
+
+
+
+
+
+.home-plan-header
+  background-color: $sky-blue-color
+  color: $light-black-color
+  +font-21
+  text-transform: uppercase
+  text-align: center
+  height: rem-calc(64)
+  line-height: rem-calc(64)
+
+
+
+@media #{$screen} and (max-width: 700px) and (min-width: 641px)
+  #home-plans
+    button.start-now-button
+      label
+        padding-left: 40px
+        .svg-wrap
+          left: -7px
+
+@media #{$small-only}
+  .section-header
+    height: 120px
+    line-height: 120px
+
+
+li.feedback
+  list-style: none

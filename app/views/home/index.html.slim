@@ -4,5 +4,61 @@ sass:
       padding: 0
       height: 100px
       line-height: 100px
-a href=wizard_path
-  |wizard
+#home-banner.banner
+
+#home-page-content
+  #home-how-it-works
+    .row
+      .columns.large-12.section-header
+        |How it works?
+      - @how_it_works_items.each do |item|
+        .item
+          = svg_placeholder(item[:svg])
+          .header
+            = item[:name]
+          .time
+            = "[ #{item[:time]} ]"
+          .description
+            = item[:description]
+  #home-statistics
+    .row
+      .columns.large-12.section-header
+        |Need some statistics?
+      .columns.large-5.projects
+        .counter
+          = 143
+        .text
+          |Projects
+          br
+          |tested
+      .columns.large-2.by
+        |by
+      .columns.large-5.testers
+        .counter
+          = 1981
+        .text
+          |Professional
+          br
+          |testers
+
+  #home-plans
+    .row
+      .columns.large-6.home-plan
+        .home-plan-header
+          |Self-serve
+        .black-bg
+          .price-and-text
+            .currency
+              |$
+            .price
+              |49
+            .price-per
+              |/per platform
+              br
+              |/per tester
+        .content
+          .columns.large-10.large-centered
+            p.centered
+              |Get your product tested on the most popular browsers, operating systems and mobile devices in your target markets.
+          .columns.large-5
+            .header

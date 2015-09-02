@@ -3,31 +3,34 @@
 #wizard-banner
 #wizard-content
   #wizard-steps
-    = wizard_step(1, "What type of tests are you looking for?") do
-      form method="post" action=""
-        /input type="radio"
-        .row
-          .input.required
-            = option_image(asset_path("rf-icon-functional-test.svg"), "test_type", "Functional test", "functional", 4, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
-            = option_image(asset_path("rf-icon-functional-test.svg"), "test_type", "Localization test", "localization", 4, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
-            = option_image(asset_path("rf-icon-functional-test.svg"), "test_type", "Usability test", "usability", 4, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
-        .step-nav-buttons
-          = next_step_button(2, "Type of product")
+    = wizard_step(1) do
+      = question("What type of tests are you looking for?", true) do
+        form method="post" action=""
+          /input type="radio"
+          .row
+            .input.required
+              = option_image("rf-icon-functional-test", "test_type", "Functional test", "functional", 4, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
+              = option_image("rf-icon-functional-test", "test_type", "Localization test", "localization", 4, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
+              = option_image("rf-icon-functional-test", "test_type", "Usability test", "usability", 4, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
 
-    = wizard_step(2, "For what type of product?") do
-      form method="post" action=""
-        /input type="radio"
-        .row
-          .input.required
-            = option_image(asset_path("rf-icon-functional-test.svg"), "product_type", "Mobile apps", "mobile_apps", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
-            = option_image(asset_path("rf-icon-functional-test.svg"), "product_type", "Responsive website", "responsive_website", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
-            = option_image(asset_path("rf-icon-functional-test.svg"), "product_type", "Software", "software", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
-            = option_image(asset_path("rf-icon-functional-test.svg"), "product_type", "Games", "games", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
-        .step-nav-buttons
-          = next_step_button(3, "Platforms")
-          = prev_step_button(1)
+      = question("For what type of product?", true) do
+        form method="post" action=""
+          /input type="radio"
+          .row
+            .input.required
+              = option_image("rf-icon-functional-test", "product_type", "Mobile apps", "mobile_apps", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
+              = option_image("rf-icon-functional-test", "product_type", "Responsive website", "responsive_website", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
+              = option_image("rf-icon-functional-test", "product_type", "Software", "software", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
+              = option_image("rf-icon-functional-test", "product_type", "Games", "games", 3, "Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience")
+      .step-nav-buttons
+        = configure_button
+        = next_step_button(3, "Platforms")
+        = prev_step_button(1)
 
-    = wizard_step(3, "On what platforms would you like your product to be tested?") do
+    /= wizard_step(2) do
+
+
+    = wizard_step(2, "On what platforms would you like your product to be tested?") do
       .row
         = blue_header("Platform / testers per platform", 12)
         = platform("Browsers", asset_path("ie.svg")) do
@@ -65,7 +68,7 @@
         = next_step_button(4, "Project info")
         = prev_step_button(2)
 
-    = wizard_step(4) do
+    = wizard_step(3) do
       .questions
         = question("Have you ever tested this project with us?") do
           .inputs
@@ -91,10 +94,10 @@
             = checkbox_input("report_languages", "Dutch", "dutch")
             = checkbox_input("report_languages", "Portuguese", "portuguese")
 
-      .step-nav-buttons
+      /.step-nav-buttons
         = next_step_button(5, "Methodology")
         = prev_step_button(3)
-    = wizard_step(5) do
+    = wizard_step(4) do
       = question("What methodology are you looking for?") do
         .inputs
           = radio_input("methodology", "Exploratory", "exploratory", true, "This is unscripted testing. Our testers use your product like any normal user would.")
@@ -113,13 +116,13 @@
         .selectize-tags-input
           input type="text" id="input-tags" class="demo-default" value="awesome,neat"
 
-      .step-nav-buttons
+      /.step-nav-buttons
         = next_step_button(6, "Project data")
         = prev_step_button(4)
 
 
 
-    = wizard_step(6) do
+    = wizard_step(5) do
       = question("Please provide the URL or file to be tested") do
         input type="url" placeholder="http://domain.com"
         |or
@@ -138,7 +141,7 @@
           button
             |ok
 
-      .step-nav-buttons
+      /.step-nav-buttons
         = summary_button
         = prev_step_button(5)
 
@@ -170,9 +173,9 @@
             .columns.large-6
               |Platforms:
             .columns.large-3.icon.human
-              span.svg-placeholder path="user"
+              = svg_placeholder "user"
             .columns.large-3.icon.hours
-              span.svg-placeholder path="clock"
+              = svg_placeholder "clock"
           .rows
             .row
               .columns.large-6
@@ -205,9 +208,9 @@
             .currency
               |$
             |25321
-        .button-go
-          span.svg-placeholder path="rf-icon-rocket"
+        .checkout-button
+          = svg_placeholder "rf-icon-rocket"
         .save
-          span.svg-placeholder path="download"
+          = svg_placeholder "download"
           span.button-label
             |Save this project

@@ -1,0 +1,28 @@
+.option-image class="large-{{columns_count}}"
+  input.option-image-input type="radio" name="{{name}}" value="{{value}}" id="{{id}}" ng-model="ng_model"
+  label for="{{id}}"
+    /svg-image src="{{image_name}}"
+    /ng-include src="'/assets/android.svg'"
+    ng-include src="image_path"
+    /= svg_placeholder image_path
+    span.name
+      |{{label}}
+
+    /- if description.present?
+      .description
+        = description
+
+    .description ng-if="description"
+      |{{description}}
+
+
+
+/.option-image class="large-#{columns_count}"
+  input.option-image-input type="radio" name=name value=value id="#{name}__#{value}" ng-model=ng_model
+  label for="#{name}__#{value}"
+    = svg_placeholder image_path
+    span.name
+      = label
+    - if description.present?
+      .description
+        = description

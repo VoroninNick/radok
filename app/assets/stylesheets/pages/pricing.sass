@@ -1,0 +1,32 @@
+#pricing-page-content-rows
+  .section-header
+    +h2
+    color: $light-black-color
+  .features
+    margin-top: 30px
+    .item
+      margin-top: 20px
+      margin-bottom: 20px
+      .header
+        margin-top: 15px
+        text-align: left
+        +font-21-semibold
+
+#pricing__features
+  +two-horizontal-per-row-mobile
+
+  @media #{$medium-only}
+    .features
+      .image-wrap
+        text-align: left
+  @media #{$small-only}
+    .features
+
+      .item
+
+        .image-wrap-outer
+          text-align: center
+          & + .header
+            margin-top: 30px
+        .header
+          text-align: center

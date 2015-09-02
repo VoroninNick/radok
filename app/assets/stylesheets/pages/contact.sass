@@ -1,0 +1,61 @@
+#contact-info-and-map
+  .header
+    @extend %large-section-header-text
+    text-align: center
+
+  .property-header
+    color: $sky-blue-color
+    +font-18-semibold
+  .property
+    padding: 7px 0
+    .text
+      &, a
+        color: $fire-orange-color
+        +font-16-light
+      a
+        text-decoration: none
+
+    .social-icons
+      ul
+        list-style: none
+
+
+#contact-feedback
+  //@extend %simple-contact-form-section
+
+  .tag-textarea
+    textarea
+      height: 221px
+
+#contact-data
+  .social-icons
+    ul
+      padding: 0
+    li
+      display: inline-block
+      margin: 0 10px
+      &:first-child
+        margin-left: 0
+
+
+
+@media #{$intermediate-down}
+
+  #contact-feedback
+
+    .header-column
+      text-align: center
+      margin-bottom: 30px
+    .header
+      line-height: 1
+      max-width: 400px
+      margin: 0 auto
+    .subheader
+      margin-top: 8px
+
+
+  .fields-group-column
+    width: grid-calc(12, 12)
+    &:not(:first-child)
+      margin-top: 11px
+
