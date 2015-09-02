@@ -1,0 +1,1189 @@
+$wizard-banner-background-color: $light-black-color
+$wizard-banner-height: rem-calc(230)
+$wizard-summary-width: rem-calc(200)
+$wizard-step-counter-diameter: rem-calc(48)
+
+$wizard-step-vertical-indent: rem-calc(24)
+
+$go-next-button-height: rem-calc(70)
+$go-next-button-width: rem-calc(280)
+$go-next-button-margin-top: rem-calc(48)
+
+$platform-indent: 1rem
+
+$input-width: rem-calc(90)
+$input-height: rem-calc(30)
+
+$text-header-height: rem-calc(50)
+$wizard-step-line-width: rem-calc(1)
+$wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
+
+%right-window-header
+  +font-18-semibold
+  color: $light-black-color
+  height: $text-header-height
+  line-height: $text-header-height
+  text-align: center
+  text-transform: uppercase
+  background-color: $sky-blue-color
+
+
+%banner
+  height: $wizard-banner-height
+  background-color: $wizard-banner-background-color
+  //background-image: asset-url("wizard_banner_image.png")
+  background-repeat: no-repeat
+  .title
+    +font-36
+    color: $white-color
+  .description
+    color: $sky-blue-color
+    +font-14-light
+
+.banner
+  @extend %banner
+
+= input-base
+  border: 1px solid $light-gray-text-color
+  color: $light-black-color
+  padding: 4px 12px
+
+= textarea-width
+  width: #{grid-calc(12, 12)}
+  max-width: rem-calc(600)
+
+
+= go-next-button($background-image: true)
+  background-color: $fire-orange-color
+  color: white
+  width: $go-next-button-width
+  height: $go-next-button-height
+  display: block
+  margin: $go-next-button-margin-top auto 0 auto
+  cursor: pointer
+  padding: rem-calc(7) 0 0 rem-calc(92)
+  text-align: left
+
+  @if $background-image != false
+    background-image: asset-url("rf-icon-rocket.svg")
+    background-repeat: no-repeat
+    background-position: rem-calc(34) rem-calc(10)
+
+%go-next-button
+  +go-next-button
+
+
+= platform-name
+  display: inline-block
+  line-height: 40px
+  vertical-align: top
+  color: $yellow-orange-color
+  font-size: 18px
+  font-weight: 500
+  text-transform: uppercase
+  &.with-bg-image
+    padding-left: 50px
+    background-repeat: no-repeat
+    background-size: 40px 40px
+    height: 40px
+    line-height: 40px
+
+
+#wizard-banner
+
+#wizard-content
+  +grid-row
+  position: relative
+  //padding-top: rem-calc(24)
+  //margin-top: rem-calc(24)
+#wizard-steps
+  width: 100%
+  padding-right: $wizard-summary-width
+
+#wizard-help
+  margin-top: $wizard-step-vertical-indent
+  width: $wizard-summary-width
+  height: auto
+  position: absolute
+  right: 0
+  top: 0
+
+  .header
+    @extend %right-window-header
+
+  .content
+    +font-14-semibold
+    background: $white-color
+    padding: rem-calc(8) rem-calc(16) rem-calc(48) rem-calc(16)
+    position: relative
+
+  .go-button
+    margin: 0
+    svg
+      margin: 0 8px
+  .configure-button
+    margin: 0
+    text-align: center
+    .inner
+      display: inline-block
+    .svg-wrap
+      display: inline-block
+      svg
+        margin: 0
+    .button-label
+      display: inline-block
+      +font-21-semibold
+
+#wizard-help-fixed
+  position: relative
+  width: $wizard-summary-width
+  height: 100px
+  background: inherit
+
+  &.fixed-top
+    top: #{$header-height + $go-next-button-margin-top}
+    position: fixed
+
+
+
+#wizard-summary
+  margin-top: $wizard-step-vertical-indent
+  width: $wizard-summary-width
+  height: auto
+  position: absolute
+  right: 0
+  top: 0
+  .progress-bar
+    height: rem-calc(5)
+    position: relative
+    .completed-step-number, .total-steps
+      position: absolute
+      color: $yellow-orange-color
+    .total-steps
+      right: 0
+  .progress-area
+    //background: $light-gray-text-color
+    height: rem-calc(5)
+    .progress-line
+      height: inherit
+      width: 0
+      background: $yellow-orange-color
+      max-width: 100%
+      position: absolute
+      top: 0
+      left: 0
+      +transition_all("width 0.3s")
+    .progress-steps
+      .progress-step
+        height: 5px
+        position: relative
+        float: left
+        padding-left: 1px
+        &:before
+          position: relative
+          display: block
+          width: 100%
+          height: 100%
+          content: ""
+          background: $light-gray-text-color
+
+        &.proceeded
+          &:before
+            background-color: $yellow-orange-color
+
+  .platforms
+    text-align: center
+    > .header
+      svg
+        width: 18px
+        height: 18px
+        fill: $yellow-orange-color
+    .platform-svg
+      display: inline-block
+      height: 40px
+      width: 40px
+      svg
+        fill: $light-gray-text-color
+        height: 18px
+        width: 18px
+
+    .columns
+      padding: 0
+      &:first-child
+        text-align: left
+
+  .name, .platforms .rows
+    color: $yellow-orange-color
+    text-transform: uppercase
+
+  .go-button
+    .button-label
+      +font-21-semibold
+
+
+
+
+#wizard-summary-fixed
+  position: relative
+  width: $wizard-summary-width
+  height: 100px
+  background: inherit
+
+  &.fixed-top
+    top: #{$header-height + $go-next-button-margin-top}
+    position: fixed
+
+  > .header
+    @extend %right-window-header
+
+  .content
+    +font-14-semibold
+    background: $white-color
+    padding: rem-calc(8) rem-calc(16)
+    position: relative
+
+
+
+  .footer
+    padding-top: 1px
+    .price-wrap
+      display: inline-block
+      width: rem-calc(130)
+      height: rem-calc(70)
+      background: $light-black-color
+      overflow: hidden
+      padding: 0 rem-calc(16)
+      float: left
+      .inner
+        display: inline-block
+        position: relative
+        vertical-align: middle
+      .currency
+        font-size: 1.2rem
+        display: inline
+        vertical-align: super
+
+    .total-cost-label
+      +font-14
+      line-height: 32px
+      color: $white-color
+    .total-price
+      +font-30
+      color: $yellow-orange-color
+      line-height: 12px
+
+
+
+.wizard-step
+  position: relative
+  //padding: $wizard-step-vertical-indent 0
+  margin: $wizard-step-vertical-indent 0
+  //&.completed:not(.review)
+    .wizard-step-content
+      opacity: 0.3
+
+
+  &:hover
+    .wizard-step-edit-tooltip
+      cursor: pointer
+      display: block
+      position: absolute
+      top: 52%
+      left: 55%
+      +transform(translate(-50%, -50%))
+      z-index: 1
+
+
+      svg
+        width: 80px
+        height: 80px
+
+        g
+          fill: #666
+
+  //&:not(.proceeded)
+    .wizard-step-edit-tooltip
+      display: none
+
+
+
+  .wizard-step-line
+    position: absolute
+    width: $wizard-step-line-width
+    border-left: $wizard-step-line-width solid $dark-gray-color
+    top: 48px
+    bottom: -24px
+    left: 24px
+
+    &:before
+      content: ""
+      position: absolute
+      transition: 0.5s all
+      left: -#{$wizard-step-line-width}
+      width: $wizard-step-line-width
+      border-left: $wizard-step-line-width $sky-blue-color solid
+      bottom: 100%
+      top: 0
+      +transition_all(0.5s all)
+    //&:after
+      content: ""
+      display: block
+      position: absolute
+      height: 48px
+      width: 48px
+      border: 2px solid green
+      border-radius: 50%
+      top: -48px
+      left: -25px
+      z-index: 2
+  &.active
+    .wizard-step-line
+      &:before
+        bottom: 0
+  //.wizard-step-line-overlay
+    top: 24px
+    position: absolute
+    bottom: -48px
+    width: 48px
+    overflow: hidden
+    z-index: 2
+    .round
+
+  //&:not(.active)
+    .wizard-step-line-overlay
+      height: 0
+
+
+
+
+
+  form
+    +grid-row
+    position: relative
+
+
+  //&.future:not(.ready-to-go-to-this-step)
+
+    /*
+      color: $light-gray-text-color !important
+      border-color: $light-gray-text-color !important
+
+    /*:before, *:after
+      background: $light-gray-text-color !important
+    .wizard-step-content
+      -webkit-filter: grayscale(1)
+  &:not(.active)
+    .wizard-step-content
+      opacity: 0.3
+
+  .wizard-step-content-overlay
+    display: block
+    position: absolute
+    top: 0
+    bottom: 0
+    width: 100%
+    left: 0
+    z-index: 1
+
+  &:not(.ready-to-proceed)
+    //.step-nav-buttons
+      *
+        display: none
+  &.future
+
+
+
+.wizard-step-counter, .wizard-full-summary-icon
+  background: #FFF
+  border: 1px solid $dark-gray-color
+  border-radius: 50%
+  height: $wizard-step-counter-diameter
+  width: $wizard-step-counter-diameter
+  line-height: $wizard-step-counter-diameter
+  position: absolute
+  left: 0
+  top: 0
+  cursor: pointer
+  z-index: 1
+
+  &:before
+    content: attr(data-number)
+    display: block
+    position: absolute
+    top: 3px
+    left: 3px
+    width: 40px
+    height: 40px
+    //background-color: $dark-gray-color
+    background-color: $light-gray-text-color
+    border-radius: 50%
+    line-height: 40px
+    color: white
+    +font-18-semibold
+    text-align: center
+  .wizard-step.active &
+    border-color: $sky-blue-color
+    &:before
+      background-color: $fire-orange-color
+  .wizard-step.completed &
+    &:not(:hover):before
+      background-image: asset-url("rf-icon-ok.svg")
+      background-repeat: no-repeat
+      //width: 16px
+      //height: 16px
+      //top: 12px
+      //left: 12px
+      background-size: 16px 16px
+      background-position: 12px 12px
+      content: ""
+  &:hover
+    &:before
+      background-color: rgba($fire-orange-color, 0.6)
+  .wizard-step.unavailable &
+    &:hover
+      &:before
+        content: "x"
+        background-color: rgba($fire-orange-color, 0.3)
+
+.wizard-full-summary-icon
+  svg
+    z-index: 1
+    position: relative
+    width: 25px
+    height: 25px
+    top: 11px
+    left: 12px
+
+    path.my-color
+      fill: white
+    line.my-color
+      stroke: white
+    .stroke-my-color
+      stroke: white
+
+.wizard-step-content
+  opacity: 1
+  padding-left: $wizard-step-side-padding
+  position: relative
+.wizard-step-header
+  +font-21-semibold
+  height: $text-header-height
+  line-height: $text-header-height
+  margin: 0 0 rem-calc(24) 0
+
+
+.option-image
+
+
+  text-align: center
+  label
+    cursor: pointer
+  .name
+    +font-18
+    color: $light-gray-text-color
+    display: block
+  .description
+    color: $light-gray-color
+    +font-12-light-italic
+    display: block
+    display: none
+    opacity: 0
+  img
+    opacity: 0.3
+  .label
+    cursor: pointer
+  svg
+    opacity: 0.3
+  &:hover
+    .name
+      color: $yellow-orange-color
+    .description
+      opacity: 1
+    img
+      opacity: 1
+    svg
+      opacity: 1
+
+
+.option-image-input
+  &:checked
+    & + label
+      .name
+        color: $yellow-orange-color
+      .description
+        opacity: 1
+      img
+        opacity: 1
+      svg
+        opacity: 1
+        ellipse
+          &:first-child
+            stroke-width: 3px
+
+.go-back
+  display: none
+  //+font-14-light
+  //color: $light-gray-color
+  font-size: 0.8rem
+  font-weight: 100
+
+.step-nav-buttons
+  text-align: center
+  // if keep place
+  height: rem-calc(94)
+.go-next-button
+  +go-next-button
+  display: none
+.configure-button, .next-question-button, .go-button
+  +go-next-button(false)
+  max-width: 100%
+  padding-top: 0
+  padding-left: 0
+  line-height: $go-next-button-height
+  svg
+    height: 100%
+    margin: 0 rem-calc(30)
+    vertical-align: top
+    display: inline-block
+  .button-label
+    display: inline-block
+    +font-28-bold
+    text-transform: uppercase
+
+  img
+    position: relative
+    top: rem-calc(10)
+    left: rem-calc(34)
+  .next-step
+    text-transform: uppercase
+    +font-28-bold
+    line-height: rem-calc(35)
+  .next-step-name
+    +font-14-light
+
+.summary-button
+  +go-next-button
+  +font-28-bold
+  text-transform: uppercase
+  line-height: 50px
+
+.option-image
+  @extend .columns
+
+
+//#step-type-of-tests
+  .option-image
+    +grid-column(4)
+.platform
+  +grid-column(6)
+  margin-top: $platform-indent
+  margin-bottom: $platform-indent
+
+  .human-svg-wrap
+    float: right
+    position: relative
+    width: 50px
+    margin-right: 20px
+    text-align: center
+    svg
+      fill: $yellow-orange-color
+      width: 30px
+      height: 30px
+  > .svg-wrap
+    display: inline-block
+    margin-right: 10px
+    svg
+      width: 40px
+      height: 40px
+
+  > .name
+    +platform-name
+
+
+
+.platform-content
+  position: relative
+
+
+.platform-price
+  color: $yellow-orange-color
+
+  float: right
+  display: inline-block
+  width: 90px
+  height: 30px
+  line-height: 30px
+  text-align: center
+  font-weight: 500
+  .currency
+    display: inline-block
+    float: left
+    height: inherit
+    width: 20px
+    text-align: center
+  .price
+    background: $light-black-color
+    width: 50px
+    height: inherit
+    display: inline-block
+    float: left
+
+
+
+.comment-label
+  float: left
+  line-height: 49px
+  font-size: 0.7rem
+  font-weight: 300
+  &.empty
+    color: $sky-blue-color
+    text-decoration: dotted
+    vertical-align: bottom
+    height: $input-height
+    display: inline-block
+    border-bottom: 1px dotted
+
+.hours-per-tester
+  +grid-column(6)
+  margin-top: $platform-indent
+  margin-bottom: $platform-indent
+  .available-hours
+    .hour
+      border: solid 2px $light-gray-text-color
+      border-radius: 50%
+      display: inline-block
+      position: relative
+      text-align: center
+      line-height: 1
+      color: $light-gray-text-color
+      vertical-align: bottom
+      margin: 0 rem-calc(2)
+
+
+      &:before
+        display: block
+        position: relative
+        content: attr(data-hours)
+        font-weight: 500
+      &:after
+        display: block
+        position: relative
+        content: "hours"
+        font-weight: 300
+        font-size: 0.75rem
+
+      &.selected
+        border-color: $fire-orange-color
+        &:before, &:after
+          color: $fire-orange-color
+
+
+      &:nth-child(1)
+        width: 50px
+        height: 50px
+        padding-top: 8px
+        &:after
+          content: "hour"
+      &:nth-child(2)
+        width: 55px
+        height: 55px
+        font-size: 1.1rem
+        padding-top: 10px
+      &:nth-child(3)
+        width: 60px
+        height: 60px
+        font-size: 1.2rem
+        padding-top: 12px
+      &:nth-child(4)
+        width: 65px
+        height: 65px
+        font-size: 1.3rem
+        padding-top: 12px
+      &:nth-child(5)
+        width: 70px
+        height: 70px
+        font-size: 1.4rem
+        padding-top: 14px
+
+
+.option-count
+  +grid-row
+  padding: 3px 0
+  label
+    float: left
+  .input-wrap
+    -webkit-user-select: none
+    position: relative
+    float: right
+    width: rem-calc(90)
+    text-align: center
+    input
+      width: 50px
+      text-align: center
+      border: 1px solid $white-color
+
+    &:hover
+      border-color: $sky-blue-color
+      outline: none
+
+    &:hover, input:focus ~
+      .decrement, .increment
+        //color: $sky-blue-color
+        //display: block
+        opacity: 1
+
+
+
+    .decrement, .increment
+      position: absolute
+      display: block
+      top: 0
+      opacity: 0
+      color: $light-gray-text-color
+
+
+
+      &:before
+        //content: "\2014"
+        display: block
+        font-weight: 600
+        line-height: 30px
+    .decrement
+      left: 0
+      &:before
+        content: "-"
+
+    .increment
+      right: 0
+      &:before
+        content: "+"
+
+    .decrement, .increment
+      &:hover
+        color: $sky-blue-color
+
+  &.empty
+    > label
+      color: $light-gray-text-color
+
+
+
+input, textarea
+  +input-base
+
+  +placeholder
+    color: $light-gray-text-color
+    font-style: italic
+  &:focus
+    outline: none
+    border-color: $gray-text-color
+
+
+
+
+//.radio-button-wrap
+  position: relative
+  display: inline-block
+
+input[type=checkbox]
+  & + label
+    border-radius: 2px
+  &:checked
+    & + label
+      &:before
+        border-radius: 1px
+        width: 14px
+        height: 14px
+        top: 2px
+        left: 2px
+
+
+input[type=radio]
+  &:not(.option-image-input)
+    & + label
+      border-radius: 50%
+    &:checked
+      & + label
+        &:before
+          border-radius: 50%
+          width: 12px
+          height: 12px
+          top: 3px
+          left: 3px
+
+
+
+input
+  &:not([type=radio]), &:not([type=checkbox]), &:not([type=submit])
+    width: #{grid-calc(6, 12)}
+    max-width: rem-calc(320)
+    height: $input-height
+textarea
+  +textarea-width
+  &:focus
+    outline: none
+    border-color: $gray-text-color
+
+
+
+.input-related-content
+  .actions
+    max-width: rem-calc(600)
+    text-align: right
+button
+  max-width: 100%
+  display: inline-block
+  text-align: center
+  background: $fire-orange-color
+  color: white
+  text-transform: uppercase
+  border: none
+  height: rem-calc(30)
+  padding: 0 1rem
+  &:focus
+    outline: none
+
+
+
+
+
+.inputs
+  &.horizontal
+    +flexbox
+    +flex-wrap(wrap)
+    > .input, > .checklist-item
+      +flex-grow(1)
+
+.question
+  padding: 32px 0 20px 0
+
+  .required-symbol
+    color: $yellow-orange-color
+    margin-left: 3px
+
+
+checkbox-list
+  display: block
+  padding-bottom: 30px
+  .error-messages
+    color: red
+    +font-14-light-italic
+
+
+
+  .text
+    +font-21-semibold
+    line-height: 50px
+    &.centered
+      text-align: center
+.wizard-step-content-content question
+  &:first-child
+    .question
+      padding-top: 0
+      .text
+        line-height: $text-header-height
+.input
+  .description
+    color: $light-gray-text-color
+    +font-12-light-italic
+
+.question
+  p.light
+    color: $light-gray-text-color
+    +font-14-light
+
+
+.selectize-control.multi .selectize-input > div
+  background: $white-color
+
+body
+  div.tagsinput
+    +input-base
+    //+textarea-width
+    // extracted from mixin
+    width: #{grid-calc(12, 12)} !important
+    max-width: rem-calc(600)
+
+    span.tag
+      background-color: $white-color
+      border: none
+      color: $light-black-color
+
+.intro-step
+  .question
+    padding: 0
+
+#wizard-controller
+  min-height: calc(100vh - #{$header-height})
+
+
+
+#wizard-summary
+  .go-next-button
+    +button-with-subtitle
+
+
+
+    .rocket-svg
+      +button-svg-wrap
+      svg
+        +button-svg
+
+
+
+    &.disabled
+      cursor: default
+      opacity: 1
+      background-color: $white-color
+      .next-step
+        color: $inactive-button-text-color
+      .next-step-name
+        color: $inactive-button-text-color
+      .rocket-svg
+        path
+          fill: $inactive-button-text-color
+
+    .next-step
+      +button-title
+      //color: $gray-text-color
+    .next-step-name
+      font-size: 14px
+      font-weight: 300
+      top: -8px
+      position: relative
+      //color: $gray-text-color
+
+  .or-go-back-wrap
+    display: block
+    text-align: center
+    font-size: 0.8rem
+    font-weight: 300
+    color: $light-gray-text-color
+
+  .go-back-button
+    width: 200px
+    float: none
+    //+font-14-light
+
+    display: inline
+    text-align: center
+    height: 40px
+    line-height: 40px
+    //color: $light-gray-color
+    color: $sky-blue-color
+    cursor: pointer
+    -webkit-user-select: none
+
+
+
+#wizard-full-summary
+  position: relative
+  padding-right: $wizard-summary-width
+
+  .property
+    padding: 16px 0
+
+
+#wizard-full-summary-header
+  padding: 0 $wizard-step-side-padding
+  .text
+    +font-21-semibold
+    color: $fire-orange-color
+    text-transform: uppercase
+    line-height: 48px
+
+#wizard-full-summary-inner
+
+  padding-bottom: 40px
+
+
+
+#wizard-full-summary-content
+  //max-width: 640px
+  //margin-left: auto
+  //margin-right: auto
+  background: $white-color
+  padding: 0 #{($wizard-step-counter-diameter + rem-calc(30) - rem-calc(15))}
+
+
+
+  .property-label
+    +font-21-semibold
+  .property-value
+    color: $yellow-orange-color
+    font-size: 18px
+    font-weight: 500
+    text-transform: uppercase
+
+
+
+  .platforms
+    .platform
+      width: 100%
+      padding: 0
+    .platform-name
+      +platform-name
+    .platform-svg
+      display: inline-block
+
+      svg
+        fill: $light-gray-text-color
+        height: 40px
+        width: 40px
+    .platform-name
+      display: inline-block
+
+  .total-testers-count
+    .svg-wrap
+
+      margin-right: 20px
+      display: inline-block
+      svg
+        width: 30px
+        height: 30px
+        fill: $yellow-orange-color
+    .text
+      display: inline-block
+      line-height: 30px
+      text-transform: uppercase
+      color: $yellow-orange-color
+      vertical-align: top
+
+
+#wizard-full-summary-header
+  margin-bottom: rem-calc(12)
+  .text
+    height: rem-calc(48)
+    color: $fire-orange-color
+
+
+.wizard-step-edit-tooltip
+  display: none
+
+.intro-step
+  &.proceeded
+    .wizard-step-content
+      opacity: 1
+
+.intro-step.proceeded
+  .question > .text
+    opacity: 0.3
+
+  .option-image input:not(:checked) ~ *
+    opacity: 0.3
+
+
+.highlighted-text
+  color: $yellow-orange-color
+  text-transform: uppercase
+
+.save-button
+
+  color: $sky-blue-color
+  text-transform: uppercase
+  background-color: $white-color
+  display: inline-block
+  width: 100%
+  height: 30px
+  line-height: 30px
+  margin-top: 1px
+  position: relative
+  +font-14-semibold
+  text-align: center
+
+
+  svg
+    display: inline-block
+    fill: $sky-blue-color
+    width: 24px
+    height: 16px
+    margin: 0 5px 0 0px
+
+.checkout-button
+  height: rem-calc(70)
+  width: rem-calc(70)
+  background: $fire-orange-color
+  display: inline-block
+  cursor: pointer
+  float: left
+  svg
+    width: rem-calc(38)
+    height: rem-calc(38)
+    top: 16px
+    left: 16px
+    position: relative
+
+  &.disabled
+    background: $white-color
+    color: $inactive-button-text-color
+    svg
+      path
+        fill: $inactive-button-text-color
+
+.steps-completed, steps-progress
+  float: left
+  width: 100%
+  padding: 20px 15px 0 15px
+  +font-14-semibold
+
+.wizard-step-footnotes
+  +grid-row
+  color: $light-gray-text-color
+  //font-style: italic
+  +font-12-light-italic
+
+  .footnote
+    +grid-column(12)
+
+
+.intro-step
+  question
+    &:not(:first-child)
+      .question
+        padding-top: 3rem
+
+.rf-button
+  &.rf-configure-button
+    .svg-wrap
+      margin-left: 0
+      margin-right: 17px
+      svg
+        top: -2px
+        position: relative
+    .button-text-wrap
+      .button-title
+        +font-21
+        line-height: 70px
+
+  &.rf-next-step-button
+    .svg-wrap
+      margin-left: 0
+      margin-right: 14px
+      svg
+        position: relative
+        top: -2px
+    .button-text-wrap
+      .inner
+        top: 17px
+    .button-title
+      +font-21
+
+.wizard-step
+  .question
+    width: 95%
+    display: block
+
+    .text
+      +font-21-semibold
+      line-height: 50px
+      &.centered
+        text-align: center
+  .input
+    &.radio
+      padding-bottom: 10px
+
+.wizard-step
+  .url-or-files
+    .columns
+      &:last-child
+        float: left
