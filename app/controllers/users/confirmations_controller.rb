@@ -5,9 +5,19 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # POST /resource/confirmation
-  # def create
-  #   super
-  # end
+  def create
+    local_login = params[:user][:login]
+    user = User.where("username = ? or email = ?", local_login, local_login).first
+    user_params = {email: user.email}
+    self.resource = resource_class.send_confirmation_instructions(user_params)
+    yield resource if block_given?
+
+    if successfully_sent?(resource)
+      respond_with({}, location: after_resending_confirmation_instructions_path_for(resource_name))
+    else
+      respond_with(resource)
+    end
+  end
 
   # GET /resource/confirmation?confirmation_token=abcdef
   def show

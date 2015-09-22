@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post "sign-up", to: "user_pages#registrations__create"
+  get "/sign-up", to: "user_pages#registrations__new"
   get "faq", to: "faq_articles#index", as: :faq
   get "faq/:id", to: "faq_articles#show", as: "faq_article"
   get "dashboard", to: "dashboard#index"
@@ -7,7 +9,7 @@ Rails.application.routes.draw do
   DynamicRouter.load
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
-  devise_for :users
+  devise_for :users, controllers: { confirmations: "users/confirmations", sessions: "users/sessions" }
   #mount_devise_token_auth_for 'User', at: 'auth', controllers: {
   #                                      registrations: "users/registrations",
   #                                      omniauth_callbacks: "users/omniauth_callbacks"

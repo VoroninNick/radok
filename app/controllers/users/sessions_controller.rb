@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
     begin
       self.resource = User.find_for_database_authentication(params[:user])
     rescue StandardError
-      return render inline: "invalid password"
+      return render json: { user: {form_errors: ["invalid_password_or_login"] } }, status: 401
     end
     #return render inline:
     return render json: { user: { errors: { login: :unconfirmed } } }, status: 401 unless resource.confirmed?

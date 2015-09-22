@@ -1,8 +1,21 @@
 $header_user = $("#header-user")
+window.logged_in = $("html").data().loggedIn == true
 $header_user_dropdown = $header_user.find(".dropdown")
 $header_user_dropdown.addClass("hide")
 $header_user_icon_logged = $(".user-icon.logged")
-$header_user_icon_logged.addClass("hide")
+$header_user_icon_logged.addClass("hide") if !logged_in
+$("#body").on "click", ".user-icon.logged", ->
+  $("#header-user .dropdown").toggleClass("hide")
+
+$("body").on "click", ".logout-link", (event)->
+  event.preventDefault()
+  url = $(this).attr("href")
+  $.ajax(
+    url: url
+    type: "delete"
+    success: ->
+      window.location.reload()
+  )
 
 $(".menu").on "click", ".has-dropdown", ->
   $this = $(this)
@@ -73,7 +86,9 @@ $("body").on "submit", "form", (event)->
 
     error: (xhr)->
       response_json = xhr.responseJSON
-      errors_by_field = response_json[form_resource_name].errors
+      resource_data = response_json[form_resource_name]
+      errors_by_field = resource_data.errors
+
       if response_json.error == true
         $form_errors.removeClass("hide")
         if response_json.confirmed == false
@@ -82,6 +97,10 @@ $("body").on "submit", "form", (event)->
           $form_errors.find(".unconfirmed").addClass("hide")
       else
         $form_errors.addClass("hide")
+
+      form_errors = resource_data.form_errors
+      for error_key in form_errors
+        $(".form-errors .#{error_key}").removeClass("hide")
 
       console.log "errors", errors_by_field
       $form.find(".inputs .error").addClass("hide")
@@ -94,6 +113,7 @@ $("body").on "submit", "form", (event)->
           error_key = errors
           $error = $field.find(".error.#{error_key}")
           $error.removeClass("hide")
+
 
 
       #alert("error")
@@ -134,3 +154,26 @@ $("body").on "change", ".rf-input input", (event)->
   else
     $rf_input.addClass("not-empty").removeClass("empty")
 
+
+$("body").on "click", ".resend_me_instructions", (event)->
+  event.preventDefault()
+  $resend_instruction_button = $(this)
+  $please_wait = $("<span>Wait please...</span>")
+  $login = $resend_instruction_button.closest("form").find("input[name='user[login]']")
+  login = $login.val()
+  $resend_instruction_button.replaceWith($please_wait)
+  data = { user: { login: login } }
+  $.ajax(
+    data: data
+    url: "/users/confirmation"
+    type: "post"
+    dataType: "json"
+    success: (data)->
+      $please_wait.replaceWith("<span>Instructions successfully sent</span>")
+  )
+
+$("body").on "click", ".rf-button", (event)->
+  $button = $(this)
+  href = $button.attr("href")
+  if href && href.length
+    window.location = href

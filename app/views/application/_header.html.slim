@@ -18,7 +18,7 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
                   span.subtitle
                     |Sign in
           - else
-            .user-icon.logged ng-click="toggleUserDropdown()" off-click="closeUserDropdown()"
+            .user-icon.logged ng-click="toggleUserDropdown()" off-click="closeUserDropdown()" class="#{ 'no-avatar' if true }"
               div angular-ripple=""
                 .inner
                   .svg-wrap
@@ -26,11 +26,11 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
           - if current_user
             .dropdown ng-show="logged_in && show_user_dropdown"
               rf-button size="small" title="My dashboard" svg="/assets/rf-icon-configure.svg" class="my-dashboard-button-link" ng-click="goToDashboard()"
-              = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link")
+              = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link", href: "/dashboard")
               .links
                 a.left href="/"
                   |Edit my profile
-                a.right.logout-link ng-click="logoutUser()"
+                a.right.logout-link href=destroy_user_session_path
                   |Sign out
         #header-mobile-menu-button-wrap ng-class="mobileMenuButtonClass()" ng-click="toggleMobileMenu()"
           .inner

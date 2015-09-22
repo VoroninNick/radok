@@ -108,11 +108,11 @@ module ApplicationHelper
     input_type = :password if type.to_s == 'password'
     input_tag_options[:type] = input_type
     content_tag(:div, class: "rf-input", type: type, "n-inputs-height": (options[:number_inputs_height])) do
-      content_tag(:label, "Please confirm your email", class: "hide error unconfirmed") +
+      content_tag(:label, class: "hide error unconfirmed") do content_tag(:span, "Please confirm your email") + link_to("resend instructions", "#", class: "resend_me_instructions") end +
       content_tag(:label, options[:label], class: "field-label") +
       content_tag(:div, nil, class: "input-border-wrap") +
       content_tag(tag_name, nil, input_tag_options)
-    end.html_safe
+    end
   end
 
   def popup name, **options
