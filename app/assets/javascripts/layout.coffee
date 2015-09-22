@@ -58,7 +58,7 @@ $("body").on "submit", "form", (event)->
   $form = $(this)
 
   $form.validateForm()
-  valid_form = $form.find(".rf-input.invalid").length > 0
+  valid_form = $form.find(".rf-input.invalid").length == 0
   if valid_form
     $form_errors = $(".form-errors")
     form_data = $form.serializeArray()
