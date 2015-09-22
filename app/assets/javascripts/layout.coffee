@@ -90,10 +90,19 @@ $("body").on "submit", "form", (event)->
       success: ->
         #alert("success")
         show_success = $form.attr("show-success") != undefined
-        $preloader.addClass("hide")
+        close_on_success = $form.attr("close-on-success")
+        reload_on_success = $form.attr("reload-on-success")
+        $preloader.addClass("hide") if !reload_on_success
         if show_success
           $success = $form.parent().find(".success-handler")
           $success.removeClass("hide")
+
+
+        if close_on_success && !reload_on_success
+          $form.closest(".ngdialog").addClass("hide")
+
+        if reload_on_success
+          window.location.reload()
 
 
       error: (xhr)->
