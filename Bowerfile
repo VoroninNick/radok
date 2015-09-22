@@ -41,4 +41,4 @@ asset "ng-repeat-owl-carousel"
 # without angular
 asset "jquery-animateNumber"
 
-asset "jquery.simplemodal"
+#asset "jquery.simplemodal"
