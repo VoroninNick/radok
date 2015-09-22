@@ -36,7 +36,7 @@ asset "angular-file-upload"
 asset "angular.validators"
 asset "checklist-model"
 asset "ng-repeat-owl-carousel"
-
+asset "jquery-validation"
 
 # without angular
 asset "jquery-animateNumber"

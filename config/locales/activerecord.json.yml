@@ -1,0 +1,6 @@
+json:
+  errors:
+    messages:
+      blank: blank
+      empty: empty
+      taken: taken

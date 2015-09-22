@@ -17,6 +17,9 @@ $("body").on "click", ".logout-link", (event)->
       window.location.reload()
   )
 
+$("body").on "clickout", ".logout-link", ->
+
+
 $(".menu").on "click", ".has-dropdown", ->
   $this = $(this)
   $this.toggleClass("opened")
@@ -44,6 +47,8 @@ $("body").on "click", "[open-popup]", ->
   popup_name = $this.attr("open-popup")
   openPopup(popup_name)
 
+
+
 $.fn.valid = ->
   return true
 
@@ -51,80 +56,91 @@ $.fn.valid = ->
 $("body").on "submit", "form", (event)->
   event.preventDefault()
   $form = $(this)
-  $form_errors = $(".form-errors")
-  form_data = $form.serializeArray()
-  url = $form.attr("action")
-  method = $form.attr("method") || 'GET'
-  $form_content = $form.find(".form-content")
-  show_preloader = $form.attr("show-preloader") != undefined
-  hide = true
-  hide_class = "invisible"
-  form_resource_name = $form.attr("resource")
-  if show_preloader
-    if $form_content.length > 0
-      if hide
-        $form_content.addClass(hide_class)
 
-    else
-      $form.addClass(hide_class)
-    $preloader = $form.parent().find(".preloader")
-    $preloader.removeClass("hide")
-    $("[hide-during-send='']").addClass("hide")
-  $.ajax(
-    data: form_data
-    url: url
-    dataType: "json"
-    type: method
-    success: ->
-      #alert("success")
-      show_success = $form.attr("show-success") != undefined
-      if show_success
-        $preloader.addClass("hide")
-        $success = $form.parent().find(".success-handler")
-        $success.removeClass("hide")
-
-
-    error: (xhr)->
-      response_json = xhr.responseJSON
-      resource_data = response_json[form_resource_name]
-      errors_by_field = resource_data.errors
-
-      if response_json.error == true
-        $form_errors.removeClass("hide")
-        if response_json.confirmed == false
-          $form_errors.find(".unconfirmed").removeClass("hide")
-        else
-          $form_errors.find(".unconfirmed").addClass("hide")
-      else
-        $form_errors.addClass("hide")
-
-      form_errors = resource_data.form_errors
-      for error_key in form_errors
-        $(".form-errors .#{error_key}").removeClass("hide")
-
-      console.log "errors", errors_by_field
-      $form.find(".inputs .error").addClass("hide")
-      if !isEmpty(errors_by_field)
-        for field_name, errors of errors_by_field
-          console.log "error field_name", field_name
-          console.log "error errors", errors
-          $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
-          $field.addClass("invalid")
-          error_key = errors
-          $error = $field.find(".error.#{error_key}")
-          $error.removeClass("hide")
-
-
-
-      #alert("error")
+  $form.validateForm()
+  valid_form = $form.hasClass("valid")
+  if valid_form
+    $form_errors = $(".form-errors")
+    form_data = $form.serializeArray()
+    url = $form.attr("action")
+    method = $form.attr("method") || 'GET'
+    $form_content = $form.find(".form-content")
+    show_preloader = $form.attr("show-preloader") != undefined
+    hide = true
+    hide_class = "invisible"
+    form_resource_name = $form.attr("resource")
+    if show_preloader
       if $form_content.length > 0
-        $form_content.removeClass(hide_class)
+        if hide
+          $form_content.addClass(hide_class)
+
       else
-        $form.removeClass(hide_class)
-      $preloader.addClass("hide")
-      $("[hide-during-send='']").removeClass("hide")
-      console.log "args: ", arguments
-  )
+        $form.addClass(hide_class)
+      $preloader = $form.parent().find(".preloader")
+      $preloader.removeClass("hide")
+      $("[hide-during-send='']").addClass("hide")
+
+
+
+    $.ajax(
+      data: form_data
+      url: url
+      dataType: "json"
+      type: method
+      success: ->
+        #alert("success")
+        show_success = $form.attr("show-success") != undefined
+        $preloader.addClass("hide")
+        if show_success
+          $success = $form.parent().find(".success-handler")
+          $success.removeClass("hide")
+
+
+      error: (xhr)->
+        response_json = xhr.responseJSON
+        resource_data = response_json[form_resource_name]
+        errors_by_field = resource_data.errors
+
+        if response_json.error == true
+          $form_errors.removeClass("hide")
+          if response_json.confirmed == false
+            $form_errors.find(".unconfirmed").removeClass("hide")
+          else
+            $form_errors.find(".unconfirmed").addClass("hide")
+        else
+          $form_errors.addClass("hide")
+
+        form_errors = resource_data.form_errors
+        if !isEmpty(form_errors)
+          $form_errors.removeClass("hide")
+        else
+          $form_errors.addClass("hide")
+        for error_key in form_errors
+          $(".form-errors .#{error_key}").removeClass("hide")
+
+        console.log "errors", errors_by_field
+        $form.find(".inputs .error").addClass("hide")
+        if !isEmpty(errors_by_field)
+          for field_name, errors of errors_by_field
+            console.log "error field_name", field_name
+            console.log "error errors", errors
+            $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
+            $field.addClass("invalid")
+            error_key = errors
+            $error = $field.find(".error.#{error_key}")
+            $error.removeClass("hide")
+
+
+
+        #alert("error")
+        if $form_content.length > 0
+          $form_content.removeClass(hide_class)
+        else
+          $form.removeClass(hide_class)
+        $preloader.addClass("hide")
+        $("[hide-during-send='']").removeClass("hide")
+        console.log "args: ", arguments
+    )
 
 #$("body").on "focus keypress", "input[type=password]", (event)->
 #  console.log "event: ", event
@@ -177,3 +193,58 @@ $("body").on "click", ".rf-button", (event)->
   href = $button.attr("href")
   if href && href.length
     window.location = href
+
+$.fn.validateInput = ->
+  $rf_input = $(this)
+  required = !!$rf_input.attr("required")
+  $input = $rf_input.find("input")
+  value = $input.val()
+  valid = true
+
+  $form = $rf_input.closest("form")
+  if required
+    valid = value && value.length
+  if valid
+    $rf_input.find(".error.required").addClass("hide")
+  else
+    $rf_input.find(".error.required").removeClass("hide")
+
+
+  if !valid
+    $form.addClass("invalid").removeClass("valid")
+
+  validation_options_str = $rf_input.attr("validation") || ""
+  validation_options = validation_options_str.split(" ")
+
+  if valid
+    if validation_options.indexOf("email") >= 0
+      valid = validateEmail(value)
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
+  if !valid
+    $rf_input.addClass("invalid").removeClass("valid")
+  else
+    $rf_input.removeClass("invalid").addClass("valid")
+
+$.fn.validateForm = ->
+  $form = $(this)
+  $form.find(".rf-input").each ->
+    $rf_input = $(this)
+    $rf_input.validateInput()
+  $form
+
+validateEmail = (email) ->
+  re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+  re.test email
+
+
+$("body").on "change blur", "form .rf-input input", (event)->
+  console.log "event type: ", event.type
+  console.log "value: ", $(this).val()
+  $input = $(this)
+  $rf_input = $input.closest(".rf-input")
+  $rf_input.validateInput()
+

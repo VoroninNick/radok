@@ -107,7 +107,13 @@ module ApplicationHelper
     input_type = :text
     input_type = :password if type.to_s == 'password'
     input_tag_options[:type] = input_type
-    content_tag(:div, class: "rf-input", type: type, "n-inputs-height": (options[:number_inputs_height])) do
+    required_message = options[:required_message]
+    invalid_message = options[:invalid_message]
+    validation = options[:validation]
+
+    content_tag(:div, class: "rf-input", type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
+      content_tag(:label, required_message, class: "hide error required") +
+      content_tag(:label, invalid_message, class: "hide error invalid") +
       content_tag(:label, class: "hide error unconfirmed") do content_tag(:span, "Please confirm your email") + link_to("resend instructions", "#", class: "resend_me_instructions") end +
       content_tag(:label, options[:label], class: "field-label") +
       content_tag(:div, nil, class: "input-border-wrap") +

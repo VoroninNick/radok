@@ -15,20 +15,22 @@
 
           .form-errors.hide
             .columns.large-12
-              p.semibold.unconfirmed
+              p.semibold.unconfirmed.hide
                 |Please check your email and confirm registration
+              p.semibold.invalid_password_or_login.hide
+                |Invalid username/email or password.
           .caps-lock-warning.hide
             | Warning: Caps-lock is on
 
           .inputs
             .row
               .columns.large-12
-                = rf_input(label: "Username or email", name: "user[login]")
+                = rf_input(label: "Username or email", name: "user[login]", required: true)
                 /! ngRepeat: (error_key, error_value) in error()
-                = rf_input(label: "password", name: "user[password]", type: "password")
+                = rf_input(label: "password", name: "user[password]", type: "password", required: true)
 
-            .forgot-password-link-wrap
-              a href="" ng-click="openForgotPasswordPopup()"  Forgot your password?
+              .forgot-password-link-wrap
+                a href="" ng-click="openForgotPasswordPopup()"  Forgot your password?
           .actions
             .columns.large-5
               .sign-up-invitation

@@ -5,6 +5,8 @@
 #= require jquery.circle-progress
 #= require jquery-animateNumber/jquery.animateNumber.min
 #= require jquery.capsChecker.min
+#= require jquery.clickout
+# require jquery-validation/dist/jquery.validate.min
 #= require functions
 #= require layout
 #= require wizard_jquery

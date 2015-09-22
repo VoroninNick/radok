@@ -18,9 +18,9 @@
           .inputs
             .row
               .columns.large-12
-                = rf_input(label: "Username (required)", required: true, name: "user[username]")
-                = rf_input(label: "Email (required)", required: true, name: "user[email]")
-                = rf_input(label: "Password (required)", type: "password", required: true, name: "user[password]")
+                = rf_input(label: "Username (required)", required: true, name: "user[username]", required_message: "Please type username" )
+                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please type email", validation: "email", invalid_message: "Please type valid email")
+                = rf_input(label: "Password (required)", type: "password", required: true, name: "user[password]", required_message: "Please type password")
 
 
 
