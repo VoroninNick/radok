@@ -1,0 +1,24 @@
+#faq-form
+  .row.faq-form-row
+    .columns.small-12.small-centered.medium-12.medium-uncentered.large-12.header-column
+      .header
+        |Still have questions?
+      .subheader
+        |Send us your question and we'll answer you as soon as possible
+    .columns.large-12
+      .row
+        form no-validate="" name="question_request"
+          .columns.large-6
+            rf-input ng-model="question_request.name" ng-required="true" label="Your name"
+            rf-input ng-model="question_request.email" is-email="" label="Email" ng-required="true"
+            rf-input ng-model="question_request.subject" ng-required="false" label="Subject"
+
+          /input ng-model="question_request.name" required="" placeholder="Your name"
+          /input ng-model="question_request.email" required="" placeholder="Your email"
+          /input type="text" ng-model="question_request.question_title" required="" placeholder="Question title"
+          .columns.large-6
+            rf-input type="text" n-inputs-height="3" ng-model="question_request.description" label="Type your question's subject here..."
+            /textarea ng-model="question_request.question_description" required="" placeholder="Type your question's subject here..."
+            /input type="button" value="Add a question"  ng-click="submitQuestion(); $event.preventDefault()"
+            rf-button svg="/assets/rf-icon-add-question.svg" class="faq-form-button" title="Add a question" ng-click="submitQuestion(); $event.preventDefault()" ng-disabled="question_request.$invalid"
+

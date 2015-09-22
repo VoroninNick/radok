@@ -89,6 +89,8 @@ button, label, input[type=button], input[type=submit]
     textarea
       margin-top: 11px
 
+
+
 = page-row-wrap
   padding: $page-row-wrap-padding
   .header
@@ -283,23 +285,44 @@ button, label, input[type=button], input[type=submit]
   cursor: pointer
   text-align: right
 
+.preloader
+  padding: 50px 0 35px 0
+  text-align: center
+.preloader, .success-handler
+  position: absolute
+  top: 50%
+  width: 100%
+  left: 0
+  text-align: center
+  transform: translate(0, -50%)
+
 #body
-  .rf-input-wrap, rf-input
+  form
+    position: relative
+  .rf-input-wrap, rf-input, .rf-input
     display: block
     position: relative
-    padding: 20px 0
+    //padding: 20px 0
+    padding: 30px 0 0 0
+
+    margin-top: 10px
 
     .input-border-wrap
       position: absolute
       //top: 15px
-      top: 10px
+      //top: 10px
+      top: 30px
       //bottom: 15px
-      bottom: 10px
+      //bottom: 10px
+      bottom: 0
       width: 100%
       border: 1px solid $light-gray-text-color
+
     label
       color: $light-gray-text-color
-      top: 15px
+      //top: 15px
+      //top: 30px
+      top: 40px
       left: 0
       line-height: 24px
       height: 30px
@@ -319,10 +342,14 @@ button, label, input[type=button], input[type=submit]
       z-index: 1
       display: block
 
+    input
+      &:not([type]), &[type=text], &[type=password]
+        height: 50px
+
     &[type=text]
       &[n-inputs-height='3']
         textarea
-          height: 170px
+          height: 190px
       &[n-inputs-height='2']
         textarea
         textarea
@@ -331,16 +358,18 @@ button, label, input[type=button], input[type=submit]
       .input-border-wrap
         border-color: $sky-blue-color
       label
-        top: -15px
+        //top: -15px
+        top: 0
         color: $sky-blue-color
     &.ng-touched.ng-invalid
       .input-border-wrap
         border-color: red
       .error-messages
         display: block
-    &.not-empty
+    &.focus-in, &.not-empty
       label
-        top: -15px
+        //top: -15px
+        top: 0
 
     .error-messages
       top: 24px
@@ -430,6 +459,7 @@ button, label, input[type=button], input[type=submit]
     .button-text-wrap
       margin-left: -2px
   &.rf-button-align-content-center
+    text-align: center
     .rf-button-content-wrap
       display: inline-block
 
@@ -552,3 +582,15 @@ a
   text-decoration: none
   &:hover
     text-decoration: underline
+
+#body
+  .rf-input
+    &.invalid
+      .field-label
+        display: none
+      .error
+        font-weight: 500
+        color: $yellow-orange-color
+      input
+        &[type=text], &[type=password]
+          border: 1px solid $yellow-orange-color

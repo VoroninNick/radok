@@ -1,18 +1,36 @@
-#fixed-header
-  #header-row
-    #header-logo
-      a href="/"
-        img src="/assets/logo.png"
-    #header-menu
-      .header-menu-item
-        a href="#"
-          |For clients
-      .header-menu-item
-        a href="#"
-          |How it works
-      .header-menu-item
-        a href="#"
-          |About us
-      .header-menu-item
-        a href="#"
-          |Contact us
+header#header  ng-controller="NavigationController" ng-class="headerClass()"
+  #fixed-header
+    #header-row
+      #header-logo
+        a href=root_path ng-class="navClass('home')"
+          img src="/assets/logo.png"
+      #header-menu
+        /top-nav menu="menu_items" item-class="header-menu-item" off-click="closeMobileMenu()" off-click-filter="'#header-mobile-menu-button-wrap'"
+        = top_nav(menu: menu_items, item_class: "header-menu-item")
+
+        #header-user  class=header_user_class
+          - if !current_user
+            .user-icon.unlogged ng-click="openSignInDialog()"
+              div angular-ripple=""
+                .inner
+                  .svg-wrap
+                    = embedded_svg_from_assets("rf-unlogged")
+                  span.subtitle
+                    |Sign in
+          - else
+            .user-icon.logged ng-click="toggleUserDropdown()" off-click="closeUserDropdown()"
+              div angular-ripple=""
+                .inner
+                  .svg-wrap
+                    = embedded_svg_from_assets("no_avatar.svg")
+          - if current_user
+            .dropdown ng-show="logged_in && show_user_dropdown"
+              rf-button size="small" title="My dashboard" svg="/assets/rf-icon-configure.svg" class="my-dashboard-button-link" ng-click="goToDashboard()"
+              = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link")
+              .links
+                a.left href="/"
+                  |Edit my profile
+                a.right.logout-link ng-click="logoutUser()"
+                  |Sign out
+        #header-mobile-menu-button-wrap ng-class="mobileMenuButtonClass()" ng-click="toggleMobileMenu()"
+          .inner

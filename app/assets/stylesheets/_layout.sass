@@ -126,7 +126,7 @@ $desktop-menu-lower-bound: 769px
       .dropdown
         opacity: 1
         top: $header-height
-        display: block
+        display: block !important
 
 
 
@@ -173,7 +173,7 @@ $desktop-menu-lower-bound: 769px
 
 
 
-top-nav
+top-nav, .top-nav
   display: inline-block
   float: left
   width: calc(100% - #{$header-height})
@@ -328,7 +328,7 @@ top-nav
     .user-icon
       &:after
         top: $small-header-height
-  top-nav
+  top-nav, .top-nav
     display: none
     //display: block
     position: absolute
@@ -393,7 +393,7 @@ top-nav
       z-index: 10
   #header
     &.mobile-menu-opened
-      top-nav
+      top-nav, .top-nav
         display: block
 
         .menu

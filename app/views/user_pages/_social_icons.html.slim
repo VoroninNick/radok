@@ -1,0 +1,23 @@
+.social-auth-links
+  ul
+    li
+      a
+        .social-icon-wrap.ng-scope ng-include="'/assets/rf-social-google-plus.svg'"
+          = embedded_svg_from_assets "rf-social-google-plus"
+    li
+      a
+        .social-icon-wrap.ng-scope
+          = embedded_svg_from_assets "rf-social-facebook"
+    li
+      a ng-click="authenticate_via_social('twitter')"
+        .social-icon-wrap.ng-scope
+          = embedded_svg_from_assets "rf-social-twitter"
+    li
+      a ng-click="authenticate_via_social('linked_in')"
+        .social-icon-wrap.ng-scope
+          = embedded_svg_from_assets "rf-social-linked-in"
+            /li
+              a ng-click="authenticate_via_social('github')"
+              /! ngInclude: '/assets/github.svg'
+              .social-icon-wrap.ng-scope
+                = embedded_svg_from_assets "github"

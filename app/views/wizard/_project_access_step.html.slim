@@ -1,0 +1,44 @@
+wizard-step  wizard="wizard" step-number="4" step-id="5" active-step-id="wizard.active_step_id" child-scope-source="controller"
+  form name="wizard.project_access_form" novalidate=""
+    .questions
+      question text="Please provide the URL or file to be tested?"
+        .inputs
+          /input type="url" placeholder="http://domain.com"
+          .url-or-files
+            .columns.large-5
+              rf-input label="url" ng-model="wizard.data.pa__access_instructions_url"
+            .columns.large-1.input-padding.or
+              |or
+            /.button-upload
+            .columns.large-5.input-padding.button-wrap
+              input#project_access_file_upload type="file" nv-file-select="" uploader="uploader" multiple=""
+            /input#project_access_file_upload.hide type="file" multiple="multiple" name="project_access_file_upload" ng-model="wizard.project_access_file_upload" onchange="project_access__add_files()"
+            /onchange="angular.element(this).scope().project_access__add_files(this)"
+
+
+            /rf-button full-width="" class="rf-upload-button" title="Upload files..." svg="/assets/upload.svg" for="project_access_file_upload" ng-click="call_file_upload()"
+            .clearfix
+
+            .attached-files
+              .attached-file ng-repeat="f in uploader.queue"
+                |{{f}}
+
+      question text="Does the product require a username or password to be accessed?"
+        .inputs
+          /radio-input name="require_auth" value="false" ng-model="wizard.auth_data.require_auth"
+
+          .input
+            input id="require_auth_1" type="radio" name="require_auth" ng-value="false" placeholder="Username" ng-model="wizard.data.pa__need_authorization"
+            label for="require_auth_1"
+            label for="require_auth_1"
+              = "No, it does not require a username or password"
+
+          .input
+            input id="require_auth_2" type="radio" name="{{name}}" ng-value="true" ng-model="wizard.data.pa__need_authorization" placeholder="password"
+            label for="require_auth_2"
+            label for="require_auth_2"
+              = "Yes, here they are:"
+
+            .input-related-content
+              input type="text" ng-model="wizard.data.pa__access_user_name"
+              input type="password" ng-model="wizard.data.pa__access_password"

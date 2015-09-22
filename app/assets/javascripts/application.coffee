@@ -1,0 +1,12 @@
+#= require jquery/dist/jquery.min.js
+#= require parallax/deploy/parallax.min
+#= require maplace-0.1.3.min
+#= require owl_carousel.min
+#= require jquery.circle-progress
+#= require jquery-animateNumber/jquery.animateNumber.min
+#= require jquery.capsChecker.min
+#= require functions
+#= require layout
+#= require wizard_jquery
+#= require dashboard
+#= require new_wizard_jquery

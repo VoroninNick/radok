@@ -8,8 +8,53 @@
 #$app.factory "WizardTest", ()->
 
 
+window.project_access__add_files = ()->
+
+  alert("test")
+  window.scope ?= {}
+  window.scope.wizard ?= {}
+  window.scope.wizard.project_access_file_upload_files ?= []
+  $file_upload = $("#project_access_file_upload")
+  file = $file_upload.val()
+
+
+
+  if file && file.length
+    data = new FormData
+    jQuery.each $file_upload[0].files, (i, file) ->
+      data.append "asset[data]", file
+
+
+    scope.wizard.project_access_file_upload_files.push(file)
+    #$file_upload.val("")
+    $attached_files_container = $(".attached-files")
+    client_attachment_index = $attached_files_container.find(".attached-file").length
+    data['client_attachment_index'] = client_attachment_index
+
+    console.log("before append asset")
+    $attached_files_container.append("<div class='attached-file' data-index='#{client_attachment_index}'>#{file}</div>")
+    console.log("after append asset")
+
+    $.ajax
+      url: 'attachments.json'
+      data: data
+      cache: false
+      contentType: false
+      processData: false
+      type: 'POST'
+      success: (data) ->
+        scope.wizard.project_access_file_upload_files
+        console.log("before complete asset")
+        $attached_files_container.find("[data-index=#{data['client_attachment_index']}]").addClass("uploaded")
+        console.log("after complete asset")
+
+
 $app.controller "WizardController", [
-   "$scope", "WizardTest", "ngDialog", "$auth", "$http", "$rootScope", ( $scope, WizardTest, ngDialog, $auth, $http, $rootScope)->
+   "$scope", "WizardTest", "ngDialog", "$auth", "$http", "$rootScope", "FileUploader", ( $scope, WizardTest, ngDialog, $auth, $http, $rootScope, FileUploader)->
+
+    $scope.uploader = new FileUploader({
+      url: 'upload.php'
+    });
 
     $scope.page_banner = {
       title: "Wizard page header"
@@ -424,4 +469,50 @@ $app.controller "WizardController", [
     #$scope.$on "auth:login:success", $scope.saveProject
 
 
+    $scope.call_file_upload = ()->
+      #$("#project_access_file_upload").click()
+
+    $scope.show_uploaded_files = ()->
+
+#    $scope.project_access__add_files = ()->
+#
+#      alert("test")
+#      $scope.wizard.project_access_file_upload_files ?= []
+#      $file_upload = $("#project_access_file_upload")
+#      file = $file_upload.val()
+#
+#
+#
+#      if file && file.length
+#        data = new FormData
+#        jQuery.each $file_upload[0].files, (i, file) ->
+#          data.append "asset[data]", file
+#
+#        $scope.wizard.project_access_file_upload_files.push(file)
+#        #$file_upload.val("")
+#        $attached_files_container = $(".attached-files")
+#        client_attachment_index = $attached_files_container.find(".attached-file").length
+#        data['client_attachment_index'] = client_attachment_index
+#
+#        console.log("before append asset")
+#        $attached_files_container.append("<div class='attached-file' data-index='#{client_attachment_index}'>#{file}</div>")
+#        console.log("after append asset")
+#
+#        $.ajax
+#          url: 'attachments.json'
+#          data: data
+#          cache: false
+#          contentType: false
+#          processData: false
+#          type: 'POST'
+#          success: (data) ->
+#            $scope.wizard.project_access_file_upload_files
+#            console.log("before complete asset")
+#            $attached_files_container.find("[data-index=#{data['client_attachment_index']}]").addClass("uploaded")
+#            console.log("after complete asset")
+
+
+    $scope.project_access__add_files = window.project_access__add_files
+
 ]
+

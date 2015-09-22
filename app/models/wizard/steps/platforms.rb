@@ -4,6 +4,8 @@ module Wizard
       attr_accessor :platforms
       attr_accessor :hours_per_tester
 
+
+
       def self.available_platforms
         {
             browsers: {

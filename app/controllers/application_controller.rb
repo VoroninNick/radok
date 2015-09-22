@@ -1,9 +1,12 @@
 class ApplicationController < ActionController::Base
-  include DeviseTokenAuth::Concerns::SetUserByToken
+  #include DeviseTokenAuth::Concerns::SetUserByToken
+  include MetaDataHelper
+  include ImageHelper
+  include Rails.application.routes.url_helpers
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   #protect_from_forgery with: :exception
-  protect_from_forgery
+  #protect_from_forgery
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   respond_to :html, :json
@@ -35,4 +38,42 @@ class ApplicationController < ActionController::Base
   def authenticate
 
   end
+
+  def menu_items
+    unlogged_user_menu = [
+        { title: "For clients",
+          subitems: [
+              {title: "Testing services", href: testing_services_path},
+              {title: "Pricing", href: pricing_path},
+              {title: "FAQ", href: faq_path}
+          ]
+        },
+        {title: "How it works", href: how_it_works_path},
+        {title: "About us", href: about_path},
+        {title: "Contact us", href: contact_path}
+    ]
+
+    logged_user_menu = [
+        {title: "My dashboard", href: dashboard_path},
+        {
+            title: "For clients",
+            subitems: [
+                {title: "Testing services", href: testing_services_path},
+                {title: "How it works", href: how_it_works_path},
+                {title: "Pricing", href: pricing_path},
+                {title: "FAQ", href: faq_path}
+            ]
+        },
+        {title: "About us", href: about_path},
+        {title: "Contact us", href: contact_path}
+    ]
+
+    if current_user
+      return logged_user_menu
+    else
+      return unlogged_user_menu
+    end
+  end
+
+  helper_method :menu_items
 end

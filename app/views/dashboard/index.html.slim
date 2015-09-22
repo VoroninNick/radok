@@ -1,0 +1,131 @@
+#dashboard-projects
+  - if @drafts.try(&:any?)
+    .drafts
+      .row
+        .columns.large-12.header
+          |Drafted projects
+        .items.columns.large-12
+          .row
+            - @drafts.each do |project|
+              .columns.large-4.item
+                .inner
+                  .project-status
+                    |Draft
+                  .my-row
+                    .my-column
+                      .content
+                        .type-of-test-logo
+                          = embedded_svg_from_assets(project.type_of_test_logo)
+                        .project-name
+                          = project.pi__project_name
+                        .steps-completed
+                          .progress
+                            - (project.steps || 0.times).each_with_index do |step, index|
+                              .step ng-repeat="step in project.state.configuration_steps track by $index" style="width: {{100 / project.state.configuration_steps.length}}%;"
+                                .inner
+                        .type-of-test-wrap
+                          .type-of-test-icon
+                            .svg-wrap
+                              = embedded_svg_from_assets(project.type_of_product_logo_path)
+                          .type-of-test
+                            = project.type_of_test
+                          .testing-type ng-show="project.testing_type && project.testing_type.length"
+                            = project.testing_type
+                          .clearfix
+                        .testers-and-hours
+                          .testers
+                            .testers-icon
+                              = embedded_svg_from_assets("user")
+                            .total-testers-count
+                              - if (count = project.total_testers_count) > 0
+                                = "#{count} testers"
+                              - else
+                                |Not specified
+                          .hours
+                            .hours-icon
+                              = embedded_svg_from_assets("clock")
+                            .hours-count
+                              = project.ps__hours
+                  .actions
+                    .delete-draft-button ng-click="deleteDraft(project)"
+                      |Delete draft
+                    rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
+
+
+
+
+
+
+
+
+  - if @in_progress_tests.try(&:any?)
+    .in-process-tests
+      .row
+        .columns.large-12.header
+          |In process
+        .items.columns.large-12
+          .row
+            - @in_progress_tests.each do |project|
+              .columns.large-4.item
+                a.inner href=dashboard_project_path(project)
+                  .project-status
+                    |Testing
+                  .my-row
+                    .my-column
+                      .content
+                        .type-of-test-logo ng-include="project.type_of_test_logo"
+                        .project-name
+                          = project.project_name
+                        = render "project_progress", percent: 55
+
+  - if @finished_projects.try(&:any?)
+    .finished-tests
+      .row
+        .columns.large-12.header
+          |Finished projects
+        .items
+          - @finished_projects_groups.each do |project_group|
+            .columns.large-6
+              - project_group.each do |project|
+                .item.collapsed collapsable=""
+                  .header expander=""
+                    .project-name
+                      = project.project_name
+                    .dropdown-arrow.collapsed
+                      = embedded_svg_from_assets("rf-icon-arrow-left")
+
+                    .project-status ng-class=(project.successful? ? 'success' : 'failure' )
+                      - if project.successful?
+                        .success-svg-wrap
+                          = embedded_svg_from_assets("rf-icon-ok")
+                      - else
+                        .fail-svg-wrap
+                          = embedded_svg_from_assets("close")
+                  .finished-project-short-info collapsable-content=""
+                    .row
+                    .columns.large-12
+                      .property-label
+                        |Type of test
+                      .property-value
+                        = project.type_of_test
+                    .columns.large-6
+                      .property-label
+                        |Type of product
+                      .property-value
+                        = project.type_of_product
+                    .columns.large-6
+                      .property-label
+                        |Price
+                      .property-value
+                        |$&nbsp;
+                        = project.price
+                    .columns.large-12
+                      .property-label
+                        |Number of testers
+                      .property-value
+                        = project.total_testers_count
+                    .columns.large-12
+                      .property-label
+                        |Hours per tester
+                      .property-value
+                        = project.hours_per_tester

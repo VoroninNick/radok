@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+require_relative "bin/bundler_extensions"
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -39,6 +40,11 @@ group :development, :test do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   #gem 'spring'
 end
@@ -69,7 +75,7 @@ gem 'devise'
 
 gem 'responders'
 
-gem 'devise_token_auth'#, '~> 0.1.31.beta9'
+#gem 'devise_token_auth'#, '~> 0.1.31.beta9'
 gem 'omniauth'
 
 gem 'omniauth-github'
@@ -83,3 +89,7 @@ gem 'global_config'
 gem 'geo_ip'
 
 gem "omniauth-gplus"
+
+gem 'quiet_assets'
+
+local_gem "attachable"

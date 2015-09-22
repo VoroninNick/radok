@@ -1,0 +1,20 @@
+wizard-step  wizard="wizard" step-number="3" step-id="4" active-step-id="wizard.active_step_id" child-scope-source="controller"
+  form name="wizard.testing_type_form" novalidate=""
+    .questions
+      question text="What methodology are you looking for?"
+        .inputs
+          /div ng-repeat="methodology in wizard.available_methodology_types track by $index"
+                    radio-input name="methodology" value="{{methodology.id}}" id="{{methodology.id}}"  label="{{methodology.type}}" ng-model="wizard.methodology_id" methodology-data="methodology"
+                    rf-input type="text" name="methodology_{{methodology.id}}_description" ng-model="methodology.description" placeholder="{{methodology.description_placeholder}}" id="methodology_{{methodology.id}}_description" ng-required="wizard.methodology_id == methodology.id " ng-show="wizard.methodology_id == methodology.id"
+          radio-input name="methodology" value="{{'exploratory'}}" id="testing_type_form__type_of_test_exploratory"  label="Exploratory" ng-model="wizard.data.tp__type_of_testing"
+          rf-input type="text" name="methodology_1_description" ng-model="wizard.data.tp__exploratory_instructions" label="Please provide testing instructions for the testers here..." id="methodology_1_description" ng-required="wizard.data.tp__type_of_testing == 'exploratory' " ng-show="wizard.data.tp__type_of_testing == 'exploratory'"
+
+          radio-input name="methodology" value="{{'test_case'}}" id="testing_type_form__type_of_test_test_case"  label="Test-case driven" ng-model="wizard.data.tp__type_of_testing"
+      /rf-input type="text" name="methodology_1_description" ng-model="wizard.data.tp__exploratory_instructions" placeholder="" id="methodology_1_description" ng-required="wizard.data.tp__type_of_testing == 'test_case' " ng-show="wizard.data.tp__type_of_testing == 'test_case'"
+
+      question text="What are the product's main components?"
+        p.light
+          |Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
+        /.selectize-tags-input
+                  /input type="text" id="input-tags" class="demo-default" value="awesome,neat"
+        tags-input ng-model="wizard.product_main_components"

@@ -22,7 +22,7 @@ window.$app.controller "AboutController", [
     ]
 
     $scope.clients = [
-      {url: "http://apple.com", image: "/assets/clients/apple.svg", name: "Apple"}
+      {url: "http://apple.com", image: "/assets/clients/ios.svg", name: "Apple"}
       {url: "http://microsoft.com", image: "/assets/clients/microsoft.svg", name: "Microsoft"}
       {url: "http://ea.com", image: "/assets/clients/ea.svg", name: "Electronic Arts: EA Games"}
       {url: "http://adobe.com", image: "/assets/clients/adobe.svg", name: "Adobe"}

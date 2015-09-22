@@ -119,7 +119,7 @@ $app.directive "rfInput", ()->
     watchFocus(element, ngModelCtrl)
 
     scope.error_message = (error_key)->
-      console.log "attrs", attrs
+      #console.log "attrs", attrs
       attrs[error_key+"ErrorMessage"] || error_key
 
 $app.directive "validateWith", ()->
@@ -214,7 +214,7 @@ $app.directive "checkboxList", ()->
       ngModelCtrl.$error
 
     scope.error_message = (error_key)->
-      console.log "attrs", attrs
+      #console.log "attrs", attrs
       attrs[error_key+"ErrorMessage"] || error_key
 
 

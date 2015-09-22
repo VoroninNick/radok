@@ -1,0 +1,9 @@
+= form_for @asset do |f|
+  - if @asset.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@asset.errors.count, "error")} prohibited this asset from being saved:"
+      ul
+        - @asset.errors.full_messages.each do |message|
+          li = message
+
+  .actions = f.submit

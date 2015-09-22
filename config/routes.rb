@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
+  get "faq", to: "faq_articles#index", as: :faq
+  get "faq/:id", to: "faq_articles#show", as: "faq_article"
+  get "dashboard", to: "dashboard#index"
+  get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
+  get "wizard", to: "wizard#new"
+  DynamicRouter.load
+  resources :attachments, controller: :assets
   get "geo", to: "application#geo"
-  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-                                        registrations: "users/registrations",
-                                        omniauth_callbacks: "users/omniauth_callbacks"
-                                    }
+  devise_for :users
+  #mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+  #                                      registrations: "users/registrations",
+  #                                      omniauth_callbacks: "users/omniauth_callbacks"
+  #                                  }
 
   #devise_for :users, controllers: {registrations: "users/registrations"}
   mount Ckeditor::Engine => '/ckeditor'
@@ -12,7 +20,7 @@ Rails.application.routes.draw do
   get "about/leaders", to: "about#leaders"
   post "contact_request", to: "contact#contact_request"
   post "faq_request", to: "faq_articles#request_question"
-  get "faq_articles", to: "faq_articles#articles"
+  get "faq_articles", to: "faq_articles#articles", as: :faq_index
 
   post "/delete_dashboard_project", to: "wizard#delete_dashboard_project"
   get "/dashboard_projects", to: "wizard#dashboard_projects"
@@ -21,14 +29,14 @@ Rails.application.routes.draw do
 
   scope "ng" do
     root to: "angular#index", as: :ng_root
-    get 'wizard', to: "angular#wizard"
+    #get 'wizard', to: "angular#wizard"
   end
 
   get "/svg_images", to: "home#svg_images"
 
 
   post "/save_project", to: "wizard#save_project"
-  get 'wizard', to: "wizard#index"
+
   get "ng_wizard", to: "wizard#ng_wizard"
 
   # The priority is based upon order of creation: first created -> highest priority.

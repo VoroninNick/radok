@@ -344,6 +344,22 @@ $banner-title-color: #e6e7e9
   .rn-carousel-control
     display: none
 
+
+#home-feedbacks
+  .owl-carousel
+    .owl-pagination
+      .owl-page
+        display: inline-block
+        &:before
+          content: "●"
+          width: 12px
+          height: 12px
+          font-size: 24px
+          margin: 0 15px
+        &.active
+          &:before
+            color: $fire-orange-color
+
 #home-bottom-container
   background: $white-color
   padding: 50px 0 75px 0

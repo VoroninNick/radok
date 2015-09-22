@@ -1,0 +1,65 @@
+footer#footer
+  .row
+    #footer-social-and-menu.columns.large-6.medium-6.right
+      .social-icons
+        .header
+          |Stay in touch with our social channels:
+        ul
+          li
+            a href=""
+              .svg-wrap
+                = embedded_svg_from_assets("rf-social-google-plus")
+          li
+            a href=""
+              .svg-wrap
+                = embedded_svg_from_assets("rf-social-facebook")
+          li
+            a href=""
+              .svg-wrap
+                = embedded_svg_from_assets("rf-social-linked-in")
+          li
+            a href=""
+              .svg-wrap
+                = embedded_svg_from_assets("rf-social-twitter")
+          li
+            a href=""
+              .svg-wrap
+                = embedded_svg_from_assets("rf-social-skype")
+
+      .menu
+        ul
+          li
+            a ui-sref="testing_services"
+              |For clients
+          li
+            a ui-sref="how_it_works"
+              |How it works
+          li
+            a ui-sref="about"
+              |About us
+          li
+            a ui-sref="contact"
+              |Contact us
+      .sublinks
+        ul
+          li
+            a style="text-decoration:none;cursor: default;"
+              |Terms of use
+          li
+            a style="text-decoration:none;cursor: default;"
+              |Site map
+          li
+            a style="text-decoration:none;cursor: default;"
+              |For testers
+    #footer-subscribe-and-copyright-and-developed-by.columns.large-6.medium-6
+      .subscribe-block
+        label.header for="footer-subscribe-input"
+          |Subscribe for our latest news and updates:
+        input#footer-subscribe-input type="text" placeholder="youremail@mail.com"
+        /rf-button#subscribe-button svg="/assets/rf-icon-email.svg"
+        = rf_button(svg: "rf-icon-email", id: "subscribe-button")
+      .copyright
+        = raw "&copy;&nbsp;2009-#{Date.today.year} RadokForce GmBH. All rights reserved"
+      .developed-by
+        .vs-logo
+          = embedded_svg_from_assets("vs-logo")

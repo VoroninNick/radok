@@ -183,7 +183,7 @@ $app.controller 'NavigationController', [
 
       });
     $scope.goToDashboard = ()->
-      $state.go("dashboard")
+      $state.go("dashboard.projects")
 
     $scope.mobile_menu_opened = false
     $scope.$watch("mobile_menu_opened", (newValue)->

@@ -68,7 +68,7 @@
                 = option_count("Latest version of Chrome", 0, option_count_ng_model)
                 = option_count("Latest version of Safari", 0, option_count_ng_model)
 
-              /= platform("IOS", asset_path("apple.svg")) do
+              /= platform("IOS", asset_path("ios.svg")) do
                 = option_count("iPhone 4", 0)
                 = option_count("iPhone 5s", 0)
                 = option_count("iPad 2", 0)
@@ -156,8 +156,17 @@
                       |or
                     /.button-upload
                     .columns.large-5.input-padding.button-wrap
-                      rf-button full-width="" class="rf-upload-button" title="Upload files..." svg="/assets/upload.svg"
+                      input#project_access_file_upload type="file" nv-file-select="" uploader="uploader" multiple=""
+                      /input#project_access_file_upload.hide type="file" multiple="multiple" name="project_access_file_upload" ng-model="wizard.project_access_file_upload" onchange="project_access__add_files()"
+                      /onchange="angular.element(this).scope().project_access__add_files(this)"
+
+
+                      /rf-button full-width="" class="rf-upload-button" title="Upload files..." svg="/assets/upload.svg" for="project_access_file_upload" ng-click="call_file_upload()"
                     .clearfix
+
+                    .attached-files
+                      .attached-file ng-repeat="f in uploader.queue"
+                        |{{f}}
 
               question text="Does the product require a username or password to be accessed?"
                 .inputs

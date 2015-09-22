@@ -1,0 +1,28 @@
+#faq-controller disable-click-on-active="" ng-controller="FaqController"
+  .page-banner-wrap
+    = render "page_banner"
+  #faq-content
+    #faq-menu-and-article
+      #faq-menu
+        #faq-menu-fixed
+          .header
+            |Top questions
+          .content
+            ul
+              - @faq_articles.each_with_index do |article, index|
+                li class=("active" if article[:id] == @article[:id])
+                  a href=faq_article_path(article[:id])
+                    = article[:name]
+          .footer
+            rf-button title="Add a question" subtitle="if you have one" svg="/assets/rf-icon-add-question.svg" class="add-question-button" ng-click="scrollToForm()"
+
+      #article ng-show="active_article"
+        .article-name
+          = @article[:name]
+        .article-content
+          = raw @article[:content]
+      /|{{active_article[1]}}
+      /.item ng-bind-html="item"
+      .clearfix
+
+    = render "static_form"

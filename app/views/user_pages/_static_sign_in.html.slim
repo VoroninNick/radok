@@ -1,0 +1,42 @@
+.popup.sign-in
+  .form-partial.sign-in
+    .header
+      .title
+        | Login
+    .content
+      form.form.login-form action=user_session_path method="post" novalidate="" show-preloader="" resource="user"
+        .form-content
+          .oauth-login
+            .header
+              | Login using social networks
+            = render "user_pages/social_icons"
+            .or
+              | or
+
+          .form-errors.hide
+            .columns.large-12
+              p.semibold.unconfirmed
+                |Please check your email and confirm registration
+          .caps-lock-warning.hide
+            | Warning: Caps-lock is on
+
+          .inputs
+            .row
+              .columns.large-12
+                = rf_input(label: "Username or email", name: "user[login]")
+                /! ngRepeat: (error_key, error_value) in error()
+                = rf_input(label: "password", name: "user[password]", type: "password")
+
+            .forgot-password-link-wrap
+              a href="" ng-click="openForgotPasswordPopup()"  Forgot your password?
+          .actions
+            .columns.large-5
+              .sign-up-invitation
+                | No account?&nbsp;
+                a href="/sign-up"
+                  |Sign up
+            .columns.large-7
+              = rf_button title: "LOGIN", raised: true, class: "login-button"
+
+        .preloader.hide
+          = image_tag("preloader.gif")

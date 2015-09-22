@@ -1,0 +1,63 @@
+wizard-step.ng-isolate-scope active-step-id="wizard.active_step_id" child-scope-source="controller" step-id="4" step-number="3" wizard="wizard"
+  .wizard-step.active
+    .wizard-step-edit-tooltip.ng-hide ng-click="wizard.go_to_step(step_id)" ng-show=("!active &amp;&amp; step_number &amp;&amp; proceeded &amp;&amp; wizard.ready_go_to_step")
+      /! ngInclude: '/assets/pen.svg'
+      .svg-container.ng-scope ng-include="'/assets/pen.svg'"
+        /! ?xml version="1.0" ?
+        svg height="16px" version="1.1" viewbox=("0 0 16 16") width="16px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"
+          title
+          defs
+          g fill="none" fill-rule="evenodd" id=("Icons with numbers") stroke="none" stroke-width="1"
+            g#Group fill="#000000" transform="translate(-384.000000, -192.000000)"
+              path d="M385,203.950806 L389,208 L385,208 Z M392,196 L396,200 L389.978638,207.044189 L386,203 Z M394.084619,193.781497 C394.709458,193.156658 395.90929,193.343426 396.764518,194.198654 L397.538782,194.972918 C398.394011,195.828147 398.580778,197.027979 397.95594,197.652817 L396.720394,198.888363 L392.849074,195.017043 Z M394.084619,193.781497" id=("Triangle 313")
+    /! ngIf: step_number
+    .wizard-step-line.ng-scope ng-if="step_number"
+    /! end ngIf: step_number
+    .wizard-step-counter data-number="3" ng-click="wizard.go_to_step(step_id)" ng-show="step_number"
+    .wizard-step-content
+      /! ngIf: !(active)
+      /! ngIf: step_title
+      .wizard-step-content-content ng-transclude=""
+        form name="wizard.testing_type_form" novalidate=""
+          .questions
+            question.ng-isolate-scope text=("What methodology are you looking for?")
+              .question
+                .text.ng-binding ng-class=("centered ? 'centered' : ''")
+                  | What methodology are you looking for?
+                /! ngIf: required
+                div ng-transclude=""
+                  .inputs.ng-scope
+                    #testing_type_form__type_of_test_exploratory.input.radio.ng-pristine.ng-untouched.ng-valid.ng-isolate-scope label="Exploratory" name="methodology" ng-model="wizard.data.tp__type_of_testing" value="exploratory"
+                      input#methodology__testing_type_form__type_of_test_exploratory.ng-untouched.ng-valid.ng-dirty.ng-valid-parse name="methodology" ng-model="model" type="radio" value="exploratory" /
+                      label for="methodology__testing_type_form__type_of_test_exploratory"
+                      label.ng-binding for="methodology__testing_type_form__type_of_test_exploratory"  Exploratory
+                      /! ngIf: description
+                      .input-related-content
+                        .yield
+                    rf-input#methodology_1_description label=("Please provide testing instructions for the testers here...") name="methodology_1_description" ng-model="wizard.data.tp__exploratory_instructions" ng-required=("wizard.data.tp__type_of_testing == 'exploratory' ") required="required" type="text"
+                      .rf-input.string
+                        label Please provide testing instructions for the testers here...
+                        .input-border-wrap
+                        /textarea.ng-pristine.ng-valid.ng-binding.ng-touched ng-change="onChange()" ng-model="value"  &lt;div class='error-messages' ng-show='hasErrors()'&gt;&lt;div class='error-message' ng-repeat='(error_key, error_value) in error()'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+                    #testing_type_form__type_of_test_test_case.input.radio.ng-pristine.ng-untouched.ng-valid.ng-isolate-scope label=("Test-case driven") name="methodology" ng-model="wizard.data.tp__type_of_testing" value="test_case"
+                      input#methodology__testing_type_form__type_of_test_test_case.ng-untouched.ng-valid.ng-dirty name="methodology" ng-model="model" type="radio" value="test_case" /
+                      label for="methodology__testing_type_form__type_of_test_test_case"
+                      label.ng-binding for="methodology__testing_type_form__type_of_test_test_case"  Test-case driven
+                      /! ngIf: description
+                      .input-related-content
+                        .yield
+            question.ng-isolate-scope text=("What are the product's main components?")
+              .question
+                .text.ng-binding ng-class=("centered ? 'centered' : ''")
+                  | What are the product's main components?
+                /! ngIf: required
+                div ng-transclude=""
+                  p.light.ng-scope
+                    | Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
+                  tags-input.ng-pristine.ng-untouched.ng-valid.ng-scope.ng-isolate-scope.ng-valid-max-tags.ng-valid-min-tags.ng-valid-leftover-text ng-model="wizard.product_main_components"
+                    .host ng-click="eventHandlers.host.click()" tabindex="-1" ti-transclude-append=""
+                      .tags ng-class=("{focused: hasFocus}")
+                        ul.tag-list
+                        /! ngRepeat: tag in tagList.items track by track(tag)
+                        input
+                        span.input style=("visibility: hidden; width: auto; white-space: pre; display: none;")  Add a tag

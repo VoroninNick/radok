@@ -37,6 +37,14 @@ window.$app.config [
         url: "/dashboard"
         templateUrl: "/assets/dashboard.html"
         controller: "DashboardController"
+      .state "dashboard.projects",
+        url: "/projects"
+        controller: "DashboardController"
+        templateUrl: "/assets/dashboard_projects.html"
+      .state "dashboard.project_details",
+        url: "/projects/:project_id"
+        controller: "ProjectDetailsController"
+        templateUrl: "/assets/project_details.html"
       .state "profile",
         url: "/profile"
         templateUrl: "/assets/profile.html"
@@ -52,6 +60,7 @@ window.$app.config [
       .state "terms_of_use",
         url: "/terms-of-use"
         templateUrl: "/assets/terms_of_use.html"
+
 
     $urlRouterProvider.otherwise '/home'
 ]

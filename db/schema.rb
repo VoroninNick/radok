@@ -11,7 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617165817) do
+ActiveRecord::Schema.define(version: 20150917170411) do
+
+  create_table "assets", force: :cascade do |t|
+    t.integer  "assetable_id"
+    t.string   "assetable_type"
+    t.string   "assetable_field_name"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+    t.string   "data_alt"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "banners", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "background_image_file_name"
+    t.string   "background_image_content_type"
+    t.integer  "background_image_file_size"
+    t.datetime "background_image_updated_at"
+    t.string   "button_label"
+    t.string   "button_url"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -66,6 +92,25 @@ ActiveRecord::Schema.define(version: 20150617165817) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "meta_data", force: :cascade do |t|
+    t.string   "page_type"
+    t.integer  "page_id"
+    t.string   "head_title"
+    t.text     "keywords"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.text     "content"
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "simple_wizard_tests", force: :cascade do |t|
     t.string   "tot__type_of_test"
     t.string   "top__type_of_product"
@@ -96,8 +141,6 @@ ActiveRecord::Schema.define(version: 20150617165817) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider",                             null: false
-    t.string   "uid",                     default: "", null: false
     t.string   "encrypted_password",      default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -124,20 +167,14 @@ ActiveRecord::Schema.define(version: 20150617165817) do
     t.string   "billing_address"
     t.string   "billing_card_number"
     t.string   "billing_cvv_number"
-    t.text     "tokens"
+    t.string   "full_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "full_name"
-    t.string   "phone"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
 
   create_table "wizard_platforms", force: :cascade do |t|
     t.string   "name"
@@ -145,6 +182,16 @@ ActiveRecord::Schema.define(version: 20150617165817) do
     t.string   "ancestry"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "wizard_product_types", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "wizard_tests", force: :cascade do |t|

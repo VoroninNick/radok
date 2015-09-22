@@ -8,6 +8,11 @@ class WizardController < ApplicationController
     render template: "layouts/ng", layout: false
   end
 
+  def new
+    @head_title = "Wizard"
+    @project = Wizard::Test.new
+  end
+
   def ng_wizard
     @platforms =  [
         {
@@ -21,7 +26,7 @@ class WizardController < ApplicationController
         ]
         },
         {
-            name: "IOS", image_path: "apple.svg", sub_items: [
+            name: "IOS", image_path: "ios.svg", sub_items: [
               { name: "iPhone 4", count: 0 },
               { name: "iPhone 5s", count: 0 },
               { name: "iPad 2", count: 0 },

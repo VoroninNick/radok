@@ -33,7 +33,7 @@
     padding: 0 30px
   > .content
     background: $white-color
-    padding: 0 30px
+    padding: 0 15px
     color: $light-black-color
     +font-14-light
 
@@ -75,6 +75,7 @@
     color: $gray-text-color
     line-height: 16px
   .additional-information-slider
+    margin-top: 30px
     text-align: center
     &:not(.opened)
       color: $sky-blue-color
@@ -82,24 +83,8 @@
 
 
 
-  &.sign-in, &.forgot-password, &.sign-up
-    .form
-      .actions
-        > *:first-child
-          width: 166px
-          color: $gray-text-color
-          display: inline-block
-          text-align: center
-          vertical-align: middle
 
-        > *:nth-child(2)
-          width: 310px
-          display: inline-block
-          button
-            width: 100%
-            height: 70px
-            text-transform: uppercase
-            +font-28-bold
+
   &.forgot-password
     .text
       padding: 20px 0
@@ -115,7 +100,25 @@
 
 
 
+
 .form
+  .actions
+    > *:first-child
+      //width: 166px
+      color: $gray-text-color
+      display: inline-block
+      text-align: center
+      vertical-align: middle
+
+    > *:nth-child(2)
+      //width: 310px
+      display: inline-block
+      button
+        width: 100%
+        height: 70px
+        text-transform: uppercase
+        +font-28-bold
+
   .input
     padding-bottom: 16px
     &:last-child
@@ -175,9 +178,6 @@
   .forgot-password-link-wrap
     text-align: right
   .sign-up-invitation
-
-  .login-button
-    text-align: center
 
   .actions
     line-height: 70px

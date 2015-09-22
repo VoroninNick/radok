@@ -1,0 +1,96 @@
+#wizard-full-summary ng-show="wizard.configure_mode"
+  #wizard-full-summary-inner
+    #wizard-full-summary-header
+      .wizard-full-summary-icon
+        = embedded_svg_from_assets("finish_flag")
+      .text
+        |Summary
+    #wizard-full-summary-content.row
+
+      .columns.large-6
+        .property
+          .property-label
+            |Project name
+          .property-value
+            = project.project_name
+
+        .property
+          .property-label
+            |Version
+          .property-value
+            = project.version_number
+
+      .columns.large-6
+        .property
+          .property-label
+            |Type of test
+          .property-value
+            = project.type_of_test
+
+        .property
+          .property-label
+            |Type of product
+          .property-value
+            = project.product_type
+      .columns.large-12.large-indent
+        .row
+          .columns.large-12
+            .property-label
+              |Your product will be tested on the following platforms:
+          - project.platforms.each do |platform_key, platform|
+            .columns.large-4.platforms
+              - if platform[:testers_count] > 0
+                .platform
+                  .platform-svg
+                    = embedded_svg_from_assets(platform[:logo_path])
+                  .platform-name
+                    = platform[:name]
+                  .platform-subitems
+                    - platform[:platform_subitems].each do |subitem|
+                      - if subitem[:count] > 0
+                        .platform-subitem
+                          = subitem[:name]
+
+      .columns.large-12.total-testers-count.large-indent
+        .property-label
+          |Your product will be tested by:
+        .property-value
+          .svg-wrap
+            = embedded_svg_from_assets("user")
+          .text
+            = project.total_testers_count
+            |&nbsp; testers
+          br
+          .svg-wrap
+            = embedded_svg_from_assets("clock")
+          .text
+            = project.ps__hours
+            |&nbsp; hours each
+
+
+      .columns.large-12.large-indent
+        hr
+
+      .columns.large-6
+        .property-label
+          |Your product is in:
+        .property-value
+          = project.project_languages.join(", ")
+
+      .columns.large-6
+        .property-label
+          |Bugs will be reported in:
+        .property-value
+          = project.report_languages.join(", ")
+      .columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
+        .property-label
+          |Here is project url:
+        .property-value
+          a href=project.project_access__url
+            = project.project_access__url
+      .columns.large-12.large-indent ng-show="wizard.comment && wizard.comment.length"
+        .property-label
+          |You've provided the following instructions:
+        .property-input-value
+          textarea
+            = project.instructions

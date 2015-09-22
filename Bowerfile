@@ -31,7 +31,14 @@ asset "angular-inview"
 asset "angular-loading-bar"
 asset "angular-validation-match"
 asset "ng-jcrop"
-asset "ng-file-upload"
+#asset "ng-file-upload"
+asset "angular-file-upload"
 asset "angular.validators"
 asset "checklist-model"
 asset "ng-repeat-owl-carousel"
+
+
+# without angular
+asset "jquery-animateNumber"
+
+asset "jquery.simplemodal"

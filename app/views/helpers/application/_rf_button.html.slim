@@ -1,0 +1,14 @@
+button id=(id if id.present?) angular-ripple=""  class=button_class
+  .rf-button-content-wrap
+    .rf-button-content
+      - if svg
+        .svg-wrap class="svg-size-#{svg_size}"
+          = embedded_svg_from_assets(svg)
+      .button-text-wrap
+        .inner
+          - if title
+            .button-title
+              = title
+          - if subtitle
+            .button-subtitle
+              = subtitle
