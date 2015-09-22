@@ -58,7 +58,7 @@ $("body").on "submit", "form", (event)->
   $form = $(this)
 
   $form.validateForm()
-  valid_form = $form.hasClass("valid")
+  valid_form = $form.find(".rf-input.invalid").length > 0
   if valid_form
     $form_errors = $(".form-errors")
     form_data = $form.serializeArray()
@@ -210,8 +210,7 @@ $.fn.validateInput = ->
     $rf_input.find(".error.required").removeClass("hide")
 
 
-  if !valid
-    $form.addClass("invalid").removeClass("valid")
+
 
   validation_options_str = $rf_input.attr("validation") || ""
   validation_options = validation_options_str.split(" ")
@@ -228,6 +227,11 @@ $.fn.validateInput = ->
     $rf_input.addClass("invalid").removeClass("valid")
   else
     $rf_input.removeClass("invalid").addClass("valid")
+
+  if !valid
+    $form.addClass("invalid").removeClass("valid")
+
+
 
 $.fn.validateForm = ->
   $form = $(this)
