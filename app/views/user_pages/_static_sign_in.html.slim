@@ -25,12 +25,12 @@
           .inputs
             .row
               .columns.large-12
-                = rf_input(label: "Username or email", name: "user[login]", required: true)
+                = rf_input(label: "Username or email", name: "user[login]", required: true, required_message: "Please type username or email")
                 /! ngRepeat: (error_key, error_value) in error()
-                = rf_input(label: "password", name: "user[password]", type: "password", required: true)
+                = rf_input(label: "password", name: "user[password]", type: "password", required: true, required_message: "Please type password")
 
-              .forgot-password-link-wrap
-                a href="" ng-click="openForgotPasswordPopup()"  Forgot your password?
+              .columns.large-12.forgot-password-link-wrap
+                a href="" open-popup="user_pages__forgot_password"  Forgot your password?
           .actions
             .columns.large-5
               .sign-up-invitation

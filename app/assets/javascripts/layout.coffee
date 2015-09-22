@@ -42,10 +42,15 @@ $("body").on "click", ".ngdialog-overlay, .ngdialog-close", ->
   $ng_dialog = $(this).closest(".ngdialog")
   $ng_dialog.addClass("hide")
 
-$("body").on "click", "[open-popup]", ->
+$("body").on "click", "[open-popup]", (event)->
+  event.preventDefault()
   $this = $(this)
+  $current_popup = $(this).closest(".ngdialog")
+  $current_popup.addClass("hide")
+  $current_popup.find(".ngdialog-overlay").addClass("hide")
   popup_name = $this.attr("open-popup")
   openPopup(popup_name)
+
 
 
 
@@ -108,7 +113,8 @@ $("body").on "submit", "form", (event)->
       error: (xhr)->
         response_json = xhr.responseJSON
         resource_data = response_json[form_resource_name]
-        errors_by_field = resource_data.errors
+        errors_by_field = resource_data.errors if resource_data
+        errors_by_field ?= response_json.errors
 
         if response_json.error == true
           $form_errors.removeClass("hide")
@@ -119,23 +125,33 @@ $("body").on "submit", "form", (event)->
         else
           $form_errors.addClass("hide")
 
-        form_errors = resource_data.form_errors
+        form_errors = []
+        form_errors = resource_data.form_errors if resource_data
         if !isEmpty(form_errors)
           $form_errors.removeClass("hide")
+          for error_key in form_errors
+            $(".form-errors .#{error_key}").removeClass("hide")
         else
           $form_errors.addClass("hide")
-        for error_key in form_errors
-          $(".form-errors .#{error_key}").removeClass("hide")
+
+
 
         console.log "errors", errors_by_field
+
         $form.find(".inputs .error").addClass("hide")
+
         if !isEmpty(errors_by_field)
           for field_name, errors of errors_by_field
             console.log "error field_name", field_name
             console.log "error errors", errors
             $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
+            console.log "form_resource_name: ", form_resource_name
+            console.log "field_name: ", field_name
             $field.addClass("invalid")
             error_key = errors
+            error_key = errors[0] if Array.isArray(errors)
+            console.log "error_key", error_key
+            window.$FIELD = $field
             $error = $field.find(".error.#{error_key}")
             $error.removeClass("hide")
 
@@ -209,6 +225,7 @@ $.fn.validateInput = ->
   $input = $rf_input.find("input")
   value = $input.val()
   valid = true
+  $field_label = $rf_input.find(".field-label")
 
   $form = $rf_input.closest("form")
   if required
@@ -234,8 +251,11 @@ $.fn.validateInput = ->
 
   if !valid
     $rf_input.addClass("invalid").removeClass("valid")
+    $field_label.removeClass("hide")
+
   else
     $rf_input.removeClass("invalid").addClass("valid")
+    $field_label.addClass("hide")
 
   if !valid
     $form.addClass("invalid").removeClass("valid")
@@ -255,9 +275,13 @@ validateEmail = (email) ->
 
 
 $("body").on "change blur", "form .rf-input input", (event)->
+
   console.log "event type: ", event.type
   console.log "value: ", $(this).val()
   $input = $(this)
   $rf_input = $input.closest(".rf-input")
+  if event.type == 'change'
+    $rf_input.find(".error.taken").addClass("hide")
+
   $rf_input.validateInput()
 

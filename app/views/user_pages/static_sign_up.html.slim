@@ -4,7 +4,7 @@
       .title
         | Sign up
     .content
-      form.form.sign-up-form action="/sign-up" novalidate="" method="post" show-preloader="" show-success=""
+      form.form.sign-up-form action="/sign-up" novalidate="" method="post" show-preloader="" show-success="" resource="user"
         .form-content
           .oauth-sign-up
             .header
@@ -18,8 +18,8 @@
           .inputs
             .row
               .columns.large-12
-                = rf_input(label: "Username (required)", required: true, name: "user[username]", required_message: "Please type username" )
-                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "")
+                = rf_input(label: "Username (required)", required: true, name: "user[username]", required_message: "Please type username", taken_message: "Username already in use" )
+                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "Email already in use")
                 = rf_input(label: "Password (required)", type: "password", required: true, name: "user[password]", required_message: "Please type password")
 
 

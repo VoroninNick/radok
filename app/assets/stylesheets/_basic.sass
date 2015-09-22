@@ -585,13 +585,14 @@ a
 
 #body
   .rf-input
+    .error
+      font-weight: 500
+      //color: $yellow-orange-color
+      color: $error-color
     &.invalid
       .field-label
         display: none
-      .error
-        font-weight: 500
-        //color: $yellow-orange-color
-        color: $error-color
+
       input
         &[type=text], &[type=password]
           //border: 1px solid $yellow-orange-color
