@@ -43,6 +43,8 @@ Rails.application.routes.draw do
 
   get "ng_wizard", to: "wizard#ng_wizard"
 
+  match "*not_found_url", to: "errors#not_found", via: [:get, :post, :put, :patch, :update, :delete, :create]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

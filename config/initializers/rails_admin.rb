@@ -1,3 +1,21 @@
+require_relative "require_libs"
+
+def pages_models
+  Dir[Rails.root.join("app/models/pages/*")].map{|p| filename = File.basename(p, ".rb"); "Pages::" + filename.camelize }
+end
+
+def pages_navigation_label
+  navigation_label do
+    I18n.t("admin.navigation_labels.pages")
+  end
+end
+
+def page_fields
+  field :content
+  field :url
+  field :seo_tags
+end
+
 RailsAdmin.config do |config|
 
   ### Popular gems integration
@@ -35,6 +53,95 @@ RailsAdmin.config do |config|
   end
 
   config.included_models = [Wizard::ProductType, Wizard::Platform]
+
+  ( [MetaData, Page] + pages_models) .each do |model|
+    config.included_models += [model]
+
+    if !model.instance_of?(Class)
+      Dir[Rails.root.join("app/models/#{model.underscore}")].each do |file_name|
+        require file_name
+      end
+
+      model = model.constantize rescue nil
+    end
+
+    if model.respond_to?(:translates?) && model.translates?
+      config.included_models += [model.translation_class]
+    end
+  end
+
+  config.model MetaData do
+    visible false
+
+    nested do
+      field :head_title
+      field :keywords
+      field :description
+    end
+  end
+
+  config.model Page do
+    visible false
+
+    edit do
+      page_fields
+    end
+  end
+
+  config.model Pages::About do
+    pages_navigation_label
+
+    edit do
+      page_fields
+    end
+  end
+
+  config.model Pages::Contact do
+    pages_navigation_label
+
+    edit do
+      page_fields
+    end
+  end
+
+  config.model Pages::Pricing do
+    pages_navigation_label
+
+    edit do
+      page_fields
+    end
+  end
+
+  config.model Pages::TestingServices do
+    pages_navigation_label
+
+    edit do
+      page_fields
+    end
+  end
+
+  config.model Pages::HowItWorks do
+    pages_navigation_label
+
+    edit do
+      page_fields
+    end
+  end
+
+  config.model Pages::TestInfo do
+    visible false
+  end
+
+  config.model Pages::Dashboard do
+    visible false
+  end
+
+  config.model Pages::Wizard do
+    visible false
+  end
+
+
+
 
    config.model FaqArticle do
      edit do

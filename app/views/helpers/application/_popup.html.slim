@@ -1,4 +1,4 @@
-div.hide id=options[:id] class="ngdialog ngdialog-theme-default ngdialog-theme-rf-light-gray ng-scope" role="alertdialog"
+div id=options[:id] class="#{'hide' if !options[:visible]} ngdialog ngdialog-theme-default ngdialog-theme-rf-light-gray ng-scope" role="alertdialog"
   div class="ngdialog-overlay">
   div class="ngdialog-content" role="document"
     = render partial, options

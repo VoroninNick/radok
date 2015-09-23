@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      pages/about: "About"
+      pages/contact: "Contact"
+      pages/pricing: "Pricing"
+      pages/testing_services: "Testing services"
+      pages/how_it_works: "How it works"

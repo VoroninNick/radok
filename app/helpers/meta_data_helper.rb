@@ -1,6 +1,7 @@
 module MetaDataHelper
   def head_title
     title = @head_title
+
     title = @page_metadata.try do |m|
       if m.is_a?(Hash)
         break m[:head_title]
@@ -8,7 +9,6 @@ module MetaDataHelper
         break m.head_title
       end
     end if title.blank?
-
 
 
     title = (@page || @resource).try{|p| p.seo_tags.try(&:title) if p.respond_to?(:seo_tags) } if title.blank?

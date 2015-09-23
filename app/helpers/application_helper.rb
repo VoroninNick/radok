@@ -137,6 +137,7 @@ module ApplicationHelper
 
   def popup name, **options
     options[:id] ||= "#{name.gsub(/\//, '__').underscore}_popup"
+    options[:visible] ||= false
     render "helpers/application/popup", partial: name, options: options
   end
 

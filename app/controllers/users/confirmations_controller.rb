@@ -27,7 +27,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     if resource.errors.empty?
       sign_in(resource_name, resource)
       set_flash_message(:notice, :confirmed) if is_flashing_format?
-      respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource) }
+      respond_with_navigational(resource){ redirect_to(after_confirmation_path_for(resource_name, resource), flash: {confirmation_congratulations: true }) }
 
 
     else
@@ -43,12 +43,12 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # The path used after confirmation.
-  def after_confirmation_path_for(resource_name, resource)
+  def after_confirmation_path_for(resource_name, resource, params = {})
     #super(resource_name, resource)
     if signed_in?(resource_name)
       signed_in_root_path(resource)
     else
-      root_path
+      root_path()
     end
   end
 end

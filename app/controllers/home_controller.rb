@@ -74,6 +74,7 @@ class HomeController < ApplicationController
   end
 
   def about
+
     @template = "/assets/about.html"
 
     @title = "About us page"

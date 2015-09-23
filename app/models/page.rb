@@ -14,4 +14,9 @@ class Page < ActiveRecord::Base
   def self.disabled
     false
   end
+
+  # after_save :reload_routes
+  # def reload_routes
+  #   if
+  #end
 end

@@ -46,8 +46,10 @@
         .preloader.hide
           = image_tag("preloader.gif")
         .success-handler.hide
-          p.h4
-            |You have successfully created account. Please check email for confirmation instructions.
+          p.h4.text-center
+            |You have successfully created account.
+          p
+            |Please check email for confirmation instructions.
 
     /! end ngIf: title()
     /! ngIf: subtitle()

@@ -29,8 +29,12 @@ class PagesController < ApplicationController
 
   def set_page_metadata
     page_class = params[:page_class_name].try(&:constantize)
-    @page_metadata = page_class.try(&:first)
+    @page_metadata = page_class.try(&:first).try(&:seo_tags)
+
     @page_metadata ||= { head_title: page_class.try(&:default_head_title) }
+
+    #render inline: @page_metadata.inspect
+
 
   end
 end

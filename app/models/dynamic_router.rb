@@ -13,7 +13,9 @@ class DynamicRouter
       page_route_name = page_class_name.split("::").last.underscore
       page_controller = "pages"
       page_controller_action = page_route_name
-      pages[page_route_name.to_sym] ||= { url: page_class.default_url, route_name: page_route_name, type: page_class_name, controller: page_controller, action: page_controller_action }
+      page = pages[page_route_name.to_sym] ||= { route_name: page_route_name, type: page_class_name, controller: page_controller, action: page_controller_action }
+
+      page[:url] = page_class.default_url if page[:url].blank?
     end
 
     PagesController.actions.each do |action|
