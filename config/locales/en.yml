@@ -21,3 +21,7 @@
 
 en:
   hello: "Hello world"
+  form-errors:
+    unconfirmed: Please check your email and confirm registration
+    invalid_password_or_login: Invalid username/email or password
+    invalid_username_or_email: Invalid username or email. <a href='/sign-up'>Sign up</a>

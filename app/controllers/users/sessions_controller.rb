@@ -8,16 +8,29 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    begin
-      self.resource = User.find_for_database_authentication(params[:user])
-    rescue StandardError
+
+    self.resource = User.find_for_database_authentication(params[:user])
+
+
+    if resource
+      unless resource.valid_password?(params[:user][:password])
+        return render json: { user: {form_errors: ["invalid_password_or_login"] } }, status: 401
+      end
+
+      unless resource.confirmed?
+        return render json: { user: { errors: { login: :unconfirmed } } }, status: 401
+      end
+
+      sign_in(resource_name, resource)
+
+    else
       return render json: { user: {form_errors: ["invalid_password_or_login"] } }, status: 401
     end
     #return render inline:
-    return render json: { user: { errors: { login: :unconfirmed } } }, status: 401 unless resource.confirmed?
+
     set_flash_message(:notice, :signed_in) if is_flashing_format?
 
-    sign_in(resource_name, resource)
+
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
   end

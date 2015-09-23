@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post "update_subscription", to: "user_pages#update_subscription"
+  get "/profile", to: "user_pages#profile"
   post "sign-up", to: "user_pages#registrations__create"
   get "/sign-up", to: "user_pages#registrations__new"
   get "faq", to: "faq_articles#index", as: :faq
@@ -9,7 +11,7 @@ Rails.application.routes.draw do
   DynamicRouter.load
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
-  devise_for :users, controllers: { confirmations: "users/confirmations", sessions: "users/sessions" }
+  devise_for :users, controllers: { confirmations: "users/confirmations", sessions: "users/sessions", passwords: "users/passwords" }
   #mount_devise_token_auth_for 'User', at: 'auth', controllers: {
   #                                      registrations: "users/registrations",
   #                                      omniauth_callbacks: "users/omniauth_callbacks"

@@ -48,6 +48,9 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration
       t.string :billing_card_number
       t.string :billing_cvv_number
       t.string :full_name
+      t.boolean :subscribed
+
+      t.has_attached_file :avatar
 
 
       ## Tokens

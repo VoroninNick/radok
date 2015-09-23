@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation
 
   attr_accessible :confirm_success_url, :config_name
+
+  has_attached_file :avatar, styles: { profile_image: "120x120#", header_image: "40x40#" }
+  attr_accessible :avatar, :delete_avatar
   
   
   # User info
@@ -18,7 +21,7 @@ class User < ActiveRecord::Base
 
   #attr_accessor :login
 
-  validates :username, :email, :password, presence: true
+  validates :username, :email, presence: true
   validates :email, :username, uniqueness: true
 
   def login
@@ -49,7 +52,7 @@ class User < ActiveRecord::Base
     user = nil
 
     user = User.where("username = ? or email = ?", local_login, local_login).first #(username: local_login).or(email: local_login)
-    raise StandardError, "invalid_password" unless user.valid_password?(local_password)
+    #raise StandardError, "invalid_password" unless user.valid_password?(local_password)
     user
   end
 
@@ -57,6 +60,26 @@ class User < ActiveRecord::Base
   #def valid_password?
 
   #end
+
+
+  def subscribe!
+    subscribe
+    save!
+  end
+
+  def unsubscribe!
+    unsubscribe
+    save!
+  end
+
+  def subscribe
+    self.subscribed = true
+  end
+
+  def unsubscribe
+    self.subscribed = false
+  end
+
 
 
 end

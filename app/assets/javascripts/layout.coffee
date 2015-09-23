@@ -35,23 +35,31 @@ $("[disable-click-on-active]").on "click", ".active", (event)->
   $this = $(this)
   event.preventDefault()
 
-$("#header-menu").on "click", "[id=header-user].unlogged", ->
-  openPopup("user_pages__static_sign_in")
+#$("#header-menu").on "click", "[id=header-user].unlogged", ->
+#  openPopup("user_pages__static_sign_in")
 
 $("body").on "click", ".ngdialog-overlay, .ngdialog-close", ->
   $ng_dialog = $(this).closest(".ngdialog")
   $ng_dialog.addClass("hide")
 
 $("body").on "click", "[open-popup]", (event)->
-  event.preventDefault()
   $this = $(this)
-  $current_popup = $(this).closest(".ngdialog")
-  $current_popup.addClass("hide")
-  $current_popup.find(".ngdialog-overlay").addClass("hide")
-  popup_name = $this.attr("open-popup")
-  openPopup(popup_name)
+
+  open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
+  condition = true
+  if open_popup_from_popup_only
+    condition = $this.closest(".ngdialog").length > 0
+
+  if condition
+    event.preventDefault()
 
 
+
+    $current_popup = $(this).closest(".ngdialog")
+    $current_popup.addClass("hide")
+    popup_name = $this.attr("open-popup")
+
+    openPopup(popup_name)
 
 
 $.fn.valid = ->
@@ -65,10 +73,10 @@ $("body").on "submit", "form", (event)->
   $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
   if valid_form
-    $form_errors = $(".form-errors")
+    $form_errors = $form.find(".form-errors")
     form_data = $form.serializeArray()
     url = $form.attr("action")
-    method = $form.attr("method") || 'GET'
+    method = $form.attr("ajax-method") || $form.attr("method") || 'GET'
     $form_content = $form.find(".form-content")
     show_preloader = $form.attr("show-preloader") != undefined
     hide = true
@@ -92,7 +100,7 @@ $("body").on "submit", "form", (event)->
       url: url
       dataType: "json"
       type: method
-      success: ->
+      success: (data)->
         #alert("success")
         show_success = $form.attr("show-success") != undefined
         close_on_success = $form.attr("close-on-success")
@@ -101,6 +109,7 @@ $("body").on "submit", "form", (event)->
         if show_success
           $success = $form.parent().find(".success-handler")
           $success.removeClass("hide")
+          $form.trigger("show_success", data)
 
 
         if close_on_success && !reload_on_success
@@ -127,10 +136,14 @@ $("body").on "submit", "form", (event)->
 
         form_errors = []
         form_errors = resource_data.form_errors if resource_data
+
+        $form_errors.find(".form-error").addClass("hide")
         if !isEmpty(form_errors)
           $form_errors.removeClass("hide")
+          console.log "error: form_errors: ", form_errors
           for error_key in form_errors
-            $(".form-errors .#{error_key}").removeClass("hide")
+            console.log "error: form_errors: for: ", error_key
+            $form_errors.find(".#{error_key}").removeClass("hide")
         else
           $form_errors.addClass("hide")
 
@@ -167,6 +180,11 @@ $("body").on "submit", "form", (event)->
         console.log "args: ", arguments
     )
 
+$("body").on "show_success", "form.forgot-password-form", (event, data)->
+  $form = $(this)
+  $email_placeholder = $form.find(".success-handler .email-placeholder")
+  user = data.user
+  $email_placeholder.text(user.email)
 #$("body").on "focus keypress", "input[type=password]", (event)->
 #  console.log "event: ", event
 
@@ -285,3 +303,57 @@ $("body").on "change blur", "form .rf-input input", (event)->
 
   $rf_input.validateInput()
 
+
+
+$("body").on "click", ".tab-labels > :not(.active)", ->
+  $tab_label = $(this)
+  $tab_labels = $tab_label.closest(".tab-labels")
+  tab_index = $tab_label.index()
+  $active_tab_label = $tab_labels.children().filter(".active")
+  $active_tab_label.removeClass("active")
+  active_tab_index = $active_tab_label.index()
+  $tabs = $tab_labels.closest(".tabs")
+  $tab_contents = $tabs.find(".tab-contents")
+  $active_tab_content = $tab_contents.children().filter(".active")
+  $active_tab_content.removeClass("active")
+  $tab_content = $tab_contents.children().eq(tab_index)
+  $tab_label.addClass("active")
+  $tab_content.addClass("active")
+  #setContainerSize()
+
+
+setContainerSize = ()->
+  $profile_tab_contents_wrap = $(".profile-tab-contents-row-wrap")
+  $profile_tab_contents_wrap.css("min-height", '')
+  wrap_height = $("#wrap").height()
+  header_height = $("#header").height()
+  #profile_header_outer_height = $("#profile-header").outerHeight()
+  #$profile_tabs_wrap_height = $(".profile-tab-labels-row-wrap").height()
+  main_height = $("main").height()
+
+
+  difference = wrap_height - (header_height + main_height)
+  if difference > 0
+    min_height = $profile_tab_contents_wrap.height() + difference
+    $profile_tab_contents_wrap.css("min-height", min_height)
+
+
+$("body").on "click", ".delete-account", ->
+  delete_confirmed = confirm("Do you really want delete your account? This action cannot be reverted")
+  if delete_confirmed
+    $.ajax("/")
+
+$(window).on "resize", setContainerSize
+$(window).trigger("resize")
+
+$("body").on "change", "#subscribe_form__subscribe", ->
+  subscribe = $(this).filter(":checked").length > 0
+  data = { subscribe: subscribe }
+  $.ajax(
+    url: "/update_subscription"
+    type: "post"
+    dataType: "json"
+    data: data
+    success: ->
+
+  )

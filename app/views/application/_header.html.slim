@@ -10,7 +10,7 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
 
         #header-user  class=header_user_class
           - if !current_user
-            .user-icon.unlogged ng-click="openSignInDialog()"
+            a.user-icon.unlogged href=new_user_session_path open-popup=("user_pages__static_sign_in" unless controller_name.to_s == "user_pages" || controller_name.to_s.scan(/\Ausers/).any? || controller_name.to_s.scan(/\Adevise/).any?)
               div angular-ripple=""
                 .inner
                   .svg-wrap
@@ -28,7 +28,7 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
               rf-button size="small" title="My dashboard" svg="/assets/rf-icon-configure.svg" class="my-dashboard-button-link" ng-click="goToDashboard()"
               = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link", href: "/dashboard")
               .links
-                a.left href="/"
+                a.left href="/profile"
                   |Edit my profile
                 a.right.logout-link href=destroy_user_session_path
                   |Sign out

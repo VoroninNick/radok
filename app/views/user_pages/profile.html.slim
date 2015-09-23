@@ -1,0 +1,120 @@
+.page.profile-page-content ng-controller="ProfileController as profile"
+  #profile-header.header-wrap
+    .row.header-row
+      .columns.large-6.header-column
+        .header
+          |Your account
+        .subheader
+          |You can manage your account here.
+  #profile-tabs-section.tabs
+    .profile-tab-labels-row-wrap
+      .row
+        .columns
+          ul.tab-labels
+            li class="#{'active' if @personal_data_tab_active}"
+              a ng-click="active_tab_index = 0"
+                .icon-wrap
+                  = embedded_svg_from_assets "rf-icon-user"
+                .text-label
+                  |Personal data
+            li class="#{'active' if @password_change_tab_active}"
+              a ng-click="active_tab_index = 1"
+                .icon-wrap
+                  = embedded_svg_from_assets "rf-icon-email"
+                .text-label
+                  |Password change
+            li class="#{'active' if @new_letter_tab_active}"
+              a ng-click="active_tab_index = 2"
+                .icon-wrap
+                  = embedded_svg_from_assets "rf-icon-email"
+                .text-label
+                  |Newsletter
+    .profile-tab-contents-row-wrap full-height=""
+      .row.profile-tab-contents-row
+        .columns.large-12
+          ul.tab-contents
+            li class="#{'active' if @personal_data_tab_active}"
+              form#personal-data.row novalidate="" name="profile_info"
+                .columns.large-4.photo-column
+                  .photo-header
+                  .photo-image-wrap
+                    .ready-image
+
+                      input#input-file-uploader type="file" ngf-select="" ng-model="userAvatarFile" name="userAvatarFile" accept="image/*" ng-change=""
+                      div.photo-field-label
+                        label for="input-file-uploader"
+                          |Your photo
+                      /.jcrop-wrap ng-jcrop="'/assets/wizard_banner_image.png'" selection="image_options.selection" thumbnail="true"
+                      div
+
+
+                        label.image-label for="input-file-uploader" class="#{'hide' unless @user.avatar.exists?}" ng-show="personal_data.avatar_file_name && personal_data.avatar_file_name.length"
+                          img src=(@user.avatar.url(:profile_image) if @user.avatar.exists?(:profile_image))
+
+                        label.no-image for="input-file-uploader" class="#{'hide' if @user.avatar.exists?(:profile_image)}"
+                          img src="/assets/no_avatar.svg"
+                      div
+                        label.change-photo-label for="input-file-uploader"
+                          |Change photo
+                  .change-button
+                .columns.large-8.inputs
+                  .row
+                    .columns.large-6.inputs-group
+                      /rf-input ng-model="personal_data.email" ng-required="true" is-email="" name="email"
+                      /div
+                        |{{personal_data.email}}
+
+                      rf-input ng-model="personal_data.username" ng-required=""
+                      rf-input ng-model="personal_data.full_name"
+                      rf-input ng-model="personal_data.phone"
+                      rf-input ng-model="personal_data.email" is-email="" ng-required=""
+                    /my-input name="username" label="Username" model="personal_data.username" required=""
+                    /my-input name="name" label="Full name" model="personal_data.name"
+                    /my-input name="phone" label="Phone number" model="personal_data.phone"
+                    /my-input type="email" label="Email" name="email" model="personal_data.email" required=""
+                    .columns.large-6.inputs-group
+
+
+                      /.inputs-group
+                        .row
+                          .columns.large-6
+                            my-input model="personal_data.city" name="city" label="City"
+                          .columns.large-6
+                            my-input label="ZIP code" name="zip_code" model="personal_data.zip_code"
+                      rf-input ng-model="personal_data.country"
+                      rf-input ng-model="personal_data.city"
+                      rf-input ng-model="personal_data.zip_code"
+                      rf-input ng-model="personal_data.billing_address"
+            /my-input label="Country" name="country" model="personal_data.country"
+            /my-input model="personal_data.city" name="city" label="City"
+            /my-input label="ZIP code" name="zip_code" model="personal_data.zip_code"
+            /my-input name="billing_address" model="personal_data.billing_address" label="Billing address"
+
+
+            li class="#{'active' if @password_change_tab_active}"
+              form name="password_change_form"
+                .columns.large-4.large-centered
+                  rf-input name="old_password" ng-model="password_change.old_password" type="password" ng-required="true" rf-min-length="8"
+                  rf-input name="password" ng-model="password_change.password" type="password" ng-required="true" rf-min-length="8" mismatch="password_change.old_password"
+                  rf-input name="password_confirmation" ng-model="password_change.password_confirmation" type="password" match="password_change.password"
+                  /my-input name="old_password" model="password_change.old_password" type="password" label="Old password" required=""
+                  /my-input name="password" model="password_change.password" type="password" required="" label="New password"
+                  /my-input name="password_confirmation" model="password_change.password_confirmation" type="password" label="Password confirmation"
+                  rf-button class="change_password_button" max-button-width="300px" svg-size="small" full-width="" svg="/assets/rf-icon-password.svg" title="Change password" ng-disabled="password_change_form.$invalid" ng-click="change_password()"
+
+            li class="#{'active' if @new_letter_tab_active}"
+              .header.h4
+                |Subscribe for newsletter
+              p.large-7
+                |Subscribe to our newsletter and stay updated on the latest developments and special offers!
+
+              form#subscribe-form name="subscribe_form"
+                input#subscribe_form__subscribe type="checkbox" checked=("checked" if @user.subscribed?)
+                label for="subscribe_form__subscribe"
+                label for="subscribe_form__subscribe"
+                  |I want to receive newsletter
+
+      .tabcontrol-footer.row
+        .columns.large-2.right
+          .delete-account ng-click="confirm_destroy_account()"
+            |Delete account

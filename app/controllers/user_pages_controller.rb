@@ -18,4 +18,23 @@ class UserPagesController < ApplicationController
 
     #render "user_pages/static_sign_up"
   end
+
+  def profile
+    @personal_data_tab_active = true
+    @user = current_user
+    if @user.nil?
+      authenticate_user!
+    end
+  end
+
+  def update_subscription
+    subscribe = params[:subscribe] == 'true'
+    if subscribe
+      current_user.subscribe!
+    else
+      current_user.unsubscribe!
+    end
+
+    render json: {}, status: 200
+  end
 end

@@ -37,7 +37,8 @@
           .actions
             .columns.large-5
               .sign-in-link-wrap
-                a open-popup="user_pages__static_sign_in"  I have an account
+                a href=new_user_session_path
+                  |I have an account
             .columns.large-7
               .sign-up-button
                 = rf_button title: "CREATE ACCOUNT", class: "sign_up_submit", align_content: "center"

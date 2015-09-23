@@ -123,6 +123,18 @@ module ApplicationHelper
     end
   end
 
+  def form_errors
+    content_tag :div, class: "form-errors hide" do
+      content_tag :div, class: "columns large-12" do
+        raw(%w(unconfirmed invalid_password_or_login invalid_username_or_email).map do |error_key|
+          content_tag :p, class: "form-error semibold #{error_key} hide" do
+            raw(t("form-errors.#{error_key}"))
+          end
+        end.join)
+      end
+    end
+  end
+
   def popup name, **options
     options[:id] ||= "#{name.gsub(/\//, '__').underscore}_popup"
     render "helpers/application/popup", partial: name, options: options
