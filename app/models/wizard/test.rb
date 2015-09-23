@@ -7,6 +7,10 @@ class Wizard::Test < ActiveRecord::Base
    # Wizard::Step.available_steps
   #end
 
+  def available_platforms
+
+  end
+
   def self.available_steps
     step_classes = [Wizard::Steps::Intro, Wizard::Steps::Platforms, Wizard::Steps::ProjectInformation, Wizard::Steps::TestPlan, Wizard::Steps::ProjectAccess]
     data = {}

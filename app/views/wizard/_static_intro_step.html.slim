@@ -40,7 +40,7 @@
                   .input.required
                     - Wizard::ProductType.all.each_with_index do |product_type, product_type_id|
                       .option-image.large-3 label=("Mobile apps") name="product_type"
-                        input.option-image-input.ng-pristine.ng-untouched.ng-valid id="product_type__#{product_type_id}" name="product_type" type="radio" value="mobile" data-name=product_type.name
+                        input.option-image-input.ng-pristine.ng-untouched.ng-valid data-id=product_type.id id="product_type__#{product_type_id}" name="product_type" type="radio" value="mobile" data-name=product_type.name
                         label for="product_type__#{product_type_id}"
                           = embedded_svg_from_absolute_path(product_type.image.path(:original))
                           span.name

@@ -23,6 +23,29 @@ $(".rf-configure-button").on "click", ->
 
   $(".wizard-platforms-step .wizard-step").addClass("active")
 
+  window.product_type_id = parseInt($('question[question-key=type_of_product] input:checked').attr('data-id'))
+
+  #$(".wizard-platforms-step").find("platform").each ->
+  #  $platform = $(this)
+  #  if !$platform.hasClass("in-group")
+
+  $platform_items = $(".wizard-platforms-step").find("platform")
+
+
+  $platform_items.each ->
+    $platform = $(this)
+    platform_product_ids = $platform.attr("data-product-type-ids").split(',')
+    if platform_product_ids.indexOf(product_type_id.toString()) >= 0
+      $platform.removeClass("hide")
+    else
+      $platform.addClass("hide")
+
+  $platform_items.filter(":not(.hide)").each (index, item)->
+    if index % 2 == 0
+      $(item).addClass('first')
+    else
+      $(item).removeClass('first')
+
   scrollToStep(1)
 
 $(".option-count").on "click", ".decrement, .increment", ->

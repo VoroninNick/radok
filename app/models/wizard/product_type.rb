@@ -7,4 +7,7 @@ class Wizard::ProductType < ActiveRecord::Base
   attr_accessible :image
 
   do_not_validate_attachment_file_type :image
+
+  has_and_belongs_to_many :platforms, class_name: Wizard::Platform, join_table: :wizard_platforms_product_types
+  attr_accessible :platforms, :platform_ids
 end

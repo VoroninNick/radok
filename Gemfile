@@ -93,3 +93,5 @@ gem "omniauth-gplus"
 gem 'quiet_assets'
 
 local_gem "attachable"
+
+gem 'rails_admin_nestable'

@@ -63,7 +63,7 @@
           /= go_button("Configure", class: "wizard.type_of_test && wizard.product_type && !wizard.configure_mode ? 'visible' : 'hide'", click: "configure();")
           /go-button text="Configure"  ng-if="wizard.type_of_test && wizard.product_type && !wizard.configure_mode" ng-click="configure();"
           /configure-button ng-show="wizard.type_of_test && wizard.product_type && !wizard.configure_mode" ng-click="configure();"
-          rf-button class="rf-configure-button" full-width="" svg="/assets/rf-icon-configure.svg" title="configure" ng-disabled="!(wizard.data.tot__type_of_test && wizard.data.top__type_of_product  && !wizard.configure_mode)" ng-click="configure();"
+          /rf-button class="rf-configure-button" full-width="" svg="/assets/rf-icon-configure.svg" title="configure" ng-disabled="!(wizard.data.tot__type_of_test && wizard.data.top__type_of_product  && !wizard.configure_mode)" ng-click="configure();"
           = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure")
 
     #wizard-summary ng-show="wizard.configure_mode"

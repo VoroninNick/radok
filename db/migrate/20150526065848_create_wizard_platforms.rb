@@ -4,6 +4,7 @@ class CreateWizardPlatforms < ActiveRecord::Migration
       t.string :name
       t.integer :testers_count
       t.string :ancestry
+      t.integer :position
 
       t.timestamps null: false
     end

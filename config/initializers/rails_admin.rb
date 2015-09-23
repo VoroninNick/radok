@@ -30,9 +30,11 @@ RailsAdmin.config do |config|
     ## With an audit adapter, you can add:
     # history_index
     # history_show
+
+    nestable
   end
 
-  config.included_models = [Wizard::ProductType]
+  config.included_models = [Wizard::ProductType, Wizard::Platform]
 
    config.model FaqArticle do
      edit do
@@ -41,4 +43,24 @@ RailsAdmin.config do |config|
        field :content, :ck_editor
      end
    end
+
+  config.model Wizard::ProductType do
+    edit do
+      field :name
+      field :image
+      field :platforms
+    end
+  end
+
+  config.model Wizard::Platform do
+    nestable_tree({
+      position_field: :position,
+      max_depth: 2
+    })
+
+    edit do
+      field :name
+      field :product_types
+    end
+  end
 end

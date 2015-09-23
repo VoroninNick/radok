@@ -11,6 +11,8 @@ class WizardController < ApplicationController
   def new
     @head_title = "Wizard"
     @project = Wizard::Test.new
+
+    @all_platforms = Wizard::Platform.roots
   end
 
   def ng_wizard
