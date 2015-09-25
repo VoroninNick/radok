@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
 
   #end
 
+  before_save do
+    self.role = :user if self.role.blank?
+  end
+
 
   def subscribe!
     subscribe
@@ -80,6 +84,10 @@ class User < ActiveRecord::Base
     self.subscribed = false
   end
 
+
+  def admin?
+    self.role == "admin"
+  end
 
 
 end

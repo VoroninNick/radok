@@ -21,13 +21,13 @@ RailsAdmin.config do |config|
   ### Popular gems integration
 
   ## == Devise ==
-  # config.authenticate_with do
-  #   warden.authenticate! scope: :user
-  # end
-  # config.current_user_method(&:current_user)
+  config.authenticate_with do
+    warden.authenticate! scope: :user
+  end
+  config.current_user_method(&:current_user)
 
   ## == Cancan ==
-  # config.authorize_with :cancan
+  config.authorize_with :cancan
 
   ## == PaperTrail ==
   # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
@@ -52,7 +52,7 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.included_models = [Wizard::ProductType, Wizard::Platform]
+  config.included_models = [Wizard::ProductType, Wizard::Platform, User]
 
   ( [MetaData, Page] + pages_models) .each do |model|
     config.included_models += [model]
@@ -168,6 +168,51 @@ RailsAdmin.config do |config|
     edit do
       field :name
       field :product_types
+    end
+  end
+
+  config.model User do
+    list do
+      field :username
+      field :email
+      field :confirmed?, :boolean
+
+    end
+
+    create do
+      field :username
+      field :role, :enum do
+        enum do
+          [:admin, :user]
+        end
+      end
+      field :email
+      field :password do
+        required do
+          true
+        end
+      end
+
+    end
+    edit do
+      field :subscribed
+      field :username
+      field :role, :enum do
+        enum do
+          [:admin, :user]
+        end
+      end
+      field :email
+      field :password
+      field :first_name
+      field :last_name
+      field :country
+      field :city
+      field :zip_code
+      field :company_url
+      field :image
+
+
     end
   end
 end
