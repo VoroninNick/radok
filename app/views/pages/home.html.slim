@@ -26,11 +26,12 @@
             .button-container.banner-button-wrap
               = rf_button(title: slide[:button][:title], align_content: "left", full_width: true, subtitle: slide[:button][:subtitle], svg: slide[:button][:svg], href: slide[:button][:href])
               /rf-button align-content="left" full-width="" title="{{slide.button.title}}" subtitle="{{slide.button.subtitle}}" svg="{{slide.button.svg}}" class="start-now-button" sref="{{slide.button.sref}}"
-              .sub-button-text
-                span
-                  |or&nbsp;
-                a.link ng-click="openSignInDialog()"
-                  |Sign in
+              - if !current_user
+                .sub-button-text
+                  span
+                    |or&nbsp;
+                  a.link ng-click="openSignInDialog()"
+                    |Sign in
 
     - if @home_slides.length > 1
       #home-slider-bullets
