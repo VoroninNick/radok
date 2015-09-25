@@ -2,7 +2,7 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
   #fixed-header
     #header-row
       #header-logo
-        a href=root_path ng-class="navClass('home')"
+        a href=home_path ng-class="navClass('home')"
           img src="/assets/logo.png"
       #header-menu
         /top-nav menu="menu_items" item-class="header-menu-item" off-click="closeMobileMenu()" off-click-filter="'#header-mobile-menu-button-wrap'"

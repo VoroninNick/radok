@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   #devise_for :users, controllers: {registrations: "users/registrations"}
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  root to: 'home#index'
+  #root to: 'home#index'
   get "about/leaders", to: "about#leaders"
   post "contact_request", to: "contact#contact_request"
   post "faq_request", to: "faq_articles#request_question"

@@ -48,7 +48,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     if signed_in?(resource_name)
       signed_in_root_path(resource)
     else
-      root_path()
+      home_path()
     end
   end
 end
