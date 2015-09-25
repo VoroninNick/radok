@@ -21,6 +21,7 @@ class FaqArticlesController < ApplicationController
     #@article = @faq_articles.select{|a| a[:id] == params[:id].to_i}.first || @faq_articles.first
     @article = @faq_articles.where(url_fragment: params[:id]).first
     set_page_metadata(@article)
+
     render "index"
   end
 

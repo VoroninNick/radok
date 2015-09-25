@@ -85,10 +85,10 @@ class ApplicationController < ActionController::Base
       end
       page_class = page_class_name.constantize rescue nil
 
-      if !page.is_a?(Class)
+      if page.is_a?(ActiveRecord::Base)
         page_instance = page
         if page_instance.respond_to?(:has_seo_tags?) && page_instance.has_seo_tags?
-          @page_metadata = page_instance.has_seo_tags?
+          @page_metadata = page_instance.seo_tags
         end
       end
     else
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
     end
 
 
-    @page_metadata = page_class.try(&:first).try(&:seo_tags)
+    @page_metadata ||= page_class.try(&:first).try(&:seo_tags)
 
     @page_metadata ||= { head_title: page_class.try(&:default_head_title) }
 
