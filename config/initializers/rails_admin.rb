@@ -52,7 +52,7 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.included_models = [Wizard::ProductType, Wizard::Platform, User]
+  config.included_models = [Wizard::ProductType, Wizard::Platform, User, FaqArticle]
 
   ( [MetaData, Page] + pages_models) .each do |model|
     config.included_models += [model]
@@ -161,7 +161,9 @@ RailsAdmin.config do |config|
      edit do
        field :published
        field :name
+       field :url_fragment
        field :content, :ck_editor
+       field :seo_tags
      end
    end
 

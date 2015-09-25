@@ -11,7 +11,7 @@
             ul
               - @faq_articles.each_with_index do |article, index|
                 li class=("active" if article[:id] == @article[:id])
-                  a href=faq_article_path(article[:id])
+                  a href=faq_article_path(article)
                     = article[:name]
           .footer
             rf-button title="Add a question" subtitle="if you have one" svg="/assets/rf-icon-add-question.svg" class="add-question-button" ng-click="scrollToForm()"
