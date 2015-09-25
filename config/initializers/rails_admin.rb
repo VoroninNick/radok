@@ -140,6 +140,13 @@ RailsAdmin.config do |config|
     visible false
   end
 
+  config.model Pages::Home do
+    pages_navigation_label
+
+    edit do
+      field :seo_tags
+    end
+  end
 
 
 
