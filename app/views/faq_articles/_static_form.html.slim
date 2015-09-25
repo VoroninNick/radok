@@ -7,41 +7,15 @@
         |Send us your question and we'll answer you as soon as possible
     .columns.large-12
       .row
-        form.ng-pristine.ng-invalid.ng-invalid-required.ng-valid-is-email name="question_request" no-validate=""
+        form name="question_request" no-validate="" action="/faq-request" method="post"
           .columns.large-6
-            = rf_input(label: "Your name")
-            = rf_input(label: "Email", type: "email")
-            = rf_input(label: "Subject")
-            /.rf-input.string
-              label Your name
-              .input-border-wrap
-              input type="text"
-              .error-messages ng-show="hasErrors()"
-                /! ngRepeat: (error_key, error_value) in error()
-                .error-message.ng-binding.ng-scope ng-repeat="(error_key, error_value) in error()"  required=""
-            /! end ngRepeat: (error_key, error_value) in error()
+            = rf_input(label: "Your name", name: "faq_request[name]")
+            = rf_input(label: "Email", type: "email", name: "faq_request[email]")
+            = rf_input(label: "Subject", name: "faq_request[subject]")
 
-            /.rf-input.string
-              label Email
-              .input-border-wrap
-              input type="text"
-              .error-messages ng-show="hasErrors()"
-                /! ngRepeat: (error_key, error_value) in error()
-                .error-message.ng-binding.ng-scope ng-repeat="(error_key, error_value) in error()"  required=""
-            /! end ngRepeat: (error_key, error_value) in error()
-
-            /.rf-input.string
-              label Subject
-              .input-border-wrap
-              input type="text"
-              .error-messages ng-show="hasErrors()"
-          /! ngRepeat: (error_key, error_value) in error()
           .columns.large-6
 
-            = rf_input(type: "text", number_inputs_height: 3)
-            /.rf-input.string type="text" n-inputs-height="3"
-              label Type your question's subject here...
-              .input-border-wrap
-              textarea.ng-pristine.ng-untouched.ng-valid.ng-binding ng-change="onChange()" ng-model="value"
+            = rf_input(type: "text", number_inputs_height: 3, name: "faq_request[description]")
 
-            = rf_button(svg: "rf-icon-add-question", class: "faq-form-button", title: "Add a question")
+
+            = rf_button(svg: "rf-icon-add-question", title: "Add a question")

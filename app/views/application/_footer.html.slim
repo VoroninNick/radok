@@ -29,16 +29,16 @@ footer#footer
       .menu
         ul
           li
-            a ui-sref="testing_services"
+            a href=testing_services_path title="For clients"
               |For clients
           li
-            a ui-sref="how_it_works"
+            a href=how_it_works_path title="How it works"
               |How it works
           li
-            a ui-sref="about"
+            a href=about_path title="About us"
               |About us
           li
-            a ui-sref="contact"
+            a href=contact_path title="Contact us"
               |Contact us
       .sublinks
         ul
@@ -60,6 +60,6 @@ footer#footer
         = rf_button(svg: "rf-icon-email", id: "subscribe-button")
       .copyright
         = raw "&copy;&nbsp;2009-#{Date.today.year} RadokForce GmBH. All rights reserved"
-      .developed-by
+      /.developed-by
         .vs-logo
           = embedded_svg_from_assets("vs-logo")

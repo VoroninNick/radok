@@ -23,7 +23,9 @@ class FaqArticlesController < ApplicationController
 
   def request_question
     if request.post?
-      FaqRequest.create!(params[:request_question])
+      @faq_request = FaqRequest.create!(params[:faq_request])
+      FaqRequestMailer.new_request(@faq_request).deliver
+
       render json: { result: "successfully rendered", code: 200 }
     else
       render json: { result: "error", code: 500 }

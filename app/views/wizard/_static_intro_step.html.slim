@@ -1,5 +1,5 @@
 .wizard-step.intro-step.active
-  .wizard-step-edit-tooltip class="#{"proceeded" if @project.intro_step_proceeded?} #{"hide" if !@project.intro_step_proceeded?}"
+  .wizard-step-edit-tooltip
     .svg-container.ng-scope
       = embedded_svg_from_assets("pen")
   .wizard-step-content
@@ -12,6 +12,7 @@
             div ng-transclude=""
               .row.ng-scope
                 .input.required
+                  = option_image("name", "test_type")
                   .option-image.large-4.ng-valid description="" image-path="rf-functional-test" label=("Functional test") name="test_type" ng-model="wizard.data.tot__type_of_test" value="functional"
                     input#test_type__1.option-image-input.ng-pristine.ng-untouched.ng-valid name="test_type" type="radio" value="functional" data-name="Functional"
                     label for="test_type__1"

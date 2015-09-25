@@ -37,9 +37,9 @@ module WizardHelper
 
   end
 
-  def option_image(image_path, name, label, value, ng_model, columns_count = 4, description = nil)
-    render "helpers/wizard/option_image", { image_path: image_path, name: name, label: label, value: value, ng_model: ng_model, description: description, columns_count: columns_count }
-  end
+  # def option_image(image_path, name, label, value, ng_model, columns_count = 4, description = nil)
+  #   render "helpers/wizard/option_image", { image_path: image_path, name: name, label: label, value: value, ng_model: ng_model, description: description, columns_count: columns_count }
+  # end
 
   def blue_header(text, columns = false)
     render "helpers/wizard/blue_header", { text: text, columns: columns }

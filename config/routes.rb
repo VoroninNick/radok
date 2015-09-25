@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "/sign-up", to: "user_pages#registrations__new"
   get "faq", to: "faq_articles#index", as: :faq
   get "faq/:id", to: "faq_articles#show", as: "faq_article"
+
   get "dashboard", to: "dashboard#index"
   get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
   get "wizard", to: "wizard#new"
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   #root to: 'home#index'
   get "about/leaders", to: "about#leaders"
   post "contact_request", to: "contact#contact_request"
-  post "faq_request", to: "faq_articles#request_question"
+  post "faq-request", to: "faq_articles#request_question"
   get "faq_articles", to: "faq_articles#articles", as: :faq_index
 
   post "/delete_dashboard_project", to: "wizard#delete_dashboard_project"

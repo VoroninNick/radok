@@ -6,13 +6,13 @@
           ul
             - menu_item.subitems.each do |subitem|
               li
-                a href=subitem[:href]
+                a href=subitem[:href] title=subitem[:title]
                   = subitem[:title]
 
   .menu
     - menu.each do |menu_item|
       .menu-item.header-menu-item class="#{'has-dropdown' if menu_item[:subitems].try(&:any?)} #{menu_item[:class]}" off-click="closeDropdown(menu_item, $event)"
-        a href=menu_item[:href] ng-click="toggleDropdown(menu_item, $event)" angular-ripple=""
+        a href=menu_item[:href] ng-click="toggleDropdown(menu_item, $event)" angular-ripple=""  title=menu_item[:title]
           span
             = menu_item[:title]
         - if menu_item[:subitems].try(&:any?)
@@ -20,6 +20,6 @@
             ul
               - menu_item[:subitems].each do |subitem|
                 li
-                  a href=subitem[:href]
+                  a href=subitem[:href]  title=subitem[:title]
                     = subitem[:title]
 

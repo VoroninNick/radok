@@ -1,0 +1,16 @@
+.option-image class="large-#{columns_count}"
+  input.option-image-input type="radio" name=name value=value id="#{name}__#{value}" ng-model=ng_model
+  label for="#{name}__#{value}"
+    = svg_placeholder image_path
+    span.name
+      = label
+    - if description.present?
+      .description
+        = description
+
+
+.option-image class="large-#{columns_count}"
+  input.option-image-input id="test_type__#{}" name="test_type" type="radio" value="functional" data-name="Functional"
+  label for="test_type__1"
+    = embedded_svg_from_assets("rf-functional-test.svg")
+    span.name.ng-binding Functional test

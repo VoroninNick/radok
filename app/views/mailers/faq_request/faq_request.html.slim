@@ -1,0 +1,28 @@
+table border="1"
+  tr
+    td
+      |Name
+    td
+      = @faq_request.name
+
+  tr
+    td
+      |Email
+    td
+      = @faq_request.email
+
+  tr
+    td
+      |Subject
+    td
+      = @faq_request.subject
+
+  tr
+    td
+      |Description
+    td
+      = @faq_request.description
+
+p
+  a href="http://radok.voroninstudio.eu/admin/faq_request/#{@faq_request.id}"
+    | In admin panel

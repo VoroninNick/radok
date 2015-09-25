@@ -83,6 +83,7 @@ class PagesController < ApplicationController
         ]
     }
 
+
     @show_plans_section_header = true
   end
 end

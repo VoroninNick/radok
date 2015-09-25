@@ -157,5 +157,10 @@ module ApplicationHelper
     render "helpers/application/popup", partial: name, options: options
   end
 
+  def option_image(name, id, value, label, image_path, columns_count = 4)
+    render "helpers/wizard/option_image", { name: name, value: value, label: label, image_path: image_path, options: options }
+  end
+
+
 
 end
