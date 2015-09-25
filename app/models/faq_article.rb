@@ -7,7 +7,7 @@ class FaqArticle < ActiveRecord::Base
 
   before_save :setup_url_fragment
 
-  validate :name, presence: true
+  validates :name, presence: true
 
   def setup_url_fragment
     self.url_fragment = self.name.parameterize if url_fragment.blank?
