@@ -7,7 +7,7 @@
         |Send us your question and we'll answer you as soon as possible
     .columns.large-12
       .row
-        form name="question_request" no-validate="" action="/faq-request" method="post"
+        form name="question_request" no-validate="" action="/faq-request" method="post" success-popup=""
           .columns.large-6
             = rf_input(label: "Your name", name: "faq_request[name]")
             = rf_input(label: "Email", type: "email", name: "faq_request[email]")

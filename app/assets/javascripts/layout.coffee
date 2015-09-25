@@ -68,6 +68,7 @@ $.fn.valid = ->
 
 $("body").on "submit", "form", (event)->
   event.preventDefault()
+
   $form = $(this)
 
   $form.validateForm()
