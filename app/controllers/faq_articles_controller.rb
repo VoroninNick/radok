@@ -16,12 +16,15 @@ class FaqArticlesController < ApplicationController
 
   def show
     init_articles
-    @article = @faq_articles.select{|a| a[:id] == params[:id].to_i}.first || @faq_articles.first
+    #@article = @faq_articles.select{|a| a[:id] == params[:id].to_i}.first || @faq_articles.first
+    @article = @faq_articles.where(id: params[:id]).first
+    set_page_metadata(@article)
     render "index"
   end
 
   def init_articles
-    @faq_articles = FaqArticle.published.pluck(:id, :name, :content).map{|arr| {id: arr[0], name: arr[1], content: arr[2]} }
+    #@faq_articles = FaqArticle.published.pluck(:id, :name, :content).map{|arr| {id: arr[0], name: arr[1], content: arr[2]} }
+    @faq_articles = FaqArticle.published
   end
 
   def request_question

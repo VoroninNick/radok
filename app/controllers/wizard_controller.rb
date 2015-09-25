@@ -2,48 +2,17 @@ class WizardController < ApplicationController
 
   before_action :authenticate, only: [:dashboard_projects, :delete_dashboard_project]
 
-  def index
-    @template = "/assets/wizard.html"
-
-    render template: "layouts/ng", layout: false
-  end
 
   def new
     @head_title = "Wizard"
     @project = Wizard::Test.new
 
     @all_platforms = Wizard::Platform.roots
+
+    set_page_metadata("wizard")
   end
 
-  def ng_wizard
-    @platforms =  [
-        {
-            name: 'Browsers', image_path: "ie.svg", sub_items: [
-            {name: 'Internet Explorer 9', count: 0},
-            {name: 'Internet Explorer 10', count: 0},
-            {name: 'Internet Explorer 11', count: 0},
-            {name: 'Latest version of Firefox', count: 0},
-            {name: 'Latest version of Chrome', count: 0},
-            {name: 'Latest version of Safari', count: 0}
-        ]
-        },
-        {
-            name: "IOS", image_path: "ios.svg", sub_items: [
-              { name: "iPhone 4", count: 0 },
-              { name: "iPhone 5s", count: 0 },
-              { name: "iPad 2", count: 0 },
-              { name: "iPad Air", count: 0 },
-              { name: "iPad mini", count: 0 },
-              { name: "iPhone 6 Plus", count: 0 }
-            ]
-        },
-        {
-            name: "Android", image_path: "android.svg"
-        }
-    ]
 
-    render file: Rails.root.join("app/assets/templates/wizard.html")
-  end
 
   def new_test_available_steps
     steps = Wizard::Test.available_steps

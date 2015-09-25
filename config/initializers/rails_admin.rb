@@ -133,12 +133,13 @@ RailsAdmin.config do |config|
   end
 
   config.model Pages::Dashboard do
-    visible false
+    pages_navigation_label
+
+    edit do
+      field :seo_tags
+    end
   end
 
-  config.model Pages::Wizard do
-    visible false
-  end
 
   config.model Pages::Home do
     pages_navigation_label
@@ -148,7 +149,13 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model Pages::Wizard do
+    pages_navigation_label
 
+    edit do
+      field :seo_tags
+    end
+  end
 
    config.model FaqArticle do
      edit do
