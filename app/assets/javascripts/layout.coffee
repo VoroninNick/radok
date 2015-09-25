@@ -107,6 +107,13 @@ $("body").on "submit", "form", (event)->
         close_on_success = $form.attr("close-on-success")
         reload_on_success = $form.attr("reload-on-success")
         $preloader.addClass("hide") if !reload_on_success
+
+        show_success_popup = $form.attr("success-popup")
+        if show_success_popup && show_success_popup.length
+          $success_popup = $("#" + show_success_popup)
+          $success_popup.removeClass("hide")
+
+
         if show_success
           $success = $form.parent().find(".success-handler")
           $success.removeClass("hide")
