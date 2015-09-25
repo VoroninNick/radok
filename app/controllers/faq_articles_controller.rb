@@ -1,13 +1,4 @@
 class FaqArticlesController < ApplicationController
-  def articles
-    articles = FaqArticle.published.pluck(:name, :content)
-    render json: articles
-  end
-
-  def item
-
-  end
-
   def index
     init_articles
     #@article = @faq_articles.published.first
