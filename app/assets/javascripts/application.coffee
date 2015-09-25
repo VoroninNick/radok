@@ -1,4 +1,6 @@
 #= require jquery/dist/jquery.min.js
+#= require jquery_extensions
+#= require jquery.selectors
 #= require parallax/deploy/parallax.min
 #= require maplace-0.1.3.min
 #= require owl_carousel.min

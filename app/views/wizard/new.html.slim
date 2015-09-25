@@ -67,22 +67,35 @@
           = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure")
 
     #wizard-summary ng-show="wizard.configure_mode"
-      #wizard-summary-fixed
+      #wizard-summary-fixed.fixed-top
         .header
           |Summary
         .content
+          /p.test-type-and-product-type
+            /span class='test-type'
+            |You ordered
+            span.sp
+            /span class='test name'
+            span data-bind="tot__type_of_test"
+            /span.sp
+            |test
+            /span class='product-type'
+            /span.sp
+            |for
+            /span.sp
+            span class='name' data-bind="top__type_of_product"
+
           p.test-type-and-product-type
-            span class='test-type'
-              |You ordered&nbsp;
-              span class='test name'
-                span data-bind="tot__type_of_test"
-                |&nbsp;test
-            span class='product-type'
-              |&nbsp;for
-              span class='name' data-bind="top__type_of_product"
+            |You ordered&thinsp;
+            span.highlighted-text data-bind="tot__type_of_test"
+            span.highlighted-text
+              |&thinsp;test
+            |&thinsp;for&thinsp;
+            span.highlighted-text data-bind="top__type_of_product"
 
 
-
+          /p.current-task
+            |Please select platforms to be tested
 
           .platforms.hide ng-show="wizard.total_testers_count"
             .row.header
@@ -119,13 +132,15 @@
             .total-price
               .currency
                 |$
-              |{{wizard.total_price}}
-          .checkout-button ng-class="!wizard.ready_to_checkout ? 'disabled' : '' "
+              span data-bind="total_price"
+
+          .checkout-button.disabled ng-class="!wizard.ready_to_checkout ? 'disabled' : '' "
             /= svg_placeholder "rf-rocket-up-right"
             ng-include src="'/assets/rf-rocket-up-right.svg'"
+              = embedded_svg_from_assets "rf-rocket-up-right"
 
 
-          steps-progress steps="wizard.configuration_steps"
+          /steps-progress steps="wizard.configuration_steps"
           /.steps-completed
             label
               |Steps completed:
@@ -137,12 +152,14 @@
                 |{{wizard.active_step_id - 1}}
               /.total-steps
                 |{{wizard.steps.length}}
+          = steps_progress(4)
 
 
+          /rf-button class="rf-next-step-button" align-content="left" full-width="" svg="/assets/rf-icon-rocket.svg" title="Next step" subtitle="{{wizard.next_step.number}}. {{wizard.next_step.name}}" ng-click="next_step()" ng-show="wizard.next_step" ng-disabled="wizard.active_step_form.$invalid"
 
-          rf-button class="rf-next-step-button" align-content="left" full-width="" svg="/assets/rf-icon-rocket.svg" title="Next step" subtitle="{{wizard.next_step.number}}. {{wizard.next_step.name}}" ng-click="next_step()" ng-show="wizard.next_step" ng-disabled="wizard.active_step_form.$invalid"
+          = rf_button class: "rf-next-step-button", align_content: "left", full_width: true, svg: "rf-icon-rocket", title: "Next step", subtitle: "2. Project information", disabled: true
           /next-step-button step-number="2" step-name="test name" model-active-step="wizard.active_step" model-next-step="wizard.next_step" ng-click="next_step()"
-          .or-go-back-wrap ng-show="wizard.active_step_id > 2"
+          .or-go-back-wrap.hide
             |or
             .go-back-button  ng-click="go_back()"
               |go back to STEP {{wizard.active_step_id - 2}}

@@ -25,6 +25,7 @@ module ApplicationHelper
 
 
     options[:button_class] = options.delete(:class)
+    options[:disabled] ||= false
     render "helpers/application/rf_button", options
   end
 
@@ -121,6 +122,21 @@ module ApplicationHelper
       content_tag(:div, nil, class: "input-border-wrap") +
       content_tag(tag_name, nil, input_tag_options)
     end
+  end
+
+  def steps_progress(total_steps_count, completed_step = 0)
+    (content_tag("steps-progress") do
+      raw([
+      content_tag(:label, "Steps completed:"),
+      content_tag(:div, class: "progress") do
+        raw(total_steps_count.times.map do |i|
+          content_tag(:div, class: "step #{'proceeded' if i < completed_step }", style: "width: #{100 / total_steps_count}%;") do
+            content_tag :div, nil, class: "inner"
+          end
+        end.join)
+      end
+      ].join)
+    end)
   end
 
   def form_errors

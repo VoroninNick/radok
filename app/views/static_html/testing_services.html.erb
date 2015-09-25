@@ -1393,7 +1393,7 @@
       </div>
       <div class="columns large-5 button-column">
         <div class="button-outer">
-          <button angular-ripple="" href="/wizard" ng-class="button_class()" class="rf-button rf-button-with-subtitle rf-button-with-svg rf-button-raised rf-button-auto-width rf-button-svg-size-medium rf-button-align-content-center rf-button-size-medium start-now-button"><div class="rf-button-content-wrap"><div class="rf-button-content"><!-- ngIf: svg() --><!-- ngInclude: svg() --><div class="svg-wrap svg-size-medium" ng-include="svg()" ng-if="svg()"><!--?xml version="1.0" encoding="utf-8"?-->
+          <button angular-ripple="" href="/wizard" ng-class="button_class()" class="rf-button <%= if !current_user then 'rf-button-with-subtitle' else 'rf-button-without-subtitle' end %> rf-button-with-svg rf-button-raised rf-button-auto-width rf-button-svg-size-medium rf-button-align-content-center rf-button-size-medium start-now-button"><div class="rf-button-content-wrap"><div class="rf-button-content"><!-- ngIf: svg() --><!-- ngInclude: svg() --><div class="svg-wrap svg-size-medium" ng-include="svg()" ng-if="svg()"><!--?xml version="1.0" encoding="utf-8"?-->
             <!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="128px" height="128px" viewBox="0 0 128 128" enable-background="new 0 0 128 128" xml:space="preserve">
@@ -1412,7 +1412,7 @@
 		s12.451-3.894,17.592,1.337C37.386,99.416,44.21,101.053,33.277,111.801z"></path>
               </g>
             </svg>
-          </div><!-- end ngIf: svg() --><div class="button-text-wrap"><div class="inner"><!-- ngIf: title() --><div class="button-title ng-binding ng-scope" ng-bind="title()" ng-if="title()">Start now!</div><!-- end ngIf: title() --><!-- ngIf: subtitle() --><div class="button-subtitle ng-binding ng-scope" ng-if="subtitle()" ng-bind="subtitle()">no registration required</div><!-- end ngIf: subtitle() --></div></div></div></div></button>
+          </div><!-- end ngIf: svg() --><div class="button-text-wrap"><div class="inner"><!-- ngIf: title() --><div class="button-title ng-binding ng-scope" ng-bind="title()" ng-if="title()">Start now!</div><!-- end ngIf: title() --><!-- ngIf: subtitle() --><% unless current_user %><div class="button-subtitle ng-binding ng-scope" ng-if="subtitle()" ng-bind="subtitle()">no registration required</div><% end %><!-- end ngIf: subtitle() --></div></div></div></div></button>
         </div>
       </div>
     </div>

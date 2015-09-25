@@ -7,6 +7,10 @@ $intermediate-only: "#{$screen} and (min-width: #{lower-bound($intermediate-rang
 $faq-menu-breakpoint: $intermediate-down
 $page-row-wrap-padding: 40px 0 65px 0
 
+.sp
+  &:before
+    content: "\00a0"
+
 @media #{$intermediate-up}
   @for $i from 1 through 12
     .intermediate-#{$i}

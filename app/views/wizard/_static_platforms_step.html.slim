@@ -67,20 +67,20 @@ wizard-step.wizard-platforms-step.ng-isolate-scope active-step-id="wizard.active
                 | How much effort would you like each tester to spend testing tour product?
               .available-hours
                 /! ngRepeat: hour in wizard.hours
-                label.hour.ng-scope.selected data-hours="1" for="hour-1" ng-class=("wizard.data.ps__hours == hour ? 'selected' : 'unselected' ") ng-repeat=("hour in wizard.hours")
-                  input#hour-1.ng-pristine.ng-untouched.ng-valid name="271" ng-model="wizard.data.ps__hours" type="radio" value="1" /
-                /! end ngRepeat: hour in wizard.hours
-                label.hour.ng-scope.unselected data-hours="2" for="hour-2" ng-class=("wizard.data.ps__hours == hour ? 'selected' : 'unselected' ") ng-repeat=("hour in wizard.hours")
-                  input#hour-2.ng-pristine.ng-untouched.ng-valid name="273" ng-model="wizard.data.ps__hours" type="radio" value="2" /
-                /! end ngRepeat: hour in wizard.hours
-                label.hour.ng-scope.unselected data-hours="3" for="hour-3" ng-class=("wizard.data.ps__hours == hour ? 'selected' : 'unselected' ") ng-repeat=("hour in wizard.hours")
-                  input#hour-3.ng-pristine.ng-untouched.ng-valid name="275" ng-model="wizard.data.ps__hours" type="radio" value="3" /
-                /! end ngRepeat: hour in wizard.hours
-                label.hour.ng-scope.unselected data-hours="4" for="hour-4" ng-class=("wizard.data.ps__hours == hour ? 'selected' : 'unselected' ") ng-repeat=("hour in wizard.hours")
-                  input#hour-4.ng-pristine.ng-untouched.ng-valid name="277" ng-model="wizard.data.ps__hours" type="radio" value="4" /
-                /! end ngRepeat: hour in wizard.hours
-                label.hour.ng-scope.unselected data-hours="5" for="hour-5" ng-class=("wizard.data.ps__hours == hour ? 'selected' : 'unselected' ") ng-repeat=("hour in wizard.hours")
-                  input#hour-5.ng-pristine.ng-untouched.ng-valid name="279" ng-model="wizard.data.ps__hours" type="radio" value="5" /
+                label.hour.selected data-hours="1" for="hour-1"
+                  input#hour-1 name="hours_per_tester" type="radio" value="1"
+
+                label.hour data-hours="2" for="hour-2"
+                  input#hour-2 name="hours_per_tester" type="radio" value="2"
+
+                label.hour data-hours="3" for="hour-3"
+                  input#hour-3 name="hours_per_tester" ng-model="wizard.data.ps__hours" type="radio" value="3"
+
+                label.hour data-hours="4" for="hour-4"
+                  input#hour-4 name="hours_per_tester"  type="radio" value="4"
+
+                label.hour data-hours="5" for="hour-5"
+                  input#hour-5 name="hours_per_tester" type="radio" value="5"
         /! end ngRepeat: hour in wizard.hours
         .wizard-step-footnotes.ng-scope
           .footnote

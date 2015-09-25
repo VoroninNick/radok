@@ -111,4 +111,4 @@
                 = item
         .columns.large-12.button-container
           /rf-button full-width="" subtitle="no registration required" svg="/assets/rf-rocket-up-right.svg" class="start-now-button"  sref="wizard"
-          = rf_button(full_width: true, title: "Start now!", subtitle: "no registration required", svg: "rf-rocket-up-right.svg", class: "start-now-button", href: "/wizard")
+          = rf_button(full_width: true, title: "Start now!", subtitle: ("no registration required" unless current_user), svg: "rf-rocket-up-right.svg", class: "start-now-button", href: "/wizard")
