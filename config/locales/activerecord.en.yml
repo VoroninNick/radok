@@ -7,3 +7,5 @@ en:
       pages/testing_services: "Testing services"
       pages/how_it_works: "How it works"
       pages/home: "Home"
+      pages/dashboard: "Dashboard"
+      pages/wizard: "Wizard"
