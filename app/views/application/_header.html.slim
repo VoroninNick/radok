@@ -18,11 +18,16 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
                   span.subtitle
                     |Sign in
           - else
-            .user-icon.logged ng-click="toggleUserDropdown()" off-click="closeUserDropdown()" class="#{ 'no-avatar' if true }"
+            .user-icon.logged ng-click="toggleUserDropdown()" off-click="closeUserDropdown()" class="#{ 'no-avatar' unless current_user.avatar.exists?(:header_image) }"
               div angular-ripple=""
                 .inner
-                  .svg-wrap
-                    = embedded_svg_from_assets("no_avatar.svg")
+                  - if !current_user.avatar.exists?(:header_image)
+                    .svg-wrap
+                      = embedded_svg_from_assets("no_avatar.svg")
+                  - else
+                    .image-wrap
+                      = image_tag(current_user.avatar.url(:header_image))
+
           - if current_user
             .dropdown.hide
               rf-button size="small" title="My dashboard" svg="/assets/rf-icon-configure.svg" class="my-dashboard-button-link" ng-click="goToDashboard()"

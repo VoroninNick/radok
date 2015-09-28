@@ -98,6 +98,7 @@ module ApplicationHelper
   def rf_input(**options)
     options[:type] ||= :string
     form_prefix = options.delete :form_prefix
+    value = options.delete :value
     tag_name = :input
     type = options.delete(:type)
     tag_name = :textarea if type.to_sym == :text
@@ -113,6 +114,10 @@ module ApplicationHelper
     validation = options[:validation]
     taken_message = options[:taken_message]
 
+    input_tag_content = nil
+    input_tag_content = value if tag_name == :textarea
+    input_tag_options[:value] = value if tag_name == :input
+
     content_tag(:div, class: "rf-input", type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
       content_tag(:label, taken_message, class: "hide error taken") +
       content_tag(:label, required_message, class: "hide error required") +
@@ -120,7 +125,8 @@ module ApplicationHelper
       content_tag(:label, class: "hide error unconfirmed") do content_tag(:span, "Please confirm your email") + link_to("resend instructions", "#", class: "resend_me_instructions") end +
       content_tag(:label, options[:label], class: "field-label") +
       content_tag(:div, nil, class: "input-border-wrap") +
-      content_tag(tag_name, nil, input_tag_options)
+
+      content_tag(tag_name, input_tag_content, input_tag_options)
     end
   end
 

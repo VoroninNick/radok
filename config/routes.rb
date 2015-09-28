@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   post "update_subscription", to: "user_pages#update_subscription"
-  get "/profile", to: "user_pages#profile"
+  match "/profile", to: "user_pages#profile", via: [:get, :post]
   post "sign-up", to: "user_pages#registrations__create"
   get "/sign-up", to: "user_pages#registrations__new"
   get "faq", to: "faq_articles#index", as: :faq

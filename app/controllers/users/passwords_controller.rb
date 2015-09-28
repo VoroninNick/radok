@@ -35,13 +35,31 @@ class Users::PasswordsController < Devise::PasswordsController
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
     super
-    render template: "user_pages/edit_password"
+    #render template: "user_pages/edit_password"
+    pt = params[:reset_password_token]
+    built_token = Devise.token_generator.digest(User, :reset_password_token, pt)
+    user = User.where(reset_password_token: built_token).first
+    if user
+      sign_in(resource_name, user)
+      redirect_to "/profile", flash: { forgot_password: true }
+    end
+
   end
 
   # PUT /resource/password
-  # def update
-  #   super
-  # end
+  def update
+    #super
+    new_password = params[:user][:password]
+    user = User.find(current_user.id)
+    if user.update(password: new_password)
+      #user.password = new_password
+     # sign_in(resource_name, user)
+      #if user.save
+      sign_in user, :bypass => true
+      render json: { success: true }, status: 200
+      #end
+    end
+  end
 
   # protected
 

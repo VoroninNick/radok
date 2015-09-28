@@ -20,10 +20,30 @@ class UserPagesController < ApplicationController
   end
 
   def profile
-    @personal_data_tab_active = true
+    @password_change_tab_active = flash[:forgot_password].present?
+    @personal_data_tab_active = !@password_change_tab_active
+
     @user = current_user
+
     if @user.nil?
       authenticate_user!
+    end
+
+    if request.post?
+      @user.update(params[:user])
+
+      render json: {
+                 user:
+                     {avatar: {
+                        profile_image: {
+                            url: @user.avatar.url(:profile_image)
+                        },
+                        header_image: {
+                            url: @user.avatar.url(:header_image)
+                        }
+                        }
+                     }
+             }, status: 200
     end
   end
 
@@ -35,6 +55,6 @@ class UserPagesController < ApplicationController
       current_user.unsubscribe!
     end
 
-    render json: {}, status: 200
+    render json: { }, status: 200
   end
 end

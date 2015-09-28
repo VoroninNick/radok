@@ -371,3 +371,63 @@ $("body").on "change", "#subscribe_form__subscribe", ->
     success: ->
 
   )
+
+$("body").on "change", "#input-file-uploader", ->
+  $photo_image_wrap = $(".photo-image-wrap")
+  $no_image = $photo_image_wrap.find(".no-image")
+  $no_image.addClass("hide")
+
+  input = this
+  file = input.files[0]
+  imageType = /image.*/
+  $image_label = $(".image-label")
+  $image_label.removeClass("hide")
+  if file.type.match(imageType)
+    reader = new FileReader()
+    reader.onload = ->
+
+      src = reader.result
+      $img = $image_label.find("img")
+      if $img.length == 0
+        $img = $("<img />")
+        $image_label.append($img)
+      $img.attr("src", src)
+      data = {user: {avatar: src}  }
+      $.ajax(
+        url: "/profile"
+        type: "post"
+        dataType: "json"
+        data: data
+        headers:
+          "Content-Type": "multipart/form-data"
+          "X-File-Name": file.name
+          "X-File-Size": file.size
+          "X-File-Type": file.type
+        success: ->
+          alert("success")
+        error: ->
+          alert("error")
+      )
+
+
+    reader.readAsDataURL(file);
+  else
+    $image_label.text("File type is not supported")
+
+#$("body").on "change", "#personal-data"
+
+$('body').on 'input propertychange', "#personal-data input", (evt) ->
+  $input = $(this)
+
+  # If it's the propertychange event, make sure it's the value that changed.
+  if window.event and event.type == 'propertychange' and event.propertyName != 'value'
+    return
+
+  # Clear any previously set timer before setting a fresh one
+  window.clearTimeout $(this).data('timeout')
+  $(this).data 'timeout', setTimeout((->
+    # Do your thing here
+      $form = $input.closest("form")
+      $form.submit()
+
+    ), 2000)
