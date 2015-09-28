@@ -19,7 +19,7 @@
 
                 .columns.large-6
 
-                  = rf_input(type: "text", number_inputs_height: 3, name: "contact_feedback[description]", required: true)
+                  = rf_input(type: "text", number_inputs_height: 3, name: "contact_feedback[description]", label: "Message", required: true)
 
 
 
@@ -27,7 +27,7 @@
             .actions
               .row.text-right
                 .columns.large-12
-                  = rf_button(svg: "rf-icon-add-question", title: "Add a question")
+                  = rf_button(svg: "rf-icon-email", title: "Send message")
 
           .preloader.hide
             = image_tag("preloader.gif")

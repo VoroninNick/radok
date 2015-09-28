@@ -109,6 +109,7 @@ module ApplicationHelper
     input_type = :text
     input_type = :password if type.to_s == 'password'
     input_tag_options[:type] = input_type
+    options[:required_message] ||= "#{options[:label]} is required"
     required_message = options[:required_message]
     invalid_message = options[:invalid_message]
     validation = options[:validation]
@@ -118,7 +119,9 @@ module ApplicationHelper
     input_tag_content = value if tag_name == :textarea
     input_tag_options[:value] = value if tag_name == :input
 
-    content_tag(:div, class: "rf-input", type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
+    empty = value.blank?
+
+    content_tag(:div, class: "rf-input #{'empty' if empty} #{'not-empty' if !empty}", type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
       content_tag(:label, taken_message, class: "hide error taken") +
       content_tag(:label, required_message, class: "hide error required") +
       content_tag(:label, invalid_message, class: "hide error invalid") +

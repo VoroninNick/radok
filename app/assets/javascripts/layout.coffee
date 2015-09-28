@@ -126,6 +126,10 @@ $("body").on "submit", "form", (event)->
         if reload_on_success
           window.location.reload()
 
+        show_on_success = $form.attr("show-on-success") != undefined
+        if show_on_success
+          $form_content.removeClass(hide_class)
+          $form.find(".form-message").removeClass("hide")
 
       error: (xhr)->
         response_json = xhr.responseJSON
@@ -202,7 +206,7 @@ $("body").on "capsoff", ->
   $(".caps-lock-warning").addClass("hide")
 
 
-$("body").on "focusin focusout", ".rf-input input", (event)->
+$("body").on "focusin focusout", ".rf-input input, .rf-input textarea", (event)->
   $input = $(this)
   $rf_input = $input.closest(".rf-input")
   focus = event.type == 'focusin'
@@ -247,9 +251,14 @@ $("body").on "click", ".rf-button", (event)->
 
 $.fn.validateInput = ->
   $rf_input = $(this)
+
   required = !!$rf_input.attr("required")
   $input = $rf_input.find("input, textarea")
   value = $input.val()
+  if value && value.length
+    $rf_input.addClass('not-empty').removeClass("empty")
+  else
+    $rf_input.addClass('empty').removeClass("not-empty")
   valid = true
   $field_label = $rf_input.find(".field-label")
 
@@ -277,11 +286,11 @@ $.fn.validateInput = ->
 
   if !valid
     $rf_input.addClass("invalid").removeClass("valid")
-    $field_label.removeClass("hide")
+    $field_label.addClass("hide")
 
   else
     $rf_input.removeClass("invalid").addClass("valid")
-    $field_label.addClass("hide")
+    $field_label.removeClass("hide")
 
   if !valid
     $form.addClass("invalid").removeClass("valid")
@@ -309,7 +318,10 @@ $("body").on "change blur", "form .rf-input input", (event)->
   if event.type == 'change'
     $rf_input.find(".error.taken").addClass("hide")
 
+
   $rf_input.validateInput()
+
+
 
 
 

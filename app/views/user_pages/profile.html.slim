@@ -102,19 +102,25 @@
 
 
             li class="#{'active' if @password_change_tab_active}"
-              form#change-password-form novalidate="" resource="user" action="/users/password" method="post" ajax-method="put"
-                .inputs
-                  .columns.large-5.large-centered
-                    /rf-input name="old_password" ng-model="password_change.old_password" type="password" ng-required="true" rf-min-length="8"
-                    /= rf_input name: ""
-                    /rf-input name="password" ng-model="password_change.password" type="password" ng-required="true" rf-min-length="8" mismatch="password_change.old_password"
-                    = rf_input name: "user[password]", label: "New password", type: "password", required: true
-                    /rf-input name="password_confirmation" ng-model="password_change.password_confirmation" type="password" match="password_change.password"
+              form#change-password-form novalidate="" resource="user" action="/users/password" method="post" ajax-method="put" show-preloader="" show-on-success=""
+                .form-content
+                  .form-message.hide
+                    p.h4.text-center
+                      |You have successfully changed password
+                  .inputs
+                    .columns.large-5.large-centered
+                      /rf-input name="old_password" ng-model="password_change.old_password" type="password" ng-required="true" rf-min-length="8"
+                      /= rf_input name: ""
+                      /rf-input name="password" ng-model="password_change.password" type="password" ng-required="true" rf-min-length="8" mismatch="password_change.old_password"
+                      = rf_input name: "user[password]", label: "New password", type: "password", required: true
+                      /rf-input name="password_confirmation" ng-model="password_change.password_confirmation" type="password" match="password_change.password"
 
-                    /rf-button class="change_password_button" max-button-width="300px" svg-size="small" full-width="" svg="/assets/rf-icon-password.svg" title="Change password" ng-disabled="password_change_form.$invalid" ng-click="change_password()"
-                .actions
-                  .columns.large-5.large-centered
-                    = rf_button title: "change password", svg: "rf-icon-password", full_width: true
+                      /rf-button class="change_password_button" max-button-width="300px" svg-size="small" full-width="" svg="/assets/rf-icon-password.svg" title="Change password" ng-disabled="password_change_form.$invalid" ng-click="change_password()"
+                  .actions
+                    .columns.large-5.large-centered
+                      = rf_button title: "change password", svg: "rf-icon-password", full_width: true
+                .preloader.hide
+                  = image_tag("preloader.gif")
             li class="#{'active' if @new_letter_tab_active}"
               .header.h4
                 |Subscribe for newsletter
