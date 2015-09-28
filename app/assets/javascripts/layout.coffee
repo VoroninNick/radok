@@ -388,6 +388,14 @@ $("body").on "change", "#input-file-uploader", ->
 
       src = reader.result
       $img = $image_label.find("img")
+      $header_user = $("#header-user")
+      $header_user.find(".svg-wrap").remove()
+      $header_user_icon_inner = $header_user.find(".user-icon .inner")
+      $image_wrap = $header_user_icon_inner.find(".image-wrap")
+      if $image_wrap.length == 0
+        $image_wrap = $("<div><img /></div>").appendTo($header_user_icon_inner)
+      $header_img = $image_wrap.find("img")
+      $header_img.attr("src", src)
       if $img.length == 0
         $img = $("<img />")
         $image_label.append($img)
@@ -403,10 +411,12 @@ $("body").on "change", "#input-file-uploader", ->
           "X-File-Name": file.name
           "X-File-Size": file.size
           "X-File-Type": file.type
-        success: ->
-          alert("success")
+        success: (data)->
+          #alert("success")
+          $header_img.attr('src', data.user.avatar.header_image.url)
+          $img.attr('src', data.user.avatar.profile_image.url)
         error: ->
-          alert("error")
+          #alert("error")
       )
 
 

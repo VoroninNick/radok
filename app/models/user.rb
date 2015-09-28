@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :confirm_success_url, :config_name
 
-  has_attached_file :avatar, styles: { profile_image: "120x120#", header_image: "40x40#" }, url: "/system/users/avatars/:id/:style/:filename.:extension"
+  has_attached_file :avatar, styles: { profile_image: "120x120#", header_image: "40x40#" }#, url: "/system/users/avatars/:id/:style/:filename.:extension"
   attr_accessible :avatar, :delete_avatar
 
   do_not_validate_attachment_file_type :avatar
