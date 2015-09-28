@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   post "update_subscription", to: "user_pages#update_subscription"
   get "/profile", to: "user_pages#profile"
   post "sign-up", to: "user_pages#registrations__create"
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   #root to: 'home#index'
   get "about/leaders", to: "about#leaders"
-  post "contact_request", to: "contact#contact_request"
+  post "contact_feedback", to: "contact#contact_feedback"
   post "faq-request", to: "faq_articles#request_question"
   get "faq_articles", to: "faq_articles#articles", as: :faq_index
 

@@ -1,7 +1,8 @@
 class ContactController < ApplicationController
-  def contact_request
+  def contact_feedback
     if request.post?
-      ContactRequest.create!(params[:contact_request])
+      @contact_feedback = ContactFeedback.create!(params[:contact_feedback])
+      ContactFeedbackMailer.new_request(@contact_feedback).deliver
       render json: { result: "successfully rendered", code: 200 }
     else
       render json: { result: "error", code: 500 }

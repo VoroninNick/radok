@@ -248,7 +248,7 @@ $("body").on "click", ".rf-button", (event)->
 $.fn.validateInput = ->
   $rf_input = $(this)
   required = !!$rf_input.attr("required")
-  $input = $rf_input.find("input")
+  $input = $rf_input.find("input, textarea")
   value = $input.val()
   valid = true
   $field_label = $rf_input.find(".field-label")
@@ -349,7 +349,13 @@ setContainerSize = ()->
 $("body").on "click", ".delete-account", ->
   delete_confirmed = confirm("Do you really want delete your account? This action cannot be reverted")
   if delete_confirmed
-    $.ajax("/")
+    $.ajax(
+      url: "/users",
+      type: "delete"
+      dataType: "json"
+      complete: ()->
+        window.location.reload()
+    )
 
 $(window).on "resize", setContainerSize
 $(window).trigger("resize")

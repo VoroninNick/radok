@@ -1,6 +1,6 @@
-class FaqRequestMailer < ApplicationMailer
+class ContactFeedbackMailer < ApplicationMailer
   def new_request(request)
-    to = FormConfigs::FaqRequest.first.try(&:emails) || FormConfigs::FaqRequest.default_emails
+    to = FormConfigs::ContactFeedback.first.try(&:emails) || FormConfigs::ContactFeedback.default_emails
     @resource = request
     mail(
         #template_path: "views/mailers/faq_request",
@@ -8,7 +8,7 @@ class FaqRequestMailer < ApplicationMailer
         template_name: "faq_request",
         layout: false,
         to: to,
-        subject: "New FAQ Request",
+        subject: "New Contact feedback",
         from: "Radok force"
     )
   end
