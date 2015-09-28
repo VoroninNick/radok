@@ -309,7 +309,7 @@ validateEmail = (email) ->
   re.test email
 
 
-$("body").on "change blur", "form .rf-input input", (event)->
+$("body").on "change blur", "form .rf-input input, form .rf-input textarea", (event)->
 
   console.log "event type: ", event.type
   console.log "value: ", $(this).val()
