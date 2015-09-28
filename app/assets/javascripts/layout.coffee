@@ -393,7 +393,7 @@ $("body").on "change", "#input-file-uploader", ->
       $header_user_icon_inner = $header_user.find(".user-icon .inner")
       $image_wrap = $header_user_icon_inner.find(".image-wrap")
       if $image_wrap.length == 0
-        $image_wrap = $("<div><img /></div>").appendTo($header_user_icon_inner)
+        $image_wrap = $("<div class='image-wrap'><img /></div>").appendTo($header_user_icon_inner)
       $header_img = $image_wrap.find("img")
       $header_img.attr("src", src)
       if $img.length == 0
