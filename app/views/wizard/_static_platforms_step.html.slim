@@ -1,88 +1,87 @@
-wizard-step.wizard-platforms-step.ng-isolate-scope active-step-id="wizard.active_step_id" child-scope-source="controller" step-id="2" step-number="1" step-title=("On what platforms would you like your product to be tested?") wizard="wizard"
-  .wizard-step
-    .wizard-step-edit-tooltip.ng-hide ng-click="wizard.go_to_step(step_id)" ng-show=("!active &amp;&amp; step_number &amp;&amp; proceeded &amp;&amp; wizard.ready_go_to_step")
-      /! ngInclude: '/assets/pen.svg'
-      .svg-container.ng-scope ng-include="'/assets/pen.svg'"
-        = embedded_svg_from_assets("pen")
+.wizard-step.wizard-platforms-step   step-number="1"
+  .wizard-step-edit-tooltip
+    /! ngInclude: '/assets/pen.svg'
+    .svg-container
+      = embedded_svg_from_assets("pen")
 
-    .wizard-step-line.ng-scope ng-if="step_number"
-    /! end ngIf: step_number
-    .wizard-step-counter data-number="1" ng-click="wizard.go_to_step(step_id)" ng-show="step_number"
-    .wizard-step-content
-      /! ngIf: !(active)
-      /! ngIf: step_title
-      .wizard-step-header.text-center.ng-binding.ng-scope ng-if="step_title"
-        | On what platforms would you like your product to be tested?
-      /! end ngIf: step_title
-      .wizard-step-content-content ng-transclude=""
-        form.ng-pristine.ng-untouched.ng-scope.ng-invalid.ng-invalid-min.ng-valid-required.ng-valid-pattern name="wizard.platforms_form" ng-model="wizard.platforms" novalidate=""
-          input.hide.ng-pristine.ng-untouched.ng-invalid.ng-invalid-min.ng-valid-required min="1" name="total_price" ng-model="wizard.total_price" required="" type="number"
-          .row
-            .blue-header.ng-binding.ng-scope.columns.large- columns="12" ng-class=("columns ? 'columns large-12' : ''") text=("Platform / testers per platform")
-              | Platform / testers per platform
-
-
-            .platforms
-              - @all_platforms.each do |platform|
-                platform commentable="" min-testers="1" ng-model="platform"  show-full="" data-product-type-ids=platform.product_types.map(&:id).join(",")
-                  .platform.commentable
-                    /! ngInclude: image_path
-                    - if platform.avatar.exists?(:original)
-                      .svg-wrap
-                        = embedded_svg_from_absolute_path platform.avatar.path(:original)
-
-                    .human-svg-wrap
-                      = embedded_svg_from_assets("user")
-
-                    .name.ng-binding
-                      = platform.name
-                    /! ngIf: !show_full
-                    .platform-content
-                      /! ngRepeat: option_count in model.platform_subitems track by $index
-                      - platform.children.each_with_index do |sub_item, index|
-                        .option-count html-id="platform-1-subitem-1"
-                          label.ng-binding for="platform-1-subitem-1"
-                            = sub_item.name
-                          .input-wrap
-                            input  pattern="[0-9]*" type="text"
-                            label.decrement for="platform-1-subitem-1" ng-click="focus();decrement();$event.stopPropagation();"
-                            label.increment for="platform-1-subitem-1" ng-click="focus();increment();$event.stopPropagation();"
-                        /! end ngRepeat: option_count in model.platform_subitems track by $index
-
-                      comment-with-price.ng-isolate-scope model-comment="model.comment" model-price="model.price" ng-show="commentable"
-                        label.comment-label.ng-binding.empty  ng-click="edit_or_create()"  Add a comment
-                        .platform-price
-                          .currency
-                            | $
-                          .price.ng-binding
-                            | 0
-                        textarea.comment-textarea.ng-pristine.ng-untouched.ng-valid.hide.empty  ng-model="model_comment"
-              /! end ngRepeat: platform in wizard.platforms
+  .wizard-step-line
+  /! end ngIf: step_number
+  .wizard-step-counter data-number="1"
+  .wizard-step-content
+    /! ngIf: !(active)
+    /! ngIf: step_title
+    .wizard-step-header.text-center
+      | On what platforms would you like your product to be tested?
+    /! end ngIf: step_title
+    .wizard-step-content-content
+      form name="wizard.platforms_form" novalidate=""
+        input.hide min="1" name="total_price" required="" type="number"
+        .row
+          .blue-header.ng-binding.ng-scope.columns.large-12
+            | Platform / testers per platform
 
 
-            .hours-per-tester
-              .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=("Time (hours per tester)")
-                | Time (hours per tester)
-              p
-                | How much effort would you like each tester to spend testing tour product?
-              .available-hours
-                /! ngRepeat: hour in wizard.hours
-                label.hour.selected data-hours="1" for="hour-1"
-                  input#hour-1 name="hours_per_tester" type="radio" value="1"
+          .platforms
+            - @all_platforms.each do |platform|
+              platform commentable="" min-testers="1" ng-model="platform"  show-full="" data-product-type-ids=platform.product_types.map(&:id).join(",")
+                .platform.commentable
+                  /! ngInclude: image_path
+                  - if platform.avatar.exists?(:original)
+                    .svg-wrap
+                      = embedded_svg_from_absolute_path platform.avatar.path(:original)
 
-                label.hour data-hours="2" for="hour-2"
-                  input#hour-2 name="hours_per_tester" type="radio" value="2"
+                  .human-svg-wrap
+                    = embedded_svg_from_assets("user")
 
-                label.hour data-hours="3" for="hour-3"
-                  input#hour-3 name="hours_per_tester" ng-model="wizard.data.ps__hours" type="radio" value="3"
+                  .name.ng-binding
+                    = platform.name
+                  /! ngIf: !show_full
+                  .platform-content
+                    /! ngRepeat: option_count in model.platform_subitems track by $index
+                    - platform.children.each_with_index do |sub_item, index|
+                      .option-count html-id="platform-1-subitem-1" data-id=sub_item.id
+                        label.ng-binding for="platform-1-subitem-1"
+                          = sub_item.name
+                        .input-wrap
+                          input  pattern="[0-9]*" type="text" value=( @project.platform_testers_count(sub_item.id))
+                          label.decrement for="platform-1-subitem-1" ng-click="focus();decrement();$event.stopPropagation();"
+                          label.increment for="platform-1-subitem-1" ng-click="focus();increment();$event.stopPropagation();"
+                      /! end ngRepeat: option_count in model.platform_subitems track by $index
 
-                label.hour data-hours="4" for="hour-4"
-                  input#hour-4 name="hours_per_tester"  type="radio" value="4"
+                    comment-with-price.ng-isolate-scope model-comment="model.comment" model-price="model.price" ng-show="commentable"
+                      label.comment-label.ng-binding.empty  ng-click="edit_or_create()"  Add a comment
+                      .platform-price
+                        .currency
+                          | $
+                        .price.ng-binding
+                          | 0
+                      textarea.comment-textarea.ng-pristine.ng-untouched.ng-valid.hide.empty  ng-model="model_comment"
+            /! end ngRepeat: platform in wizard.platforms
 
-                label.hour data-hours="5" for="hour-5"
-                  input#hour-5 name="hours_per_tester" type="radio" value="5"
-        /! end ngRepeat: hour in wizard.hours
-        .wizard-step-footnotes.ng-scope
-          .footnote
-            | * Specify operation system if necessary
-        .step-nav-buttons.ng-scope
+
+          .hours-per-tester
+            .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=("Time (hours per tester)")
+              | Time (hours per tester)
+            p
+              | How much effort would you like each tester to spend testing tour product?
+            .available-hours
+              /! ngRepeat: hour in wizard.hours
+              label.hour.selected data-hours="1" for="hour-1"
+                input#hour-1 name="hours_per_tester" type="radio" value="1"
+
+              label.hour data-hours="2" for="hour-2"
+                input#hour-2 name="hours_per_tester" type="radio" value="2"
+
+              label.hour data-hours="3" for="hour-3"
+                input#hour-3 name="hours_per_tester" ng-model="wizard.data.ps__hours" type="radio" value="3"
+
+              label.hour data-hours="4" for="hour-4"
+                input#hour-4 name="hours_per_tester"  type="radio" value="4"
+
+              label.hour data-hours="5" for="hour-5"
+                input#hour-5 name="hours_per_tester" type="radio" value="5"
+      /! end ngRepeat: hour in wizard.hours
+      .wizard-step-footnotes.ng-scope
+        .footnote
+          | * Specify operation system if necessary
+      .step-nav-buttons.ng-scope

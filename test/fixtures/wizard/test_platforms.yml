@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  platform_id: 1
+  test_id: 1
+  testers_count: 1
+
+two:
+  platform_id: 1
+  test_id: 1
+  testers_count: 1

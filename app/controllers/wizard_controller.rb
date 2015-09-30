@@ -2,6 +2,13 @@ class WizardController < ApplicationController
 
   before_action :authenticate, only: [:dashboard_projects, :delete_dashboard_project]
 
+  def edit_or_show
+    @project = Wizard::Test.find(params[:id])
+    @all_platforms = Wizard::Platform.roots
+    @created = true
+    @head_title = "Wizard Test ##{@project.id}"
+    render "new"
+  end
 
   def new
     @head_title = "Wizard"
@@ -10,6 +17,24 @@ class WizardController < ApplicationController
     @all_platforms = Wizard::Platform.roots
 
     set_page_metadata("wizard")
+  end
+
+  def create
+    test = Wizard::Test.create(params[:test])
+    if test.save
+      render json: test
+    end
+  end
+
+  def update
+
+    test = Wizard::Test.find(params[:id])
+    test_params = params[:test]
+    test_params[:testers_by_platform] = test_params.delete :platforms
+    test.update(test_params)
+    if test.save
+      render json: test
+    end
   end
 
 

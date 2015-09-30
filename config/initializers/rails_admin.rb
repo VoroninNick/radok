@@ -52,7 +52,7 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.included_models = [Wizard::ProductType, Wizard::Platform, User, FaqArticle, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FaqRequest, ContactFeedback]
+  config.included_models = [Wizard::ProductType, Wizard::TestType, Wizard::Platform, User, FaqArticle, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FaqRequest, ContactFeedback]
 
   ( [MetaData, Page] + pages_models) .each do |model|
     config.included_models += [model]
@@ -172,6 +172,13 @@ RailsAdmin.config do |config|
       field :name
       field :image
       field :platforms
+    end
+  end
+
+  config.model Wizard::TestType do
+    edit do
+      field :name
+      field :image
     end
   end
 

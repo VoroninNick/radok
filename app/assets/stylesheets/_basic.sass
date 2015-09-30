@@ -303,7 +303,7 @@ button, label, input[type=button], input[type=submit]
 #body
   form
     position: relative
-  .rf-input-wrap, rf-input, .rf-input
+  .rf-input-wrap, rf-input, .rf-input:not(.checkbox-list)
     display: block
     position: relative
     //padding: 20px 0
@@ -461,6 +461,8 @@ button, label, input[type=button], input[type=submit]
     .button-text-wrap
       .inner
         //top: 20px
+  &.rf-upload-button
+    line-height: 35px
   &.rf-button-with-svg
     .button-text-wrap
       margin-left: -2px
@@ -590,12 +592,12 @@ a
     text-decoration: underline
 
 #body
-  .rf-input
+  .rf-input:not(.checkbox-list)
     .error
       font-weight: 500
       //color: $yellow-orange-color
       color: $error-color
-    &.invalid
+    &.invalid.touched
       .field-label
         display: none
 
@@ -622,3 +624,27 @@ a
 .standard-form
   .header + .subheader
     max-width: 400px
+
+
+.rf-input
+  &:not(.touched)
+    .error
+      display: none !important
+    .field-label
+      display: block !important
+
+#body
+  .wizard-step
+    .rf-input[type=string]
+      input[type=text]
+        height: 35px
+      label
+        top: 32px
+      &.not-empty, &.focus-in
+        label
+          top: 0
+.url-or-files
+  .or, .button-wrap
+    padding-top: 25px
+  .rf-input
+    top: -15px

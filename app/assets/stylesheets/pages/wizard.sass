@@ -283,7 +283,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
     .wizard-step-content
       opacity: 0.3
 
-  &.proceeded
+  &.proceeded:not(.active)
     .wizard-step-edit-tooltip
       display: none
     &:hover
@@ -294,7 +294,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
         top: 52%
         left: 55%
         +transform(translate(-50%, -50%))
-        z-index: 1
+        z-index: 2
 
 
         svg
@@ -304,6 +304,9 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
           g
             fill: #666
 
+  &[uneditable]
+    .wizard-step-edit-tooltip
+      display: none !important
   //&:not(.proceeded)
     .wizard-step-edit-tooltip
       display: none
@@ -379,14 +382,15 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
     .wizard-step-content
       opacity: 0.3
 
-  .wizard-step-content-overlay
-    display: block
-    position: absolute
-    top: 0
-    bottom: 0
-    width: 100%
-    left: 0
-    z-index: 1
+
+    .wizard-step-content-overlay
+      display: block
+      position: absolute
+      top: 0
+      bottom: 0
+      width: 100%
+      left: 0
+      z-index: 1
 
   &:not(.ready-to-proceed)
     //.step-nav-buttons
@@ -854,7 +858,7 @@ button
   &.horizontal
     +flexbox
     +flex-wrap(wrap)
-    > .input, > .checklist-item
+    > .input , > .checklist-item
       +flex-grow(1)
 
 .question
@@ -1080,7 +1084,7 @@ body
     .button-text-wrap
       .button-title
         +font-21
-        line-height: 70px
+        //line-height: 70px
 
   &.rf-next-step-button
     .svg-wrap
@@ -1141,3 +1145,36 @@ body
 #wizard-summary
   .current-task
     //+animation(current-task-blink 1s infinite)
+
+
+.checkbox-list
+  .options
+    &.horizontal
+      +flexbox
+      +flex-wrap(wrap)
+      .checklist-option
+        +flex-grow(1)
+        input
+          display: none
+
+.wizard-step
+  .input
+    > .description
+      display: block
+      margin-left: 38px
+
+
+input#test_case_files
+  display: none
+
+.test_case_files-list
+  .delete
+    &:before
+      content: "x"
+      color: $fire-orange-color
+      display: inline-block
+      margin-left: 5px
+      cursor: pointer
+
+div.tagsinput span.tag a
+  color: $fire-orange-color

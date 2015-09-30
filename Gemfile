@@ -97,3 +97,5 @@ local_gem "attachable"
 gem 'rails_admin_nestable'
 
 gem 'cancancan'
+
+gem 'composite_primary_keys'

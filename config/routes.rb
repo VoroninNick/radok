@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "/wizard/:id", to: "wizard#edit_or_show"
+  put "wizard/:id", to: "wizard#update"
+  post "wizard", to: "wizard#create"
 
   post "update_subscription", to: "user_pages#update_subscription"
   match "/profile", to: "user_pages#profile", via: [:get, :post]

@@ -1,121 +1,44 @@
-wizard-step.ng-isolate-scope active-step-id="wizard.active_step_id" child-scope-source="controller" step-id="3" step-number="2" wizard="wizard"
-  .wizard-step.active
-    .wizard-step-edit-tooltip.ng-hide ng-click="wizard.go_to_step(step_id)" ng-show=("!active &amp;&amp; step_number &amp;&amp; proceeded &amp;&amp; wizard.ready_go_to_step")
-      .svg-container.ng-scope ng-include="'/assets/pen.svg'"
-        = embedded_svg_from_assets("pen")
-    /! ngIf: step_number
-    .wizard-step-line.ng-scope ng-if="step_number"
-    /! end ngIf: step_number
-    .wizard-step-counter data-number="2" ng-click="wizard.go_to_step(step_id)" ng-show="step_number"
-    .wizard-step-content
-      /! ngIf: !(active)
-      /! ngIf: step_title
-      .wizard-step-content-content ng-transclude=""
-        form.ng-pristine.ng-scope.ng-invalid.ng-invalid-required name="wizard.project_info_form" novalidate=""
-          .questions
-            question.ng-isolate-scope required="true" text=("What is the name of this wonderful project?")
-              .question
-                .text.ng-binding ng-class=("centered ? 'centered' : ''")
-                  | What is the name of this wonderful project?
-                  /! ngIf: required
-                  span.required-symbol.ng-scope ng-if="required"  *
-                /! end ngIf: required
-                div ng-transclude=""
-                  rf-input.ng-pristine.ng-valid.ng-scope.not-empty.ng-touched.focus-out label=("Project name") ng-model="wizard.data.pi__project_name"
-                    .rf-input.string
-                      label Project name
-                      .input-border-wrap
-                      input.ng-pristine.ng-valid.ng-touched ng-change="onChange()" ng-model="value" type="text"
-                      .error-messages ng-show="hasErrors()"
-            /! ngRepeat: (error_key, error_value) in error()
-            question.ng-isolate-scope required="true" text=("What is version number of the new release that you'd like us to test?")
-              .question
-                .text.ng-binding ng-class=("centered ? 'centered' : ''")
-                  | What is version number of the new release that you'd like us to test?
-                  /! ngIf: required
-                  span.required-symbol.ng-scope ng-if="required"  *
-                /! end ngIf: required
-                div ng-transclude=""
-                  rf-input.ng-pristine.ng-untouched.ng-scope.is-empty.ng-invalid.ng-invalid-required label=("Project version") name="version_number" ng-model="wizard.data.pi__project_version" required=""
-                    .rf-input.string
-                      label Project version
-                      .input-border-wrap
-                      input.ng-pristine.ng-untouched.ng-valid ng-change="onChange()" ng-model="value" type="text"
-                      .error-messages ng-show="hasErrors()"
-                        /! ngRepeat: (error_key, error_value) in error()
-                        .error-message.ng-binding.ng-scope ng-repeat="(error_key, error_value) in error()"  required
-            /! end ngRepeat: (error_key, error_value) in error()
-            checkbox-list#pi__project-languages.ng-pristine.ng-untouched.ng-valid.ng-isolate-scope.ng-valid-required collection="wizard.available_project_languages" name="project_languges" ng-model="wizard.data.pi__project_languages" question=("In what language(s) is the project?") required="true" required-error-message=("Please check at least one language")
-              .rf-input.checkbox-list
-                question.ng-isolate-scope ng-required="true" required="required" text=("In what language(s) is the project?")
-                  .question
-                    .text.ng-binding ng-class=("centered ? 'centered' : ''")
-                      | In what language(s) is the project?
-                    /! ngIf: required
-                    div ng-transclude=""
-                      .inputs.horizontal.ng-scope
-                        /! ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__project-languages-1.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__project-languages-1"
-                          label.ng-binding for="pi__project-languages-1"  English
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__project-languages-2.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__project-languages-2"
-                          label.ng-binding for="pi__project-languages-2"  Ukrainian
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__project-languages-3.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__project-languages-3"
-                          label.ng-binding for="pi__project-languages-3"  Russian
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__project-languages-4.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__project-languages-4"
-                          label.ng-binding for="pi__project-languages-4"  Portuguese
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__project-languages-5.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__project-languages-5"
-                          label.ng-binding for="pi__project-languages-5"  Polish
-                /! end ngRepeat: key in collection track by $index
-                .error-messages ng-show="hasErrors()"
-            /! ngRepeat: (error_key, error_value) in error()
-            checkbox-list#pi__report-languages.ng-pristine.ng-untouched.ng-valid.ng-isolate-scope.ng-valid-required collection="wizard.available_report_languages" name="report_languges" ng-model="wizard.data.pi__report_languages" question=("In what language(s) is the project?") required="true" required-error-message=("Please check at least one language")
-              .rf-input.checkbox-list
-                question.ng-isolate-scope ng-required="true" required="required" text=("In what language(s) is the project?")
-                  .question
-                    .text.ng-binding ng-class=("centered ? 'centered' : ''")
-                      | In what language(s) is the project?
-                    /! ngIf: required
-                    div ng-transclude=""
-                      .inputs.horizontal.ng-scope
-                        /! ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__report-languages-1.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__report-languages-1"
-                          label.ng-binding for="pi__report-languages-1"  English
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__report-languages-2.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__report-languages-2"
-                          label.ng-binding for="pi__report-languages-2"  Ukrainian
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__report-languages-3.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__report-languages-3"
-                          label.ng-binding for="pi__report-languages-3"  Russian
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__report-languages-4.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__report-languages-4"
-                          label.ng-binding for="pi__report-languages-4"  Portuguese
-                        /! end ngRepeat: key in collection track by $index
-                        .checklist-item.ng-scope ng-repeat=("key in collection track by $index")
-                          input#pi__report-languages-5.ng-scope.ng-pristine.ng-untouched.ng-valid checklist-change="onChange()" checklist-value="key" ng-model="checked" type="checkbox"
-                          label for="pi__report-languages-5"
-                          label.ng-binding for="pi__report-languages-5"  Polish
-                /! end ngRepeat: key in collection track by $index
-                .error-messages ng-show="hasErrors()"
-                  /! ngRepeat: (error_key, error_value) in error()
+.wizard-step step-number="2"
+  .wizard-step-edit-tooltip
+    .svg-container
+      = embedded_svg_from_assets("pen")
+  /! ngIf: step_number
+  .wizard-step-line
+  /! end ngIf: step_number
+  .wizard-step-counter data-number="2"
+  .wizard-step-content
+    /! ngIf: !(active)
+    /! ngIf: step_title
+    .wizard-step-content-content
+      form name="wizard.project_info_form" novalidate=""
+        .questions
+          question required="true" text=("What is the name of this wonderful project?")
+            .question
+              .text
+                | What is the name of this wonderful project?
+                /! ngIf: required
+                span.required-symbol  *
+              /! end ngIf: required
+              div
+                = rf_input label: "Project name", required: true, name: "wizard[project_name]"
+                /rf-input label=("Project name") ng-model="wizard.data.pi__project_name"
+                  .rf-input.string
+                    label Project name
+                    .input-border-wrap
+                    input.ng-pristine.ng-valid.ng-touched ng-change="onChange()" ng-model="value" type="text"
+                    .error-messages ng-show="hasErrors()"
+          /! ngRepeat: (error_key, error_value) in error()
+          question required="true" text=("What is version number of the new release that you'd like us to test?")
+            .question
+              .text
+                | What is version number of the new release that you'd like us to test?
+                /! ngIf: required
+                span.required-symbol  *
+              /! end ngIf: required
+              div
+                = rf_input label: "Project version", required: true, name: "wizard[project_version]"
+
+
+
+          = wizard_checkbox_list field: "pi__project_languages", name: "wizard[project_languages[]]", question: "In what language(s) is the project?", options: %w(English Russian Ukrainian French Polish Portuguese)
+          = wizard_checkbox_list field: "pi__report_languages", name: "wizard[report_languages[]]", question: "In what language(s) should the bugs be reported?", options: %w(English Russian Ukrainian French Polish Portuguese)

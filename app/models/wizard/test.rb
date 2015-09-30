@@ -1,7 +1,54 @@
 class Wizard::Test < ActiveRecord::Base
   attr_accessor :steps
 
+  attr_accessible *attribute_names
 
+  has_attachments :test_case_files
+
+  has_attachments :test_files
+
+  has_many :test_platforms_bindings, class_name: Wizard::TestPlatform#, foreign_key: [:test_id, :platform_id]
+  has_many :platforms, class_name: Wizard::Platform, through: :test_platforms_bindings
+
+
+  accepts_nested_attributes_for :test_platforms_bindings
+  attr_accessible :test_platforms_bindings, :test_platforms_bindings_attributes
+
+  attr_accessible :testers_by_platform
+
+  def testers_by_platform=(platforms)
+    puts "testers_by_platform="
+    puts platforms.inspect
+    platforms.each do |k , p|
+      platform_id = p['id'].to_i
+      count = p['count'].to_i
+      test_platform_binding = Wizard::TestPlatform.where(platform_id: platform_id, test_id: self.id).first
+      if test_platform_binding.nil?
+        test_platform_binding = Wizard::TestPlatform.new(test_id: self.id, platform_id: platform_id, testers_count: count)
+
+        test_platform_binding.save
+
+      elsif test_platform_binding.testers_count != count
+        #test_platform_binding.testers_count = count
+        test_platform_binding.update(testers_count: 5)
+      end
+
+
+
+
+    end
+    platform_ids = platforms.map{|k, p| p['id'].to_i }
+    platforms_to_remove = Wizard::TestPlatform.where(test_id: self.id).where.not(platform_id: platform_ids)
+    platforms_to_remove.delete_all
+  end
+
+  def has_platform_by_id?(platform_id)
+    self.test_platforms_bindings.where(platform_id: platform_id).any?
+  end
+
+  def platform_testers_count(platform_id)
+    self.test_platforms_bindings.where(platform_id: platform_id).first.try(&:testers_count)
+  end
 
   #def initialize
    # Wizard::Step.available_steps

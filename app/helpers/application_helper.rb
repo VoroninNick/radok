@@ -171,5 +171,28 @@ module ApplicationHelper
   end
 
 
+  def wizard_checkbox_list **options
+    options[:question] ||= false
+    options[:options] ||= []
+
+    content_tag :div, class: "rf-input checkbox-list" do
+      raw(
+
+        content_tag(:div, class: "question") do
+          content_tag(:div, options[:question], class: "text") +
+          content_tag(:div, class: "options horizontal") do
+            raw(options[:options].each_with_index.map do |opt, i|
+              id =   "#{options[:field]}-#{i + 1}"
+              content_tag(:div, class: "checklist-option") do
+                content_tag(:input, nil, id: id, type: "checkbox", value: opt, name: options[:name] ) +
+                content_tag(:label, nil, class: "checklist-option-label", for: id) +
+                content_tag(:label, opt, for: id, class: "checklist-option-label")
+              end
+            end.join)
+          end
+        end
+      )
+    end
+  end
 
 end

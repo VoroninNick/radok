@@ -1,11 +1,11 @@
-#wizard-controller ng-controller="WizardController as wizardCtrl"
+#wizard-controller ng-controller="WizardController as wizardCtrl" class="#{'configure-mode' if @created}"
   = render "page_banner"
   #wizard-content
     #wizard-steps
       = render "static_intro_step"
 
 
-      .configuration-steps.hide ng-init="initConfigurationSteps()"
+      .configuration-steps ng-init="initConfigurationSteps()" class=('hide' if !@created)
         = render "static_platforms_step"
         /= next_step_button(4, "Project info")
         /= prev_step_button(2)
@@ -41,7 +41,7 @@
             = prev_step_button(5)
 
 
-    = render "project_full_summary", project: @project
+    = render "project_full_summary", project: @project, hide: true
 
 
     #wizard-help

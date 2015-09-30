@@ -197,6 +197,8 @@ $("body").on "show_success", "form.forgot-password-form", (event, data)->
   $email_placeholder = $form.find(".success-handler .email-placeholder")
   user = data.user
   $email_placeholder.text(user.email)
+
+
 #$("body").on "focus keypress", "input[type=password]", (event)->
 #  console.log "event: ", event
 
@@ -209,11 +211,14 @@ $("body").on "capsoff", ->
 $("body").on "focusin focusout", ".rf-input input, .rf-input textarea", (event)->
   $input = $(this)
   $rf_input = $input.closest(".rf-input")
+  $rf_input.addClass("touched")
   focus = event.type == 'focusin'
   if focus
     $rf_input.addClass("focus-in")
   else
     $rf_input.removeClass("focus-in")
+
+
 
 $("body").on "change", ".rf-input input", (event)->
   $input = $(this)
@@ -252,9 +257,11 @@ $("body").on "click", ".rf-button", (event)->
 $.fn.validateInput = ->
   $rf_input = $(this)
 
+  touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
   $input = $rf_input.find("input, textarea")
   value = $input.val()
+
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
   else
@@ -297,10 +304,15 @@ $.fn.validateInput = ->
 
 
 
-$.fn.validateForm = ->
+$.fn.validateForm = (options)->
+
+
+
   $form = $(this)
+
   $form.find(".rf-input").each ->
     $rf_input = $(this)
+
     $rf_input.validateInput()
   $form
 
@@ -309,7 +321,8 @@ validateEmail = (email) ->
   re.test email
 
 
-$("body").on "change blur", "form .rf-input input, form .rf-input textarea", (event)->
+
+$("body").on "change blur keyup", "form .rf-input input, form .rf-input textarea", (event)->
 
   console.log "event type: ", event.type
   console.log "value: ", $(this).val()

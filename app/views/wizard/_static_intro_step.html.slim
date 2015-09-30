@@ -1,8 +1,9 @@
-.wizard-step.intro-step.active
+.wizard-step.intro-step.active uneditable="" class="#{'proceeded' if @created} #{'active' unless @created}"
   .wizard-step-edit-tooltip
     .svg-container.ng-scope
       = embedded_svg_from_assets("pen")
   .wizard-step-content
+    .wizard-step-content-overlay
     .wizard-step-content-content ng-transclude=""
       form.ng-valid.ng-scope.ng-dirty.ng-valid-parse action="" method="post" name="wizard.type_of_test_form" novalidate=""
         question question-key="type_of_test"
@@ -12,7 +13,7 @@
             div ng-transclude=""
               .row.ng-scope
                 .input.required
-                  = option_image("name", "test_type")
+                  /= option_image("name", "wizard__test_type")
                   .option-image.large-4.ng-valid description="" image-path="rf-functional-test" label=("Functional test") name="test_type" ng-model="wizard.data.tot__type_of_test" value="functional"
                     input#test_type__1.option-image-input.ng-pristine.ng-untouched.ng-valid name="test_type" type="radio" value="functional" data-name="Functional"
                     label for="test_type__1"
@@ -30,7 +31,7 @@
                       = embedded_svg_from_assets("rf-usability-test")
                       span.name.ng-binding Usability test
 
-        question question-key="type_of_product" class="#{"hide" unless @project.tot__type_of_test}"
+        question question-key="type_of_product" class="#{"hide" if !@created && !@project.tot__type_of_test}"
           .question
             .text.ng-binding.centered
               | For what type of product?
@@ -40,8 +41,8 @@
                 .row
                   .input.required
                     - Wizard::ProductType.all.each_with_index do |product_type, product_type_id|
-                      .option-image.large-3 label=("Mobile apps") name="product_type"
-                        input.option-image-input.ng-pristine.ng-untouched.ng-valid data-id=product_type.id id="product_type__#{product_type_id}" name="product_type" type="radio" value="mobile" data-name=product_type.name
+                      .option-image.large-3 name="product_type"
+                        input.option-image-input checked=("checked" if product_type.id == @project.) data-id=product_type.id id="product_type__#{product_type_id}" name="product_type" type="radio" value="mobile" data-name=product_type.name
                         label for="product_type__#{product_type_id}"
                           = embedded_svg_from_absolute_path(product_type.image.path(:original))
                           span.name
