@@ -134,7 +134,7 @@
                 |$
               span data-bind="total_price"
 
-          .checkout-button.disabled ng-class="!wizard.ready_to_checkout ? 'disabled' : '' "
+          .checkout-button disabled="disabled" ng-class="!wizard.ready_to_checkout ? 'disabled' : '' " open-popup="payment"
             /= svg_placeholder "rf-rocket-up-right"
             ng-include src="'/assets/rf-rocket-up-right.svg'"
               = embedded_svg_from_assets "rf-rocket-up-right"
@@ -163,3 +163,5 @@
             |or
             .go-back-button  ng-click="go_back()"
               |go back to STEP {{wizard.active_step_id - 2}}
+
+= popup "payment"

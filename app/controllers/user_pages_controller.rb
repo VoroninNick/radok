@@ -7,6 +7,7 @@ class UserPagesController < ApplicationController
     if provider == 'facebook'
       @user.email = facebook_data['info']['email']
       @user.username = facebook_data['info']['nickname']
+      @user.full_name = facebook_data['info']['name']
     end
 
     render "user_pages/static_sign_up"

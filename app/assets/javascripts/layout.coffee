@@ -38,12 +38,18 @@ $("[disable-click-on-active]").on "click", ".active", (event)->
 #$("#header-menu").on "click", "[id=header-user].unlogged", ->
 #  openPopup("user_pages__static_sign_in")
 
-$("body").on "click", ".ngdialog-overlay, .ngdialog-close", ->
+$.fn.closeDialog = ()->
   $ng_dialog = $(this).closest(".ngdialog")
   $ng_dialog.addClass("hide")
 
+$("body").on "click", ".ngdialog-overlay, .ngdialog-close", ->
+  $ng_dialog = $(this)
+  $ng_dialog.closeDialog()
+
 $("body").on "click", "[open-popup]", (event)->
   $this = $(this)
+  if $this.attr("disabled") == 'disabled'
+    return
 
   open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
   condition = true
@@ -70,9 +76,10 @@ $("body").on "submit", "form", (event)->
   event.preventDefault()
 
   $form = $(this)
-
+  $form.find(".rf-input").addClass("touched")
   $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
+  console.log "valid_form", valid_form
   if valid_form
     $form_errors = $form.find(".form-errors")
     form_data = $form.serializeArray()
@@ -256,7 +263,8 @@ $("body").on "click", ".rf-button", (event)->
 
 $.fn.validateInput = ->
   $rf_input = $(this)
-
+  $form = $rf_input.closest("form")
+  form_try_send = $form.hasClass("try-send")
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
   #$input = $rf_input.find("input, textarea")
@@ -271,10 +279,11 @@ $.fn.validateInput = ->
   valid = true
   $field_label = $rf_input.find(".field-label")
 
-  $form = $rf_input.closest("form")
+
   if required
     valid = value && value.length
   if valid
+    $rf_input.find(".error.required").addClass("hide")
     $rf_input.find(".error.required").addClass("hide")
   else
     $rf_input.find(".error.required").removeClass("hide")
@@ -515,3 +524,10 @@ $(document).on "ready", ->
       if !is_true
         $input.prop("checked", "checked")
 
+$("body").on "click", ".return_to_wizard", (e)->
+  e.preventDefault()
+  $(this).closeDialog()
+
+
+$("body").on "click", ".shedule-call-button", ->
+  openPopup("wizard__schedule_call")

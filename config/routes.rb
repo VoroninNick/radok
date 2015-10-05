@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post "schedule-call", to: "contact#schedule_call"
+
   delete "/wizard/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
   post "/wizard/:id/:asset_field_name", to: "wizard#upload_test_case_files"
   delete "/wizard/:id", to: "wizard#destroy"
@@ -22,9 +24,9 @@ Rails.application.routes.draw do
 
 
   devise_for :users, controllers: { confirmations: "users/confirmations", sessions: "users/sessions", passwords: "users/passwords", omniauth_callbacks: "users/omniauth_callbacks" }
-  # devise_scope :user do
-  #   get ""
-  # end
+  devise_scope :user do
+    get "sign-in/:provider", to: "users/sessions#create"
+  end
 
   #mount_devise_token_auth_for 'User', at: 'auth', controllers: {
   #                                      registrations: "users/registrations",

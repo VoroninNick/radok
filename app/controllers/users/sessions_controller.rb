@@ -8,15 +8,22 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-
-    self.resource = User.find_for_database_authentication(params[:user])
+    user_params = params[:user]
+    from_oauth = false
+    if user_params.blank?
+      user_params = {email: session["devise.facebook_data"]['info']['email']}
+      from_oauth = true
+    end
+    self.resource = User.find_for_database_authentication(user_params)
 
     @user ||= User.from_omniauth(request.env["omniauth.auth"])
 
 
     if resource
-      unless resource.valid_password?(params[:user][:password])
-        return render json: { user: {form_errors: ["invalid_password_or_login"] } }, status: 401
+      unless from_oauth
+        unless  resource.valid_password?(params[:user][:password])
+          return render json: { user: {form_errors: ["invalid_password_or_login"] } }, status: 401
+        end
       end
 
       unless resource.confirmed?

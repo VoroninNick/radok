@@ -10,15 +10,23 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # end
 
   def facebook
+    #return render inline: params.keys.map(&:to_s).inspect
+    #sign_in = params.keys.map(&:to_s).include?("sign-in")
+    #sign_up = !sign_in
+
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env["omniauth.auth"])
     #return render inline: "persisted: #{@user.persisted?.inspect}" + @user.inspect
     if @user.persisted?
-      sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
-      set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
+      sign_in resource_name, @user
+      redirect_to "/"
+      # sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
+      #set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       #redirect_to new_user_registration_url
+      #url_to_redirect = "/sign-up/facebook"
+      #url_to_redirect = "/sign-in/facebook" if sign_in
       redirect_to "/sign-up/facebook"
     end
   end

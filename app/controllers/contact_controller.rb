@@ -8,4 +8,8 @@ class ContactController < ApplicationController
       render json: { result: "error", code: 500 }
     end
   end
+
+  def schedule_call
+    render json: {}, status: 201
+  end
 end

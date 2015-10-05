@@ -105,10 +105,14 @@ $("body").on "change keyup", ".wizard-step input", ()->
   #$form.validateForm()
   valid = $form.find(".rf-input.invalid").length == 0
   $rf_next_step_button = $(".rf-next-step-button")
-  if valid
-    $rf_next_step_button.removeAttr("disabled")
-  else
-    $rf_next_step_button.attr("disabled", "disabled")
+  $step = $form.closest(".wizard-step")
+  step_number = parseInt($step.attr("step-number"))
+  if wizard.active_step_number == step_number
+    if valid
+      $rf_next_step_button.removeAttr("disabled")
+    else
+      $rf_next_step_button.attr("disabled", "disabled")
+
 editStep = (step_number, save = true)->
 
 
@@ -122,16 +126,21 @@ editStep = (step_number, save = true)->
   scrollToStep(step_number)
   configuration_step = configuration_steps[step_number - 1]
   valid = basicValidate(step_number)
+
   if valid && configuration_step && configuration_step.validate
     valid = configuration_step.validate()
+  console.log "valid_step ", valid
   #console.log("valid:", valid)
   if !valid
     $(".rf-next-step-button").attr("disabled", "disabled")
   else
+    console.log("valid")
     $(".rf-next-step-button").removeAttr("disabled")
 
 
   wizard['active_step_number'] = step_number
+  if wizard.proceeded_steps_count < step_number - 1
+    wizard.proceeded_steps_count = step_number - 1
   if save
     saveTest()
 
@@ -144,7 +153,7 @@ editStep = (step_number, save = true)->
 presentProgressSteps = ()->
   $progress_steps = $("#wizard-summary .progress .step")
 
-  $progress_steps.filter(":not(.proceeded)").first().addClass("proceeded")
+  $progress_steps.filter(":lt(#{wizard.proceeded_steps_count})").addClass("proceeded")
 
 nextStep = ()->
   local_step_number = wizard.active_step_number + 1
@@ -299,17 +308,18 @@ window.getTotalPrice = ()->
   return total_price
 
 presentTotalPrice = ()->
+  console.log "wizard.active_step_number", wizard.active_step_number
   total_price = getTotalPrice()
   $summary_footer =  $("#wizard-summary .footer")
 
   $rf_next_button = $(".rf-next-step-button")
-
-  if total_price > 0
-  #  $summary_footer.removeClass("hide")
-    $rf_next_button.removeAttr("disabled")
-  else
-  #  $summary_footer.addClass("hide")
-    $rf_next_button.attr("disabled", "disabled")
+  if wizard.active_step_number == 1
+    if total_price > 0
+    #  $summary_footer.removeClass("hide")
+      $rf_next_button.removeAttr("disabled")
+    else
+    #  $summary_footer.addClass("hide")
+      $rf_next_button.attr("disabled", "disabled")
   $("[data-bind=total_price]").text(total_price)
 
 
@@ -347,11 +357,11 @@ $(document).on "ready", ->
 
   step_number = wizard.active_step_number
 
+  $(".configuration-steps .wizard-step:lt(#{wizard.proceeded_steps_count})").addClass("proceeded")
 
   if $(".configure-mode").length
     configure()
-
-  editStep(step_number, false)
+    editStep(step_number, false)
 
 #$("body").on "check uncheck", "input", (event)->
 #  console.log "event: ", event
@@ -481,4 +491,10 @@ $("body").on "change", "input", ->
     wizard[name] = $("input[name='"+name+"']:checked").map( ()->
       return $(this).val()
     )
+
+
+
+$("body").on "click", ".checkout-button", ->
+  $button = $(this)
+
 

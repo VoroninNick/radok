@@ -12,4 +12,8 @@ class ContactFeedbackMailer < ApplicationMailer
         from: "Radok force"
     )
   end
+
+  def new_call(call)
+
+  end
 end

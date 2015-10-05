@@ -1,0 +1,66 @@
+.popup.shedule-call
+  .form-partial.schedule-call
+    .header
+      .title
+        |Schedule call
+    .content
+      /.oauth-login
+        .header
+          |Login using social networks
+        .social-auth-links
+          ul
+            li
+              a
+                .social-icon-wrap ng-include="'/assets/rf-social-google-plus.svg'"
+            li
+              a ng-click="authenticate_via_social('facebook')"
+                .social-icon-wrap ng-include="'/assets/rf-social-facebook.svg'"
+            li
+              a
+                .social-icon-wrap ng-include="'/assets/rf-social-twitter.svg'"
+            li
+              a
+                .social-icon-wrap ng-include="'/assets/rf-social-linked-in.svg'"
+            li
+              a ng-click="authenticate_via_social('github')"
+                .social-icon-wrap ng-include="'/assets/github.svg'"
+        .or
+          |or
+      .form
+        form.form.shedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
+          .form-content
+            .inputs
+              /.input
+                label for="shedule_call__phone"
+                  |Phone
+                input#shedule_call__phone type="tel" placeholder="Phone" ng-model="credentials.phone"
+              = rf_input label: "Phone", required: true
+              /.input
+                label for="shedule_call__name"
+                  |Name
+                input#shedule_call__name type="text" placeholder="Your email" ng-model="credentials.name"
+              = rf_input label: "Name"
+              /.input
+                label for="shedule_call__description"
+                  |Description
+                textarea#shedule_call__description placeholder="Your email" ng-model="credentials.description"
+              = rf_input label: "Description"
+            .actions
+              .columns.large-5
+                .sign-up-invitation
+                  |No account?&nbsp;
+                  a ng-click="openSignUpPopup()"
+                    |Sign up
+              /.login-button ng-click="doSignIn()"
+                button title="Call me"
+              .columns.large-7
+                = rf_button(title: "Call me")
+
+
+          .preloader.hide
+            = image_tag("preloader.gif")
+          .success-handler.hide
+            p.h4
+              |Our manager will contact you
+
+
