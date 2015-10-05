@@ -7,21 +7,21 @@
         .items.columns.large-12
           .row
             - @drafts.each do |project|
-              .columns.large-4.item
-                .inner
+              .columns.large-4.item data-test-id=project.id
+                a.inner href="/wizard/#{project.id}"
                   .project-status
                     |Draft
                   .my-row
                     .my-column
                       .content
                         .type-of-test-logo
-                          = embedded_svg_from_assets(project.type_of_test_logo)
+                          = embedded_svg_from_absolute_path(project.type_of_test_logo)
                         .project-name
                           = project.pi__project_name
                         .steps-completed
                           .progress
-                            - (project.steps || 0.times).each_with_index do |step, index|
-                              .step ng-repeat="step in project.state.configuration_steps track by $index" style="width: {{100 / project.state.configuration_steps.length}}%;"
+                            - (project.total_steps_count.times).each_with_index do |step, index|
+                              .step class="#{'proceeded' if index < project.steps_completed}" style="width: #{100 / project.total_steps_count}%;"
                                 .inner
                         .type-of-test-wrap
                           .type-of-test-icon
@@ -29,7 +29,7 @@
                               = embedded_svg_from_assets(project.type_of_product_logo_path)
                           .type-of-test
                             = project.type_of_test
-                          .testing-type ng-show="project.testing_type && project.testing_type.length"
+                          /.testing-type ng-show="project.testing_type && project.testing_type.length"
                             = project.testing_type
                           .clearfix
                         .testers-and-hours

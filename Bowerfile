@@ -42,3 +42,7 @@ asset "jquery-validation"
 asset "jquery-animateNumber"
 
 #asset "jquery.simplemodal"
+
+asset "jquery-serialize-object"
+
+asset "blueimp-file-upload"

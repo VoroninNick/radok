@@ -9,7 +9,7 @@
           .oauth-sign-up
             .header
               | Sign up using social networks
-            = render "user_pages/social_icons"
+            = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook"}
             .or
               | or
 
@@ -19,7 +19,7 @@
             .row
               .columns.large-12
                 = rf_input(label: "Username (required)", required: true, name: "user[username]", required_message: "Please type username", taken_message: "Username already in use" )
-                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "Email already in use")
+                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "Email already in use", value: @user.email)
                 = rf_input(label: "Password (required)", type: "password", required: true, name: "user[password]", required_message: "Please type password")
 
 

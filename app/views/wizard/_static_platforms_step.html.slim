@@ -66,20 +66,14 @@
               | How much effort would you like each tester to spend testing tour product?
             .available-hours
               /! ngRepeat: hour in wizard.hours
-              label.hour.selected data-hours="1" for="hour-1"
-                input#hour-1 name="hours_per_tester" type="radio" value="1"
+              - 5.times do |h|
+                - hour = h + 1
+                - html_input_id = "hour-#{hour}"
+                - selected = hour == @project.hours_per_tester
+                label.hour data-hours=hour for=html_input_id class="#{'selected' if selected}"
+                  input id=html_input_id name="hours_per_tester" type="radio" value=hour
 
-              label.hour data-hours="2" for="hour-2"
-                input#hour-2 name="hours_per_tester" type="radio" value="2"
 
-              label.hour data-hours="3" for="hour-3"
-                input#hour-3 name="hours_per_tester" ng-model="wizard.data.ps__hours" type="radio" value="3"
-
-              label.hour data-hours="4" for="hour-4"
-                input#hour-4 name="hours_per_tester"  type="radio" value="4"
-
-              label.hour data-hours="5" for="hour-5"
-                input#hour-5 name="hours_per_tester" type="radio" value="5"
       /! end ngRepeat: hour in wizard.hours
       .wizard-step-footnotes.ng-scope
         .footnote

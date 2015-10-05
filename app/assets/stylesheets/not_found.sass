@@ -1,0 +1,101 @@
+//@import "app_basic"
+//
+//
+//
+//
+//.not-found-page
+//  .not-found-row
+//    height: 100%
+//    max-width: 1800px
+//  body
+//    overflow: hidden
+//    background-color: $light-black-color
+//
+//
+//  .image-column
+//    height: 100%
+//    //background-image: url(/assets/rf-404-image.png)
+//    //background-repeat: no-repeat
+//    img
+//      max-width: none
+//  .header
+//    +h2
+//    color: $white-color
+//  .description
+//    +font-16-light
+//    color: $white-color
+//
+//  .link
+//    +font-14-light
+//    color: $sky-blue-color
+//
+//  .message-container
+//    //right: 10%
+//    position: relative
+//    top: 50%
+//    +transform(translate(0, -50%))
+//    max-width: 350px
+//
+//
+//  @media #{$screen} and (max-width: 1300px)
+//    body
+//      background-image: none
+//    .message-container
+//      //right: auto
+//      //left: 50%
+//      //+transform(translate(-50%, -50%))
+
+
+
+@import "app_basic"
+
+
+
+
+.not-found-page
+  .not-found-row
+    height: 100%
+    //max-width: 1800px
+  body
+    overflow: hidden
+    background-color: $light-black-color
+    background-image: url(/assets/rf-404-image-2.png)
+    background-repeat: no-repeat
+    background-size: cover
+
+
+  .image-column
+    height: 100%
+
+    img
+      max-width: none
+  .header
+    +h2
+    color: $white-color
+  .description
+    +font-16-light
+    color: $white-color
+
+  .link
+    +font-14-light
+    color: $sky-blue-color
+
+  .message-container
+    //right: 10%
+    position: relative
+    top: 50%
+    +transform(translate(0, -50%))
+    max-width: 370px
+    width: 100%
+
+
+  @media #{$screen} and (max-width: 1300px)
+    body
+      //background-image: none
+    .message-container
+      //right: auto
+      //left: 50%
+      //+transform(translate(-50%, -50%))
+  @media #{$medium-only}
+    body
+      background-position-x: 50%

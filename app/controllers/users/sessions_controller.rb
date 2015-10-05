@@ -11,6 +11,8 @@ class Users::SessionsController < Devise::SessionsController
 
     self.resource = User.find_for_database_authentication(params[:user])
 
+    @user ||= User.from_omniauth(request.env["omniauth.auth"])
+
 
     if resource
       unless resource.valid_password?(params[:user][:password])

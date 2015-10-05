@@ -1,6 +1,10 @@
-h1
-  |Error 404
-p
-  |It seems your page was lost somewhere between space and time
-a href=home_path
-  = "Go home"
+.row.not-found-row
+  /.columns.large-4.image-column
+    /img src="/assets/rf-404-image.png"
+  .columns.large-4.large-push-8.medium-5.medium-push-7.message-container
+    h1.header
+      |Error 404
+    p.description
+      |It seems your page was lost somewhere between space and time
+    a.link href=home_path
+      = "Go home"

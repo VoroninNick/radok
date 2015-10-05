@@ -33,4 +33,33 @@
         name = $this.attr('name')
         $(document.getElementsByName(name)).filter(":not(:checked)").trigger("uncheck")
 
+
+    $.fn.val = (value)->
+      getter = arguments[0] == undefined
+      $this = $(this)
+      if $this.filter(".rf-boolean-input").length
+        return original_functions.val.apply($this) == 'true'
+      if $this.filter("div.rf-input").length
+        if $this.attr("type") == 'tags'
+          res = $this.find("input").val().split(",")
+          if res.length == 1 && res[0].length == 0
+            return []
+          else
+            return res
+        if $this.filter(".string").length
+
+          return original_functions.val.apply($this.find("input"), arguments)
+          #return $this.find("input").val(value)
+
+        if  $this.filter(".text").length
+          #return $this.find("textarea").val(value)
+          return original_functions.val.apply($this.find("textarea"), arguments)
+        if $this.filter(".checkbox-list").length
+          if getter
+            return $this.first().find("input").map( ()->
+              if $(this).filter(":checked").length
+                return $(this).val()
+            )
+      return original_functions.val.apply(this, arguments)
+
 )(jQuery)

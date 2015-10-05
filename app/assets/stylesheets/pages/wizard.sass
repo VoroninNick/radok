@@ -1164,7 +1164,7 @@ body
       margin-left: 38px
 
 
-input#test_case_files
+input.file-upload-input
   display: none
 
 .test_case_files-list
@@ -1178,3 +1178,9 @@ input#test_case_files
 
 div.tagsinput span.tag a
   color: $fire-orange-color
+
+.rf-input[type=tags]
+  .input-border-wrap
+    z-index: -1
+  div.tagsinput
+    max-width: 100%

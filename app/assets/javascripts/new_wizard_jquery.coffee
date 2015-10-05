@@ -1,8 +1,50 @@
 $wizard_controller = $("#wizard-controller")
-window.wizard = {}
+window.wizard = {
+  active_step_number: 1
+  proceeded_steps_count: 0
+}
+
+basicValidate = (step_number)->
+  $step = $(".wizard-step[step-number=#{step_number}]")
+  return $step.find(".rf-input.invalid").length == 0
+
+window.configuration_steps = [
+  {
+
+
+    initialize: ()->
+      $platform_items = $(".wizard-platforms-step").find("platform")
+
+
+
+      $platform_items.each ->
+        $platform = $(this)
+        platform_product_ids = $platform.attr("data-product-type-ids").split(',')
+        if platform_product_ids.indexOf(product_type_id.toString()) >= 0
+          $platform.removeClass("hide")
+        else
+          $platform.addClass("hide")
+
+      $platform_items.filter(":not(.hide)").each (index, item)->
+        if index % 2 == 0
+          $(item).addClass('first')
+        else
+          $(item).removeClass('first')
+    validate: ()->
+      return getTotalPrice() > 0
+    serialize: ()->
+      return serializePlatforms()
+
+  }
+  {
+
+  }
+]
+
+
 wizard.price_per_hour = 20
 wizard.hours_count = 1
-active_step_number = 1
+
 
 created = false
 saving_in_progress = false
@@ -10,7 +52,7 @@ saving_in_progress = false
 saveTest = ()->
   if !saving_in_progress
     if !created
-      data = {test: $(".intro-step form").serializeHash()}
+      data = {test: $(".intro-step form").serializeObject()}
       saving_in_progress = true
       $.ajax(
         url: "/wizard"
@@ -28,7 +70,8 @@ saveTest = ()->
 
 
     else
-      data = { test: {platforms: serializePlatforms(), hours_count: wizard.hours_count}}
+      serializeTest()
+      data = { test: wizard}
       saving_in_progress = true
       $.ajax(
         url: "/wizard/#{wizard.id}"
@@ -45,7 +88,7 @@ $("body").on "click", ".save-button", ->
   saveTest()
 
 
-scrollToStep = (step_number)->
+window.scrollToStep = (step_number)->
   $step = $(".wizard-step[step-number=#{step_number}]")
   step_top = $step.offset().top
   top_for_scroll = step_top - 80
@@ -66,7 +109,7 @@ $("body").on "change keyup", ".wizard-step input", ()->
     $rf_next_step_button.removeAttr("disabled")
   else
     $rf_next_step_button.attr("disabled", "disabled")
-editStep = (step_number)->
+editStep = (step_number, save = true)->
 
 
   $active_step = $(".wizard-step.active")
@@ -77,16 +120,41 @@ editStep = (step_number)->
   $requested_step.addClass("active")
   $requested_step.validateStep()
   scrollToStep(step_number)
-  valid = $requested_step.find(".rf-input.invalid").length == 0
+  configuration_step = configuration_steps[step_number - 1]
+  valid = basicValidate(step_number)
+  if valid && configuration_step && configuration_step.validate
+    valid = configuration_step.validate()
+  #console.log("valid:", valid)
   if !valid
     $(".rf-next-step-button").attr("disabled", "disabled")
+  else
+    $(".rf-next-step-button").removeAttr("disabled")
 
 
-  active_step_number = step_number
+  wizard['active_step_number'] = step_number
+  if save
+    saveTest()
+
+  if configuration_step && configuration_step.initialize
+    configuration_step.initialize()
+
+  presentProgressSteps()
+
+
+presentProgressSteps = ()->
+  $progress_steps = $("#wizard-summary .progress .step")
+
+  $progress_steps.filter(":not(.proceeded)").first().addClass("proceeded")
+
 nextStep = ()->
-  editStep(active_step_number + 1)
-  saveTest()
-$("#wizard-full-summary").addClass("hide")
+  local_step_number = wizard.active_step_number + 1
+  if $(".configuration-steps .wizard-step").length > wizard.proceeded_steps_count
+    wizard.proceeded_steps_count = wizard.proceeded_steps_count + 1
+  editStep(local_step_number)
+
+
+
+#$("#wizard-full-summary").addClass("hide")
 
 $(".rf-next-step-button").on "click", ->
   nextStep()
@@ -97,18 +165,18 @@ $("body").on "click", ".wizard-step-edit-tooltip, .wizard-step-counter", ->
   requested_step_number = parseInt($wizard_step.attr("step-number"))
   editStep(requested_step_number)
 
-$(".rf-configure-button").on "click", ->
-  saveTest()
+configure = ()->
+
   $wizard_controller.addClass("configure-mode")
   $(".intro-step").removeClass("active").addClass("proceeded")
   $("[data-bind=tot__type_of_test]").each ->
     $this = $(this)
-    val = $("input[name=test_type]:checked").attr("data-name")
+    val = $("input[name=test_type]:checked").attr("data-name") || wizard.test_type_name
     $this.text(val)
 
   $("[data-bind=top__type_of_product]").each ->
     $this = $(this)
-    val = $("input[name=product_type]:checked").attr("data-name")
+    val = $("input[name=product_type]:checked").attr("data-name") || wizard.product_type_name
     $this.text(val)
 
   $summary_footer =  $("#wizard-summary .footer")
@@ -116,7 +184,7 @@ $(".rf-configure-button").on "click", ->
 
   $(".configuration-steps").removeClass("hide")
 
-  $(".wizard-platforms-step").addClass("active")
+
 
   window.product_type_id = parseInt($('question[question-key=type_of_product] input:checked').attr('data-id'))
 
@@ -124,24 +192,17 @@ $(".rf-configure-button").on "click", ->
   #  $platform = $(this)
   #  if !$platform.hasClass("in-group")
 
-  $platform_items = $(".wizard-platforms-step").find("platform")
 
 
-  $platform_items.each ->
-    $platform = $(this)
-    platform_product_ids = $platform.attr("data-product-type-ids").split(',')
-    if platform_product_ids.indexOf(product_type_id.toString()) >= 0
-      $platform.removeClass("hide")
-    else
-      $platform.addClass("hide")
+$(".rf-configure-button").on "click", ->
 
-  $platform_items.filter(":not(.hide)").each (index, item)->
-    if index % 2 == 0
-      $(item).addClass('first')
-    else
-      $(item).removeClass('first')
+  configure()
+
+
 
   scrollToStep(1)
+  saveTest()
+  editStep(1)
 
 
 $(".option-count").on "click", ".decrement, .increment", ->
@@ -166,7 +227,7 @@ $(".option-count").on "click", ".decrement, .increment", ->
     $input.trigger_val(new_value)
 
 $("body").on "check uncheck", ".hours-per-tester input", (event)->
-  console.log event.type
+  #console.log event.type
   $hours_per_tester = $(".hours-per-tester")
   $input = $(this)
   hour = parseInt($input.val())
@@ -228,7 +289,7 @@ window.presentPlatformPrice = ()->
 
 
 
-window.getTotalPrice = (hours)->
+window.getTotalPrice = ()->
   #wizard.hours_count
   $platforms = $(".wizard-platforms-step platform:not(.hide)")
   total_price = $platforms.map((index, item)->
@@ -263,6 +324,13 @@ updatePrice = ()->
 
 
 $(document).on "ready", ->
+  #fixChromeAutocompleteBug()
+
+  test_json_str = $wizard_controller.attr('test-json')
+  if test_json_str != undefined
+    $.extend wizard, $.parseJSON(test_json_str)
+  wizard.test_type_name = $("[name=test_type_id]:checked").attr("data-name")
+  wizard.product_type_name = $("[name=product_type_id]:checked").attr("data-name")
   $(".option-count input:blank").each ->
     $this = $(this)
     old_val = $this.val()
@@ -270,6 +338,20 @@ $(document).on "ready", ->
       $this.trigger_val(0)
 
   $('input.tags-input').tagsInput();
+  $('.rf-input[type=tags] input').tagsInput({
+    defaultText: ""
+    onChange: ()->
+      $rf_input = $(this).closest(".rf-input")
+      $rf_input.trigger("change")
+  })
+
+  step_number = wizard.active_step_number
+
+
+  if $(".configure-mode").length
+    configure()
+
+  editStep(step_number, false)
 
 #$("body").on "check uncheck", "input", (event)->
 #  console.log "event: ", event
@@ -285,27 +367,37 @@ $("body").on "click", ".rf-test-case-files-upload-button", ()->
   $input = $("input#test_case_files")
   $input.click()
 
-$("body").on "change", ".upload-area input#test_case_files", ->
+$("body").on "click", ".rf-wizard-test-files-upload-button", ()->
+  $input = $("input#test_files")
+  $input.click()
+
+window.assets ?= {}
+window.assets.test_case_files ?= []
+
+$("body").on "change", "input.file-upload-input", ->
   input = this
   $input = $(input)
   $upload_area = $input.closest(".upload-area")
 
-  $list = $(".test_case_files-list")
+  list_selector = $input.attr("list-selector")
+  $list = $(list_selector)
+  attachment_name = $input.attr("data-attachment-name")
 
 
 
-  window.test_case_files_list ?= []
+
   new_files_length = input.files.length
   new_files_saved_count = 0
   for file in input.files
-    $list.append("<div class='file'>#{file.name}<span class='delete'></span></div>")
+
+    $list.append("<div class='file' data-file-name='#{file.name}'>#{file.name}<span class='delete'></span></div>")
     f = {name: file.name}
     reader = new FileReader()
     reader.onload = ->
       #console.log "reader.load", arguments
       src = reader.result
       f.content = src
-      test_case_files_list.push(f)
+      assets.test_case_files.push(f)
       new_files_saved_count = new_files_saved_count + 1
 
       if new_files_length == new_files_saved_count
@@ -313,16 +405,34 @@ $("body").on "change", ".upload-area input#test_case_files", ->
 
     reader.readAsDataURL(file);
 
+  $input.simpleUpload("/wizard/#{wizard.id}/#{attachment_name}", {
+    success: (data)->
+      file_name = data.data_file_name
+      $file = $list.find(".file:not(.loaded)").filter("[data-file-name='#{file_name}']")
+      $file.attr("data-id", data.id)
+  })
 
-$("body").on "click", ".test_case_files-list .delete", ->
+
+
+$("body").on "click", ".file-upload-files-list .delete", ->
   $file = $(this).closest('.file')
   file_index = $file.index()
+  asset_id = $file.attr("data-id")
   $file.remove()
-  window.test_case_files_list.splice(file_index, 1)
+  assets.test_case_files.splice(file_index, 1)
+  $list = $(".file-upload-files-list")
+  attachment_name = $list.attr("data-attachment-name")
+  $.ajax({
+    url: "/wizard/#{wizard.id}/#{attachment_name}/#{asset_id}"
+    type: "delete"
+    dataType: "json"
+
+  })
 
 
 window.serializePlatforms = ()->
   platforms = []
+
   $('platform:not(.hide) .option-count input').each ->
     $input = $(this)
     count = parseInt($input.val())
@@ -330,4 +440,45 @@ window.serializePlatforms = ()->
       platform_id = parseInt($input.closest(".option-count").attr("data-id"))
       platforms.push({id: platform_id, count: count})
 
+  wizard['platforms'] = platforms
   return platforms
+
+window.serializeProjectInfo = ()->
+  $step = $(".wizard-project-info-step")
+  $form = $step.find("form")
+  project_info = $form.serializeObject()
+  $.extend wizard, project_info
+
+  project_info
+
+window.serializeTest = ()->
+  serializePlatforms()
+  serializeProjectInfo()
+
+
+fixChromeAutocompleteBug = ->
+  if navigator.userAgent.toLowerCase().indexOf('chrome') >= 0
+    $('input[autocomplete="off"]').each ->
+      type = $(this).attr('type')
+      if type[0] == '_'
+        type = type.substr(1)
+      $(this).attr 'type', '_' + type
+      $(this).attr 'type', type
+
+
+
+# project access step
+$("body").on "change", "input", ->
+  $input = $(this)
+  name = $input.attr("name")
+  input_type = $input.attr("type") || 'text'
+  string_input_types = "url password text".split(" ")
+  if string_input_types.indexOf(input_type) >= 0
+    wizard[name] = $input.val()
+  else if input_type == 'radio'
+    wizard[name] = $("input[name='#{name}']:checked").val()
+  else if input_type == 'checkbox'
+    wizard[name] = $("input[name='"+name+"']:checked").map( ()->
+      return $(this).val()
+    )
+

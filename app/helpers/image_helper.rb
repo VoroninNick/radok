@@ -67,6 +67,7 @@ module ImageHelper
   end
 
   def self.self_embedded_svg_from_absolute_path(filename, options = {})
+    return nil if filename.blank?
     filename = filename.to_s
     filename = filename.to_s + ".svg" if filename.scan(/\.svg\Z/).empty?
     file = File.read(filename.to_s)

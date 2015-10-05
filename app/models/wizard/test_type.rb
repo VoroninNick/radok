@@ -8,4 +8,6 @@ class Wizard::TestType < ActiveRecord::Base
 
   do_not_validate_attachment_file_type :image
 
+  has_many :tests, class_name: Wizard::Test
+
 end

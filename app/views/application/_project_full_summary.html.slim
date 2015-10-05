@@ -18,20 +18,20 @@
           .property-label
             |Version
           .property-value
-            = project.version_number
+            = project.project_version
 
       .columns.large-6
         .property
           .property-label
             |Type of test
           .property-value
-            = project.type_of_test
+            = project.test_type.try &:name
 
         .property
           .property-label
             |Type of product
           .property-value
-            = project.product_type
+            = project.product_type.try &:name
       .columns.large-12.large-indent
         .row
           .columns.large-12

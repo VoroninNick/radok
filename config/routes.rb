@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  delete "/wizard/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
+  post "/wizard/:id/:asset_field_name", to: "wizard#upload_test_case_files"
+  delete "/wizard/:id", to: "wizard#destroy"
   get "/wizard/:id", to: "wizard#edit_or_show"
   put "wizard/:id", to: "wizard#update"
   post "wizard", to: "wizard#create"
@@ -6,7 +9,7 @@ Rails.application.routes.draw do
   post "update_subscription", to: "user_pages#update_subscription"
   match "/profile", to: "user_pages#profile", via: [:get, :post]
   post "sign-up", to: "user_pages#registrations__create"
-  get "/sign-up", to: "user_pages#registrations__new"
+  get "/sign-up/(:provider)", to: "user_pages#registrations__new"
   get "faq", to: "faq_articles#index", as: :faq
   get "faq/:id", to: "faq_articles#show", as: "faq_article"
 
@@ -16,7 +19,13 @@ Rails.application.routes.draw do
   DynamicRouter.load
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
-  devise_for :users, controllers: { confirmations: "users/confirmations", sessions: "users/sessions", passwords: "users/passwords" }
+
+
+  devise_for :users, controllers: { confirmations: "users/confirmations", sessions: "users/sessions", passwords: "users/passwords", omniauth_callbacks: "users/omniauth_callbacks" }
+  # devise_scope :user do
+  #   get ""
+  # end
+
   #mount_devise_token_auth_for 'User', at: 'auth', controllers: {
   #                                      registrations: "users/registrations",
   #                                      omniauth_callbacks: "users/omniauth_callbacks"

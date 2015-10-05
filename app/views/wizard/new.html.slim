@@ -1,4 +1,4 @@
-#wizard-controller ng-controller="WizardController as wizardCtrl" class="#{'configure-mode' if @created}"
+#wizard-controller ng-controller="WizardController as wizardCtrl" class="#{'configure-mode' if @created}" test-json=(@project.to_json if @created)
   = render "page_banner"
   #wizard-content
     #wizard-steps
@@ -41,7 +41,7 @@
             = prev_step_button(5)
 
 
-    = render "project_full_summary", project: @project, hide: true
+    = render "project_full_summary", project: @project, hide: @created.blank?
 
 
     #wizard-help
@@ -66,7 +66,7 @@
           /rf-button class="rf-configure-button" full-width="" svg="/assets/rf-icon-configure.svg" title="configure" ng-disabled="!(wizard.data.tot__type_of_test && wizard.data.top__type_of_product  && !wizard.configure_mode)" ng-click="configure();"
           = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure")
 
-    #wizard-summary ng-show="wizard.configure_mode"
+    #wizard-summary
       #wizard-summary-fixed.fixed-top
         .header
           |Summary

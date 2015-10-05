@@ -107,6 +107,20 @@ $map = $("#contact-map map")
 #  generate_controls: false
 #}).Load()
 
+
+$("body").on "click", ".delete-draft-button", ()->
+  $button = $(this)
+  $draft = $button.closest(".item")
+  test_id = parseInt($draft.attr("data-test-id"))
+  $draft.remove()
+  $.ajax(
+    url: "/wizard/#{test_id}"
+    type: "delete"
+    dataType: "json"
+    success: ()->
+
+  )
+
 initialize_google_map = ->
   lat = 49.829182
   lng = 24.01275

@@ -1,9 +1,32 @@
-class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # You should configure your model like this:
-  # devise :omniauthable, omniauth_providers: [:twitter]
+
+
+  #skip_before_filter
+  skip_filter *_process_action_callbacks.map(&:filter)
+
+  # def facebook
+  #   render inline: params.inspect
+  # end
+
+  def facebook
+    # You need to implement the method below in your model (e.g. app/models/user.rb)
+    @user = User.from_omniauth(request.env["omniauth.auth"])
+    #return render inline: "persisted: #{@user.persisted?.inspect}" + @user.inspect
+    if @user.persisted?
+      sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
+      set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
+    else
+      session["devise.facebook_data"] = request.env["omniauth.auth"]
+      #redirect_to new_user_registration_url
+      redirect_to "/sign-up/facebook"
+    end
+  end
+
 
 
   def redirect_callbacks
+    return render inline: "hi"
     # derive target redirect route from 'resource_class' param, which was set
     # before authentication.
 
@@ -14,12 +37,16 @@ class Users::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksCon
     session['dta.omniauth.auth'] = request.env['omniauth.auth']
     session['dta.omniauth.params'] = request.env['omniauth.params']
 
-    redirect_route = "/auth/#{params[:provider]}/callback"
+    redirect_route = "/users/auth/#{params[:provider]}/callback"
     redirect_to redirect_route
   end
 
   def omniauth_success
     super
+  end
+
+  def passthru
+    render inline: "hi"
   end
 
 

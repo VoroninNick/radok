@@ -1,4 +1,4 @@
-.wizard-step step-number="2"
+.wizard-step.wizard-project-info-step step-number="2" class="#{'active' if @project.active_step_number == 2}"
   .wizard-step-edit-tooltip
     .svg-container
       = embedded_svg_from_assets("pen")
@@ -20,7 +20,7 @@
                 span.required-symbol  *
               /! end ngIf: required
               div
-                = rf_input label: "Project name", required: true, name: "wizard[project_name]"
+                = rf_input label: "Project name", required: true, name: "project_name"
                 /rf-input label=("Project name") ng-model="wizard.data.pi__project_name"
                   .rf-input.string
                     label Project name
@@ -36,9 +36,9 @@
                 span.required-symbol  *
               /! end ngIf: required
               div
-                = rf_input label: "Project version", required: true, name: "wizard[project_version]"
+                = rf_input label: "Project version", required: true, name: "project_version"
 
 
 
-          = wizard_checkbox_list field: "pi__project_languages", name: "wizard[project_languages[]]", question: "In what language(s) is the project?", options: %w(English Russian Ukrainian French Polish Portuguese)
-          = wizard_checkbox_list field: "pi__report_languages", name: "wizard[report_languages[]]", question: "In what language(s) should the bugs be reported?", options: %w(English Russian Ukrainian French Polish Portuguese)
+          = wizard_checkbox_list field: "pi__project_languages", name: "project_languages[]", question: "In what language(s) is the project?", options: %w(English Russian Ukrainian French Polish Portuguese), required: true, default: "English"
+          = wizard_checkbox_list field: "pi__report_languages", name: "report_languages[]", question: "In what language(s) should the bugs be reported?", options: %w(English Russian Ukrainian French Polish Portuguese), required: true, default: "English"

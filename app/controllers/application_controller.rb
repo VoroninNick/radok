@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
 
   after_filter :set_csrf_cookie_for_ng
 
+  rescue_from CanCan::AccessDenied do |exception|
+    #redirect_to main_app.root_url, :alert => exception.message
+    render template: "errors/access_denied", layout: "not_found"
+  end
+
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end

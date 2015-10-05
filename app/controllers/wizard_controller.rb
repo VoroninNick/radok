@@ -13,6 +13,7 @@ class WizardController < ApplicationController
   def new
     @head_title = "Wizard"
     @project = Wizard::Test.new
+    @intro_step = true
 
     @all_platforms = Wizard::Platform.roots
 
@@ -21,6 +22,7 @@ class WizardController < ApplicationController
 
   def create
     test = Wizard::Test.create(params[:test])
+    test.user_id = current_user.try(&:id)
     if test.save
       render json: test
     end
@@ -35,6 +37,31 @@ class WizardController < ApplicationController
     if test.save
       render json: test
     end
+  end
+
+  def destroy
+    test_id = params[:id].to_i
+    test = Wizard::Test.delete(test_id)
+    if test.present?
+      render json: test
+    else
+      render nothing: true, status: 500
+    end
+  end
+
+  def upload_test_case_files
+    f = params[:file]
+    test = Wizard::Test.find(params[:id])
+    asset_field_name = params[:asset_field_name]
+    db_file = test.send "add_#{asset_field_name}", f
+    test.save
+    render status: 201, json: db_file
+  end
+
+  def delete_test_case_files
+    asset_id = params[:asset_id].to_i
+    Attachable::Asset.delete(asset_id)
+    render json: {}, status: 200
   end
 
 

@@ -108,20 +108,26 @@ module ApplicationHelper
     input_tag_options[:class] = "#{input_tag_options[:class]}"
     input_type = :text
     input_type = :password if type.to_s == 'password'
-    input_tag_options[:type] = input_type
+    input_tag_options[:type] = "#{input_type}"
     options[:required_message] ||= "#{options[:label]} is required"
     required_message = options[:required_message]
     invalid_message = options[:invalid_message]
     validation = options[:validation]
     taken_message = options[:taken_message]
+    model = options[:model]
+
 
     input_tag_content = nil
     input_tag_content = value if tag_name == :textarea
     input_tag_options[:value] = value if tag_name == :input
+    input_tag_options[:autocomplete] = "off" if options[:autocomplete] == false
 
     empty = value.blank?
 
-    content_tag(:div, class: "rf-input #{'empty' if empty} #{'not-empty' if !empty}", type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
+    string_input = type.to_s.in?(%w(string email url password tags))
+    text_input = type.to_s.in?(%w(text))
+
+    content_tag(:div, class: "rf-input #{'string' if string_input} #{'text' if text_input} #{'empty' if empty} #{'not-empty' if !empty}", model: (model if model.present?), type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
       content_tag(:label, taken_message, class: "hide error taken") +
       content_tag(:label, required_message, class: "hide error required") +
       content_tag(:label, invalid_message, class: "hide error invalid") +
@@ -175,16 +181,20 @@ module ApplicationHelper
     options[:question] ||= false
     options[:options] ||= []
 
-    content_tag :div, class: "rf-input checkbox-list" do
+    options[:required] ||= false
+
+    content_tag :div, class: "rf-input checkbox-list", required: ('' if options[:required]) do
       raw(
 
         content_tag(:div, class: "question") do
           content_tag(:div, options[:question], class: "text") +
           content_tag(:div, class: "options horizontal") do
             raw(options[:options].each_with_index.map do |opt, i|
+              is_default = !options[:default].nil? && opt == options[:default]
+              checked = is_default
               id =   "#{options[:field]}-#{i + 1}"
               content_tag(:div, class: "checklist-option") do
-                content_tag(:input, nil, id: id, type: "checkbox", value: opt, name: options[:name] ) +
+                content_tag(:input, nil, id: id, type: "checkbox", value: opt, name: options[:name], checked: (checked) ) +
                 content_tag(:label, nil, class: "checklist-option-label", for: id) +
                 content_tag(:label, opt, for: id, class: "checklist-option-label")
               end

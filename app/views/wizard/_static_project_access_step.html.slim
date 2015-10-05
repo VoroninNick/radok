@@ -1,4 +1,4 @@
-.wizard-step step-number="4"
+.wizard-step step-number="4" class="#{'active' if @project.active_step_number == 4}"
   .wizard-step-edit-tooltip.ng-hide ng-click="wizard.go_to_step(step_id)" ng-show=("!active &amp;&amp; step_number &amp;&amp; proceeded &amp;&amp; wizard.ready_go_to_step")
     /! ngInclude: '/assets/pen.svg'
     .svg-container.ng-scope ng-include="'/assets/pen.svg'"
@@ -17,7 +17,7 @@
     /! ngIf: !(active)
     /! ngIf: step_title
     .wizard-step-content-content ng-transclude=""
-      form.ng-valid.ng-scope.ng-dirty.ng-valid-parse name="wizard.project_access_form" novalidate=""
+      form.ng-valid.ng-scope.ng-dirty.ng-valid-parse name="wizard.project_access_form" novalidate="" autocomplete="off"
         .questions
           question.ng-isolate-scope text=("Please provide the URL or file to be tested?")
             .question
@@ -34,13 +34,20 @@
                           .input-border-wrap
                           input.ng-pristine.ng-valid.ng-touched ng-change="onChange()" ng-model="value" type="text" /
                           .error-messages ng-show="hasErrors()"
-                      = rf_input label: "url"
+                      = rf_input label: "url", name: "test_url"
                     /! ngRepeat: (error_key, error_value) in error()
                     .columns.large-1.input-padding.or
                       | or
                     .columns.large-5.input-padding.button-wrap
+                      input#test_files.file-upload-input type="file" multiple="multiple" list-selector=".test_files-list" data-attachment-name="test_files"
+                      = rf_button class: "rf-upload-button rf-wizard-upload-button rf-wizard-test-files-upload-button", title: "Upload files", svg: "upload"
+                      .file-upload-files-list.test_files-list data-attachment-name="test_files"
+                        - @project.test_files.each do |f|
+                          .file data-id=f.id
+                            = f.data_file_name
+                            span.delete
 
-                      = rf_button class: "rf-upload-button", title: "Upload files", svg: "upload"
+
                       /button.rf-button.rf-button-without-subtitle.rf-button-with-svg.rf-button-raised.rf-button-full-width.rf-button-svg-size-medium.rf-button-align-content-center.rf-button-size-medium.rf-upload-button angular-ripple="" full-width=""
                         .rf-button-content-wrap
                           .rf-button-content
@@ -71,14 +78,18 @@
               /! ngIf: required
               div ng-transclude=""
                 .inputs.ng-scope
-                  .input
-                    input#require_auth_1.ng-pristine.ng-untouched.ng-valid name="require_auth" ng-model="wizard.data.pa__need_authorization" ng-value="false" placeholder="Username" type="radio" value="false" /
+                  .input data-type="boolean"
+                    input#require_auth_1.rf-boolean-input name="authentication_required" model="wizard.authentication_required" type="radio" value="false"
                     label for="require_auth_1"
                     label for="require_auth_1"  No, it does not require a username or password
-                  .input
-                    input#require_auth_2.ng-untouched.ng-valid.ng-dirty.ng-valid-parse name="" ng-model="wizard.data.pa__need_authorization" ng-value="true" placeholder="password" type="radio" value="true" /
+                  /= rf_input name: "authentication_required", model: "wizard.authentication_required", label: "", type: ""
+                  .input data-type="boolean"
+                    input#require_auth_2.rf-boolean-input name="authentication_required" model="wizard.authentication_required" type="radio" value="true"
                     label for="require_auth_2"
                     label for="require_auth_2"  Yes, here they are:
                     .input-related-content
-                      input.ng-pristine.ng-untouched.ng-valid ng-model="wizard.data.pa__access_user_name" type="text" /
-                      input.ng-pristine.ng-untouched.ng-valid ng-model="wizard.data.pa__access_password" type="password" /
+                      /input.ng-pristine.ng-untouched.ng-valid ng-model="wizard.data.pa__access_user_name" type="text" /
+                      /input.ng-pristine.ng-untouched.ng-valid ng-model="wizard.data.pa__access_password" type="password" /
+
+                      = rf_input label: "User name", name: "auth_login", autocomplete: false
+                      = rf_input label: "User password", name: "auth_password", type: "password", autocomplete: false

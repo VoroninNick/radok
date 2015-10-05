@@ -10,6 +10,14 @@ class Wizard::Test < ActiveRecord::Base
   has_many :test_platforms_bindings, class_name: Wizard::TestPlatform#, foreign_key: [:test_id, :platform_id]
   has_many :platforms, class_name: Wizard::Platform, through: :test_platforms_bindings
 
+  belongs_to :user, class_name: User
+
+  belongs_to :product_type, class_name: Wizard::ProductType
+  belongs_to :test_type, class_name: Wizard::TestType
+
+  attr_accessible :product_type, :test_type
+
+
 
   accepts_nested_attributes_for :test_platforms_bindings
   attr_accessible :test_platforms_bindings, :test_platforms_bindings_attributes
@@ -69,11 +77,13 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def type_of_test_logo
-    "rf-icon-functional-test"
+    self.test_type.try {|t| t.image.path(:original) }
   end
 
   def pi__project_name
-    "Test Project #{self.id || "Name"}"
+    name = self['project_name']
+    name = "Test ##{self.id}" if name.blank?
+    name
   end
 
   def project_name
@@ -89,7 +99,8 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def type_of_test
-    "test"
+    return nil if test_type.nil?
+    "#{test_type.name} test"
   end
 
   def testing_type
@@ -97,11 +108,11 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def total_testers_count
-    1
+    self.test_platforms_bindings.map{|p| p.testers_count }.sum
   end
 
   def ps__hours
-    1
+    hours_per_tester
   end
 
   def percent_completed_counter
@@ -124,16 +135,18 @@ class Wizard::Test < ActiveRecord::Base
     2.56
   end
 
-  def product_type
-    "games"
-  end
+  # def product_type
+  #   "games"
+  # end
 
   def project_languages
-    [:english, :ukrainian, :russian]
+    #[:english, :ukrainian, :russian]
+    self['project_languages'].try{|s| JSON.parse(s)} || []
   end
 
   def report_languages
-    [:english, :ukrainian]
+    #[:english, :ukrainian]
+    self['report_languages'].try{|s| JSON.parse(s)} || []
   end
 
   def project_access__url
@@ -165,13 +178,28 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def hours_per_tester
-    rand(1..5)
+    self['hours_per_tester'] || 1
   end
 
   def price
-    rand(100..5000)
+    total_testers_count * hours_per_tester * hour_price
   end
 
+  def hour_price
+    20
+  end
+
+  def steps_completed
+    2
+  end
+
+  def total_steps_count
+    4
+  end
+
+  def active_step_number
+    self['active_step_number'] || 1
+  end
 
 
 end

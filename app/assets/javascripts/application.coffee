@@ -10,7 +10,9 @@
 #= require jquery.clickout
 # require jquery-validation/dist/jquery.validate.min
 #= require jquery.tagsinput/src/jquery.tagsinput.js
-#= require jquery.serialize-hash
+# require jquery.serialize-hash
+#= require jquery-serialize-object/dist/jquery.serialize-object.min
+#= require simpleUpload.min
 #= require functions
 #= require layout
 #= require wizard_jquery

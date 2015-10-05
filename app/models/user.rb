@@ -3,8 +3,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable,# :validatable,
           :confirmable, :omniauthable#,
+         #omniauth_providers: [:facebook]
+          #,
          #:authentication_keys => [:login]
   #include DeviseTokenAuth::Concerns::User
+
+  self.omniauth_providers = [:facebook, :github, :google_plus, :linked_in]
+
+  has_many :tests, class_name: Wizard::Test
 
   attr_accessible *attribute_names
   
@@ -21,10 +27,21 @@ class User < ActiveRecord::Base
   # User info
 
 
+
   #attr_accessor :login
 
   validates :username, :email, presence: true
   validates :email, :username, uniqueness: true
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.first_name = auth.info.first_name   # assuming the user model has a name
+      user.last_name = auth.info.last_name
+      #user.image = auth.info.image # assuming the user model has an image
+    end
+  end
 
   def login
     @login || self.username || self.email

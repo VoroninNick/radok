@@ -152,30 +152,30 @@ $("body").on "submit", "form", (event)->
         $form_errors.find(".form-error").addClass("hide")
         if !isEmpty(form_errors)
           $form_errors.removeClass("hide")
-          console.log "error: form_errors: ", form_errors
+          #console.log "error: form_errors: ", form_errors
           for error_key in form_errors
-            console.log "error: form_errors: for: ", error_key
+            #console.log "error: form_errors: for: ", error_key
             $form_errors.find(".#{error_key}").removeClass("hide")
         else
           $form_errors.addClass("hide")
 
 
 
-        console.log "errors", errors_by_field
+        #console.log "errors", errors_by_field
 
         $form.find(".inputs .error").addClass("hide")
 
         if !isEmpty(errors_by_field)
           for field_name, errors of errors_by_field
-            console.log "error field_name", field_name
-            console.log "error errors", errors
+            #console.log "error field_name", field_name
+            #console.log "error errors", errors
             $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
-            console.log "form_resource_name: ", form_resource_name
-            console.log "field_name: ", field_name
+            #console.log "form_resource_name: ", form_resource_name
+            #console.log "field_name: ", field_name
             $field.addClass("invalid")
             error_key = errors
             error_key = errors[0] if Array.isArray(errors)
-            console.log "error_key", error_key
+            #console.log "error_key", error_key
             window.$FIELD = $field
             $error = $field.find(".error.#{error_key}")
             $error.removeClass("hide")
@@ -189,7 +189,7 @@ $("body").on "submit", "form", (event)->
           $form.removeClass(hide_class)
         $preloader.addClass("hide")
         $("[hide-during-send='']").removeClass("hide")
-        console.log "args: ", arguments
+        #console.log "args: ", arguments
     )
 
 $("body").on "show_success", "form.forgot-password-form", (event, data)->
@@ -259,8 +259,10 @@ $.fn.validateInput = ->
 
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
-  $input = $rf_input.find("input, textarea")
-  value = $input.val()
+  #$input = $rf_input.find("input, textarea")
+
+  value = $rf_input.val()
+
 
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
@@ -322,12 +324,14 @@ validateEmail = (email) ->
 
 
 
-$("body").on "change blur keyup", "form .rf-input input, form .rf-input textarea", (event)->
-
-  console.log "event type: ", event.type
-  console.log "value: ", $(this).val()
-  $input = $(this)
-  $rf_input = $input.closest(".rf-input")
+$("body").on "change blur keyup", "form .rf-input", (event)->
+  #console.log "form rf-input event"
+  #console.log "event type: ", event.type
+  #console.log "before val()"
+  #console.log "value: ", $(this).val()
+  #console.log "after val()"
+  $rf_input = $(this)
+  #$rf_input = $input.closest(".rf-input")
   if event.type == 'change'
     $rf_input.find(".error.taken").addClass("hide")
 
@@ -466,3 +470,48 @@ $('body').on 'input propertychange', "#personal-data input", (evt) ->
       $form.submit()
 
     ), 2000)
+
+
+$("body").on "change blur keyup", "div.rf-input input, div.rf-input textarea", (e)->
+  $(this).closest("div.rf-input").trigger(e.type, arguments)
+
+$("body").on "change", "div.rf-input.checkbox-list input", ()->
+  $checkbox_list = $(this).closest("div.rf-input.checkbox-list")
+  $checkbox_list.trigger("change")
+
+$("body").on "click", ".rf-input[type=tags] span.tag a", ()->
+  $tag = $(this).closest("span.tag")
+  $rf_input = $tag.closest(".rf-input")
+  tag_index = $tag.index()
+  $tag.remove()
+  $rf_input.trigger("change")
+
+$("body").on "keyup change", "[model]", (e)->
+  console.log "e", e.type
+  $rf_input = $(this)
+  model = $rf_input.attr("model")
+  model_keys = model.split(".")
+  last_key = model_keys[model_keys.length - 1]
+  target = window
+  for key, index in model_keys
+    if index == model_keys.length - 1
+      break
+    target[key] ?= {}
+    target = target[key]
+  target[last_key] = $(this).val()
+  console.log "target", target
+
+$(document).on "ready", ->
+  $("[model]").each ->
+    $input = $(this)
+    model = $input.attr("model")
+    model_keys = model.split(".")
+    target = window
+    for key in model_keys
+      target = target[key]
+
+    if $input.filter(".rf-boolean-input").length
+      is_true = $(this).val() == true
+      if !is_true
+        $input.prop("checked", "checked")
+

@@ -1,4 +1,4 @@
-wizard-step wizard="wizard" step-number="1" step-title="On what platforms would you like your product to be tested?" step-id="2" active-step-id="wizard.active_step_id" child-scope-source="controller"
+wizard-step wizard="wizard" step-number="1" class="#{'active' if @project.active_step_number == 1}" step-id="2" active-step-id="wizard.active_step_id" child-scope-source="controller"
   form name="wizard.platforms_form" novalidate="" ng-model="wizard.platforms"
     input.hide type="number" ng-model="wizard.total_price" required="" min="1" name="total_price"
     .row
