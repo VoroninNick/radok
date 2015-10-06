@@ -179,6 +179,14 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model Pages::FaqIndex do
+    pages_navigation_label
+
+    edit do
+      field :banner
+    end
+  end
+
    config.model FaqArticle do
      edit do
        field :published
