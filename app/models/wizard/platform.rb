@@ -9,4 +9,6 @@ class Wizard::Platform < ActiveRecord::Base
   has_many :tests, class_name: Wizard::Platform, through: :test_platforms_bindings
 
   has_attached_file :avatar
+
+  do_not_validate_attachment_file_type :avatar
 end

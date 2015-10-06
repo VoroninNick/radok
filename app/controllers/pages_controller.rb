@@ -1,5 +1,8 @@
 class PagesController < ApplicationController
   before_action :set_page_metadata
+  before_action :set_page_banner, except: [:home]
+
+
   def self.actions
     self.instance_methods.sort - self.superclass.instance_methods - %w(default set_page_metadata).map(&:to_sym)
   end
@@ -24,7 +27,9 @@ class PagesController < ApplicationController
   end
 
   def about
-    render "static_html/about"
+
+    #render "static_html/about"
+    render "default"
   end
 
 

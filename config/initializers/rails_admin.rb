@@ -11,6 +11,7 @@ def pages_navigation_label
 end
 
 def page_fields
+  field :banner
   field :content
   field :url
   field :seo_tags
@@ -52,9 +53,9 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.included_models = [Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FaqRequest, ContactFeedback]
+  config.included_models = [Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
 
-  ( [MetaData, Page] + pages_models) .each do |model|
+  ( [MetaData, Page, Banner] + pages_models) .each do |model|
     config.included_models += [model]
 
     if !model.instance_of?(Class)
@@ -67,6 +68,16 @@ RailsAdmin.config do |config|
 
     if model.respond_to?(:translates?) && model.translates?
       config.included_models += [model.translation_class]
+    end
+  end
+
+  config.model Banner do
+    nested do
+      field :title
+      field :description
+      field :background_image
+      field :button_label
+      field :button_url
     end
   end
 
@@ -136,7 +147,9 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
+      field :banner
       field :seo_tags
+
     end
   end
 
@@ -153,7 +166,16 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
+      field :banner
       field :seo_tags
+    end
+  end
+
+  config.model Pages::Devices do
+    pages_navigation_label
+
+    edit do
+      page_fields
     end
   end
 

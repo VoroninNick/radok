@@ -101,7 +101,10 @@ class ApplicationController < ActionController::Base
     end
 
 
-    @page_metadata ||= page_class.try(&:first).try(&:seo_tags)
+
+    @page_class = page_class
+    page_instance ||= page_class.try(&:first)
+    @page_metadata ||= page_instance.try(&:seo_tags)
 
     @page_metadata ||= { head_title: page_class.try(&:default_head_title) }
 
@@ -110,10 +113,16 @@ class ApplicationController < ActionController::Base
         @page_metadata[:head_title] = page_instance.name
       end
     end
+
+    @page_instance = page_instance
   end
 
   def set_resource_metadata(resource)
 
+  end
+
+  def set_page_banner
+    @banner ||= @page_instance.banner
   end
 
 

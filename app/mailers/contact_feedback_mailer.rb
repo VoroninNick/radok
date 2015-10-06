@@ -13,7 +13,17 @@ class ContactFeedbackMailer < ApplicationMailer
     )
   end
 
-  def new_call(call)
-
+  def new_call(request)
+    to = FormConfigs::ScheduleCall.first.try(&:emails) || FormConfigs::ScheduleCall.default_emails
+    @resource = request
+    mail(
+        #template_path: "views/mailers/faq_request",
+        template_path: "mailers/contact",
+        template_name: "schedule_call",
+        layout: false,
+        to: to,
+        subject: "New Schedule call request",
+        from: "Radok force"
+    )
   end
 end

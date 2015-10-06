@@ -11,6 +11,7 @@ class DashboardController < ApplicationController
     @finished_projects_groups = a.each_slice( (a.size/2.to_f).round ).to_a
 
     set_page_metadata("dashboard")
+    set_page_banner
   end
 
   def project
