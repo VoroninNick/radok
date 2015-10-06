@@ -34,17 +34,17 @@
                 label for="shedule_call__phone"
                   |Phone
                 input#shedule_call__phone type="tel" placeholder="Phone" ng-model="credentials.phone"
-              = rf_input label: "Phone", required: true
+              = rf_input label: "Phone", required: true, name: "call[phone]"
               /.input
                 label for="shedule_call__name"
                   |Name
                 input#shedule_call__name type="text" placeholder="Your email" ng-model="credentials.name"
-              = rf_input label: "Name"
+              = rf_input label: "Name", name: "call[name]"
               /.input
                 label for="shedule_call__description"
                   |Description
                 textarea#shedule_call__description placeholder="Your email" ng-model="credentials.description"
-              = rf_input label: "Description"
+              = rf_input label: "Description", name: "call[description]"
             .actions
               .columns.large-5
                 .sign-up-invitation
