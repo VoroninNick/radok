@@ -183,14 +183,14 @@ RailsAdmin.config do |config|
   end
 
   config.model Wizard::Platform do
-    # nestable_tree({
-    #   position_field: :position,
-    #   max_depth: 2
-    # })
+    nestable_tree({
+      position_field: :position,
+      max_depth: 2
+    })
 
     edit do
       field :name
-      #field :product_types
+      field :product_types
     end
 
     list do

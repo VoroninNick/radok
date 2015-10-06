@@ -6,7 +6,7 @@ class Wizard::Platform < ActiveRecord::Base
   attr_accessible :product_types, :product_type_ids
 
   has_many :test_platforms_bindings, class_name: Wizard::TestPlatform#, foreign_key: [:test_id, :platform_id]
-  has_many :tests, class_name: Wizard::Platform, through: :test_platforms
+  has_many :tests, class_name: Wizard::Platform, through: :test_platforms_bindings
 
   has_attached_file :avatar
 end
