@@ -1,0 +1,23 @@
+.devices-table-wrap
+  table.footable.table
+    thead
+      tr
+        th data-sort-initial="asceding"
+          |Manufacturer
+        th
+          |Model
+        th
+          |OS
+        th
+          |Screen size
+    tbody
+      - @devices.each do |device|
+        tr
+          td
+            = device.manufacturer.name
+          td
+            = device.model
+          td
+            = device.os
+          td
+            = device.screen_pixel_size

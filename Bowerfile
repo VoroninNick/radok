@@ -46,3 +46,4 @@ asset "jquery-animateNumber"
 asset "jquery-serialize-object"
 
 asset "blueimp-file-upload"
+asset "footable"

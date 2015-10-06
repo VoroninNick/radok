@@ -86,4 +86,8 @@ class PagesController < ApplicationController
 
     @show_plans_section_header = true
   end
+
+  def devices
+    @devices = Wizard::Device.all
+  end
 end

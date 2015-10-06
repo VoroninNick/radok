@@ -8,6 +8,8 @@
 #= require jquery-animateNumber/jquery.animateNumber.min
 #= require jquery.capsChecker.min
 #= require jquery.clickout
+#= require footable/dist/footable.min
+#= require footable/dist/footable.sort.min
 # require jquery-validation/dist/jquery.validate.min
 #= require jquery.tagsinput/src/jquery.tagsinput.js
 # require jquery.serialize-hash

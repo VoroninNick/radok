@@ -511,6 +511,7 @@ $("body").on "keyup change", "[model]", (e)->
   console.log "target", target
 
 $(document).on "ready", ->
+  $('.footable').footable();
   $("[model]").each ->
     $input = $(this)
     model = $input.attr("model")

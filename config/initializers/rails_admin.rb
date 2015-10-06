@@ -52,7 +52,7 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.included_models = [Wizard::ProductType, Wizard::TestType, Wizard::Platform, User, FaqArticle, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FaqRequest, ContactFeedback]
+  config.included_models = [Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FaqRequest, ContactFeedback]
 
   ( [MetaData, Page] + pages_models) .each do |model|
     config.included_models += [model]
@@ -183,14 +183,18 @@ RailsAdmin.config do |config|
   end
 
   config.model Wizard::Platform do
-    nestable_tree({
-      position_field: :position,
-      max_depth: 2
-    })
+    # nestable_tree({
+    #   position_field: :position,
+    #   max_depth: 2
+    # })
 
     edit do
       field :name
-      field :product_types
+      #field :product_types
+    end
+
+    list do
+      field :name
     end
   end
 
