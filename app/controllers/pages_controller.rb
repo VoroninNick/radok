@@ -15,15 +15,18 @@ class PagesController < ApplicationController
   end
 
   def pricing
-    render "static_html/pricing"
+    #render "static_html/pricing"
+    render "default"
   end
 
   def how_it_works
-    render "static_html/how_it_works"
+    #render "static_html/how_it_works"
+    render "default"
   end
 
   def testing_services
-    render "static_html/testing_services"
+    #render "static_html/testing_services"
+    render "default"
   end
 
   def about

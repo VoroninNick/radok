@@ -24,6 +24,10 @@ class Wizard::Test < ActiveRecord::Base
 
   attr_accessible :testers_by_platform
 
+  scope :drafts, -> { where("completed_at is null") }
+  scope :processing_projects, -> { where("completed_at is not null") }
+  scope :tested_projects, -> { where("completed_at is not null and tested_at is not null") }
+
   def testers_by_platform=(platforms)
     puts "testers_by_platform="
     puts platforms.inspect
@@ -190,7 +194,13 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def steps_completed
-    2
+    self.proceeded_steps_count
+  end
+
+  def proceeded_steps_count
+    count = self['proceeded_steps_count']
+    count ||= 0
+    return count
   end
 
   def total_steps_count

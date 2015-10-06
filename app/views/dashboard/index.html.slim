@@ -23,7 +23,7 @@
                           .steps-completed
                             .progress
                               - (project.total_steps_count.times).each_with_index do |step, index|
-                                .step class="#{'proceeded' if index < project.steps_completed}" style="width: #{100 / project.total_steps_count}%;"
+                                .step class="#{'proceeded' if index < project.proceeded_steps_count}" style="width: #{100 / project.total_steps_count}%;"
                                   .inner
                           .type-of-test-wrap
                             .type-of-test-icon
@@ -52,6 +52,7 @@
                       .delete-draft-button ng-click="deleteDraft(project)"
                         |Delete draft
                       rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
+                      = rf_button title: "Complete", subtitle: "Draft", svg: "finish_flag", class: "complete-draft-button"
 
 
 

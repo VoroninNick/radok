@@ -108,7 +108,9 @@ $map = $("#contact-map map")
 #}).Load()
 
 
-$("body").on "click", ".delete-draft-button", ()->
+$("body").on "click", ".delete-draft-button", (event)->
+  event.preventDefault()
+  event.stopImmediatePropagation()
   $button = $(this)
   $draft = $button.closest(".item")
   test_id = parseInt($draft.attr("data-test-id"))
