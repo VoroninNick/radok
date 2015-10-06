@@ -9,3 +9,4 @@ en:
       pages/home: "Home"
       pages/dashboard: "Dashboard"
       pages/wizard: "Wizard"
+      pages/faq_index: "FAQ index"
