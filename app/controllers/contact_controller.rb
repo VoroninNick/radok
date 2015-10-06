@@ -10,7 +10,7 @@ class ContactController < ApplicationController
   end
 
   def schedule_call
-    @schedule_call_request = ScheduleCallRequest.create!(params[:schedule_call])
+    @schedule_call_request = ScheduleCallRequest.create!(params[:call])
     ContactFeedbackMailer.new_call(@schedule_call_request).deliver
     render json: {}, status: 201
   end
