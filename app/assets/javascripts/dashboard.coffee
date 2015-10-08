@@ -124,8 +124,11 @@ $("body").on "click", ".delete-draft-button", (event)->
   )
 
 initialize_google_map = ->
-  lat = 49.829182
-  lng = 24.01275
+  #lat = 49.829182
+  #lng = 24.01275
+  lat = 43.660219
+  lng = -79.489481
+
   latlng = new google.maps.LatLng(lat, lng)
 
   mapOptions =
@@ -134,6 +137,15 @@ initialize_google_map = ->
     scrollwheel: true
 
 
+
+
   map = new google.maps.Map($map.get(0), mapOptions)
+
+  marker = new google.maps.Marker({
+    map: map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    position: {lat: lat, lng: lng}
+  });
 
 initialize_google_map()

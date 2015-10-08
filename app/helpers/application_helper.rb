@@ -12,6 +12,22 @@ module ApplicationHelper
     res
   end
 
+  def skype_login
+    "force.10g"
+  end
+
+  def twitter_login
+    "10g_force"
+  end
+
+  def google_plus_id
+    "109753715460055186428"
+  end
+
+  def facebook_login
+    "10g.force"
+  end
+
   def rf_button(**options)
 
 

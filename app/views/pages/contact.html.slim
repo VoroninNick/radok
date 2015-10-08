@@ -32,27 +32,7 @@
             .property-header
               |Stay in touch with our social channels:
             .social-icons
-              ul
-                li
-                  a href=""
-                    .svg-wrap
-                      = embedded_svg_from_assets "rf-social-google-plus"
-                li
-                  a href=""
-                    .svg-wrap
-                      = embedded_svg_from_assets "rf-social-facebook"
-                li
-                  a href=""
-                    .svg-wrap
-                      = embedded_svg_from_assets "rf-social-linked-in"
-                li
-                  a href=""
-                    .svg-wrap
-                      = embedded_svg_from_assets "rf-social-twitter"
-                li
-                  a href=""
-                    .svg-wrap
-                      = embedded_svg_from_assets "rf-social-skype"
+              = render "social_links"
 
 
         #contact-map.columns.large-7.medium-6
