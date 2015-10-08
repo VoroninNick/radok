@@ -150,7 +150,7 @@ editStep = (step_number, save = true)->
   presentProgressSteps()
 
 
-presentProgressSteps = ()->
+window.presentProgressSteps = ()->
   $progress_steps = $("#wizard-summary .progress .step")
 
   $progress_steps.filter(":lt(#{wizard.proceeded_steps_count})").addClass("proceeded")

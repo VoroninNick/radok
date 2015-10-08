@@ -12,7 +12,7 @@
               | What type of tests are you looking for?
             div ng-transclude=""
               .row.ng-scope
-                .input.required
+                .input.required rf-model="wizard.test_type_id"
                   - Wizard::TestType.all.each_with_index do |test_type, test_type_index|
                     - html_input_id = "test_type__#{test_type_index + 1}"
                     .option-image.large-4
