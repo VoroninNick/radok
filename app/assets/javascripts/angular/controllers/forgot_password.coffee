@@ -10,7 +10,7 @@ window.$app.controller "ForgotPasswordController", [
         method: 'POST',
         url: '/users/password.json',
         data: $scope.credentials
-        #success_message: "Reset instructions have been sent to your e-mail address."
+        #success_message: "Reset instructions have been sent to your e-mail.html.slim address."
         #error_entity: $scope.login_error
 
     ###
@@ -19,7 +19,7 @@ window.$app.controller "ForgotPasswordController", [
         method: 'POST',
         url: '/users/password.json',
         data: $scope.credentials
-        #success_message: "Reset instructions have been sent to your e-mail address."
+        #success_message: "Reset instructions have been sent to your e-mail.html.slim address."
         #error_entity: $scope.login_error
 
 

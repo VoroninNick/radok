@@ -16,7 +16,7 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = {:host => "radok.voroninstudio.eu"}
+  config.action_mailer.default_url_options = {:host => "10g-force.com"}
   config.action_mailer.perform_deliveries = true #default value
   config.action_mailer.delivery_method = :smtp #default value
 

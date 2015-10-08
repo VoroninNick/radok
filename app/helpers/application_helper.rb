@@ -12,6 +12,10 @@ module ApplicationHelper
     res
   end
 
+  def host_name
+    Rails.application.config.action_mailer.default_url_options[:host]
+  end
+
   def skype_login
     "force.10g"
   end
@@ -36,6 +40,7 @@ module ApplicationHelper
     options[:subtitle] ||= false
     options[:svg_size] ||= :medium
     options[:id] ||= false
+
 
     options[:class] = button_class(options)
 

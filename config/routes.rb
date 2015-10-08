@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call"
 
   delete "/wizard/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"

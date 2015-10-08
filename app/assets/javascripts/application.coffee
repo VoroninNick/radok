@@ -20,3 +20,4 @@
 #= require wizard_jquery
 #= require dashboard
 #= require new_wizard_jquery
+#= require mail_form

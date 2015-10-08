@@ -1,0 +1,49 @@
+.page
+  .popup
+    .form-partial
+      .header
+        .title
+          | Login
+      .content
+        form.form.mail-form no-processing="" action="https://passport.yandex.ru/for/#{host_name}?mode=auth" method="post" novalidate=""
+          input type="hidden" name="retpath" value="http://mail.yandex.ru/for/#{host_name}"
+          .form-content
+            /.oauth-login
+              .header
+                | Login using social networks
+              = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in"}
+              .or
+                | or
+
+            /.form-errors.hide
+              .columns.large-12
+                p.semibold.unconfirmed.hide
+                  = t("form-errors.unconfirmed")
+                p.semibold.invalid_password_or_login.hide
+                  = t("form-errors.invalid_password_or_login")
+            .caps-lock-warning.hide
+              | Warning: Caps-lock is on
+
+            .inputs
+              .row
+                .columns.large-8
+                  = rf_input(label: "username", name: "login", required: true, required_message: "Please type username")
+                  /! ngRepeat: (error_key, error_value) in error()
+                .columns.large-4.host_name style="padding-top: 40px; line-height: 50px; left: -15 px;"
+                  = "@#{host_name}"
+                .columns.large-12
+                  = rf_input(label: "password", name: "passwd", type: "password", required: true, required_message: "Please type password")
+
+                .columns.large-12.forgot-password-link-wrap
+                  a href=new_user_password_path open-popup="user_pages__forgot_password" open-popup-from-popup-only="true"  Forgot your password?
+            .actions
+              /.columns.large-5
+                .sign-up-invitation
+                  | No account?&nbsp;
+                  a href="/sign-up"
+                    |Sign up
+              .columns.large-7
+                = rf_button title: "LOGIN", raised: true, class: "login-button", type: "submit", name: "In"
+
+          .preloader.hide
+            = image_tag("preloader.gif")

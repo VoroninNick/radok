@@ -72,7 +72,7 @@ $.fn.valid = ->
   return true
 
 
-$("body").on "submit", "form", (event)->
+$("body").on "submit", "form:not([no-processing])", (event)->
   event.preventDefault()
 
   $form = $(this)
