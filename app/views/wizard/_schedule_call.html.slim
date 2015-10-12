@@ -1,4 +1,4 @@
-.popup.shedule-call
+.popup.schedule-call
   .form-partial.schedule-call
     .header
       .title
@@ -27,23 +27,23 @@
         .or
           |or
       .form
-        form.form.shedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
+        form.form.schedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
           .form-content
             .inputs
               /.input
-                label for="shedule_call__phone"
+                label for="schedule_call__phone"
                   |Phone
-                input#shedule_call__phone type="tel" placeholder="Phone" ng-model="credentials.phone"
+                input#schedule_call__phone type="tel" placeholder="Phone" ng-model="credentials.phone"
               = rf_input label: "Phone", required: true, name: "call[phone]"
               /.input
-                label for="shedule_call__name"
+                label for="schedule_call__name"
                   |Name
-                input#shedule_call__name type="text" placeholder="Your email" ng-model="credentials.name"
+                input#schedule_call__name type="text" placeholder="Your email" ng-model="credentials.name"
               = rf_input label: "Name", name: "call[name]"
               /.input
-                label for="shedule_call__description"
+                label for="schedule_call__description"
                   |Description
-                textarea#shedule_call__description placeholder="Your email" ng-model="credentials.description"
+                textarea#schedule_call__description placeholder="Your email" ng-model="credentials.description"
               = rf_input label: "Description", name: "call[description]"
             .actions
               .columns.large-5

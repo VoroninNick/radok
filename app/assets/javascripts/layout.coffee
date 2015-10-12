@@ -530,5 +530,5 @@ $("body").on "click", ".return_to_wizard", (e)->
   $(this).closeDialog()
 
 
-$("body").on "click", ".shedule-call-button", ->
+$("body").on "click", ".schedule-call-button", ->
   openPopup("wizard__schedule_call")

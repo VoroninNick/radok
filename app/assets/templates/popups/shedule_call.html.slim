@@ -1,8 +1,8 @@
-.popup.shedule-call
-  .form-partial.shedule-call
+.popup.schedule-call
+  .form-partial.schedule-call
     .header
       .title
-        |Shedule call
+        |Schedule call
     .content
       /.oauth-login
         .header
@@ -26,20 +26,20 @@
                 .social-icon-wrap ng-include="'/assets/github.svg'"
         .or
           |or
-      form.form.shedule-call-form
+      form.form.schedule-call-form
         .inputs
           .input
-            label for="shedule_call__phone"
+            label for="schedule_call__phone"
               |Phone
-            input#shedule_call__phone type="tel" placeholder="Phone" ng-model="credentials.phone"
+            input#schedule_call__phone type="tel" placeholder="Phone" ng-model="credentials.phone"
           .input
-            label for="shedule_call__name"
+            label for="schedule_call__name"
               |Name
-            input#shedule_call__name type="text" placeholder="Your email" ng-model="credentials.name"
+            input#schedule_call__name type="text" placeholder="Your email" ng-model="credentials.name"
           .input
-            label for="shedule_call__description"
+            label for="schedule_call__description"
               |Description
-            textarea#shedule_call__description placeholder="Your email" ng-model="credentials.description"
+            textarea#schedule_call__description placeholder="Your email" ng-model="credentials.description"
 
         .actions
           .sign-up-invitation

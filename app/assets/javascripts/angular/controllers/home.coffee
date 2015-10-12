@@ -140,11 +140,11 @@ window.$app.controller "HomeController", [
       scene = angular.element('.home-parallax-banner').each ()->
         parallax = new Parallax(this)
 
-    $scope.sheduleCall = ()->
+    $scope.scheduleCall = ()->
       ngDialog.open({
-        template: '/assets/popups/shedule_call.html'
+        template: '/assets/popups/schedule_call.html'
         className: 'ngdialog-theme-default ngdialog-theme-rf-light-gray'
-        controller: "SheduleCallController"
+        controller: "ScheduleCallController"
       });
 
 

@@ -22,11 +22,11 @@ window.$app.controller "PricingController", [
       {text: "I have engaged with Radok Force after a few failed attempts to work with cheap freelancers on oDesk. I was disappointed no one could test my app on all the devices I needed, both desktop and mobile, so didn’t even expect they could do this in such a short period. Not only my app was tested on all the platforms and devices I asked, but also I got a profound report with the recommendations for bug fixing to make my app truly responsive. I’m planning to use Radok Force in all further iterations and product pivots as it is worry-free for me. "}
     ]
 
-    $scope.sheduleCall = ()->
+    $scope.scheduleCall = ()->
       ngDialog.open({
-        template: '/assets/popups/shedule_call.html'
+        template: '/assets/popups/schedule_call.html'
         className: 'ngdialog-theme-default ngdialog-theme-rf-light-gray'
-        controller: "SheduleCallController"
+        controller: "ScheduleCallController"
       });
 
     $scope.init_carousel_bullets = ()->
