@@ -1,7 +1,7 @@
 class UserPagesController < ApplicationController
   def registrations__new
     #return render inline: session["devise.facebook_data"].inspect
-    return render inline: "hi"
+    return render inline: params.inspect
     @user = User.new
 
     provider = params[:provider]
