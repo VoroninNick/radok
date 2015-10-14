@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call"
-
-  delete "/wizard/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
-  post "/wizard/:id/:asset_field_name", to: "wizard#upload_test_case_files"
-  delete "/wizard/:id", to: "wizard#destroy"
-  get "/wizard/:id", to: "wizard#edit_or_show"
-  put "wizard/:id", to: "wizard#update"
-  post "wizard", to: "wizard#create"
+  wizard_path = "/ordering-crowdsourced-testing"
+  delete "#{wizard_path}/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
+  post "#{wizard_path}:id/:asset_field_name", to: "wizard#upload_test_case_files"
+  delete "#{wizard_path}/:id", to: "wizard#destroy"
+  get "#{wizard_path}/:id", to: "wizard#edit_or_show"
+  put "#{wizard_path}/:id", to: "wizard#update"
+  post "#{wizard_path}", to: "wizard#create"
 
   post "update_subscription", to: "user_pages#update_subscription"
   match "/profile", to: "user_pages#profile", via: [:get, :post]
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboard#index"
   get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
-  get "/ordering-crowdsourced-testing", to: "wizard#new"#, as: "wizard"
+  get "#{wizard_path}", to: "wizard#new"#, as: "wizard"
   DynamicRouter.load
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
