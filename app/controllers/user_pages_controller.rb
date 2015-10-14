@@ -1,7 +1,7 @@
 class UserPagesController < ApplicationController
   def registrations__new
     #return render inline: session["devise.facebook_data"].inspect
-    return render inline: params.inspect
+    return render inline: social_params(params[:provider]).inspect
     @user = User.new
 
     provider = params[:provider]
@@ -35,10 +35,16 @@ class UserPagesController < ApplicationController
     session["devise.facebook_data"]
   end
 
-  def social_params
-    [:facebook, :twitter, :linkedin, :google_oauth2].each do |provider_key|
-      data = session["devise.#{provider_key}_data"]
-      return data if data.present?
+  def social_params(provider = :any)
+    available_providers = [:facebook, :twitter, :linkedin, :google_oauth2]
+
+    if provider == :any || !provider.to_s.in?(available_providers)
+      available_providers.each do |provider_key|
+        data = session["devise.#{provider_key}_data"]
+        return data if data.present?
+      end
+    else
+      session["devise.#{provider}_data"]
     end
   end
 
