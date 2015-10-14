@@ -167,7 +167,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :banner
-      field :url
+      #field :url
       field :seo_tags
     end
   end
