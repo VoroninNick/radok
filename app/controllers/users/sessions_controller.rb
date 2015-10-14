@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
     user_params = params[:user]
     from_oauth = false
     if user_params.blank?
-      user_params = {email: session["devise.facebook_data"]['info']['email']}
+      user_params = {email: social_params['info']['email']}
       from_oauth = true
     end
     self.resource = User.find_for_database_authentication(user_params)
@@ -42,6 +42,13 @@ class Users::SessionsController < Devise::SessionsController
 
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
+  end
+
+  def social_params
+    [:facebook, :twitter, :linkedin, :google_oauth2].each do |provider_key|
+      data = session["devise.#{provider_key}_data"]
+      return data if data.present?
+    end
   end
 
   # DELETE /resource/sign_out

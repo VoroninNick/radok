@@ -88,7 +88,14 @@ gem 'global_config'
 
 gem 'geo_ip'
 
-gem "omniauth-gplus"
+#gem "omniauth-gplus"
+
+gem "omniauth-google_oauth2"
+
+
+gem 'omniauth-linkedin-oauth2'
+
+gem 'omniauth-twitter'
 
 gem 'quiet_assets'
 

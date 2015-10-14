@@ -9,7 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   #   render inline: params.inspect
   # end
 
-  def facebook
+  def specific_provider(name)
     #return render inline: params.keys.map(&:to_s).inspect
     #sign_in = params.keys.map(&:to_s).include?("sign-in")
     #sign_up = !sign_in
@@ -23,14 +23,29 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       #set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
-      session["devise.facebook_data"] = request.env["omniauth.auth"]
+      session["devise.#{name}_data"] = request.env["omniauth.auth"]
       #redirect_to new_user_registration_url
       #url_to_redirect = "/sign-up/facebook"
       #url_to_redirect = "/sign-in/facebook" if sign_in
-      redirect_to "/sign-up/facebook"
+      redirect_to "/sign-up/#{name}"
     end
   end
 
+  def facebook
+    specific_provider(:facebook)
+  end
+
+  def twitter
+    specific_provider(:twitter)
+  end
+
+  def linkedin
+    specific_provider(:linkedin)
+  end
+
+  def google_oauth2
+    specific_provider(:google_oauth2)
+  end
 
 
   def redirect_callbacks

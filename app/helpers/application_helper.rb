@@ -32,6 +32,10 @@ module ApplicationHelper
     "10g.force"
   end
 
+  def linked_in_url
+    "https://www.linkedin.com/grp/home?gid=8415315"
+  end
+
   def rf_button(**options)
 
 
