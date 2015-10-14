@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   delete "#{wizard_path}/:id", to: "wizard#destroy"
   get "#{wizard_path}/:id", to: "wizard#edit_or_show"
   put "#{wizard_path}/:id", to: "wizard#update"
-  post "#{wizard_path}", to: "wizard#create"
+  post "#{wizard_path}", to: "wizard#create", as: "wizard"
 
   post "update_subscription", to: "user_pages#update_subscription"
   match "/profile", to: "user_pages#profile", via: [:get, :post]
