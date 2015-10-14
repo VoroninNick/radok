@@ -90,7 +90,8 @@ gem 'geo_ip'
 
 #gem "omniauth-gplus"
 
-gem "omniauth-google_oauth2"
+#gem "omniauth-google_oauth2"
+gem 'omniauth-google-oauth2'
 
 
 gem 'omniauth-linkedin-oauth2'
