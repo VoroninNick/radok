@@ -19,8 +19,12 @@
 
 
           .description-block
-            .title
-              = slide[:title]
+            - if index > 0
+              .title
+                = slide[:title]
+            - else
+              h1.title
+                = slide[:title]
             .description
               = slide[:description]
             .button-container.banner-button-wrap
@@ -63,7 +67,7 @@
 
     #home-statistics
       .row
-        .columns.large-12.section-header
+        h2.columns.large-12.section-header
           = @statistics[:title]
         .columns.large-5.projects
           .counter animate-number="" value=@statistics[:tested_projects_count]

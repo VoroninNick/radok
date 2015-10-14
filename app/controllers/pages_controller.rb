@@ -61,7 +61,7 @@ class PagesController < ApplicationController
     }
 
     @statistics = {
-        title: "Need some statistic?",
+        title: "Our software testing statistics",
         tested_projects_count: 300,
         testers_count: 1850
     }

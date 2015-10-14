@@ -74,6 +74,7 @@ RailsAdmin.config do |config|
   config.model Banner do
     nested do
       field :title
+      field :title_html_tag
       field :description
       field :background_image
       field :button_label
