@@ -8,6 +8,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    return render inline: social_params.inspect
     user_params = params[:user]
     from_oauth = false
     if user_params.blank?

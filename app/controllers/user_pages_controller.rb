@@ -1,13 +1,14 @@
 class UserPagesController < ApplicationController
   def registrations__new
     #return render inline: session["devise.facebook_data"].inspect
+    return render inline: "hi"
     @user = User.new
 
     provider = params[:provider]
     if provider == 'facebook'
-      @user.email = facebook_data['info']['email']
-      @user.username = facebook_data['info']['nickname']
-      @user.full_name = facebook_data['info']['name']
+      @user.email = social_params['info']['email']
+      @user.username = social_params['info']['nickname']
+      @user.full_name = social_params['info']['name']
     end
 
     render "user_pages/static_sign_up"
@@ -32,6 +33,13 @@ class UserPagesController < ApplicationController
 
   def facebook_data
     session["devise.facebook_data"]
+  end
+
+  def social_params
+    [:facebook, :twitter, :linkedin, :google_oauth2].each do |provider_key|
+      data = session["devise.#{provider_key}_data"]
+      return data if data.present?
+    end
   end
 
   def profile
