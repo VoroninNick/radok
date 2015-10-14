@@ -9,7 +9,7 @@
           .oauth-sign-up
             .header
               | Sign up using social networks
-            = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook"}
+            = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: "/users/auth/twitter?sign-in",  google_plus: "/users/auth/google_plus?sign-in"}
             .or
               | or
 
