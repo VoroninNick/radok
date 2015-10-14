@@ -13,12 +13,12 @@ Rails.application.routes.draw do
   match "/profile", to: "user_pages#profile", via: [:get, :post]
   post "sign-up", to: "user_pages#registrations__create"
   get "/sign-up/(:provider)", to: "user_pages#registrations__new"
-  get "faq", to: "faq_articles#index", as: :faq
-  get "faq/:id", to: "faq_articles#show", as: "faq_article"
+  get "/crowdsourced-testing-faq", to: "faq_articles#index", as: :faq
+  get "/crowdsourced-testing-faq/:id", to: "faq_articles#show", as: "faq_article"
 
   get "dashboard", to: "dashboard#index"
   get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
-  get "wizard", to: "wizard#new"
+  get "/ordering-crowdsourced-testing", to: "wizard#new"#, as: "wizard"
   DynamicRouter.load
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
