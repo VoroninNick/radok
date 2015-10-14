@@ -49,7 +49,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
 
   def redirect_callbacks
-    return render inline: "hi"
+    #return render inline: "hi"
     # derive target redirect route from 'resource_class' param, which was set
     # before authentication.
 
