@@ -1,7 +1,7 @@
 class UserPagesController < ApplicationController
   def registrations__new
     #return render inline: session["devise.facebook_data"].inspect
-    return render inline: social_params(params[:provider]).inspect
+    #return render inline: social_params(params[:provider]).inspect
     @user = User.new
 
     provider = params[:provider]
@@ -44,7 +44,7 @@ class UserPagesController < ApplicationController
         return data if data.present?
       end
     else
-      session["devise.#{provider}_data"]
+      return session["devise.#{provider}_data"]
     end
   end
 
