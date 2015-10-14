@@ -4,8 +4,7 @@
       .row
         .inner
           .description-block
-            .title
-              = @banner.title
+            = content_tag(@banner.title_html_tag, @banner.title, class: "title")
             .description
               = @banner.description
             /rf-button title="{{page_banner.button.title}}" ng-show="page_banner.button" ng-click="page_banner.button.click()"
