@@ -1,4 +1,5 @@
 duration = 1200
+
 $.fn.animate_number = (options)->
   $this = $(this)
   local_duration = parseInt($this.attr("duration") ) || duration
@@ -116,7 +117,7 @@ $("body").on "click", ".delete-draft-button", (event)->
   test_id = parseInt($draft.attr("data-test-id"))
   $draft.remove()
   $.ajax(
-    url: "/wizard/#{test_id}"
+    url: "#{wizard_root_path}/#{test_id}"
     type: "delete"
     dataType: "json"
     success: ()->

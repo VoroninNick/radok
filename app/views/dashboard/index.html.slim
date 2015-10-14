@@ -10,7 +10,7 @@
             .row
               - @drafts.each do |project|
                 .columns.large-4.item data-test-id=project.id
-                  a.inner href="/wizard/#{project.id}"
+                  a.inner href="#{wizard_path}/#{project.id}"
                     .project-status
                       |Draft
                     .my-row

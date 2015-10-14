@@ -55,7 +55,7 @@ saveTest = ()->
       data = {test: $(".intro-step form").serializeObject()}
       saving_in_progress = true
       $.ajax(
-        url: "/wizard"
+        url: wizard_root_path
         type: "post"
         dataType: "json"
         data: data
@@ -64,7 +64,7 @@ saveTest = ()->
         success: (data)->
           $.extend(wizard, data)
           created = true
-          window.history.pushState({}, "", "/wizard/#{data.id}")
+          window.history.pushState({}, "", "#{wizard_root_path}/#{data.id}")
       )
 
 
@@ -74,7 +74,7 @@ saveTest = ()->
       data = { test: wizard}
       saving_in_progress = true
       $.ajax(
-        url: "/wizard/#{wizard.id}"
+        url: "#{wizard_root_path}/#{wizard.id}"
         type: "put"
         data: data
         dataType: "json"
@@ -415,7 +415,7 @@ $("body").on "change", "input.file-upload-input", ->
 
     reader.readAsDataURL(file);
 
-  $input.simpleUpload("/wizard/#{wizard.id}/#{attachment_name}", {
+  $input.simpleUpload("#{wizard_root_path}/#{wizard.id}/#{attachment_name}", {
     success: (data)->
       file_name = data.data_file_name
       $file = $list.find(".file:not(.loaded)").filter("[data-file-name='#{file_name}']")
@@ -433,7 +433,7 @@ $("body").on "click", ".file-upload-files-list .delete", ->
   $list = $(".file-upload-files-list")
   attachment_name = $list.attr("data-attachment-name")
   $.ajax({
-    url: "/wizard/#{wizard.id}/#{attachment_name}/#{asset_id}"
+    url: "#{wizard_root_path}/#{wizard.id}/#{attachment_name}/#{asset_id}"
     type: "delete"
     dataType: "json"
 

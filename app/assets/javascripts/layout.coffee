@@ -1,3 +1,4 @@
+window.wizard_root_path = "/ordering-crowdsourced-testing"
 $header_user = $("#header-user")
 window.logged_in = $("html").data().loggedIn == true
 $header_user_dropdown = $header_user.find(".dropdown")
