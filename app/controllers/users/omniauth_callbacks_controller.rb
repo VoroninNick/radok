@@ -69,7 +69,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def passthru
-    render inline: "hi"
+    #render inline: "hi"
   end
 
 
