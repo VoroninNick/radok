@@ -97,5 +97,13 @@ class PagesController < ApplicationController
 
   def devices
     @devices = Wizard::Device.all
+
+    @statistics = {
+        title: "Devices in numbers",
+        devices_count: 109,
+        manufacturers_count: 21,
+        operating_systems: 48,
+        screen_sizes: 25
+    }
   end
 end
