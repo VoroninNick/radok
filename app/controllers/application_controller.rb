@@ -49,6 +49,7 @@ class ApplicationController < ActionController::Base
         { title: "For clients",
           subitems: [
               {title: "Testing services", href: testing_services_path},
+              {title: "Devices", href: devices_path},
               {title: "Pricing", href: pricing_path},
               {title: "FAQ", href: faq_path}
           ]
@@ -64,6 +65,7 @@ class ApplicationController < ActionController::Base
             title: "For clients",
             subitems: [
                 {title: "Testing services", href: testing_services_path},
+                {title: "Devices", href: devices_path},
                 {title: "How it works", href: how_it_works_path},
                 {title: "Pricing", href: pricing_path},
                 {title: "FAQ", href: faq_path}
