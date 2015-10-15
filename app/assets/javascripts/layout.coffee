@@ -8,6 +8,8 @@ $header_user_icon_logged.addClass("hide") if !logged_in
 $("#body").on "click", ".user-icon.logged", ->
   $("#header-user .dropdown").toggleClass("hide")
 
+
+
 $("body").on "click", ".logout-link", (event)->
   event.preventDefault()
   url = $(this).attr("href")

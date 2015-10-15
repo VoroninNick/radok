@@ -75,13 +75,43 @@ $("[collapsable]").on "click", "[expander]", ->
 $("[parallax-banner]").each ->
   parallax = new Parallax(this)
 
+activate_carousel_controls = ()->
+  console.log "move", arguments
+  index = $("#home-feedbacks .owl-carousel").data().owlCarousel.currentItem
+  $bullets = $("#home-slider-bullets li")
+  $bullets.removeClass("active")
+  console.log "banner", index
+  $bullets.eq(index).addClass("active")
+
+$("#home-banner #home-slider-carousel").owlCarousel(
+  navigation : false
+  singleItem : true
+  navigationText: ["", ""]
+  autoPlay: false #2000
+  stopOnHover: true
+  pagination: true
+  #afterMove: activate_carousel_controls
+)
+
+$("body").on "click", "#home-slider-bullets li", (event)->
+  index = $(this).index()
+  $home_banner = $(this).closest("#home-banner")
+  $carousel = $home_banner.children().filter("#home-slider-carousel")
+  carousel = $carousel.data().owlCarousel
+  carousel.goTo(index)
+
+
+
 $("#home-feedbacks .owl-carousel").owlCarousel(
   navigation : false
   singleItem : true
   navigationText: ["", ""]
   autoPlay: 15000
   stopOnHover: true
+
 )
+
+#$("body").on "owl.play owl.goTo", "#home-slider-carousel", activate_carousel_controls
 
 $("#home-feedbacks").on "click", ".rn-carousel-control-item", ->
   carousel = $("#home-feedbacks .owl-carousel").data("owlCarousel")

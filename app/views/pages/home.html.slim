@@ -37,11 +37,11 @@
                   a.link ng-click="openSignInDialog()" href="/users/sign_in" open-popup="user_pages__static_sign_in"
                     |Sign in
 
-    - if @home_slides.length > 1
+    /- if @home_slides.length > 1
       #home-slider-bullets
         ul
           - @home_slides.each_with_index do |slide, index|
-            li ng-class="$parent.homeBannerCarouselIndex == $index ? 'active' : 'inactive'"
+            li class=("active" if index == 0) ng-class="$parent.homeBannerCarouselIndex == $index ? 'active' : 'inactive'"
               |●
 
 

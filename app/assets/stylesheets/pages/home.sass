@@ -27,6 +27,7 @@ $banner-title-color: #e6e7e9
       +carousel-indicator-bullet
 
   .description-block
+    white-space: initial
     position: absolute
     left: 50%
     right: 0
@@ -411,4 +412,36 @@ button.start-now-button, button.schedule-call-button
 #home-banner .button-container
   margin: 45px 0 0 0 !important
 
+
+#home-banner
+  .owl-wrapper-outer, .owl-wrapper, .owl-item, .home-parallax-banner
+    height: 100%
+
+
+  .owl-controls
+    //position: absolute
+    //bottom: 0
+    //right: 200px
+    width: 100%
+    max-width: 1000px
+    right: auto
+    position: relative
+    margin: 0 auto
+    bottom: 33px
+    text-align: right
+
+  .owl-pagination
+    .owl-page
+      display: inline-block
+      span
+        &:before
+          content: "●"
+          width: 12px
+          height: 12px
+          font-size: 24px
+          margin: 0 15px
+      &.active
+        span
+          &:before
+            color: $fire-orange-color
 
