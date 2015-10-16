@@ -87,7 +87,7 @@ $("#home-banner #home-slider-carousel").owlCarousel(
   navigation : false
   singleItem : true
   navigationText: ["", ""]
-  autoPlay: false #2000
+  autoPlay: 5000
   stopOnHover: true
   pagination: true
   #afterMove: activate_carousel_controls

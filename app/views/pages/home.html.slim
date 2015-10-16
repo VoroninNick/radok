@@ -5,17 +5,24 @@
         padding: 0
         height: 100px
         line-height: 100px
+
+    #home-slider-carousel
+      .owl-item:nth-child(2)
+        .layer
+          &:nth-child(1)
+            img
+              transform: translate(-10%, -10%)
   #home-banner.banner
     ul#home-slider-carousel  rn-carousel="" rn-carousel-pause-on-hover="" rn-carousel-index="homeBannerCarouselIndex" rn-carousel-auto-slide="3"
       - @home_slides.each_with_index do |slide, index|
         li.home-parallax-banner on-finish-render="" parallax-banner=""
           .scene data-calibrate-x="false" data-calibrate-y="true" data-invert-x="false" data-invert-y="true" data-limit-y="8" id="scene#{index+1}"
             .layer data-depth="1"
-              img src="/assets/radok-web-banner-layer-1.png"
+              img src=slide[:images][0]
             .layer data-depth="0.3"
-              img src="/assets/radok-web-banner-layer-2.png"
+              img src=slide[:images][1]
             .layer data-depth="0.6"
-              img src="/assets/radok-web-banner-layer-3.png"
+              img src=slide[:images][2]
 
 
           .description-block
