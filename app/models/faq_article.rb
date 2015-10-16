@@ -26,6 +26,6 @@ class FaqArticle < ActiveRecord::Base
   end
 
   def url
-    faq_article_path(id: self.to_param)
+    Rails.application.routes.url_helpers.faq_article_path(id: self.to_param)
   end
 end
