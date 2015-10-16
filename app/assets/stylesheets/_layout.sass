@@ -234,7 +234,7 @@ top-nav, .top-nav
 
   .dropdown
     width: 220px
-    height: 120px
+    height: 160px // 120px
     background: $white-color
     position: relative
     top: 1px
@@ -243,6 +243,10 @@ top-nav, .top-nav
 
     button.my-dashboard-button-link
       margin: 24px 0 16px 0
+
+      &.wizard-button
+        //display: none !important
+        margin-top: 0
 
     .links
       a
@@ -629,6 +633,10 @@ button.my-dashboard-button-link
       margin-left: 6px
   .button-title
     +semibold
+
+  &.wizard-button
+    .svg-wrap
+      width: 21px
 
 @media #{$screen} and (max-width: 980px) and (min-width: 641px)
   #wrap

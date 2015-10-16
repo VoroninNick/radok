@@ -32,6 +32,7 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
             .dropdown.hide
               rf-button size="small" title="My dashboard" svg="/assets/rf-icon-configure.svg" class="my-dashboard-button-link" ng-click="goToDashboard()"
               = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link", href: "/dashboard")
+              = rf_button(size: :small, title: "Start new test", svg: "rf-rocket-up-right.svg", class: "my-dashboard-button-link wizard-button", href: wizard_path)
               .links
                 a.left href="/profile"
                   |Edit my profile

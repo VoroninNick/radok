@@ -2,12 +2,24 @@ class WizardController < ApplicationController
 
   before_action :authenticate, only: [:dashboard_projects, :delete_dashboard_project]
 
+  before_action :set_wizard_options, only: [:edit_or_show, :new]
+
   def edit_or_show
     @project = Wizard::Test.find(params[:id])
     @all_platforms = Wizard::Platform.roots
     @created = true
     @head_title = "Wizard Test ##{@project.id}"
+
+    @wizard_options = {
+        step_disabled_unless_active_or_proceeded: false
+    }
+
     render "new"
+  end
+
+  def set_wizard_options
+    @product_type_names = Wizard::ProductType.all.pluck(:id, :name).to_json
+    @test_type_names = Wizard::TestType.all.pluck(:id, :name).to_json
   end
 
   def new
@@ -16,6 +28,10 @@ class WizardController < ApplicationController
     @intro_step = true
 
     @all_platforms = Wizard::Platform.roots
+
+    @wizard_options = {
+        step_disabled_unless_active_or_proceeded: false
+    }
 
     set_page_metadata("wizard")
   end

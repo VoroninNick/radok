@@ -2,7 +2,10 @@ $wizard_controller = $("#wizard-controller")
 window.wizard = {
   active_step_number: 1
   proceeded_steps_count: 0
+  total_steps_count: null
 }
+
+validate_before_change_step = false
 
 basicValidate = (step_number)->
   $step = $(".wizard-step[step-number=#{step_number}]")
@@ -90,9 +93,13 @@ $("body").on "click", ".save-button", ->
 
 window.scrollToStep = (step_number)->
   $step = $(".wizard-step[step-number=#{step_number}]")
+  $step.addClass("activated")
   step_top = $step.offset().top
   top_for_scroll = step_top - 80
   $('body').animate(scrollTop: top_for_scroll)
+
+
+
 $.fn.validateStep = ()->
   $form = $(this).find("form")
 
@@ -113,7 +120,7 @@ $("body").on "change keyup", ".wizard-step input", ()->
     else
       $rf_next_step_button.attr("disabled", "disabled")
 
-editStep = (step_number, save = true)->
+editStep = (step_number, save = true, validate = false)->
 
 
   $active_step = $(".wizard-step.active")
@@ -123,18 +130,26 @@ editStep = (step_number, save = true)->
   $requested_step = $(".wizard-step[step-number=#{step_number}]")
   $requested_step.addClass("active")
   $requested_step.validateStep()
+
+  if wizard.total_steps_count == step_number
+    $(".rf-next-step-button").addClass("hide")
   scrollToStep(step_number)
   configuration_step = configuration_steps[step_number - 1]
-  valid = basicValidate(step_number)
 
-  if valid && configuration_step && configuration_step.validate
-    valid = configuration_step.validate()
-  console.log "valid_step ", valid
-  #console.log("valid:", valid)
-  if !valid
-    $(".rf-next-step-button").attr("disabled", "disabled")
+  if validate
+    valid = basicValidate(step_number)
+
+    if valid && configuration_step && configuration_step.validate
+      valid = configuration_step.validate()
+    console.log "valid_step ", valid
+    #console.log("valid:", valid)
+    if !valid
+      $(".rf-next-step-button").attr("disabled", "disabled")
+    else
+      console.log("valid")
+      $(".rf-next-step-button").removeAttr("disabled")
+
   else
-    console.log("valid")
     $(".rf-next-step-button").removeAttr("disabled")
 
 
@@ -181,17 +196,24 @@ configure = ()->
   $("[data-bind=tot__type_of_test]").each ->
     $this = $(this)
     val = $("input[name=test_type]:checked").attr("data-name") || wizard.test_type_name
+    if val != wizard.test_type_name
+      wizard.test_type_name = val
     $this.text(val)
+
 
   $("[data-bind=top__type_of_product]").each ->
     $this = $(this)
     val = $("input[name=product_type]:checked").attr("data-name") || wizard.product_type_name
+    if val != wizard.product_type_name
+      wizard.product_type_name = val
     $this.text(val)
 
   $summary_footer =  $("#wizard-summary .footer")
   $summary_footer.removeClass("hide")
 
   $(".configuration-steps").removeClass("hide")
+
+  wizard.total_steps_count = $(".configuration-steps").find(".wizard-step").length
 
 
 
@@ -200,6 +222,8 @@ configure = ()->
   #$(".wizard-platforms-step").find("platform").each ->
   #  $platform = $(this)
   #  if !$platform.hasClass("in-group")
+
+  $("#wizard-full-summary").removeClass("hide")
 
 
 
@@ -336,6 +360,9 @@ updatePrice = ()->
 $(document).on "ready", ->
   #fixChromeAutocompleteBug()
 
+  window.test_types = $("#wizard-controller").attr("data-test-type-names")
+
+
   test_json_str = $wizard_controller.attr('test-json')
   if test_json_str != undefined
     $.extend wizard, $.parseJSON(test_json_str)
@@ -358,6 +385,8 @@ $(document).on "ready", ->
   step_number = wizard.active_step_number
 
   $(".configuration-steps .wizard-step:lt(#{wizard.proceeded_steps_count})").addClass("proceeded")
+
+  $(".wizard-step:not()").addClass("")
 
   if $(".configure-mode").length
     configure()
@@ -498,3 +527,5 @@ $("body").on "click", ".checkout-button", ->
   $button = $(this)
 
 
+$("body").on "focus", ".wizard-step:not(.touched)", ()->
+  $(this).addClass("touched")

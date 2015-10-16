@@ -274,6 +274,91 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
       line-height: 12px
 
 
+.wizard
+  &.step-disabled-unless-active-or-proceeded
+    .wizard-step
+      &:not(.active)
+        .wizard-step-content
+          opacity: 0.3
+
+
+        .wizard-step-content-overlay
+          display: block
+          position: absolute
+          top: 0
+          bottom: 0
+          width: 100%
+          left: 0
+          z-index: 1
+
+      &:not(.ready-to-proceed)
+      //.step-nav-buttons
+        *
+          display: none
+      &.future
+
+      &.active
+        .wizard-step-line
+          &:before
+            bottom: 0
+
+
+    .wizard-step-counter, .wizard-full-summary-icon
+      .wizard-step.active &
+      border-color: $sky-blue-color
+      &:before
+        background-color: $fire-orange-color
+    .wizard-step.completed &
+      &:not(:hover):before
+        background-image: asset-url("rf-icon-ok.svg")
+        background-repeat: no-repeat
+        //width: 16px
+        //height: 16px
+        //top: 12px
+        //left: 12px
+        background-size: 16px 16px
+        background-position: 12px 12px
+        content: ""
+    &:hover
+      &:before
+        background-color: rgba($fire-orange-color, 0.6)
+    .wizard-step.unavailable &
+      &:hover
+        &:before
+          content: "x"
+          background-color: rgba($fire-orange-color, 0.3)
+
+  &:not(.step-disabled-unless-active-or-proceeded)
+    .wizard-step-edit-tooltip
+      display: none !important
+    .wizard-step
+      &.touched, .activated
+        .wizard-step-line
+          &:before
+            bottom: 0
+
+
+        .wizard-step-counter, .wizard-full-summary-icon
+          border-color: $sky-blue-color
+          &:before
+            background-color: $fire-orange-color
+      &.completed
+        &:not(:hover):before
+          background-image: asset-url("rf-icon-ok.svg")
+          background-repeat: no-repeat
+          //width: 16px
+          //height: 16px
+          //top: 12px
+          //left: 12px
+          background-size: 16px 16px
+          background-position: 12px 12px
+          content: ""
+      &:hover
+        &:before
+          background-color: rgba($fire-orange-color, 0.6)
+
+
+
 
 .wizard-step
   position: relative
@@ -342,10 +427,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
       top: -48px
       left: -25px
       z-index: 2
-  &.active
-    .wizard-step-line
-      &:before
-        bottom: 0
+
   //.wizard-step-line-overlay
     top: 24px
     position: absolute
@@ -378,25 +460,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
       background: $light-gray-text-color !important
     .wizard-step-content
       -webkit-filter: grayscale(1)
-  &:not(.active)
-    .wizard-step-content
-      opacity: 0.3
 
-
-    .wizard-step-content-overlay
-      display: block
-      position: absolute
-      top: 0
-      bottom: 0
-      width: 100%
-      left: 0
-      z-index: 1
-
-  &:not(.ready-to-proceed)
-    //.step-nav-buttons
-      *
-        display: none
-  &.future
 
 
 
@@ -428,29 +492,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
     color: white
     +font-18-semibold
     text-align: center
-  .wizard-step.active &
-    border-color: $sky-blue-color
-    &:before
-      background-color: $fire-orange-color
-  .wizard-step.completed &
-    &:not(:hover):before
-      background-image: asset-url("rf-icon-ok.svg")
-      background-repeat: no-repeat
-      //width: 16px
-      //height: 16px
-      //top: 12px
-      //left: 12px
-      background-size: 16px 16px
-      background-position: 12px 12px
-      content: ""
-  &:hover
-    &:before
-      background-color: rgba($fire-orange-color, 0.6)
-  .wizard-step.unavailable &
-    &:hover
-      &:before
-        content: "x"
-        background-color: rgba($fire-orange-color, 0.3)
+
 
 .wizard-full-summary-icon
   svg
@@ -1184,3 +1226,6 @@ div.tagsinput span.tag a
     z-index: -1
   div.tagsinput
     max-width: 100%
+
+.rf-next-step-button.rf-button-without-subtitle
+  line-height: 40px
