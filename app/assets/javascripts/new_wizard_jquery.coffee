@@ -245,6 +245,7 @@ $(".option-count").on "click", ".decrement, .increment", ->
   $input_wrap = $btn.closest(".input-wrap")
   $option_count = $input_wrap.closest(".option-count")
   $input = $input_wrap.find("input")
+  $input.focus()
   step = 1
   value = parseInt($input.val()) || 0
   if increment
@@ -529,3 +530,7 @@ $("body").on "click", ".checkout-button", ->
 
 $("body").on "focus", ".wizard-step:not(.touched)", ()->
   $(this).addClass("touched")
+
+
+$("body").on "change", "[name=product_type]", ()->
+  $(".rf-configure-button").removeAttr("disabled")
