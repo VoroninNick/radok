@@ -282,6 +282,8 @@ RailsAdmin.config do |config|
     end
   end
 
+
+
   config.model SitemapElement do
     field :display_on_sitemap
     field :changefreq
