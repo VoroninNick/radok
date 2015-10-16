@@ -332,7 +332,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
     .wizard-step-edit-tooltip
       display: none !important
     .wizard-step
-      &.touched, .activated
+      &.touched, &.activated
         .wizard-step-line
           &:before
             bottom: 0
@@ -1232,4 +1232,4 @@ div.tagsinput span.tag a
 
 comment-with-price
   label.comment-label, textarea
-    display: none
+    display: none !important

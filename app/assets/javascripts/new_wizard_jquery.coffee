@@ -94,6 +94,7 @@ $("body").on "click", ".save-button", ->
 window.scrollToStep = (step_number)->
   $step = $(".wizard-step[step-number=#{step_number}]")
   $step.addClass("activated")
+
   step_top = $step.offset().top
   top_for_scroll = step_top - 80
   $('body').animate(scrollTop: top_for_scroll)
@@ -162,7 +163,7 @@ editStep = (step_number, save = true, validate = false)->
   if configuration_step && configuration_step.initialize
     configuration_step.initialize()
 
-  presentProgressSteps()
+  #presentProgressSteps()
 
 
 window.presentProgressSteps = ()->
@@ -534,3 +535,36 @@ $("body").on "focus", ".wizard-step:not(.touched)", ()->
 
 $("body").on "change", "[name=product_type]", ()->
   $(".rf-configure-button").removeAttr("disabled")
+
+$("body").on "change code-change keyup", ".platforms .option-count", ()->
+  price = getTotalPrice()
+  if price > 0
+    $("steps-progress .step").eq(0).addClass("proceeded")
+  else
+    $("steps-progress .step").eq(0).removeClass("proceeded")
+
+
+
+
+
+
+
+
+
+
+showStepProgress = ()->
+  $rf_input = $(this)
+  $step = $rf_input.closest(".wizard-step")
+  step_number = $step.attr("step-number")
+  $form = $rf_input.closest("form")
+  $form.validateForm()
+  $invalid_inputs = $form.find(".rf-input.invalid")
+  if !$invalid_inputs.length
+    $("steps-progress .step").eq(2).addClass("proceeded")
+  else
+    $("steps-progress .step").eq(2).removeClass("proceeded")
+
+
+$("body").on "change code-change keyup", ".wizard-step[step-number=2] .rf-input", showStepProgress
+$("body").on "change code-change keyup", ".wizard-step[step-number=2] .rf-input", showStepProgress
+$("body").on "change code-change keyup", ".wizard-step[step-number=3] .rf-input", showStepProgress

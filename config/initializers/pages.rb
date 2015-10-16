@@ -1,0 +1,1 @@
+require "pages/active_record_extensions"

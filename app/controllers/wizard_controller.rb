@@ -25,6 +25,10 @@ class WizardController < ApplicationController
   def new
     @head_title = "Wizard"
     @project = Wizard::Test.new
+    last_test = Wizard::Test.last
+    id = last_test.id + 1
+    @project.project_name = "Test ##{id}"
+
     @intro_step = true
 
     @all_platforms = Wizard::Platform.roots

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call"
   wizard_path = "/ordering-crowdsourced-testing"

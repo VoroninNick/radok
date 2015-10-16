@@ -15,6 +15,7 @@ def page_fields
   field :content
   field :url
   field :seo_tags
+  field :sitemap_record
 end
 
 RailsAdmin.config do |config|
@@ -55,7 +56,7 @@ RailsAdmin.config do |config|
 
   config.included_models = [Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
 
-  ( [MetaData, Page, Banner] + pages_models) .each do |model|
+  ( [MetaData, Page, SitemapElement, Banner] + pages_models) .each do |model|
     config.included_models += [model]
 
     if !model.instance_of?(Class)
@@ -160,6 +161,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :seo_tags
+      field :sitemap_record
     end
   end
 
@@ -170,6 +172,7 @@ RailsAdmin.config do |config|
       field :banner
       #field :url
       field :seo_tags
+      field :sitemap_record
     end
   end
 
@@ -188,6 +191,7 @@ RailsAdmin.config do |config|
       field :banner
       field :url
       field :seo_tags
+      field :sitemap_record
     end
   end
 
@@ -198,6 +202,7 @@ RailsAdmin.config do |config|
        field :url_fragment
        field :content, :ck_editor
        field :seo_tags
+       field :sitemap_record
      end
    end
 
@@ -275,5 +280,11 @@ RailsAdmin.config do |config|
 
 
     end
+  end
+
+  config.model SitemapElement do
+    field :display_on_sitemap
+    field :changefreq
+    field :priority
   end
 end

@@ -20,7 +20,7 @@
                 span.required-symbol  *
               /! end ngIf: required
               div
-                = rf_input label: "Project name", required: true, name: "project_name"
+                = rf_input label: "Project name", required: true, name: "project_name", value: @project.project_name
                 /rf-input label=("Project name") ng-model="wizard.data.pi__project_name"
                   .rf-input.string
                     label Project name
