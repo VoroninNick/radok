@@ -189,7 +189,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :banner
-      field :url
+      #field :url
       field :seo_tags
       field :sitemap_record
     end

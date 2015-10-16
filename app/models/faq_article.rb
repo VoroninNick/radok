@@ -24,4 +24,8 @@ class FaqArticle < ActiveRecord::Base
   def to_param
     url_fragment
   end
+
+  def url
+    faq_article_path(id: self.to_param)
+  end
 end
