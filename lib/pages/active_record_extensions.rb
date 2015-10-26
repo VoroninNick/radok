@@ -19,7 +19,7 @@ module PagesLib
       def has_html_block(*names)
         names = [:content] if names.empty?
         if self._reflections[:html_blocks].nil?
-          has_many :html_blocks, class_name: "HtmlBlock"
+          has_many :html_blocks, class_name: "HtmlBlock", as: :attachable
         end
         names.each do |name|
           name = name.to_sym
