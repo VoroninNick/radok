@@ -209,7 +209,7 @@ RailsAdmin.config do |config|
 
     edit do
       #fields :how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block
-      [:how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block].each do |key|
+      [:banner, :how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block].each do |key|
         field key
       end
 
