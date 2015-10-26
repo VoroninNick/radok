@@ -18,6 +18,26 @@ def page_fields
   field :sitemap_record
 end
 
+def configure_codemirror_html_field(name)
+  configure name, :code_mirror do
+    theme = "monokai" # night
+
+    assets do
+      {
+          mode: '/assets/codemirror/modes/xml.js',
+          theme: "/assets/codemirror/themes/#{theme}.css",
+      }
+    end
+
+    config do
+      {
+          mode: 'xml',
+          theme: theme,
+      }
+    end
+  end
+end
+
 RailsAdmin.config do |config|
 
   ### Popular gems integration
@@ -56,7 +76,7 @@ RailsAdmin.config do |config|
 
   config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
 
-  ( [MetaData, Page, SitemapElement, Banner, HtmlBlock] + pages_models) .each do |model|
+  ( [MetaData, Page, SitemapElement, Banner, HtmlBlock, KeyedHtmlBlock] + pages_models) .each do |model|
     config.included_models += [model]
 
     if !model.instance_of?(Class)
@@ -72,24 +92,19 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model HtmlBlock do
-    configure :content, :code_mirror do
-      theme = "monokai" # night
+  config.model KeyedHtmlBlock do
+    configure_codemirror_html_field :content
 
-      assets do
-        {
-            mode: '/assets/codemirror/modes/xml.js',
-            theme: "/assets/codemirror/themes/#{theme}.css",
-        }
-      end
 
-      config do
-        {
-            mode: 'xml',
-            theme: theme,
-        }
-      end
+    edit do
+      field :key
+      field :content
     end
+  end
+
+  config.model HtmlBlock do
+    visible false
+    configure_codemirror_html_field(:content)
 
     edit do
       field :key

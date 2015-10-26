@@ -12,7 +12,7 @@ module PagesHelper
       html_block = p.html_blocks.by_field(key).first
     end
 
-    if  (html_block || (html_block = HtmlBlock.by_key(key).first)) && html_block.content.present?
+    if  (html_block || (html_block = KeyedHtmlBlock.by_key(key).first)) && html_block.content.present?
       return raw html_block.content
     end
 
