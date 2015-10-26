@@ -18,7 +18,10 @@ class HtmlBlock < ActiveRecord::Base
   end
 
   scope :by_key, ->(key) { where(key: key) }
+  scope :by_field, ->(field) { where(attachable_field_name: field) }
   # def self.by_key(key)
   #   where(key: key).first
   # end
+
+
 end

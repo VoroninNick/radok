@@ -9,15 +9,17 @@ module PagesHelper
     end
 
     page_instance.try do |p|
-      html_block = p.html_blocks.by_key(key).first
+      html_block = p.html_blocks.by_field(key).first
     end
 
     if  (html_block || (html_block = HtmlBlock.by_key(key).first)) && html_block.content.present?
-      return html_block.content
+      return raw html_block.content
     end
 
     if block_given?
       yield
+      #self.instance_eval(&block)
+
     end
 
     nil
