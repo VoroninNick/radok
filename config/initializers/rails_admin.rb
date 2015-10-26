@@ -257,7 +257,7 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      page_fields
+      page_fields(true)
     end
   end
 

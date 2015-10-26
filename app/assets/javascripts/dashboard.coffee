@@ -18,7 +18,8 @@ $.fn.animate_circle_progress = ()->
     $this = $(this)
     value = parseInt($this.attr('value')) / 100
     $this.circleProgress({
-      startAngle: -Math.PI / 4 * 3,
+      startAngle: -Math.PI / 2 #-Math.PI * 2 / 3
+      #startAngle: -Math.PI / 4 * 3,
       value: value,
       lineCap: 'round',
       fill: { color: '#ffa500' }
