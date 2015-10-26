@@ -1,47 +1,51 @@
 .page
   = render "page_banner"
   #devices-content.page-content-rows
-    .page-content-row-wrap
-      .row.center-items-vertically.row-reverse
-        .columns.large-4.medium-4.small-12.image-wrap-outer
-          .image-wrap.small-text-center
-            img src="/assets/rf-devices-picture-1.svg"
-        .columns.large-8.medium-8.small-12.text-column
-          .header.small-text-center
-            | Devices
-          .description
-            p
-              | We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
-    - if @statistics.try(&:any?)
-      #devices-statistics.statistics
-        .row
-          .columns.large-12.section-header
-            = @statistics[:title]
-          .columns.large-3.projects
-            .counter animate-number="" value=@statistics[:devices_count]
-              |0
-            .text
-              |Devices
+    = html_block_with_fallback :intro, true
+      .page-content-row-wrap
+        .row.center-items-vertically.row-reverse
+          .columns.large-4.medium-4.small-12.image-wrap-outer
+            .image-wrap.small-text-center
+              img src="/assets/rf-devices-picture-1.svg"
+          .columns.large-8.medium-8.small-12.text-column
+            .header.small-text-center
+              | Devices
+            .description
+              p
+                | We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
 
-          .columns.large-3.testers
-            .counter animate-number="" value=@statistics[:manufacturers_count]
-              |0
-            .text
-              |Manufacturers
-          .columns.large-3.testers
-            .counter animate-number="" value=@statistics[:operating_systems]
-              |0
-            .text
-              |Operating
-              br
-              |systems
-          .columns.large-3.testers
-            .counter animate-number="" value=@statistics[:screen_sizes]
-              |0
-            .text
-              |Screen
-              br
-              |sizes
+
+    #devices-statistics.statistics
+      = html_block_with_fallback :devices_in_numbers, true
+        - if @statistics.try(&:any?)
+          .row
+            .columns.large-12.section-header
+              = @statistics[:title]
+            .columns.large-3.projects
+              .counter animate-number="" value=@statistics[:devices_count]
+                |0
+              .text
+                |Devices
+
+            .columns.large-3.testers
+              .counter animate-number="" value=@statistics[:manufacturers_count]
+                |0
+              .text
+                |Manufacturers
+            .columns.large-3.testers
+              .counter animate-number="" value=@statistics[:operating_systems]
+                |0
+              .text
+                |Operating
+                br
+                |systems
+            .columns.large-3.testers
+              .counter animate-number="" value=@statistics[:screen_sizes]
+                |0
+              .text
+                |Screen
+                br
+                |sizes
     .page-content-row-wrap
       .row
         .columns.large-12.section-header
