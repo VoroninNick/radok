@@ -10,10 +10,11 @@ def pages_navigation_label
   end
 end
 
-def page_fields
+def page_fields(hide_content = false)
   configure_codemirror_html_field(:content)
   field :banner
-  field :content
+  field :content if !hide_content
+  html_block_fields
   field :url
   field :seo_tags
   field :sitemap_record
@@ -35,6 +36,26 @@ def configure_codemirror_html_field(name)
           mode: 'xml',
           theme: theme,
       }
+    end
+  end
+end
+
+def configure_html_blocks
+  m = self.abstract_model.model
+  if m.respond_to?(:html_block_field_names)
+
+    m.html_block_field_names.each do |name|
+
+    end
+  end
+end
+
+def html_block_fields
+  m = self.abstract_model.model
+  if m.respond_to?(:html_block_field_names)
+
+    m.html_block_field_names.each do |name|
+      field name.to_sym
     end
   end
 end
@@ -162,7 +183,7 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      page_fields
+      page_fields(true)
     end
   end
 
@@ -210,9 +231,7 @@ RailsAdmin.config do |config|
 
     edit do
       #fields :how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block
-      [:banner_1_title_with_description, :banner_2_title_with_description, :how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block].each do |key|
-        field key
-      end
+      html_block_fields
 
 
       field :seo_tags
