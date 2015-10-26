@@ -23,5 +23,6 @@
 #= require dashboard
 #= require new_wizard_jquery
 #= require jquery.forms
+#= require jquery_forms
 #= require super_new_wizard_jquery
 #= require mail_form

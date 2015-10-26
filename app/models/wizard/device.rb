@@ -9,4 +9,8 @@ class Wizard::Device < ActiveRecord::Base
   def screen_pixel_size
     "#{screen_pixel_width}x#{screen_pixel_height}"
   end
+
+  def object_label
+    model
+  end
 end

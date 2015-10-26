@@ -10,6 +10,18 @@ def pages_navigation_label
   end
 end
 
+def settings_navigation_label
+  navigation_label do
+    "Settings"
+  end
+end
+
+def forms_navigation_label
+  navigation_label do
+    "Forms"
+  end
+end
+
 def page_fields(hide_content = false)
   configure_codemirror_html_field(:content)
   field :banner
@@ -114,8 +126,65 @@ RailsAdmin.config do |config|
     end
   end
 
+
+  config.model Wizard::TestPlatform do
+    visible false
+  end
+
+  config.model Wizard::ProjectLanguage do
+    list do
+      field :name
+    end
+  end
+
+  config.model Wizard::ReportLanguage do
+    list do
+      field :name
+    end
+  end
+
+  config.model Wizard::Manufacturer do
+    list do
+      field :name
+      field :devices
+    end
+  end
+
+
+  %w(FaqRequest ContactFeedback ScheduleCall).each do |name|
+    config.model "FormConfigs::#{name}" do
+      settings_navigation_label
+      visible true
+      list do
+        field :email_receivers
+      end
+    end
+  end
+
+  %w(FaqRequest ContactFeedback ScheduleCallRequest).each do |name|
+    config.model name do
+      forms_navigation_label
+    end
+  end
+
+
+
+
+
+  # config.model FormConfigs::FaqRequest do
+  #   settings_navigation_label
+  # end
+
+  config.model FormConfig do
+    visible false
+  end
+
+
+
   config.model KeyedHtmlBlock do
     configure_codemirror_html_field :content
+    pages_navigation_label
+    weight 50
 
     list do
       field :key
@@ -146,6 +215,8 @@ RailsAdmin.config do |config|
   end
 
   config.model Banner do
+    visible false
+
     nested do
       field :title
       field :title_html_tag
@@ -176,6 +247,7 @@ RailsAdmin.config do |config|
 
   config.model Pages::About do
     pages_navigation_label
+    weight -200
 
     edit do
       page_fields
@@ -273,6 +345,8 @@ RailsAdmin.config do |config|
   end
 
    config.model FaqArticle do
+     pages_navigation_label
+     weight 60
      edit do
        field :published
        field :name
@@ -283,7 +357,25 @@ RailsAdmin.config do |config|
      end
    end
 
+  config.model Wizard::Device do
+    weight -100
+
+    object_label_method :object_label
+
+    list do
+      field :manufacturer
+      field :model
+      field :os
+      field :screen_pixel_width
+      field :screen_pixel_height
+    end
+  end
+
   config.model Wizard::ProductType do
+    list do
+      field :name
+      field :platforms
+    end
     edit do
       field :name
       field :image
@@ -292,6 +384,10 @@ RailsAdmin.config do |config|
   end
 
   config.model Wizard::TestType do
+    list do
+      field :name
+    end
+
     edit do
       field :name
       field :image
@@ -315,6 +411,7 @@ RailsAdmin.config do |config|
   end
 
   config.model User do
+    navigation_label "Users"
     list do
       field :username
       field :email
@@ -362,6 +459,8 @@ RailsAdmin.config do |config|
 
 
   config.model SitemapElement do
+    visible false
+
     field :display_on_sitemap
     field :changefreq
     field :priority

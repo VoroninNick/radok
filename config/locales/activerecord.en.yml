@@ -10,3 +10,7 @@ en:
       pages/dashboard: "Dashboard"
       pages/wizard: "Wizard"
       pages/faq_index: "FAQ index"
+
+      keyed_html_block:
+        one: "Content block"
+        other: "Content blocks"

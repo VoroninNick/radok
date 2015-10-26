@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  wizard_path = "/ordering-crowdsourced-testing"
+  get "wizard", to: redirect(wizard_path), as: "short_wizard"
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call"
-  wizard_path = "/ordering-crowdsourced-testing"
+
   delete "#{wizard_path}/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
   post "#{wizard_path}:id/:asset_field_name", to: "wizard#upload_test_case_files"
   delete "#{wizard_path}/:id", to: "wizard#destroy"
