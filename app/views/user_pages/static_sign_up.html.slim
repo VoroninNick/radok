@@ -6,7 +6,7 @@
     .content
       form.form.sign-up-form action="/sign-up" novalidate="" method="post" show-preloader="" show-success="" resource="user"
         .form-content
-          .oauth-sign-up
+          /.oauth-sign-up
             .header
               | Sign up using social networks
             = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: "/users/auth/twitter?sign-in",  google_plus: "/users/auth/google_oauth2?sign-in"}

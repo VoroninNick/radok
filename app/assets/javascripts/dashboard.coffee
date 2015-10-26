@@ -142,17 +142,20 @@ $map = $("#contact-map map")
 $("body").on "click", ".delete-draft-button", (event)->
   event.preventDefault()
   event.stopImmediatePropagation()
-  $button = $(this)
-  $draft = $button.closest(".item")
-  test_id = parseInt($draft.attr("data-test-id"))
-  $draft.remove()
-  $.ajax(
-    url: "#{wizard_root_path}/#{test_id}"
-    type: "delete"
-    dataType: "json"
-    success: ()->
+  delete_draft_confirmed = confirm("Delete draft comletely?")
+  if delete_draft_confirmed
+    $button = $(this)
+    $draft = $button.closest(".item")
+    test_id = parseInt($draft.attr("data-test-id"))
+    $draft.remove()
+    $.ajax(
+      url: "#{wizard_root_path}/#{test_id}"
+      type: "delete"
+      dataType: "json"
+      success: ()->
 
-  )
+    )
+
 
 initialize_google_map = ->
   #lat = 49.829182

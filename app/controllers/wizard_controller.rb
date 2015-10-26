@@ -6,20 +6,25 @@ class WizardController < ApplicationController
 
   def edit_or_show
     @project = Wizard::Test.find(params[:id])
-    @all_platforms = Wizard::Platform.roots
+
     @created = true
     @head_title = "Wizard Test ##{@project.id}"
 
     @wizard_options = {
         step_disabled_unless_active_or_proceeded: false
     }
-
-    render "new"
+    if server_machine?
+      return render "in_development"
+    end
+    render "new_new"
   end
 
   def set_wizard_options
     @product_type_names = Wizard::ProductType.all.pluck(:id, :name).to_json
     @test_type_names = Wizard::TestType.all.pluck(:id, :name).to_json
+    @root_platforms = Wizard::Platform.roots
+    @platforms_json = @root_platforms.map(&:recursive_to_hash).to_json
+
   end
 
   def new
@@ -28,16 +33,29 @@ class WizardController < ApplicationController
     last_test = Wizard::Test.last
     id = last_test.id + 1
     @project.project_name = "Test ##{id}"
+    @project.methodology_type ||= "exploratory"
 
     @intro_step = true
 
     @all_platforms = Wizard::Platform.roots
+
+    (@all_platforms.map(&:id) - @project.platforms.map(&:id)).each do |p_id|
+      p = @all_platforms.where(id: p_id).first
+      p.testers_count ||= 0
+      @project.platforms << p
+    end
 
     @wizard_options = {
         step_disabled_unless_active_or_proceeded: false
     }
 
     set_page_metadata("wizard")
+
+    if server_machine?
+      return render "in_development"
+    end
+
+    render "new_new"
   end
 
   def create

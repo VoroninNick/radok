@@ -903,12 +903,21 @@ button
     > .input , > .checklist-item
       +flex-grow(1)
 
-.question
+
+= question
   padding: 32px 0 20px 0
 
   .required-symbol
     color: $yellow-orange-color
     margin-left: 3px
+
+= question-text
+  +font-21-semibold
+  line-height: 50px
+
+
+.question
+  +question
 
 
 checkbox-list
@@ -1147,8 +1156,7 @@ body
     display: block
 
     .text
-      +font-21-semibold
-      line-height: 50px
+      +question-text
       &.centered
         text-align: center
   .input
@@ -1233,3 +1241,177 @@ div.tagsinput span.tag a
 comment-with-price
   label.comment-label, textarea
     display: none !important
+
+
+.wizard
+  .input
+    > label
+
+
+    &.hide-star
+      abbr
+        display: none
+
+
+    &.image_radio_buttons
+      input
+        display: none
+
+      .options
+        span
+          display: inline-block
+          text-align: center
+          label
+            display: block
+
+      &.option-large-3
+        .options
+          span
+            width: percentage(1/4)
+
+      &.option-large-4
+        .options
+          span
+            width: percentage(1/3)
+
+
+
+
+  .available-hours
+    input
+      display: none
+
+
+
+= wizard-input-placeholder
+  +input-placeholder
+  top: 80px
+
+= filled-wizard-input-placeholder
+  +filled-input-placeholder
+  top: 50px
+
+
+= radio-button-label
+  font-size: 1rem
+  font-weight: 400
+  line-height: 1.5
+  display: inline-block
+  height: auto
+
+= custom-checkbox-button
+  border-radius: 2px
+  border: 1px solid $light-gray-text-color
+  display: inline-block
+  width: 20px
+  height: 20px
+  margin-right: 1rem
+
+= custom-checkbox-button-checked
+  border-color: $sky-blue-color
+
+  &:before
+    border-radius: 1px
+    width: 14px
+    height: 14px
+    top: 2px
+    left: 2px
+    content: ""
+    position: relative
+    display: block
+    background: $fire-orange-color
+
+= custom-radio-button
+  border-radius: 50%
+  border: 1px solid $light-gray-text-color
+  display: inline-block
+  width: 20px
+  height: 20px
+  margin-right: 1rem
+
+= custom-radio-button-checked
+  border-color: $sky-blue-color
+
+  &:before
+    border-radius: 50%
+    width: 12px
+    height: 12px
+    top: 3px
+    left: 3px
+    content: ""
+    position: relative
+    display: block
+    background: $fire-orange-color
+
+#wizard-controller
+  .label
+    +question-text
+    display: block
+    height: 50px
+  .input
+    position: relative
+
+    &.radio-button
+      .custom-radio-button
+        +custom-radio-button
+      .label
+        +radio-button-label
+      input
+        display: none
+
+      &.checked, input:checked ~ label.custom-radio-button
+        +custom-radio-button-checked
+
+    &.text, &.without-label
+      .placeholder
+        top: 40px
+
+      &.focus
+        .placeholder
+          top: 0
+
+
+    &.project-auth-login, &.project-auth-password
+      .placeholder
+        top: 30px
+
+
+      &.focus
+        .placeholder
+          top: 0px
+
+
+
+    label.custom-checkbox
+      +custom-checkbox-button
+
+    .option
+      &.checked, input:checked ~
+        label.custom-checkbox
+          +custom-checkbox-button-checked
+
+    input
+      &[type=checkbox]
+        display: none
+
+
+    .placeholder
+      +wizard-input-placeholder
+
+    .input-tag
+      margin-top: 30px
+
+    &.focus
+      .placeholder
+        +filled-wizard-input-placeholder
+
+
+
+
+
+
+
+.option-count
+
+.platform-option-label
+  float: left

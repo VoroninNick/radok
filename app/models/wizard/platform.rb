@@ -11,4 +11,13 @@ class Wizard::Platform < ActiveRecord::Base
   has_attached_file :avatar
 
   do_not_validate_attachment_file_type :avatar
+
+
+  def recursive_to_hash
+    res = {name: name}
+    res[:avatar_url] = avatar.url if avatar.exists?
+    res[:children] = children.pluck_to_hash(:id, :name)
+
+    res
+  end
 end

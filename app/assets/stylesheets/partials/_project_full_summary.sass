@@ -19,6 +19,25 @@
   padding-bottom: 40px
 
 
+= large-property-value
+  color: $yellow-orange-color
+  +font-18-semibold
+  text-transform: uppercase
+  a
+    color: inherit
+
+= small-property-value
+  color: $yellow-orange-color
+  +font-15-semibold
+  text-transform: uppercase
+  a
+    color: inherit
+
+= large-property-label
+  +font-21-semibold
+
+= small-property-label
+  +font-16-semibold
 
 #wizard-full-summary-content
   //max-width: 640px
@@ -31,14 +50,9 @@
 
 
   .property-label
-    +font-21-semibold
+    +large-property-label
   .property-value
-    color: $yellow-orange-color
-    font-size: 18px
-    font-weight: 500
-    text-transform: uppercase
-    a
-      color: inherit
+    +large-property-value
 
   .property-input-value
     textarea
@@ -87,3 +101,25 @@
 
 .large-indent
   margin-top: 50px
+
+
+
+.finished-project-short-info
+  .property-label
+    +small-property-label
+  .property-value
+    +small-property-value
+
+  .property
+    margin: 0 0 24px 0
+    &:first-child
+      margin-top: 24px
+
+  .report-link
+    svg
+      display: inline-block
+      g
+        fill: $light-gray-color
+    .file-name
+      display: inline-block
+      vertical-align: top

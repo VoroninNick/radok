@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   #include DeviseTokenAuth::Concerns::SetUserByToken
   include MetaDataHelper
   include ImageHelper
+  include PagesHelper
   include Rails.application.routes.url_helpers
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -127,6 +128,14 @@ class ApplicationController < ActionController::Base
     @banner ||= @page_instance.banner
   end
 
+
+  def developer_machine?
+    Rails.application.config.action_mailer.default_url_options[:host].scan(/localhost/).any?
+  end
+
+  def server_machine?
+    !developer_machine?
+  end
 
 
   helper_method :menu_items

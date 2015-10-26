@@ -513,8 +513,7 @@ $("body").on "keyup change", "[model]", (e)->
   target[last_key] = $(this).val()
   console.log "target", target
 
-$(document).on "ready", ->
-  $('.footable').footable();
+$.read_models = ()->
   $("[model]").each ->
     $input = $(this)
     model = $input.attr("model")
@@ -527,6 +526,12 @@ $(document).on "ready", ->
       is_true = $(this).val() == true
       if !is_true
         $input.prop("checked", "checked")
+
+$(document).on "ready", ->
+  $('.footable').footable();
+  #$.read_models()
+
+
 
 $("body").on "click", ".return_to_wizard", (e)->
   e.preventDefault()

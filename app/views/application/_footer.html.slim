@@ -1,45 +1,46 @@
-footer#footer
-  .row
-    #footer-social-and-menu.columns.large-6.medium-6.right
-      .social-icons
-        .header
-          |Stay in touch with our social channels:
-        = render "social_links"
+= html_block_with_fallback(:footer)
+  footer#footer
+    .row
+      #footer-social-and-menu.columns.large-6.medium-6.right
+        .social-icons
+          .header
+            |Stay in touch with our social channels:
+          = render "social_links"
 
-      .menu
-        ul
-          li
-            a href=testing_services_path title="For clients"
-              |For clients
-          li
-            a href=how_it_works_path title="How it works"
-              |How it works
-          li
-            a href=about_path title="About us"
-              |About us
-          li
-            a href=contact_path title="Contact us"
-              |Contact us
-      .sublinks
-        ul
-          li
-            a style="text-decoration:none;cursor: default;"
-              |Terms of use
-          li
-            a style="text-decoration:none;cursor: default;"
-              |Site map
-          li
-            a style="text-decoration:none;cursor: default;"
-              |For testers
-    #footer-subscribe-and-copyright-and-developed-by.columns.large-6.medium-6
-      .subscribe-block
-        label.header for="footer-subscribe-input"
-          |Subscribe for our latest news and updates:
-        input#footer-subscribe-input type="text" placeholder="youremail@mail.com"
-        /rf-button#subscribe-button svg="/assets/rf-icon-email.svg"
-        = rf_button(svg: "rf-icon-email", id: "subscribe-button")
-      .copyright
-        = raw "&copy;&nbsp;2009-#{Date.today.year} 10G Force GmBH. All rights reserved"
-      /.developed-by
-        .vs-logo
-          = embedded_svg_from_assets("vs-logo")
+        .menu
+          ul
+            li
+              a href=testing_services_path title="For clients"
+                |For clients
+            li
+              a href=how_it_works_path title="How it works"
+                |How it works
+            li
+              a href=about_path title="About us"
+                |About us
+            li
+              a href=contact_path title="Contact us"
+                |Contact us
+        .sublinks
+          ul
+            li
+              a style="text-decoration:none;cursor: default;"
+                |Terms of use
+            li
+              a style="text-decoration:none;cursor: default;"
+                |Site map
+            li
+              a style="text-decoration:none;cursor: default;"
+                |For testers
+      #footer-subscribe-and-copyright-and-developed-by.columns.large-6.medium-6
+        .subscribe-block
+          label.header for="footer-subscribe-input"
+            |Subscribe for our latest news and updates:
+          input#footer-subscribe-input type="text" placeholder="youremail@mail.com"
+          /rf-button#subscribe-button svg="/assets/rf-icon-email.svg"
+          = rf_button(svg: "rf-icon-email", id: "subscribe-button")
+        .copyright
+          = raw "&copy;&nbsp;2009-#{Date.today.year} 10G Force GmBH. All rights reserved"
+        /.developed-by
+          .vs-logo
+            = embedded_svg_from_assets("vs-logo")

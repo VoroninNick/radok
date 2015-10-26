@@ -1,0 +1,85 @@
+= simple_form_for @project, url: wizard_path, method: :post do |f|
+  .wizard-step step="1"
+    /.label
+      |On what platforms would you like your product to be tested?
+    /.row
+      .columns.large-6
+        .blue-label
+    /= f.collection_radio_buttons :test_type, [], :id, :name, required: true, class: "hello" do |b|
+
+    /= f.association :test_type, as: :image_radio_buttons, required: true, label: "What type of tests are you looking for?", wrapper_html: {class: "hide-star text-center option-large-4"}
+
+    /= f.association :product_type, as: :image_radio_buttons, required: true, label: "For what type of product?", wrapper_html: {class: "hide-star text-center option-large-3" }
+
+  .configuration-steps
+    /.wizard-step step="2"
+      = f.label  :platforms, "On what platforms would you like your product to be tested?", class: "question"
+      = f.simple_fields_for :platforms do |fp|
+        = fp.input :testers_count
+
+    /= render "new_platforms_step"
+
+    .wizard-step step="2"
+      .wizard-step-line
+      .wizard-step-counter data-number="1"
+      .wizard-step-content
+        .label
+          |On what platforms would you like your product to be tested?
+        .input.platforms-input as="platforms-input" testers-by-platform=@project.testers_by_platform.to_json platforms=@platforms_json model="project.platforms"
+
+
+    /.wizard-step
+      .input.image-radio-buttons.required model=""
+
+    .wizard-step
+      .wizard-step-line
+      .wizard-step-counter data-number="2"
+      .wizard-step-content
+        /= f.input :project_name, label: "What is the name of this wonderful project?"
+        /= f.input :project_version, label: "What is version number of the new release that you'd like us to test?"
+
+        .input.string model="project.project_name" value=@project.project_name
+        .input.string model="project.project_version" value=@project.project_version
+        .input.has-and-belongs-to-many.collection-check-boxes model="project.project_languages" options=Wizard::Test.available_project_languages
+        .input.collection-check-boxes model="project.report_languages" options=Wizard::Test.available_report_languages value-property="id" text-property="name"
+
+        /.input.collection-check-boxes
+          = f.label :project_languages", "In what language(s) is the project?"
+          = f.collection_check_boxes :project_languages, [[:uk, "Ukrainian"], [:en, "English"], [:ru, "Russian"], [:pl, "Polish"], [:es, "Spanish"]], :first, :last
+        /.input.collection-checkboxes
+          = f.label "In what language(s) should the bugs be reported?"
+          = f.collection_check_boxes :report_languages, [[:uk, "Ukrainian"], [:en, "English"], [:ru, "Russian"], [:pl, "Polish"], [:es, "Spanish"]], :first, :last
+
+    .wizard-step
+      .wizard-step-line
+      .wizard-step-counter data-number="3"
+      .wizard-step-content
+        .label
+          |What methodology are you looking for?
+        .input.radio-button label="Exploratory" help="This is unscripted testing. Our testers use your product like any normal user would." as="radio-button" model="project.methodology_type" value="exploratory" checked=(@project.exploratory?)
+        .input.radio-button label="Test-case driven" as="radio-button" model="project.methodology_type" value="test_case_driven" checked=@project.test_case_driven?
+
+        .input.text as="text" model="project.exploratory_description" value=@project.exploratory_description
+        .input.files as="files" model="project.test_case_files" value=@project.test_case_files.to_json
+
+        .input.tags model="project.tags"
+
+    .wizard-step
+      .wizard-step-line
+      .wizard-step-counter data-number="4"
+      .wizard-step-content
+        .label
+          |Please provide the URL or file to be tested
+        .input.url as="url" model="project.project_url"
+        .input.files as="files" model="project.test_files"
+
+
+        .label
+          |Does the product require a username or password to be accessed?
+        .input.boolean.radio-button model="project.authentication_required" label="No, it does not require a username or password" value="false" checked=(!@project.authentication_required?)
+        .input.boolean.radio-button model="project.authentication_required" label="Yes, here they are:" value="true" checked=(@project.authentication_required?)
+
+        .input.string.project-auth-login model="project.auth_login"
+        .input.string.project-auth-password model="project.auth_password"
+
+

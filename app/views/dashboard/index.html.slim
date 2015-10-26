@@ -48,10 +48,11 @@
                                 = embedded_svg_from_assets("clock")
                               .hours-count
                                 = project.ps__hours
+                                |&thinsp;&thinsp;hours each
                     .actions
                       .delete-draft-button ng-click="deleteDraft(project)"
                         |Delete draft
-                      rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
+                      /rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
                       = rf_button title: "Complete", subtitle: "Draft", svg: "finish_flag", class: "complete-draft-button"
 
 
@@ -80,11 +81,14 @@
                           .project-name
                             = project.project_name
                           = render "project_progress", percent: 55
+                          .remaining-time
+                            = project.remaining_time_string
+
 
     - if @finished_projects.try(&:any?)
       .finished-tests
         .row
-          .columns.large-12.header
+          .columns.large-12.header.dashboard-projects-header
             |Finished projects
           .items
             - @finished_projects_groups.each do |project_group|
@@ -97,38 +101,44 @@
                       .dropdown-arrow.collapsed
                         = embedded_svg_from_assets("rf-icon-arrow-left")
 
-                      .project-status ng-class=(project.successful? ? 'success' : 'failure' )
-                        - if project.successful?
-                          .success-svg-wrap
-                            = embedded_svg_from_assets("rf-icon-ok")
-                        - else
-                          .fail-svg-wrap
-                            = embedded_svg_from_assets("close")
+                    .project-status class=(project.successful? ? 'success' : 'failure' )
+                      - if project.successful?
+                        .success-svg-wrap
+                          = embedded_svg_from_assets("rf-icon-ok")
+                      - else
+                        /.fail-svg-wrap
+                          = embedded_svg_from_assets("close")
                     .finished-project-short-info collapsable-content=""
-                      .row
-                      .columns.large-12
+                      /.row
+                      .columns.large-12.property
                         .property-label
                           |Type of test
                         .property-value
                           = project.type_of_test
-                      .columns.large-6
+                      .columns.large-6.property
                         .property-label
                           |Type of product
                         .property-value
                           = project.type_of_product
-                      .columns.large-6
+                      .columns.large-6.property
                         .property-label
                           |Price
                         .property-value
                           |$&nbsp;
                           = project.price
-                      .columns.large-12
+                      .columns.large-12.property
                         .property-label
                           |Number of testers
                         .property-value
                           = project.total_testers_count
-                      .columns.large-12
+                      .columns.large-12.property
                         .property-label
                           |Hours per tester
                         .property-value
                           = project.hours_per_tester
+                      .columns.large-12.property
+                        .report-link
+                          a href="#"
+                            = embedded_svg_from_assets("file-download")
+                            .file-name
+                              |File name

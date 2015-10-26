@@ -54,7 +54,7 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.included_models = [Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
+  config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
 
   ( [MetaData, Page, SitemapElement, Banner] + pages_models) .each do |model|
     config.included_models += [model]
@@ -160,6 +160,12 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
+      #fields :how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block
+      [:how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block].each do |key|
+        field key
+      end
+
+
       field :seo_tags
       field :sitemap_record
     end

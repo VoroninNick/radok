@@ -1,4 +1,5 @@
 #= require jquery/dist/jquery.min.js
+#= require js_extensions
 #= require jquery_extensions
 #= require jquery.selectors
 #= require parallax/deploy/parallax.min
@@ -16,8 +17,11 @@
 #= require jquery-serialize-object/dist/jquery.serialize-object.min
 #= require simpleUpload.min
 #= require functions
+#= require svg_images_list.coffee.erb
 #= require layout
 #= require wizard_jquery
 #= require dashboard
 #= require new_wizard_jquery
+#= require jquery.forms
+#= require super_new_wizard_jquery
 #= require mail_form

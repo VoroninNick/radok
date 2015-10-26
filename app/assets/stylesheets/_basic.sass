@@ -300,6 +300,23 @@ button, label, input[type=button], input[type=submit]
   text-align: center
   transform: translate(0, -50%)
 
+= input-placeholder
+  color: $light-gray-text-color
+  //top: 15px
+  //top: 30px
+  top: 40px
+  left: 0
+  line-height: 24px
+  height: 30px
+  position: absolute
+  padding: 4px 12px
+  +font-14-light
+  cursor: text
+  +transition_all("all 0.3s")
+
+= filled-input-placeholder
+  top: 0
+
 #body
   form
     position: relative
@@ -323,18 +340,7 @@ button, label, input[type=button], input[type=submit]
       border: 1px solid $light-gray-text-color
 
     label
-      color: $light-gray-text-color
-      //top: 15px
-      //top: 30px
-      top: 40px
-      left: 0
-      line-height: 24px
-      height: 30px
-      position: absolute
-      padding: 4px 12px
-      +font-14-light
-      cursor: text
-      +transition_all("all 0.3s")
+      +input-placeholder
 
     input, textarea
       max-width: 100%
@@ -549,6 +555,8 @@ a
 
 
 input[type=radio], input[type=checkbox], .checklist-item input
+
+= basic_option_input
   display: none
 
   &:not(.option-image-input)
@@ -649,3 +657,4 @@ a
     padding-top: 25px
   .rf-input
     top: -15px
+

@@ -15,7 +15,15 @@ class Wizard::Test < ActiveRecord::Base
   belongs_to :product_type, class_name: Wizard::ProductType
   belongs_to :test_type, class_name: Wizard::TestType
 
+  has_and_belongs_to_many :project_languages, class_name: Wizard::ProjectLanguage, join_table: :wizard_test_project_languages
+  has_and_belongs_to_many :report_languages, class_name: Wizard::ReportLanguage, join_table: :wizard_test_report_languages
+
+  attr_accessible :project_languages
+  attr_accessible :report_languages
+
   attr_accessible :product_type, :test_type
+
+
 
 
 
@@ -52,6 +60,10 @@ class Wizard::Test < ActiveRecord::Base
     platform_ids = platforms.map{|k, p| p['id'].to_i }
     platforms_to_remove = Wizard::TestPlatform.where(test_id: self.id).where.not(platform_id: platform_ids)
     platforms_to_remove.delete_all
+  end
+
+  def testers_by_platform
+    test_platforms_bindings.pluck_to_hash(:platform_id, :testers_count)
   end
 
   def has_platform_by_id?(platform_id)
@@ -127,9 +139,7 @@ class Wizard::Test < ActiveRecord::Base
     true
   end
 
-  def successful?
-    false
-  end
+
 
   def report_name
     "Bugfix report v2.56"
@@ -157,17 +167,17 @@ class Wizard::Test < ActiveRecord::Base
     "http://voroninstudio.eu"
   end
 
-  def platforms
-    {
-        ie: {testers_count: 53, logo_path: "ie", name: "Browsers", platform_subitems: [
-            {name: "Internet Explorer 9", count: 1},
-            {name: "Internet Explorer 10", count: 2}
-        ]},
-        ios: {testers_count: 3, logo_path: "ios", name: "IOS", platform_subitems: [
-            {name: "Safary 3", count: 2}
-        ]},
-        android: { testers_count: 0, logo_path: "android", name: "Android" }}
-  end
+  # def platforms
+  #   {
+  #       ie: {testers_count: 53, logo_path: "ie", name: "Browsers", platform_subitems: [
+  #           {name: "Internet Explorer 9", count: 1},
+  #           {name: "Internet Explorer 10", count: 2}
+  #       ]},
+  #       ios: {testers_count: 3, logo_path: "ios", name: "IOS", platform_subitems: [
+  #           {name: "Safary 3", count: 2}
+  #       ]},
+  #       android: { testers_count: 0, logo_path: "android", name: "Android" }}
+  # end
 
   def tot__type_of_test
     nil
@@ -211,6 +221,38 @@ class Wizard::Test < ActiveRecord::Base
     self['active_step_number'] || 1
   end
 
+
+  def exploratory?
+    methodology_type == "exploratory"
+  end
+
+  def test_case_driven?
+    methodology_type == "test_case_driven"
+  end
+
+  def self.available_project_languages
+    Wizard::ProjectLanguage.all.pluck_to_hash(:id, :name).to_json
+  end
+
+  def self.available_report_languages
+    Wizard::ReportLanguage.all.pluck_to_hash(:id, :name).to_json
+  end
+
+  def remaining_time_string
+
+    timespan = Time.diff(DateTime.now, self.expected_tested_at)
+   # (self.expected_tested_at - DateTime.now).to_s
+
+    total_days = timespan.total_days
+    quantified_day_word = "days"
+    if total_days % 10 == 1
+      quantified_day_word = quantified_day_word.singularize
+    end
+
+    if total_days > 0
+      "#{total_days} #{quantified_day_word}"
+    end
+  end
 
 end
 

@@ -62,4 +62,10 @@
             )
       return original_functions.val.apply(this, arguments)
 
+
+    $.fn.tagName = ()->
+      if !$(this)
+        return
+      $(this).get(0).tagName.toLowerCase()
+
 )(jQuery)

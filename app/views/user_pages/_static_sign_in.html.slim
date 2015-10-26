@@ -1,45 +1,46 @@
-.popup.sign-in
-  .form-partial.sign-in
-    .header
-      .title
-        | Login
-    .content
-      form.form.login-form action=user_session_path method="post" novalidate="" show-preloader="" resource="user" close-on-success="true" reload-on-success="true"
-        .form-content
-          .oauth-login
-            .header
-              | Login using social networks
-            = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: "/users/auth/twitter?sign-in",  google_plus: "/users/auth/google_oauth2?sign-in"}
-            .or
-              | or
+= html_block_with_fallback(:sign_in)
+  .popup.sign-in
+    .form-partial.sign-in
+      .header
+        .title
+          | Login
+      .content
+        form.form.login-form action=user_session_path method="post" novalidate="" show-preloader="" resource="user" close-on-success="true" reload-on-success="true"
+          .form-content
+            /.oauth-login
+              .header
+                | Login using social networks
+              = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: "/users/auth/twitter?sign-in",  google_plus: "/users/auth/google_oauth2?sign-in"}
+              .or
+                | or
 
-          .form-errors.hide
-            .columns.large-12
-              p.semibold.unconfirmed.hide
-                = t("form-errors.unconfirmed")
-              p.semibold.invalid_password_or_login.hide
-                = t("form-errors.invalid_password_or_login")
-          .caps-lock-warning.hide
-            | Warning: Caps-lock is on
-
-          .inputs
-            .row
+            .form-errors.hide
               .columns.large-12
-                = rf_input(label: "Username or email", name: "user[login]", required: true, required_message: "Please type username or email")
-                /! ngRepeat: (error_key, error_value) in error()
-                = rf_input(label: "password", name: "user[password]", type: "password", required: true, required_message: "Please type password")
+                p.semibold.unconfirmed.hide
+                  = t("form-errors.unconfirmed")
+                p.semibold.invalid_password_or_login.hide
+                  = t("form-errors.invalid_password_or_login")
+            .caps-lock-warning.hide
+              | Warning: Caps-lock is on
 
-              .columns.large-12.forgot-password-link-wrap
-                a href=new_user_password_path open-popup="user_pages__forgot_password" open-popup-from-popup-only="true"  Forgot your password?
-          .actions
-            .columns.large-5
-              .sign-up-invitation
-                | No account?&nbsp;
-                a href="/sign-up"
-                  |Sign up
-            .columns.large-7
-              = rf_button title: "LOGIN", raised: true, class: "login-button"
+            .inputs
+              .row
+                .columns.large-12
+                  = rf_input(label: "Username or email", name: "user[login]", required: true, required_message: "Please type username or email")
+                  /! ngRepeat: (error_key, error_value) in error()
+                  = rf_input(label: "password", name: "user[password]", type: "password", required: true, required_message: "Please type password")
 
-        .preloader.hide
-          = image_tag("preloader.gif")
+                .columns.large-12.forgot-password-link-wrap
+                  a href=new_user_password_path open-popup="user_pages__forgot_password" open-popup-from-popup-only="true"  Forgot your password?
+            .actions
+              .columns.large-5
+                .sign-up-invitation
+                  | No account?&nbsp;
+                  a href="/sign-up"
+                    |Sign up
+              .columns.large-7
+                = rf_button title: "LOGIN", raised: true, class: "login-button"
+
+          .preloader.hide
+            = image_tag("preloader.gif")
 
