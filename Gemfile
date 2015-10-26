@@ -114,3 +114,5 @@ gem 'pluck_to_hash'
 
 #gem 'time_diff'
 gem 'timespan', :git => 'git://github.com/toxaq/timespan.git'
+
+gem 'codemirror-rails'

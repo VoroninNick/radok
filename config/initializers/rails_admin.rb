@@ -56,7 +56,7 @@ RailsAdmin.config do |config|
 
   config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
 
-  ( [MetaData, Page, SitemapElement, Banner] + pages_models) .each do |model|
+  ( [MetaData, Page, SitemapElement, Banner, HtmlBlock] + pages_models) .each do |model|
     config.included_models += [model]
 
     if !model.instance_of?(Class)
@@ -69,6 +69,39 @@ RailsAdmin.config do |config|
 
     if model.respond_to?(:translates?) && model.translates?
       config.included_models += [model.translation_class]
+    end
+  end
+
+  config.model HtmlBlock do
+    configure :content, :code_mirror do
+      theme = "monokai" # night
+
+      assets do
+        {
+            mode: '/assets/codemirror/modes/xml.js',
+            theme: "/assets/codemirror/themes/#{theme}.css",
+        }
+      end
+
+      config do
+        {
+            mode: 'xml',
+            theme: theme,
+        }
+      end
+    end
+
+    edit do
+      field :key
+      field :content
+    end
+
+    nested do
+      field :key do
+        hide
+      end
+
+      field :content
     end
   end
 
