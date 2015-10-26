@@ -11,6 +11,7 @@ def pages_navigation_label
 end
 
 def page_fields
+  configure_codemirror_html_field(:content)
   field :banner
   field :content
   field :url
