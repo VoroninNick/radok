@@ -117,6 +117,9 @@ RailsAdmin.config do |config|
   config.model KeyedHtmlBlock do
     configure_codemirror_html_field :content
 
+    list do
+      field :key
+    end
 
     edit do
       field :key
