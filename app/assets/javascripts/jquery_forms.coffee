@@ -96,15 +96,12 @@ class Formify.Inputs.String extends Formify.Inputs.Base
   render : ()->
     input_id = @html_id_for()
     input_name = @html_name_for()
-    type = @input_type()
     $input_field = null
 
     value = @value_for()
 
     stringified_value = value
     stringified_value = "" if stringified_value == null || stringified_value == undefined
-
-    presenter = @presenter_for()
 
 
     placeholder = @placeholder_for()
@@ -117,11 +114,147 @@ class Formify.Inputs.String extends Formify.Inputs.Base
 
     "
 
+class Formify.Inputs.Text extends Formify.Inputs.Base
+
+  dom_value : ()->
+    @jquery_input.find("input").val()
+
+  render : ()->
+    input_id = @html_id_for()
+    input_name = @html_name_for()
+    $input_field = null
+
+    value = @value_for()
+
+    stringified_value = value
+    stringified_value = "" if stringified_value == null || stringified_value == undefined
 
 
+    placeholder = @placeholder_for()
+    label = @label_for()
 
+    "
+      <label for='#{input_id}' class='label'>#{label}</label>
+      <label for='#{input_id}' class='placeholder'>#{placeholder}</label>
+      <textarea class='input-tag' type='text' name='#{input_name}' />
+
+    "
+
+class Formify.Inputs.RadioButton extends Formify.Inputs.Base
+
+  checked : ()->
+    @jquery_input.attr("checked")
+
+  dom_value : ()->
+    @jquery_input.find("input").val()
+
+  render : ()->
+    input_id = @html_id_for()
+    input_name = @html_name_for()
+    $input_field = null
+
+    value = @value_for()
+
+    stringified_value = value
+    stringified_value = "" if stringified_value == null || stringified_value == undefined
+
+
+    placeholder = @placeholder_for()
+    label = @label_for()
+
+    checked_string = ''
+    checked_string = "checked=''" if @checked
+
+    "
+      <label for='#{input_id}' class='label'>#{label}</label>
+      <input type='radio' name='#{input_name}' id='#{input_id}' #{checked_string} />
+      <label class='custom-radio-button' for='#{input_id}'></label>
+
+    "
+
+
+class Formify.Inputs.CollectionInput extends Formify.Inputs.Base
+  constructor : ()->
+    super(arguments)
+    options = JSON.parse(@jquery_input.attr("options"))
+
+    @_options = options
+
+  options : ()->
+    @_options || []
+
+class Formify.Inputs.CollectionCheckBoxes extends Formify.Inputs.CollectionInput
+  render : ()->
+    input_id = @html_id_for()
+
+    options_string = ""
+    for option in @options
+      option_html_id = input_id + "_" + option.id
+      option_text = option.name || ""
+      options_string += "<span class='option'><input type='checkbox' id='#{option_html_id}' /> <label class='custom-checkbox' for='#{option_html_id}'></label> <label for='#{option_html_id}'>#{option_text}</label> </span>"
+    "
+    <label for='#{input_id}' class='label'>#{label}</label>
+    <div class='options'>
+    #{options_string}
+    </div>
+    "
+
+
+class Formify.Inputs.Platforms extends Formify.Inputs.CollectionInput
+  render : ()->
+    input_id = @html_id_for()
+
+    options_string = ""
+
+    platforms_collection_string = ""
+
+    for p in @options
+
+      platform_options_collection_string = ""
+
+      if p.children && p.children.length
+        for child_platform in p.children
+          platform_option_string = "
+            <div class='option-count'>
+              <div class='platform-option-label'>#{child_platform.name}</div>
+              <div class='input-wrap'>
+                <input value='0' pattern='[0-9]*' type='text'>
+                <label class='decrement' for='platform-1-subitem-1'>
+                <label class='increment' for='platform-1-subitem-1'>
+              </div>
+            </div>
+            "
+
+          platform_options_collection_string += platform_option_string
+
+
+      platform_options_string = "
+        <div class='platform-options'>
+          #{platform_options_collection_string}
+        </div>
+      "
+
+      platform_string = "
+        <div class='platform'>
+          <div class='name platform-label'>#{p.name}</div>
+          <div class='human-svg-wrap platform-user-icon'>#{window.svg_images.user}</div>
+          #{platform_options_string}
+        </div>
+        "
+
+      platforms_collection_string += platform_string
+
+      input_html = "
+        <div>
+        #{platforms_collection_string}
+        </div>
+      "
 
 Formify.Inputs.register("String")
+Formify.Inputs.register("Text")
+Formify.Inputs.register("RadioButton")
+Formify.Inputs.register("CollectionCheckBoxes")
+
 
 class Formify.Form
   constructor : ($form)->

@@ -25,7 +25,7 @@
       .wizard-step-content
         .label
           |On what platforms would you like your product to be tested?
-        .input.platforms-input as="platforms-input" testers-by-platform=@project.testers_by_platform.to_json platforms=@platforms_json model="project.platforms"
+        .input.platforms-input as="platforms-input" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms"
 
 
     /.wizard-step

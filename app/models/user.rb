@@ -111,4 +111,12 @@ class User < ActiveRecord::Base
   end
 
 
+  def name_or_username
+    if first_name.present?
+      return first_name
+    end
+
+    return username
+  end
+
 end
