@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  scope "emails", controller: "emails" do
+    root action: :index, as: :emails
+    get "confirmation_instructions", as: :confirmation_instructions_email
+    get "reset_password_instructions", as: :reset_password_instructions_email
+    get "unlock_instructions", as: :unlock_instructions_email
+  end
+
   wizard_path = "/ordering-crowdsourced-testing"
   get "wizard", to: redirect(wizard_path), as: "short_wizard"
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap

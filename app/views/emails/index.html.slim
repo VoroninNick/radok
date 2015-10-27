@@ -1,0 +1,4 @@
+ul
+  - %w(confirmation_instructions reset_password_instructions unlock_instructions).each do |m|
+    li
+      = link_to m, send("#{m}_email_path")

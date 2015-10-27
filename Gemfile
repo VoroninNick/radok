@@ -118,3 +118,5 @@ gem 'timespan', :git => 'git://github.com/toxaq/timespan.git'
 gem 'codemirror-rails'
 
 gem 'roadie-rails'
+
+gem 'html2slim'
