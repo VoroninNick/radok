@@ -241,30 +241,7 @@ $(".rf-configure-button").on "click", ->
   editStep(1)
 
 
-$("body").on "click", ".option-count .decrement, .option-count .increment", ->
-  console.log "increment_or_decrement"
-  $btn = $(this)
-  increment = $btn.hasClass("increment")
-  decrement = !increment
-  $input_wrap = $btn.closest(".input-wrap")
-  $option_count = $input_wrap.closest(".option-count")
-  $input = $input_wrap.find("input")
-  $input.focus()
-  step = 1
-  value = parseInt($input.val()) || 0
-  if increment
-    new_value = value + step
-  else
-    new_value = value - step
-  if new_value < 0
-    new_value = 0
 
-
-
-  if value != new_value
-    $input.trigger_val(new_value)
-
-    $input.trigger("dom_change")
 
 $("body").on "check uncheck", ".hours-per-tester input", (event)->
   #console.log event.type

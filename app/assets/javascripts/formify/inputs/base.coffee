@@ -8,9 +8,9 @@ class Formify.Inputs.Base extends EventedClass
     @jquery_input.data("form_input_index", form_input_index)
     @jquery_input.data("input", this)
 
-    if @to_assign_from_dom()
-      @assign_model_value_by_dom_value()
-      @handle_changes()
+
+    @assign_model_value_by_dom_value()
+    @handle_changes()
 
 
 
@@ -27,8 +27,7 @@ class Formify.Inputs.Base extends EventedClass
     @jquery_input.attr("model")
 
 
-  to_assign_from_dom : ()->
-    !@has_model_key()
+
   has_model_key : ()->
     parts = @model_key().split(".")
     root = window
@@ -117,9 +116,7 @@ class Formify.Inputs.Base extends EventedClass
     if model && model.length
 
       html_id = model.replace(/\./g, "_")
-      if "radio-button".split(' ').indexOf(@presenter_for()) >= 0
-        value = @value_for()
-        html_id += "_#{value}"
+
 
 
       return html_id

@@ -47,3 +47,5 @@ asset "jquery-serialize-object"
 
 asset "blueimp-file-upload"
 asset "footable"
+
+asset "jquerymy"

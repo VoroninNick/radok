@@ -16,4 +16,8 @@ class Wizard::ProductType < ActiveRecord::Base
   validates :name, uniqueness: true
 
 
+
+  def self.platform_ids_by_product_type
+    Hash[Wizard::ProductType.all.map{|product_type|  [ product_type.name,  product_type.platforms.pluck(:id) ]  }]
+  end
 end

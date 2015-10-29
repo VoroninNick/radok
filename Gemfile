@@ -120,3 +120,5 @@ gem 'codemirror-rails'
 gem 'roadie-rails'
 
 gem 'html2slim'
+
+gem 'react-rails'

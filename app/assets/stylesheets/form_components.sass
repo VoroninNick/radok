@@ -1,18 +1,89 @@
 .wizard
-  .input
-    &.image-radio-button
-      input
-        display: none
-
   #wizard-controller
     &:not(.configure-mode)
       .configuration-steps
         display: none
 
-  .wizard-step
-    &[step="1"]
-      .image-radio-button
-        opacity: 0.6
+    .input
+      &[as=image-radio-button]
+        input
+          display: none
 
-        &:hover, &.checked
-          opacity: 1
+
+    .wizard-step
+      &[step="1"]
+        .image-radio-button
+          opacity: 0.6
+
+          &:hover, &.checked
+            opacity: 1
+
+    .help
+      color: $light-gray-text-color
+      +font-14-light
+
+    .input
+      .placeholder
+        font-style: italic
+
+
+
+      &.radio-button
+        .help
+          padding-left: 36px
+
+        &:before
+          display: none !important
+        .custom-radio-button
+
+      &.image-radio-button
+        .label
+          line-height: 30px
+      &.string
+        padding-top: 30px
+
+        .placeholder
+          top: 30px
+
+        &.not-empty, &.focus
+          .placeholder
+            top: 0
+
+
+
+
+
+      &.project_exploratory_instructions_input
+        padding-left: 36px
+        padding-top: 30px
+
+        .placeholder
+          padding-left: 50px
+          top: 30px
+
+
+
+        &.not-empty, &.focus
+          .placeholder
+            top: 0
+
+      &.test-case-files-input
+        padding-left: 36px
+        padding-top: 20px
+
+
+
+
+
+
+#project-product-type
+  margin-top: 40px
+
+.product-main-components
+  margin-top: 40px
+
+  .help
+    margin-top: 0
+
+.configuration-steps
+  margin-top: 120px

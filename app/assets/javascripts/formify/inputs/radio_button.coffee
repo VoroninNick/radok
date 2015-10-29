@@ -25,8 +25,7 @@ class Formify.Inputs.RadioButton extends Formify.Inputs.Base
 
     val
 
-  to_assign_from_dom : ()->
-    super && @checked()
+
 
 
   html_id_for : ()->

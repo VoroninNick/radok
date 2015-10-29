@@ -2,7 +2,7 @@ class WizardController < ApplicationController
 
   before_action :authenticate, only: [:dashboard_projects, :delete_dashboard_project]
 
-  before_action :set_wizard_options, only: [:edit_or_show, :new]
+  before_action :set_wizard_options, only: [:edit_or_show, :new, :new_and_allow]
 
   def edit_or_show
     @project = Wizard::Test.find(params[:id])
@@ -28,6 +28,11 @@ class WizardController < ApplicationController
 
     @root_platforms = Wizard::Platform.roots
     @platforms_json = @root_platforms.map(&:recursive_to_hash).to_json
+
+    @project_languages = Wizard::ProjectLanguage.all.pluck(:name)
+    @report_languages = Wizard::ReportLanguage.all.pluck(:name)
+
+    @platform_ids_by_product_type = Wizard::ProductType.platform_ids_by_product_type
 
   end
 
@@ -87,11 +92,19 @@ class WizardController < ApplicationController
 
     set_page_metadata("wizard")
 
-    if server_machine?
+
+
+    if server_machine? && !@allow
       return render "in_development"
     end
 
     render "new_new"
+  end
+
+  def new_and_allow
+    @allow = true
+    self.new
+
   end
 
   def create

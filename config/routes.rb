@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get "w", to: "wizard#old_wizard"
+  get "w", to: "wizard#new_and_allow"
   scope "emails", controller: "emails" do
     root action: :index, as: :emails
     get "confirmation_instructions", as: :confirmation_instructions_email

@@ -1,7 +1,54 @@
 /= simple_form_for @project, url: wizard_path, method: :post do |f|
+- content_for :javascript do
+  script type="text/javascript" src="/assets/wizard_js.js"
+
+
+.wizard-controller ng-controller="Wizard"
 form for="project" url=wizard_path method="post" json="{}"
   fieldset.wizard-step step="1"
-    #project-test-type-input.text-center
+    #project-test-type
+      .columns.large-12
+        .label.text-center
+          |What type of tests are you looking for?
+
+      - @test_types.each_with_index do |test_type, index|
+        - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.test_type"; name = "project_test_type"; input_id = "project_test_type_#{index + 1}"
+        .columns.large-4.text-center
+          .input.image-radio-button class="project_test_type" as="image-radio-button" model=model image=image label=label value=value
+            input id=input_id value=value name=name type="radio"
+            label.image-label for=input_id
+              img src=image
+            label.label for=input_id
+              = label
+      .clearfix
+
+    #project-product-type
+      .columns.large-12
+        .label.text-center
+          |For what type of product?
+
+      - @product_types.each_with_index do |test_type, index|
+        - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.product_type"; name = "project_product_type"; input_id = "project_product_type_#{index + 1}"
+        .columns.large-3.text-center
+          .input.image-radio-button class="project_product_type" as="image-radio-button" model=model image=image label=label value=value
+            input id=input_id value=value name=name type="radio"
+            label.image-label for=input_id
+              img src=image
+            label.label for=input_id
+              = label
+
+      .clearfix
+
+
+    /.input as="radio-button"
+      input id="test_type_2" type="radio" name="test_type" value="2"
+      label for="test_type_2"
+        |Locales
+
+
+
+
+    /#project-test-type-input.text-center
       .columns.large-12
         .label.text-center
           |What type of tests are you looking for?
@@ -23,7 +70,7 @@ form for="project" url=wizard_path method="post" json="{}"
 
 
 
-    #project-product-type-input.text-center
+    /#project-product-type-input.text-center
       .columns.large-12
         .label.text-center
           |For what type of product?
@@ -57,7 +104,24 @@ form for="project" url=wizard_path method="post" json="{}"
       .wizard-step-content
         .label
           |On what platforms would you like your product to be tested?
-        .input.platforms-input as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms"
+        .input.platforms-input as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms" platforms-by-product-type=@platform_ids_by_product_type.to_json
+          .clearfix
+          - Wizard::Platform.roots.each do |platform|
+            .platform data-id=platform.id
+              .name.platform-label
+                = platform.name
+              .human-svg-wrap.platform-user-icon
+                = embedded_svg_from_assets("user")
+              .platform-options
+                - platform.children.each do |c|
+                  .option-count platform-subitem-id=c.id
+                    .platform-option-label
+                      = c.name
+                    .input-wrap
+                      input value="0" pattern='[0-9]*' type='text'
+                      label class='decrement' for='platform-1-subitem-1'
+                      label class='increment' for='platform-1-subitem-1'
+            /.option-count platform-subitem-id=
 
 
     /.wizard-step
@@ -69,6 +133,46 @@ form for="project" url=wizard_path method="post" json="{}"
       .wizard-step-content
         /= f.input :project_name, label: "What is the name of this wonderful project?"
         /= f.input :project_version, label: "What is version number of the new release that you'd like us to test?"
+
+        label.label for="project_project_name"
+          |What is the name of this wonderful project?
+
+        .input.string as="string" model="project.project_name" value=@project.project_name
+          label.placeholder for="project_project_name"
+            |Project name
+          input type="text" id="project_project_name" value=@project.project_name
+
+        label.label for="project_project_version"
+          |What is version number of the new release that you'd like us to test?
+        .input.string as="string" model="project.project_version" value=@project.project_version
+          label.placeholder for="project_project_version"
+            |Project version
+          input type="text" id="project_project_version" value=@project.project_version
+
+        label.label
+          |In what language(s) is the project?
+        .input.collection-checkboxes
+          .options
+            - @project_languages.each_with_index do |language, index|
+              - input_id = "project_project_languages_#{index + 1}"
+              span.option
+                input id=input_id type="checkbox" value=language
+                label.custom-checkbox for=input_id
+                label for=input_id
+                  |#{language}
+
+
+        label.label
+          |In what language(s) should the bugs be reported?
+        .input.collection-checkboxes
+          .options
+            - @report_languages.each_with_index do |language, index|
+              - input_id = "project_report_languages_#{index + 1}"
+              span.option
+                input id=input_id type="checkbox" value=language
+                label.custom-checkbox for=input_id
+                label for=input_id
+                  |#{language}
 
         .input.string as="string" model="project.project_name" value=@project.project_name
         .input.string model="project.project_version" value=@project.project_version
@@ -82,12 +186,51 @@ form for="project" url=wizard_path method="post" json="{}"
           = f.label "In what language(s) should the bugs be reported?"
           = f.collection_check_boxes :report_languages, [[:uk, "Ukrainian"], [:en, "English"], [:ru, "Russian"], [:pl, "Polish"], [:es, "Spanish"]], :first, :last
 
-    fieldset.wizard-step step="4"
+    fieldset.wizard-step.project-components-step step="4"
       .wizard-step-line
       .wizard-step-counter data-number="3"
       .wizard-step-content
         .label
           |What methodology are you looking for?
+
+        .input.radio-button model="project.methodology_type"  class="#{@project.exploratory? ? 'checked' : 'unchecked' }"
+          input type="radio" value="exploratory" id="project_methodology_type_exploratory" name="project_methodology_type" checked=('checked' if @project.exploratory?)
+          label.custom-radio-button for="project_methodology_type_exploratory"
+          label for="project_methodology_type_exploratory"
+            |Exploratory
+          .help
+            |This is unscripted testing. Our testers use your product like any normal user would.
+
+        .input.text.project_exploratory_instructions_input
+          label.placeholder for="project_exploratory_instructions"
+            |Please provide testing instructions for the testers here...
+          textarea model="project.exploratory_instructions" id="project_exploratory_instructions"
+
+        .input.radio-button model="project.methodology_type" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }"
+          input type="radio" value="test_case_driven" id="methodology_type_test_case_driven" name="project_methodology_type" checked=('checked' if @project.test_case_driven?)
+          label.custom-radio-button for="methodology_type_test_case_driven"
+          label for="methodology_type_test_case_driven"
+            |Test-case driven
+          .help
+            |You provide a specific list of steps that testers must execute.
+
+        .input.files.test-case-files-input model="project.test_case_files"
+          = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
+
+
+
+
+        .product-main-components
+          .label
+            |What are the product's main components?
+          p.help
+            |Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
+
+          .input as="tags" model="project.tags"
+            input type="text"
+
+
+
         .input.radio-button label="Exploratory" help="This is unscripted testing. Our testers use your product like any normal user would." as="radio-button" model="project.methodology_type" value="exploratory" checked=(@project.exploratory?)
         .input.radio-button label="Test-case driven" as="radio-button" model="project.methodology_type" value="test_case_driven" checked=@project.test_case_driven?
 
@@ -102,16 +245,40 @@ form for="project" url=wizard_path method="post" json="{}"
       .wizard-step-content
         .label
           |Please provide the URL or file to be tested
-        .input.url as="url" model="project.project_url"
-        .input.files as="files" model="project.test_files"
+        /.input.url as="url" model="project.project_url"
+        /.input.files as="files" model="project.test_files"
+
+        .input.url model="project.project_url"
+          input placeholder="http://domain.com"
+        span.or
+          |or
+        = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
+        .file-upload-files-list.test_files-list model="project.test_files"
 
 
         .label
           |Does the product require a username or password to be accessed?
-        .input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="No, it does not require a username or password" value="false" checked=(!@project.authentication_required?)
-        .input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=(@project.authentication_required?)
-
-        .input.string.project-auth-login model="project.auth_login"
-        .input.string.project-auth-password model="project.auth_password"
 
 
+          .input.radio-button model="project.authentication_required" class="#{@project.exploratory? ? 'checked' : 'unchecked' }"
+            input type="radio" value="exploratory" id="project_methodology_type_exploratory" name="project_methodology_type" checked=('checked' if @project.exploratory?)
+            label.custom-radio-button for="project_methodology_type_exploratory"
+            label for="project_methodology_type_exploratory"
+              |Exploratory
+            .help
+              |This is unscripted testing. Our testers use your product like any normal user would.
+          .input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=(@project.authentication_required?)
+
+          .input.string.project-auth-login model="project.auth_login"
+          .input.string.project-auth-password model="project.auth_password"
+
+
+        /.input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="No, it does not require a username or password" value="false" checked=(!@project.authentication_required?)
+        /.input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=(@project.authentication_required?)
+
+        /.input.string.project-auth-login model="project.auth_login"
+        /.input.string.project-auth-password model="project.auth_password"
+
+
+
+  = render "project_full_summary", project: @project, hide: @created.blank?

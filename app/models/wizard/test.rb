@@ -124,7 +124,7 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def total_testers_count
-    self.test_platforms_bindings.map{|p| p.testers_count }.sum
+    self.test_platforms_bindings.map{|p| p.testers_count }.select(&:present?).sum
   end
 
   def ps__hours
