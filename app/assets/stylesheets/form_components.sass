@@ -1,0 +1,18 @@
+.wizard
+  .input
+    &.image-radio-button
+      input
+        display: none
+
+  #wizard-controller
+    &:not(.configure-mode)
+      .configuration-steps
+        display: none
+
+  .wizard-step
+    &[step="1"]
+      .image-radio-button
+        opacity: 0.6
+
+        &:hover, &.checked
+          opacity: 1

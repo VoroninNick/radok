@@ -178,7 +178,7 @@ $.init_inputs = ()->
 
       $input.append($options)
     else if presenter == 'platforms-input'
-      platforms = JSON.parse($input.attr("platforms"))
+      platforms = JSON.parse($input.attr("options"))
       $platforms_input_content = $("<div></div>")
       for p in platforms
         $platform = $("<div class='platform'></div>")
@@ -224,8 +224,8 @@ $.init_inputs = ()->
 
 $document.on "ready", ->
   window.current_locale = $("#html").attr("lang") || "en"
-  $.init_inputs()
+  #$.init_inputs()
 
-  console.log "hi"
+  #console.log "hi"
 
 

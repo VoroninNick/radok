@@ -1,3 +1,5 @@
+old_wizard = false
+
 $wizard_controller = $("#wizard-controller")
 window.wizard = {
   active_step_number: 1
@@ -239,7 +241,8 @@ $(".rf-configure-button").on "click", ->
   editStep(1)
 
 
-$(".option-count").on "click", ".decrement, .increment", ->
+$("body").on "click", ".option-count .decrement, .option-count .increment", ->
+  console.log "increment_or_decrement"
   $btn = $(this)
   increment = $btn.hasClass("increment")
   decrement = !increment
@@ -260,6 +263,8 @@ $(".option-count").on "click", ".decrement, .increment", ->
 
   if value != new_value
     $input.trigger_val(new_value)
+
+    $input.trigger("dom_change")
 
 $("body").on "check uncheck", ".hours-per-tester input", (event)->
   #console.log event.type
@@ -359,40 +364,42 @@ updatePrice = ()->
 
 
 
-$(document).on "ready", ->
-  #fixChromeAutocompleteBug()
+if old_wizard
 
-  window.test_types = $("#wizard-controller").attr("data-test-type-names")
+  $(document).on "ready", ->
+    #fixChromeAutocompleteBug()
+
+    window.test_types = $("#wizard-controller").attr("data-test-type-names")
 
 
-  test_json_str = $wizard_controller.attr('test-json')
-  if test_json_str != undefined
-    $.extend wizard, $.parseJSON(test_json_str)
-  wizard.test_type_name = $("[name=test_type_id]:checked").attr("data-name")
-  wizard.product_type_name = $("[name=product_type_id]:checked").attr("data-name")
-  $(".option-count input:blank").each ->
-    $this = $(this)
-    old_val = $this.val()
-    if(old_val != 0)
-      $this.trigger_val(0)
+    test_json_str = $wizard_controller.attr('test-json')
+    if test_json_str != undefined
+      $.extend wizard, $.parseJSON(test_json_str)
+    wizard.test_type_name = $("[name=test_type_id]:checked").attr("data-name")
+    wizard.product_type_name = $("[name=product_type_id]:checked").attr("data-name")
+    $(".option-count input:blank").each ->
+      $this = $(this)
+      old_val = $this.val()
+      if(old_val != 0)
+        $this.trigger_val(0)
 
-  $('input.tags-input').tagsInput();
-  $('.rf-input[type=tags] input').tagsInput({
-    defaultText: ""
-    onChange: ()->
-      $rf_input = $(this).closest(".rf-input")
-      $rf_input.trigger("change")
-  })
+    $('input.tags-input').tagsInput();
+    $('.rf-input[type=tags] input').tagsInput({
+      defaultText: ""
+      onChange: ()->
+        $rf_input = $(this).closest(".rf-input")
+        $rf_input.trigger("change")
+    })
 
-  step_number = wizard.active_step_number
+    step_number = wizard.active_step_number
 
-  $(".configuration-steps .wizard-step:lt(#{wizard.proceeded_steps_count})").addClass("proceeded")
+    $(".configuration-steps .wizard-step:lt(#{wizard.proceeded_steps_count})").addClass("proceeded")
 
-  $(".wizard-step:not()").addClass("")
+    $(".wizard-step:not()").addClass("")
 
-  if $(".configure-mode").length
-    configure()
-    editStep(step_number, false)
+    if $(".configure-mode").length
+      configure()
+      editStep(step_number, false)
 
 #$("body").on "check uncheck", "input", (event)->
 #  console.log "event: ", event

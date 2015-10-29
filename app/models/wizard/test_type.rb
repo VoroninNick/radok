@@ -10,4 +10,6 @@ class Wizard::TestType < ActiveRecord::Base
 
   has_many :tests, class_name: Wizard::Test
 
+  validates :name, uniqueness: true
+
 end

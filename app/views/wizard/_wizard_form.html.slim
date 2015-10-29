@@ -61,10 +61,10 @@ form for="project" url=wizard_path method="post"
         .input.has-and-belongs-to-many.collection-check-boxes as="collection-check-boxes" model="project.project_languages" options=Wizard::Test.available_project_languages default-index="0"
         .input.collection-check-boxes as="collection-check-boxes" model="project.report_languages" options=Wizard::Test.available_report_languages value-property="id" text-property="name" default-index="0"
 
-        /.input.collection-check-boxes
+    /.input.collection-check-boxes
           = f.label :project_languages", "In what language(s) is the project?"
           = f.collection_check_boxes :project_languages, [[:uk, "Ukrainian"], [:en, "English"], [:ru, "Russian"], [:pl, "Polish"], [:es, "Spanish"]], :first, :last
-        /.input.collection-checkboxes
+    /.input.collection-checkboxes
           = f.label "In what language(s) should the bugs be reported?"
           = f.collection_check_boxes :report_languages, [[:uk, "Ukrainian"], [:en, "English"], [:ru, "Russian"], [:pl, "Polish"], [:es, "Spanish"]], :first, :last
 

@@ -231,11 +231,11 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def self.available_project_languages
-    Wizard::ProjectLanguage.all.pluck_to_hash(:id, :name).to_json
+    Wizard::ProjectLanguage.all.pluck(:name).to_json
   end
 
   def self.available_report_languages
-    Wizard::ReportLanguage.all.pluck_to_hash(:id, :name).to_json
+    Wizard::ReportLanguage.all.pluck(:name).to_json
   end
 
   def remaining_time_string

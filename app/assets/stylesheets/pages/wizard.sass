@@ -364,6 +364,8 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
   position: relative
   //padding: $wizard-step-vertical-indent 0
   margin: $wizard-step-vertical-indent 0
+  border: none
+  padding: 0
   //&.completed:not(.review)
     .wizard-step-content
       opacity: 0.3
@@ -1401,7 +1403,7 @@ comment-with-price
     .input-tag
       margin-top: 30px
 
-    &.focus
+    &.focus, &.not-empty
       .placeholder
         +filled-wizard-input-placeholder
 

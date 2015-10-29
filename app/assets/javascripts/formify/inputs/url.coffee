@@ -1,0 +1,1 @@
+class Formify.Inputs.Url extends Formify.Inputs.String

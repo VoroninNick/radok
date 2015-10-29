@@ -1,3 +1,6 @@
+old_model_binding = false
+
+
 window.wizard_root_path = "/ordering-crowdsourced-testing"
 $header_user = $("#header-user")
 window.logged_in = $("html").data().loggedIn == true
@@ -498,20 +501,22 @@ $("body").on "click", ".rf-input[type=tags] span.tag a", ()->
   $tag.remove()
   $rf_input.trigger("change")
 
-$("body").on "keyup change", "[model]", (e)->
-  console.log "e", e.type
-  $rf_input = $(this)
-  model = $rf_input.attr("model")
-  model_keys = model.split(".")
-  last_key = model_keys[model_keys.length - 1]
-  target = window
-  for key, index in model_keys
-    if index == model_keys.length - 1
-      break
-    target[key] ?= {}
-    target = target[key]
-  target[last_key] = $(this).val()
-  console.log "target", target
+
+if old_model_binding
+  $("body").on "keyup change", "[model]", (e)->
+    console.log "e", e.type
+    $rf_input = $(this)
+    model = $rf_input.attr("model")
+    model_keys = model.split(".")
+    last_key = model_keys[model_keys.length - 1]
+    target = window
+    for key, index in model_keys
+      if index == model_keys.length - 1
+        break
+      target[key] ?= {}
+      target = target[key]
+    target[last_key] = $(this).val()
+    console.log "target", target
 
 $.read_models = ()->
   $("[model]").each ->
