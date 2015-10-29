@@ -14,12 +14,6 @@ class Formify.Inputs.Base extends EventedClass
 
 
 
-  model_value : (val)->
-    if typeof val == 'undefined'
-      # read
-      @form().get_model_value(@model_key())
-    else
-      # write
 
 
 
@@ -77,7 +71,7 @@ class Formify.Inputs.Base extends EventedClass
 
     @assign_model_key(@model_value)
 
-    @model_value
+
 
     if @form()
       @form().trigger("model_change", @model_key())
@@ -88,8 +82,7 @@ class Formify.Inputs.Base extends EventedClass
     console.error("NotImplementedException")
 
   dom_value : ()->
-
-#console.warn("NotImplementedWarning")
+    #console.warn("NotImplementedWarning")
     if @is_built()
       @jquery_input.val()
     else
@@ -110,21 +103,7 @@ class Formify.Inputs.Base extends EventedClass
     translation_key = "placeholders." + @jquery_input.attr("model")
     t(translation_key)
 
-  input_type : ()->
-    type = "string"
-    type = "text" if @jquery_input.hasClass("text")
-    type = "collection-check-boxes" if @jquery_input.hasClass("collection-check-boxes")
-    type = "boolean" if @jquery_input.hasClass("boolean")
 
-    type
-  presenter_for : ()->
-    as = @jquery_input.attr("as")
-    if !as
-      type = @input_type()
-      if "string text collection-check-boxes".split(' ').indexOf(type) >= 0
-        as = type
-      else if type == 'boolean'
-        as = 'radio-button'
 
 
 

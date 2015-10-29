@@ -17,8 +17,7 @@ class Formify.Form extends virtual_class EventedClass, Formify.HasGroups
   model : ()->
     window[@jquery_form.attr('for')]
 
-  set_model_value : (val)->
-    window[@jquery_form.attr('for')] = val
+
 
   create_url : ()->
     @url
@@ -75,6 +74,9 @@ class Formify.Form extends virtual_class EventedClass, Formify.HasGroups
       target = target[key]
     target[last_key]
 
+
+  set_model_value : (val)->
+    window[@jquery_form.attr('for')] = val
 
 
 #model_value : ()->

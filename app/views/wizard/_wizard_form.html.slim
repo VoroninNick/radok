@@ -1,13 +1,27 @@
 /= simple_form_for @project, url: wizard_path, method: :post do |f|
-form for="project" url=wizard_path method="post"
+form for="project" url=wizard_path method="post" json="{}"
   fieldset.wizard-step step="1"
     #project-test-type-input.text-center
       .columns.large-12
         .label.text-center
           |What type of tests are you looking for?
       - @test_types.each do |test_type|
+        - model = "project.test_type_name"
+        - value = test_type.name
+        - input_id = model.gsub(".", '_') + value
+        - image_url = test_type.image.url(:original)
+        - checked = @project.test_type == test_type
+        - input_name = "name"
+
+
+
         .columns class="large-#{12 / @test_types.length}"
-          .input.image-radio-button as="image-radio-button" value=test_type.name image=test_type.image.url(:original) model="project.test_type_name" checked=("checked" if @project.test_type == test_type)
+          .input.image-radio-button as="image-radio-button" value=value image=image_url model="project.test_type_name"
+            input checked=("checked" if checked) value='#{value}' type='radio' name='#{input_name}' id="project_test_type_#{test_type.id}"
+
+
+
+
 
     #project-product-type-input.text-center
       .columns.large-12
