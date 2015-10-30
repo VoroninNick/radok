@@ -62,6 +62,16 @@ hide_unavailable_platforms = ()->
     $platform = $platforms.filter("[data-id=#{platform_id}]")
     $platform.removeClass("hide")
 
+  $platforms.filter(":not(.hide)").each(
+    (index)->
+      $p = $(this)
+      console.log "#{index + 1} : #{((index + 1) % 2 == 0)? 'odd' : 'even'}"
+      if (index + 1) % 2 == 0
+        $p.addClass("even").removeClass("odd")
+      else
+        $p.addClass("odd").removeClass("even")
+  )
+
 get_test_type_name = ()->
   $("[model*=test_type].checked").attr("value").toLowerCase()
 
@@ -156,6 +166,15 @@ $(document).on "ready", ()->
 
   init_tags_input()
 
+
+# step 4
+$(document).on "ready", ()->
+  show_or_hide_auth_credentials_inputs()
+
+$("body").on "change.project.authentication_required", ()->
+  show_or_hide_auth_credentials_inputs()
+
+
 $("body").on "change.project.methodology_type", ()->
   show_or_hide_exploratory_instructions_input()
 
@@ -171,3 +190,14 @@ show_or_hide_exploratory_instructions_input = ()->
   else
     $input.addClass("hide")
     $file_input.removeClass("hide")
+
+show_or_hide_auth_credentials_inputs = ()->
+  requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
+  $input = $(".project_exploratory_instructions_input")
+
+  $credentials_inputs = $(".project-auth-login, .project-auth-password")
+
+  if requires_auth
+    $credentials_inputs.removeClass("hide")
+  else
+    $credentials_inputs.addClass("hide")

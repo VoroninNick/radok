@@ -227,6 +227,8 @@ form for="project" url=wizard_path method="post" json="{}"
             |Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
 
           .input as="tags" model="project.tags"
+            label.placeholder
+              |Type components here, separate by commas...
             input type="text"
 
 
@@ -256,21 +258,33 @@ form for="project" url=wizard_path method="post" json="{}"
         .file-upload-files-list.test_files-list model="project.test_files"
 
 
-        .label
-          |Does the product require a username or password to be accessed?
+        .auth-data
+          .label
+            |Does the product require a username or password to be accessed?
 
 
-          .input.radio-button model="project.authentication_required" class="#{@project.exploratory? ? 'checked' : 'unchecked' }"
-            input type="radio" value="exploratory" id="project_methodology_type_exploratory" name="project_methodology_type" checked=('checked' if @project.exploratory?)
-            label.custom-radio-button for="project_methodology_type_exploratory"
-            label for="project_methodology_type_exploratory"
-              |Exploratory
-            .help
-              |This is unscripted testing. Our testers use your product like any normal user would.
-          .input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=(@project.authentication_required?)
+          .input.radio-button model="project.authentication_required" class="#{(!@project.authentication_required?) ? 'checked' : 'unchecked' }"
+            input type="radio" value="false" id="project_authentication_required_false" name="project_authentication_required" checked=('checked' if !@project.authentication_required?)
+            label.custom-radio-button for="project_authentication_required_false"
+            label for="project_authentication_required_false"
+              |No, it does not require a username or password
+
+          .input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=( 'checked' if @project.authentication_required?)
+            input type="radio" value="true" id="project_authentication_required_true" name="project_authentication_required" checked=('checked' if @project.authentication_required?)
+            label.custom-radio-button for="project_authentication_required_true"
+            label for="project_authentication_required_true"
+              |Yes, here they are:
+
+
 
           .input.string.project-auth-login model="project.auth_login"
+            label.placeholder for="project_auth_login"
+              |Username
+            input type="text" id="project_project_name" value=@project.project_name
           .input.string.project-auth-password model="project.auth_password"
+            label.placeholder for="project_auth_password"
+              |Password
+            input type="text" id="project_project_name" value=@project.project_name
 
 
         /.input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="No, it does not require a username or password" value="false" checked=(!@project.authentication_required?)

@@ -223,7 +223,7 @@ class Wizard::Test < ActiveRecord::Base
 
 
   def exploratory?
-    methodology_type == "exploratory"
+    methodology_type.blank? || methodology_type == "exploratory"
   end
 
   def test_case_driven?
@@ -253,6 +253,8 @@ class Wizard::Test < ActiveRecord::Base
       "#{total_days} #{quantified_day_word}"
     end
   end
+
+
 
 end
 
