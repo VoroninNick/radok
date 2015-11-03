@@ -226,20 +226,20 @@ form for="project" url=wizard_path method="post" json="{}"
           p.help
             |Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
 
-          .input as="tags" model="project.tags"
+          .input.tags as="tags" model="project.tags"
             label.placeholder
               |Type components here, separate by commas...
             input type="text"
 
 
 
-        .input.radio-button label="Exploratory" help="This is unscripted testing. Our testers use your product like any normal user would." as="radio-button" model="project.methodology_type" value="exploratory" checked=(@project.exploratory?)
-        .input.radio-button label="Test-case driven" as="radio-button" model="project.methodology_type" value="test_case_driven" checked=@project.test_case_driven?
+        /.input.radio-button label="Exploratory" help="This is unscripted testing. Our testers use your product like any normal user would." as="radio-button" model="project.methodology_type" value="exploratory" checked=(@project.exploratory?)
+        /.input.radio-button label="Test-case driven" as="radio-button" model="project.methodology_type" value="test_case_driven" checked=@project.test_case_driven?
 
-        .input.text as="text" model="project.exploratory_description" value=@project.exploratory_description
-        .input.files as="files" model="project.test_case_files" value=@project.test_case_files.to_json
+        /.input.text as="text" model="project.exploratory_description" value=@project.exploratory_description
+        /.input.files as="files" model="project.test_case_files" value=@project.test_case_files.to_json
 
-        .input.tags model="project.tags"
+        /.input.tags model="project.tags"
 
     fieldset.wizard-step step="5"
       .wizard-step-line
@@ -250,12 +250,17 @@ form for="project" url=wizard_path method="post" json="{}"
         /.input.url as="url" model="project.project_url"
         /.input.files as="files" model="project.test_files"
 
-        .input.url model="project.project_url"
-          input placeholder="http://domain.com"
-        span.or
-          |or
-        = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
-        .file-upload-files-list.test_files-list model="project.test_files"
+        .columns.large-7
+          .input.url model="project.project_url"
+            input placeholder="http://domain.com"
+        .columns.large-1
+          span.or
+            |or
+        .columns.large-4
+          input#test_files.file-upload-input list-selector=".test_files-list" model="project.test_files" data-attachment-name="project.test_files" type="file" multiple=""
+          = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-wizard-test-files-upload-button", svg: "upload", size: "medium"
+        .columns.large-12
+          .file-upload-files-list.test_files-list model="project.test_files"
 
 
         .auth-data

@@ -137,6 +137,7 @@ class ApplicationController < ActionController::Base
     !developer_machine?
   end
 
+  helper_method :developer_machine?, :server_machine?
 
   helper_method :menu_items
 end

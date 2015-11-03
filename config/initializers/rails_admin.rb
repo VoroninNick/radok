@@ -4,6 +4,28 @@ def pages_models
   Dir[Rails.root.join("app/models/pages/*")].map{|p| filename = File.basename(p, ".rb"); "Pages::" + filename.camelize }
 end
 
+def include_pages_models(config)
+  include_models(config, *pages_models)
+end
+
+def include_models(config, *models)
+  models.each do |model|
+    config.included_models += [model]
+
+    if !model.instance_of?(Class)
+      Dir[Rails.root.join("app/models/#{model.underscore}")].each do |file_name|
+        require file_name
+      end
+
+      model = model.constantize rescue nil
+    end
+
+    if model.respond_to?(:translates?) && model.translates?
+      config.included_models += [model.translation_class]
+    end
+  end
+end
+
 def pages_navigation_label
   navigation_label do
     I18n.t("admin.navigation_labels.pages")
@@ -72,6 +94,8 @@ def html_block_fields
   end
 end
 
+
+
 RailsAdmin.config do |config|
 
   ### Popular gems integration
@@ -110,21 +134,9 @@ RailsAdmin.config do |config|
 
   config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
 
-  ( [MetaData, Page, SitemapElement, Banner, HtmlBlock, KeyedHtmlBlock] + pages_models) .each do |model|
-    config.included_models += [model]
 
-    if !model.instance_of?(Class)
-      Dir[Rails.root.join("app/models/#{model.underscore}")].each do |file_name|
-        require file_name
-      end
-
-      model = model.constantize rescue nil
-    end
-
-    if model.respond_to?(:translates?) && model.translates?
-      config.included_models += [model.translation_class]
-    end
-  end
+  include_pages_models(config)
+  include_models(config, MetaData, Page, SitemapElement, Banner, HtmlBlock, KeyedHtmlBlock)
 
 
   config.model Wizard::TestPlatform do

@@ -388,71 +388,8 @@ if old_wizard
 #  $('button').on "click", ->
 #    $(document).trigger("ready")
 
-$("body").on "click", ".rf-test-case-files-upload-button", ()->
-  $input = $("input#test_case_files")
-  $input.click()
-
-$("body").on "click", ".rf-wizard-test-files-upload-button", ()->
-  $input = $("input#test_files")
-  $input.click()
-
-window.assets ?= {}
-window.assets.test_case_files ?= []
-
-$("body").on "change", "input.file-upload-input", ->
-  input = this
-  $input = $(input)
-  $upload_area = $input.closest(".upload-area")
-
-  list_selector = $input.attr("list-selector")
-  $list = $(list_selector)
-  attachment_name = $input.attr("data-attachment-name")
 
 
-
-
-  new_files_length = input.files.length
-  new_files_saved_count = 0
-  for file in input.files
-
-    $list.append("<div class='file' data-file-name='#{file.name}'>#{file.name}<span class='delete'></span></div>")
-    f = {name: file.name}
-    reader = new FileReader()
-    reader.onload = ->
-      #console.log "reader.load", arguments
-      src = reader.result
-      f.content = src
-      assets.test_case_files.push(f)
-      new_files_saved_count = new_files_saved_count + 1
-
-      if new_files_length == new_files_saved_count
-        $input.val(null)
-
-    reader.readAsDataURL(file);
-
-  $input.simpleUpload("#{wizard_root_path}/#{wizard.id}/#{attachment_name}", {
-    success: (data)->
-      file_name = data.data_file_name
-      $file = $list.find(".file:not(.loaded)").filter("[data-file-name='#{file_name}']")
-      $file.attr("data-id", data.id)
-  })
-
-
-
-$("body").on "click", ".file-upload-files-list .delete", ->
-  $file = $(this).closest('.file')
-  file_index = $file.index()
-  asset_id = $file.attr("data-id")
-  $file.remove()
-  assets.test_case_files.splice(file_index, 1)
-  $list = $(".file-upload-files-list")
-  attachment_name = $list.attr("data-attachment-name")
-  $.ajax({
-    url: "#{wizard_root_path}/#{wizard.id}/#{attachment_name}/#{asset_id}"
-    type: "delete"
-    dataType: "json"
-
-  })
 
 
 window.serializePlatforms = ()->
