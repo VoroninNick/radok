@@ -151,7 +151,7 @@ form for="project" url=wizard_path method="post" json="{}"
 
         label.label
           |In what language(s) is the project?
-        .input.collection-checkboxes
+        .input.collection-checkboxes as="collection-checkboxes" model="project.project_languages"
           .options
             - @project_languages.each_with_index do |language, index|
               - input_id = "project_project_languages_#{index + 1}"
@@ -164,7 +164,7 @@ form for="project" url=wizard_path method="post" json="{}"
 
         label.label
           |In what language(s) should the bugs be reported?
-        .input.collection-checkboxes
+        .input.collection-checkboxes as="collection-checkboxes" model="project.report_languages"
           .options
             - @report_languages.each_with_index do |language, index|
               - input_id = "project_report_languages_#{index + 1}"
@@ -268,7 +268,7 @@ form for="project" url=wizard_path method="post" json="{}"
             |Does the product require a username or password to be accessed?
 
 
-          .input.radio-button model="project.authentication_required" class="#{(!@project.authentication_required?) ? 'checked' : 'unchecked' }"
+          .input.radio-button model="project.authentication_required" as="radio-button" class="#{(!@project.authentication_required?) ? 'checked' : 'unchecked' }"
             input type="radio" value="false" id="project_authentication_required_false" name="project_authentication_required" checked=('checked' if !@project.authentication_required?)
             label.custom-radio-button for="project_authentication_required_false"
             label for="project_authentication_required_false"

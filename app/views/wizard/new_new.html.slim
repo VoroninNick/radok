@@ -62,12 +62,14 @@
                   |Platforms:
                 .columns.large-3.icon.human
                   /= svg_placeholder "user"
-                  ng-include src="'/assets/user.svg'"
+                  /ng-include src="'/assets/user.svg'"
+                  = embedded_svg_from_assets("user", class: "user")
                 .columns.large-3.icon.hours
                   /= svg_placeholder "clock"
-                  ng-include src="'/assets/clock.svg'"
+                  /ng-include src="'/assets/clock.svg'"
+                  = embedded_svg_from_assets("clock", class: "clock")
               .rows
-                .row ng-repeat="platform in wizard.platforms" ng-show="platform.testers_count"
+                /.row
                   .columns.large-6
                     |{{platform.name}}
                   .columns.large-3
@@ -92,6 +94,7 @@
                 .currency
                   |$
                 span data-bind="total_price"
+                  |0
 
             .checkout-button disabled="disabled" ng-class="!wizard.ready_to_checkout ? 'disabled' : '' " open-popup="payment"
               /= svg_placeholder "rf-rocket-up-right"
@@ -116,7 +119,7 @@
 
             /rf-button class="rf-next-step-button" align-content="left" full-width="" svg="/assets/rf-icon-rocket.svg" title="Next step" subtitle="{{wizard.next_step.number}}. {{wizard.next_step.name}}" ng-click="next_step()" ng-show="wizard.next_step" ng-disabled="wizard.active_step_form.$invalid"
 
-            = rf_button class: "rf-next-step-button", align_content: "left", full_width: true, svg: "rf-icon-rocket", title: "Next step", disabled: true
+            = rf_button class: "rf-next-step-button", align_content: "left", full_width: true, svg: "rf-icon-rocket", title: "Next step", disabled: false
             /next-step-button step-number="2" step-name="test name" model-active-step="wizard.active_step" model-next-step="wizard.next_step" ng-click="next_step()"
             .or-go-back-wrap.hide
               |or

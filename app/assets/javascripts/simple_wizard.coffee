@@ -1,5 +1,8 @@
 window.project ?= {}
 
+window.price_per_hour = 29
+
+
 window.assets ?= {}
 window.assets.test_case_files ?= []
 
@@ -41,6 +44,15 @@ window.input_types = {
   "image-radio-button" : {
     dom_value : (input)->
       window.input_types['radio-button'].dom_value(input)
+  }
+
+  "collection-checkboxes" : {
+    dom_value : (input)->
+      $input = $(input)
+      $input.find(".option input:checked").map(
+        (index, item)->
+          return $(item).val()
+      )
   }
 
 }
@@ -120,6 +132,181 @@ $("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-
 
   $input.addClass("checked").removeClass("unchecked")
 
+
+
+$("body").on "change code-change", ".wizard [as=platforms] .option-count input", ()->
+  test_platform_bindings = []
+  $platforms_field = $("[as=platforms]")
+  $platforms = $platforms_field.find(".platform")
+  $visible_platforms = $platforms.filter(":not(.hide)")
+
+  selected_platforms = []
+  selected_platform_ids = []
+
+  total_price = 0
+
+  $visible_platforms.each ->
+
+    $platform = $(this)
+    $platform_subitems = $platform.find(".option-count")
+    #platform = {}
+    platform_id = parseInt($platform.attr("data-id"))
+    platform_testers_count = 0
+    $platform_subitems.each ->
+      $platform_subitem = $(this)
+      test_platform_binding = {}
+      subitem_id = parseInt($platform_subitem.attr("platform-subitem-id"))
+      testers_count = parseInt($platform_subitem.find("input").val())
+      platform_testers_count += testers_count
+      test_platform_binding['subitem_id'] = subitem_id
+      test_platform_binding['testers_count'] = testers_count
+
+      platform_index = null
+
+      if testers_count > 0
+        test_platform_bindings.push(test_platform_binding)
+
+
+        p = selected_platforms.filter(
+          (p)->
+            p.id == platform_id
+        )[0]
+
+        existed = !!p
+
+        if !p
+
+          p ?= platforms.filter(
+            (p)->
+              p.id == platform_id
+          )[0]
+
+        if p
+          p.testers_count = platform_testers_count
+
+          p.hours_count = platform_testers_count * (project.hours_per_tester || 1)
+          p.price = p.hours_count * price_per_hour
+
+
+
+        platform_index = selected_platform_ids.indexOf(platform_id)
+
+        if platform_index >= 0
+          selected_platforms[platform_index] = p
+        else
+          selected_platform_ids.push(platform_id)
+
+          selected_platforms.push(p)
+
+
+
+  total_price = selected_platforms.map(
+    (p)->
+      p.price
+  ).sum()
+
+  project.total_price = total_price
+
+  project.test_platform_bindings = test_platform_bindings
+
+  project.selected_platforms = selected_platforms
+
+  $platforms_field.trigger("change.project.test_platform_bindings")
+  $platforms_field.trigger("change.project.total_price")
+  $platforms_field.trigger("change.project.selected_platforms")
+  #$platforms_field.trigger("change.#{model}")
+
+$("body").on "change.project.total_price", ()->
+  price = project.total_price
+  $(".full-summary-total-cost .total-price").text(price)
+
+$("body").on "change.project.test_platform_bindings", (e)->
+  $platforms_field = $(".wizard [as=platforms]")
+
+  $options = $platforms_field.find(".option-count")
+  $options.addClass("empty")
+  if project.test_platform_bindings && project.test_platform_bindings.length
+    for b in project.test_platform_bindings
+      $options.filter("[platform-subitem-id=#{b.subitem_id}]").removeClass("empty")
+
+      #b.attr("platform-subitem-id")
+
+#  platforms.filter(
+#    (p)->
+#      p.children.filter(
+#        (subitem)->
+#          return subitem.id > 10
+#      ).length > 0
+#  )
+
+
+  # short summary
+
+  $short_summary = $("#wizard-summary")
+  $short_summary_platforms_block = $(".platforms")
+  $platform_rows_block = $short_summary_platforms_block.find(".rows")
+  rows = ("")
+  if project.selected_platforms && project.selected_platforms.length > 0
+    $short_summary_platforms_block.removeClass("hide")
+    for p in project.selected_platforms
+
+      row = \
+        ("<div class='row'>
+            <div class='columns large-6'>#{p.name}</div>
+            <div class='columns large-3'>#{p.testers_count}</div>
+            <div class='columns large-3'>#{p.hours_count}</div>
+           </div>")
+
+      rows += row
+
+  else
+    $short_summary_platforms_block.addClass("hide")
+
+  $platform_rows_block.html(rows)
+
+
+
+  # full summary
+  $full_summary = $("#wizard-full-summary-content")
+  platforms_html = ""
+  if project.selected_platforms && project.selected_platforms.length
+
+    for p in project.selected_platforms
+      platform_subitems_html = ""
+
+      selected_children = p.children.filter(
+        (subitem)->
+          project.test_platform_bindings.map(
+            (b)->
+              b.subitem_id
+          ).indexOf(subitem.id) >= 0
+      )
+
+      p.selected_children = selected_children
+
+      subitems_html = ""
+
+      for subitem in p.selected_children
+
+        subitem_html = "<div class='platform-subitem'>#{subitem.name}</div>"
+
+        subitems_html += subitem_html
+
+      platform_html = "
+            <div class='columns large-4 platform'>
+              <div class='platform-svg'></div>
+              <div class='platform-name'>#{p.name}</div>
+              <div class='platform-subitems'>#{subitems_html}</div>
+            </div>
+          "
+
+
+
+      platforms_html += platform_html
+
+  $full_summary.find(".platforms").html(platforms_html)
+
+
 $("body").on "change", ".input[model]", ()->
   $input = $(this)
   model = $input.attr("model")
@@ -135,12 +322,23 @@ $("body").on "change", ".input[model]", ()->
 #$("body").on "change", ".wizard .input.radio-button", ()->
 
 
+scrollToFirstStep = ()->
+  top = $(".wizard-step[step=2]").offset().top - $("#header").height() - 50
+#  console.log "top", top
+  $("html, body").animate({scrollTop: top})
+
+show_mini_summary = ()->
+  $("#wizard-summary .footer").removeClass("hide")
+
 
 $("body").on "click", ".rf-configure-button", ()->
   $("#wizard-controller").addClass("configure-mode")
   hide_unavailable_steps()
   hide_unavailable_platforms()
   show_full_summary()
+  show_mini_summary()
+  scrollToFirstStep()
+
 
 
 
@@ -271,10 +469,20 @@ init_tags_input = ()->
 $(document).on "ready", ->
   init_string_inputs()
 
+  window.platforms = JSON.parse($("[as=platforms]").attr("options"))
 
 
 
 
+
+
+$("body").on "change.project.test_type", ()->
+  if project.test_type
+    $("#project-product-type").fadeIn()
+
+$("body").on "change.project.product_type", ()->
+  if project.product_type
+    $(".rf-configure-button").fadeIn()
 
 # step 3
 

@@ -14,7 +14,7 @@ class Wizard::Platform < ActiveRecord::Base
 
 
   def recursive_to_hash
-    res = {name: name}
+    res = {name: name, id: id}
     res[:avatar_url] = avatar.url if avatar.exists?
     res[:children] = children.pluck_to_hash(:id, :name)
 

@@ -37,9 +37,10 @@
           .columns.large-12
             .property-label
               |Your product will be tested on the following platforms:
-          /- project.platforms.each do |platform_key, platform|
+
             .columns.large-4.platforms
-              - if platform[:testers_count] > 0
+              - project.platforms.each do |platform_key, platform|
+              /- if platform[:testers_count] > 0
                 .platform
                   .platform-svg
                     = embedded_svg_from_assets(platform[:logo_path])
@@ -92,5 +93,18 @@
         .property-label
           |You've provided the following instructions:
         .property-input-value
-          textarea
+          textarea.instructions
             = project.instructions
+
+      .columns.large-6
+        .full-summary-total-cost
+          .dollar
+            |$
+          .total-price
+            |0
+          .total-cost-label
+            |total
+            br
+            |cost
+      .columns.large-6
+        = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false)

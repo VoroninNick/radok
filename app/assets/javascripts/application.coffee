@@ -16,6 +16,7 @@
 #= require jquery.tagsinput/src/jquery.tagsinput.js
 # require jquery.serialize-hash
 #= require jquery-serialize-object/dist/jquery.serialize-object.min
+#= require jquery_appear/jquery.appear
 #= require simpleUpload.min
 #= require functions
 #= require svg_images_list.coffee.erb
