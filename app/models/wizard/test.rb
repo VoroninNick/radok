@@ -27,6 +27,7 @@ class Wizard::Test < ActiveRecord::Base
 
 
 
+
   accepts_nested_attributes_for :test_platforms_bindings
   attr_accessible :test_platforms_bindings, :test_platforms_bindings_attributes
 
@@ -37,6 +38,8 @@ class Wizard::Test < ActiveRecord::Base
   scope :tested_projects, -> { where("completed_at is not null and tested_at is not null") }
 
   def testers_by_platform=(platforms)
+    return if platforms.nil?
+
     puts "testers_by_platform="
     puts platforms.inspect
     platforms.each do |k , p|
@@ -253,6 +256,8 @@ class Wizard::Test < ActiveRecord::Base
       "#{total_days} #{quantified_day_word}"
     end
   end
+
+  # step_id
 
 
 

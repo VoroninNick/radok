@@ -8,17 +8,31 @@ Rails.application.routes.draw do
   end
 
   wizard_path = "/ordering-crowdsourced-testing"
-  get "wizard", to: redirect(wizard_path), as: "short_wizard"
+
+  scope "wizard" do
+    root to: "wizard#new", as: "short_wizard"
+
+    delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
+    post ":id/:asset_field_name", to: "wizard#upload_test_case_files"
+    delete "/:id", to: "wizard#destroy"
+    get "/:id", to: "wizard#edit_or_show"
+    put "/:id", to: "wizard#update"
+    post "", to: "wizard#create"#, as: "wizard"
+
+  end
+
+  #get "wizard", to: "wiza", as: "short_wizard"
+  #get "wizard", to: redirect(wizard_path), as: "short_wizard"
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call"
 
-  delete "#{wizard_path}/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
-  post "#{wizard_path}:id/:asset_field_name", to: "wizard#upload_test_case_files"
-  delete "#{wizard_path}/:id", to: "wizard#destroy"
-  get "#{wizard_path}/:id", to: "wizard#edit_or_show"
-  put "#{wizard_path}/:id", to: "wizard#update"
-  post "#{wizard_path}", to: "wizard#create", as: "wizard"
+  # delete "#{wizard_path}/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
+  # post "#{wizard_path}:id/:asset_field_name", to: "wizard#upload_test_case_files"
+  # delete "#{wizard_path}/:id", to: "wizard#destroy"
+  # get "#{wizard_path}/:id", to: "wizard#edit_or_show"
+  # put "#{wizard_path}/:id", to: "wizard#update"
+  # post "#{wizard_path}", to: "wizard#create", as: "wizard"
 
   post "update_subscription", to: "user_pages#update_subscription"
   match "/profile", to: "user_pages#profile", via: [:get, :post]
@@ -29,7 +43,7 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboard#index"
   get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
-  get "#{wizard_path}", to: "wizard#new"#, as: "wizard"
+  get "#{wizard_path}", to: "wizard#render_in_development", as: "wizard"
   DynamicRouter.load
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"

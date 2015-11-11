@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917170411) do
+ActiveRecord::Schema.define(version: 20151111152912) do
 
   create_table "assets", force: :cascade do |t|
     t.integer  "assetable_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150917170411) do
   end
 
   create_table "banners", force: :cascade do |t|
+    t.integer  "page_id"
     t.string   "title"
     t.string   "description"
     t.string   "background_image_file_name"
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150917170411) do
     t.string   "button_url"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.string   "title_html_tag"
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -55,6 +57,15 @@ ActiveRecord::Schema.define(version: 20150917170411) do
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable"
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type"
 
+  create_table "contact_feedbacks", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "subject"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "contact_requests", force: :cascade do |t|
     t.string   "subject"
     t.string   "name"
@@ -68,17 +79,33 @@ ActiveRecord::Schema.define(version: 20150917170411) do
     t.boolean  "published"
     t.string   "name"
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "url_fragment"
   end
 
   create_table "faq_requests", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "question_title"
-    t.text     "question_description"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.string   "subject"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "form_configs", force: :cascade do |t|
+    t.string   "type"
+    t.text     "email_receivers"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "html_blocks", force: :cascade do |t|
+    t.text    "content"
+    t.integer "attachable_id"
+    t.string  "attachable_type"
+    t.string  "attachable_field_name"
+    t.string  "key"
   end
 
   create_table "leaders", force: :cascade do |t|
@@ -111,6 +138,14 @@ ActiveRecord::Schema.define(version: 20150917170411) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "schedule_call_requests", force: :cascade do |t|
+    t.string   "phone"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "simple_wizard_tests", force: :cascade do |t|
     t.string   "tot__type_of_test"
     t.string   "top__type_of_product"
@@ -138,6 +173,16 @@ ActiveRecord::Schema.define(version: 20150917170411) do
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.text     "state"
+  end
+
+  create_table "sitemap_elements", force: :cascade do |t|
+    t.string   "page_type"
+    t.integer  "page_id"
+    t.boolean  "display_on_sitemap"
+    t.string   "changefreq"
+    t.float    "priority"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -168,23 +213,110 @@ ActiveRecord::Schema.define(version: 20150917170411) do
     t.string   "billing_card_number"
     t.string   "billing_cvv_number"
     t.string   "full_name"
+    t.boolean  "subscribed"
+    t.string   "phone"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "role"
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
+  create_table "wizard_devices", force: :cascade do |t|
+    t.integer  "manufacturer_id"
+    t.string   "model"
+    t.string   "os"
+    t.integer  "screen_pixel_width"
+    t.integer  "screen_pixel_height"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "wizard_devices", ["manufacturer_id"], name: "index_wizard_devices_on_manufacturer_id"
+
+  create_table "wizard_manufacturers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "wizard_platforms", force: :cascade do |t|
     t.string   "name"
     t.integer  "testers_count"
     t.string   "ancestry"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "position"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+  end
+
+  create_table "wizard_platforms_product_types", id: false, force: :cascade do |t|
+    t.integer "platform_id"
+    t.integer "product_type_id"
+  end
+
+  add_index "wizard_platforms_product_types", ["platform_id", "product_type_id"], name: "index_unique_platforms_product_types", unique: true
+
+  create_table "wizard_product_types", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  create_table "wizard_project_languages", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wizard_report_languages", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wizard_test_platforms", id: false, force: :cascade do |t|
+    t.integer  "platform_id",   null: false
+    t.integer  "test_id",       null: false
+    t.integer  "testers_count"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
-  create_table "wizard_product_types", force: :cascade do |t|
+  add_index "wizard_test_platforms", ["test_id", "platform_id"], name: "index_wizard_test_platform_unique_bindings", unique: true
+
+  create_table "wizard_test_project_languages", force: :cascade do |t|
+    t.integer "test_id"
+    t.integer "project_language_id"
+  end
+
+  add_index "wizard_test_project_languages", ["project_language_id"], name: "index_wizard_test_project_languages_on_project_language_id"
+  add_index "wizard_test_project_languages", ["test_id"], name: "index_wizard_test_project_languages_on_test_id"
+
+  create_table "wizard_test_report_languages", force: :cascade do |t|
+    t.integer "test_id"
+    t.integer "report_language_id"
+  end
+
+  add_index "wizard_test_report_languages", ["report_language_id"], name: "index_wizard_test_report_languages_on_report_language_id"
+  add_index "wizard_test_report_languages", ["test_id"], name: "index_wizard_test_report_languages_on_test_id"
+
+  create_table "wizard_test_types", force: :cascade do |t|
     t.string   "name"
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -197,9 +329,28 @@ ActiveRecord::Schema.define(version: 20150917170411) do
   create_table "wizard_tests", force: :cascade do |t|
     t.string   "state"
     t.float    "percent_completed"
-    t.string   "steps_json"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "hours_per_tester"
+    t.string   "project_name"
+    t.string   "project_version"
+    t.string   "methodology_type"
+    t.text     "exploratory_description"
+    t.string   "project_url"
+    t.boolean  "authentication_required"
+    t.string   "auth_login"
+    t.string   "auth_password"
+    t.text     "comment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "product_type_id"
+    t.integer  "test_type_id"
+    t.integer  "user_id"
+    t.integer  "active_step_number"
+    t.integer  "proceeded_steps_count"
+    t.datetime "completed_at"
+    t.datetime "tested_at"
+    t.datetime "expected_tested_at"
+    t.boolean  "successful"
+    t.integer  "current_step_id"
   end
 
 end

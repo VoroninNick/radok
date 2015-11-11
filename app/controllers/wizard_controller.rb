@@ -94,11 +94,13 @@ class WizardController < ApplicationController
 
 
 
-    if server_machine? && !@allow
-      return render "in_development"
-    end
+
 
     render "new_new"
+  end
+
+  def render_in_development
+    render "in_development"
   end
 
   def new_and_allow
@@ -108,7 +110,7 @@ class WizardController < ApplicationController
   end
 
   def create
-    test = Wizard::Test.create(params[:test])
+    test = Wizard::Test.create(test_params)
     test.user_id = current_user.try(&:id)
     if test.save
       render json: test
@@ -118,8 +120,9 @@ class WizardController < ApplicationController
   def update
 
     test = Wizard::Test.find(params[:id])
-    test_params = params[:test]
-    test_params[:testers_by_platform] = test_params.delete :platforms
+
+
+
     test.update(test_params)
     if test.save
       render json: test
@@ -212,6 +215,18 @@ class WizardController < ApplicationController
     end
 
     render json: result
+  end
+
+
+  def test_params
+    test = params[:test]
+    test[:test_type_id] = Wizard::TestType.find_by_name(test.delete(:test_type)).try(&:id)
+    test[:product_type_id] = Wizard::TestType.find_by_name(test.delete(:product_type)).try(&:id)
+
+
+    test[:testers_by_platform] = test.delete(:platforms)
+
+    test
   end
 end
 

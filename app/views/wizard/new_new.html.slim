@@ -80,11 +80,15 @@
           /.total-price
                     |total price: {{wizard.total_price}}
 
-          /.save-button ng-click="saveProject()"
+          .save-button ng-click="saveProject()"
             /= svg_placeholder "download"
             ng-include src="'/assets/download.svg'"
             span.button-label
               |Save this project
+          .project-saved
+            span.button-label
+              |Project saved
+
 
           .footer.hide
             .price-wrap
@@ -124,4 +128,8 @@
             .or-go-back-wrap.hide
               |or
               .go-back-button ng-click="go_back()"
-                |go back to STEP {{wizard.active_step_id - 2}}
+                |go back to STEP
+                |&thinsp;
+                span.prev-step-number
+                  |
+

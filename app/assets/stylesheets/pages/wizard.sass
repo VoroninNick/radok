@@ -1063,8 +1063,7 @@ body
   color: $yellow-orange-color
   text-transform: uppercase
 
-.save-button
-
+= save-button
   color: $sky-blue-color
   text-transform: uppercase
   background-color: $white-color
@@ -1078,16 +1077,29 @@ body
   text-align: center
   cursor: pointer
 
+= save-button-svg
+  display: inline-block
+  fill: $sky-blue-color
+  width: 24px
+  height: 16px
+  margin: 0 5px 0 0px
+
+= save-button-hover
+  background: rgba($sky-blue-color, 0.1)
+
+.save-button
+  +save-button
+
   &:hover
-    background: rgba($sky-blue-color, 0.1)
-
-
+    +save-button-hover
   svg
-    display: inline-block
-    fill: $sky-blue-color
-    width: 24px
-    height: 16px
-    margin: 0 5px 0 0px
+    +save-button-svg
+
+
+.project-saved
+  +save-button
+  +save-button-hover
+  cursor: default
 
 .checkout-button
   height: rem-calc(70)

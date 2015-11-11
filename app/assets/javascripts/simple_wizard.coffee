@@ -55,11 +55,18 @@ window.input_types = {
       )
   }
 
+  "platforms" : {
+    dom_value : (input)->
+      project.selected_platforms
+  }
+
 }
 
 
 
 window.wizard_form = {
+  update_model_value : (value)->
+    $.extend(window.project, value)
   set_model_value : (value)->
     window.project = value
 
@@ -77,16 +84,19 @@ window.wizard_form = {
   update_url : ()->
     self = wizard_form
     if self.url[@url.length - 1] == '/'
-      @url + @model.id
+      @url + @get_model().id
     else
-      @url + "/" + @model.id
+      @url + "/" + @get_model().id
 
+  get_model : ()->
+    project
   model : project
   is_persisted : ()->
-    !!@model.id
+    #!!@get_model().id
+    !!@get_model().id
   push : ()->
     self = wizard_form
-    data = project
+    data = {test: project}
     $("form[for]").trigger("before_push")
     res = do_push = true
     if res
@@ -112,7 +122,7 @@ window.wizard_form = {
           #self.trigger("after_push")
           self.jquery_form.trigger("after_push")
 
-          self.set_model_value(response_data)
+          self.update_model_value(response_data)
           self.jquery_form.trigger("after_#{action}")
       }
       console.log "opts", ajax_options
@@ -219,6 +229,7 @@ $("body").on "change code-change", ".wizard [as=platforms] .option-count input",
 $("body").on "change.project.total_price", ()->
   price = project.total_price
   $(".full-summary-total-cost .total-price").text(price)
+  $("[data-bind=total_price]").text(price)
 
 $("body").on "change.project.test_platform_bindings", (e)->
   $platforms_field = $(".wizard [as=platforms]")
@@ -307,7 +318,8 @@ $("body").on "change.project.test_platform_bindings", (e)->
   $full_summary.find(".platforms").html(platforms_html)
 
 
-$("body").on "change", ".input[model]", ()->
+$("body").on "change keyup dom_change", ".input[model]", (e)->
+  #console.log "e : #{e.type}", e
   $input = $(this)
   model = $input.attr("model")
 
@@ -315,7 +327,31 @@ $("body").on "change", ".input[model]", ()->
   value = input_types[input_type].dom_value($input)
   assign_model_key(model, value)
 
+  #console.log "input change"
+
+  project.saved = false
+  notifyProjectHasUnsavedChanges()
+
   $input.trigger("change.#{model}")
+
+  $wizard_controller = $(".wizard-controller")
+
+  if wizard_form.is_persisted.apply(wizard_form)
+    save_timeout_id = $wizard_controller.data("save_timeout_id")
+    if save_timeout_id
+      clearTimeout(save_timeout_id)
+    save_timeout_id = setTimeout(
+      ()->
+        wizard_form.push.apply(wizard_form)
+      2000
+    )
+
+    $wizard_controller.data("save_timeout_id", save_timeout_id)
+
+
+
+
+
 
 
 
@@ -323,9 +359,27 @@ $("body").on "change", ".input[model]", ()->
 
 
 scrollToFirstStep = ()->
-  top = $(".wizard-step[step=2]").offset().top - $("#header").height() - 50
-#  console.log "top", top
-  $("html, body").animate({scrollTop: top})
+  change_step(2, null, false)
+  scrollToStep(2)
+
+
+scrollToStep = (step_id)->
+  if step_id == undefined || step_id == null
+    return
+  $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
+
+
+
+
+  available_step = project.available_step_ids.indexOf(step_id) >= 0
+
+  if available_step
+    $visible_steps.filter(".wizard-step[step=#{project.current_step_id}]")
+
+    top = $visible_steps.filter("[step=#{step_id}]").offset().top - $("#header").height() - 50
+    $("html, body").animate({scrollTop: top})
+
+    return true
 
 show_mini_summary = ()->
   $("#wizard-summary .footer").removeClass("hide")
@@ -338,9 +392,51 @@ $("body").on "click", ".rf-configure-button", ()->
   show_full_summary()
   show_mini_summary()
   scrollToFirstStep()
+  wizard_form.push.apply(wizard_form)
+  notifyProjectSaved()
+
+notifyProjectSaved = ()->
+  $(".save-button").hide()
+  $(".project-saved").fadeIn()
+
+window.notifyProjectHasUnsavedChanges = ()->
+  $(".project-saved").hide()
+  $(".save-button").fadeIn()
+
+
+$("body").on "click", ".save-button", ()->
+  wizard_form.push.apply(wizard_form)
+
+next_step = ()->
+  $current_step = $(".wizard-step[step=#{project.current_step_id}]")
+  next_step_id = project.next_step_id
+  if next_step_id
+
+    change_step(next_step_id, $current_step, false)
+    scrollToStep(next_step_id)
 
 
 
+prev_step = ()->
+  $current_step = $(".wizard-step[step=#{project.current_step_id}]")
+  prev_step_id = project.prev_step_id
+  if prev_step_id
+
+    change_step(prev_step_id, $current_step, false)
+    scrollToStep(prev_step_id)
+
+
+$("body").on "click", ".go-back-button", ()->
+  prev_step()
+
+
+
+
+$("body").on "click", ".rf-next-step-button", ()->
+  step = next_step()
+#  if !step
+#    $button = $(this)
+#    $button.fadeOut()
 
 $("body").on "change", ".project_test_type", ()->
   if is_configure_mode()
@@ -397,9 +493,11 @@ hide_unavailable_steps = ()->
   if test_type_name == 'functional' || test_type_name == 'localization'
     $step.removeClass("hide")
     $next_step.find(".wizard-step-counter").attr("data-number", 4)
+    project.last_step_index = 3
   else
     $step.addClass("hide")
     $next_step.find(".wizard-step-counter").attr("data-number", 3)
+    project.last_step_index = 2
 
 $("body").on "click", ".option-count .decrement, .option-count .increment", ->
   $btn = $(this)
@@ -447,6 +545,93 @@ $("body").on "focusin focusout", ".input", (e)->
   else
     $(this).removeClass("focus")
 
+  #console.log "e", e.type
+  if e.type == 'focusin'
+    $step = $(this).closest(".wizard-step")
+    step_id = parseInt($step.attr("step"))
+    change_step(step_id, $step, false)
+
+
+
+
+change_step = (step_id, $current_step = null, check_for_current_step_id = true)->
+  if !check_for_current_step_id || step_id != project.current_step_id
+    #console.log "change_step: step_id: ", step_id
+    project.current_step_id = step_id
+
+    $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
+    available_step_ids = $visible_steps.map(
+      (index, item)->
+        local_step_id = $(item).attr("step")
+        if local_step_id == undefined  || local_step_id == null
+          return null
+        return parseInt(local_step_id)
+    ).toArray()
+
+    project.available_step_ids = available_step_ids
+
+
+    available_next_step = available_step_ids.indexOf(step_id) < available_step_ids.length - 1
+    available_prev_step = available_step_ids.indexOf(step_id) > 0
+
+    $target = $current_step
+    if !$target || !$target.length
+      $target ?= $("body")
+
+
+
+    #if project.available_next_step
+    changed_available_next_step = available_next_step != project.available_next_step
+    project.available_next_step = available_next_step
+
+    if available_next_step
+      project.next_step_id = available_step_ids[available_step_ids.indexOf(step_id) + 1]
+    else
+      project.next_step_id = null
+
+    if changed_available_next_step
+      $target.trigger("change.project.available_next_step")
+
+
+
+
+    changed_available_prev_step = available_prev_step != project.available_prev_step
+    project.available_prev_step = available_prev_step
+    if available_prev_step
+      project.prev_step_id = available_step_ids[available_step_ids.indexOf(step_id) - 1]
+    else
+      project.prev_step_id = null
+
+    if changed_available_prev_step
+      $target.trigger("change.project.available_prev_step")
+
+
+    #console.log "status", { available_step_ids: available_step_ids, available_next_step: available_next_step, next_step_id: project.next_step_id, available_prev_step: available_prev_step, prev_step_id: project.prev_step_id }
+
+
+    $target.trigger("change.project.current_step_id")
+
+
+$("body").on "change.project.current_step_id", ()->
+  step_id = project.current_step_id
+  $step = $(".wizard-step[step=#{step_id}]")
+  number = $step.find(".wizard-step-counter").attr("data-number")
+
+
+$("body").on "change.project.available_next_step", ()->
+  if project.available_next_step
+    $(".rf-next-step-button").fadeIn()
+  else
+    $(".rf-next-step-button").fadeOut()
+
+$("body").on "change.project.available_prev_step", ()->
+  $go_back_wrap = $(".or-go-back-wrap")
+  if project.available_prev_step
+    $go_back_wrap.removeClass("hide")
+    $go_back_wrap.fadeIn()
+  else
+    $go_back_wrap.fadeOut()
+
 init_string_inputs = ()->
   $(".input.string").each ->
     $input = $(this)
@@ -465,11 +650,10 @@ init_tags_input = ()->
   })
 
 
+$("body").on "click", ".input.image-radio-button", ()->
+  $(this).trigger("focusin")
 
-$(document).on "ready", ->
-  init_string_inputs()
 
-  window.platforms = JSON.parse($("[as=platforms]").attr("options"))
 
 
 
@@ -484,17 +668,7 @@ $("body").on "change.project.product_type", ()->
   if project.product_type
     $(".rf-configure-button").fadeIn()
 
-# step 3
 
-$(document).on "ready", ()->
-  show_or_hide_exploratory_instructions_input()
-
-  init_tags_input()
-
-
-# step 4
-$(document).on "ready", ()->
-  show_or_hide_auth_credentials_inputs()
 
 $("body").on "change.project.authentication_required", ()->
   show_or_hide_auth_credentials_inputs()
@@ -599,3 +773,46 @@ $("body").on "click", ".rf-wizard-test-files-upload-button", (e)->
   e.preventDefault()
   $input = $("input#test_files")
   $input.click()
+
+
+#$("body").on "disappear", ".wizard-step", ()->
+#  $(this)
+
+$("body").on "after_push", ()->
+  notifyProjectSaved()
+
+$("body").on "after_create", ()->
+  state = {}
+  title = ""
+  url = wizard_form.update_url.apply(wizard_form)
+  history.pushState(state, title, url);
+
+
+
+init_loaded_project = ()->
+  str = $("#wizard-controller").attr("test-json")
+  if str
+    data = JSON.parse(str)
+    $.merge(window.project, data)
+
+  change_step(project.current_step_id)
+  scrollToStep(project.current_step_id)
+
+
+
+
+# initialize wizard
+init_loaded_project()
+
+
+init_string_inputs()
+window.platforms = JSON.parse($("[as=platforms]").attr("options"))
+
+
+# step 3
+show_or_hide_exploratory_instructions_input()
+init_tags_input()
+
+
+# step 4
+show_or_hide_auth_credentials_inputs()
