@@ -98,7 +98,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
 
     /= render "new_platforms_step"
 
-    fieldset.wizard-step step="2"
+    fieldset.wizard-step step="2" type="platforms"
       .wizard-step-line
       .wizard-step-counter data-number="1"
       .wizard-step-content
@@ -127,7 +127,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
     /.wizard-step
       .input.image-radio-buttons.required model=""
 
-    fieldset.wizard-step step="3"
+    fieldset.wizard-step step="3" type="project_info"
       .wizard-step-line
       .wizard-step-counter data-number="2"
       .wizard-step-content
@@ -186,7 +186,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
           = f.label "In what language(s) should the bugs be reported?"
           = f.collection_check_boxes :report_languages, [[:uk, "Ukrainian"], [:en, "English"], [:ru, "Russian"], [:pl, "Polish"], [:es, "Spanish"]], :first, :last
 
-    fieldset.wizard-step.project-components-step step="4"
+    fieldset.wizard-step.project-components-step step="4" type="project_components"
       .wizard-step-line
       .wizard-step-counter data-number="3"
       .wizard-step-content
@@ -241,7 +241,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
 
         /.input.tags model="project.tags"
 
-    fieldset.wizard-step step="5"
+    fieldset.wizard-step step="5" type="project_access"
       .wizard-step-line
       .wizard-step-counter data-number="4"
       .wizard-step-content

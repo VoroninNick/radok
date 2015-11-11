@@ -1,3 +1,5 @@
+$wizard-summary-horizontal-padding: ($wizard-step-counter-diameter + rem-calc(30) - rem-calc(15))
+
 #wizard-full-summary
   position: relative
   padding-right: $wizard-summary-width
@@ -44,7 +46,7 @@
   //margin-left: auto
   //margin-right: auto
   background: $white-color
-  padding: 0 #{($wizard-step-counter-diameter + rem-calc(30) - rem-calc(15))}
+  padding: 0 $wizard-summary-horizontal-padding 40px $wizard-summary-horizontal-padding
   margin: 0
 
 
@@ -163,3 +165,18 @@
     font-weight: 500
     line-height: 16px
     top: 19px
+
+.promo-code-field
+  margin-top: 10px
+
+  padding: 0 0 0 54px
+  label
+    display: block
+    font-size: 14px
+    font-weight: 100
+  input
+    border: none
+  button
+    vertical-align: top
+    width: 30px
+    padding: 0

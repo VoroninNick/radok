@@ -62,6 +62,44 @@ window.input_types = {
 
 }
 
+window.step_types = {
+
+  'platforms' : {
+    completed : false
+    checkIsCompleted : ()->
+      completed = project.total_price > 0
+      $step = $(this)
+      data_completed = $step.data("completed")
+      if data_completed != completed
+        $step.data('completed', completed)
+        if completed
+          $step.trigger("step_completed")
+        else
+          $step.trigger("step_uncompleted")
+
+
+
+
+  }
+
+  'project_info' : {
+    checkIsCompleted : ()->
+      true
+  }
+
+  'project_components' : {
+    checkIsCompleted : ()->
+      true
+  }
+
+  'project_access' : {
+    checkIsCompleted : ()->
+      true
+  }
+
+
+}
+
 
 
 window.wizard_form = {
@@ -145,6 +183,10 @@ $("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-
 
 
 $("body").on "change code-change", ".wizard [as=platforms] .option-count input", ()->
+  update_price()
+
+
+update_price = ()->
   test_platform_bindings = []
   $platforms_field = $("[as=platforms]")
   $platforms = $platforms_field.find(".platform")
@@ -336,6 +378,11 @@ $("body").on "change keyup dom_change", ".input[model]", (e)->
 
   $wizard_controller = $(".wizard-controller")
 
+  $step = $(this).closest(".wizard-step")
+  step_type = $step.attr("type")
+  if step_types[step_type]
+    step_types[step_type].checkIsCompleted.apply($step)
+
   if wizard_form.is_persisted.apply(wizard_form)
     save_timeout_id = $wizard_controller.data("save_timeout_id")
     if save_timeout_id
@@ -347,6 +394,8 @@ $("body").on "change keyup dom_change", ".input[model]", (e)->
     )
 
     $wizard_controller.data("save_timeout_id", save_timeout_id)
+
+
 
 
 
@@ -385,9 +434,34 @@ show_mini_summary = ()->
   $("#wizard-summary .footer").removeClass("hide")
 
 
+
+
+showStepsProgress = ()->
+  $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
+  progress_steps_str = ""
+  steps_count = $visible_steps.length
+  step_percentage_width = "#{100 / steps_count}%"
+  $visible_steps.each ()->
+
+    $step = $(this)
+    completed = !!$step.data("completed")
+    step_id = $step.attr("step")
+
+    $progress_step = $("steps-progress .step[step=#{step_id}]")
+    if completed
+      $progress_step.addClass("proceeded")
+    else
+      $progress_step.removeClass("proceeded")
+
+    step_html = "<div step='#{step_id}' class='step #{'proceeded' if completed}' style='width: #{step_percentage_width}'><div class='inner'></div></div>"
+    progress_steps_str += step_html
+
+  $("steps-progress .progress").html(progress_steps_str)
+
 $("body").on "click", ".rf-configure-button", ()->
   $("#wizard-controller").addClass("configure-mode")
   hide_unavailable_steps()
+  showStepsProgress()
   hide_unavailable_platforms()
   show_full_summary()
   show_mini_summary()
@@ -441,6 +515,7 @@ $("body").on "click", ".rf-next-step-button", ()->
 $("body").on "change", ".project_test_type", ()->
   if is_configure_mode()
     hide_unavailable_steps()
+    showStepsProgress()
 
 $("body").on "change", ".project_product_type", ->
   hide_unavailable_platforms()
@@ -568,6 +643,9 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
         return parseInt(local_step_id)
     ).toArray()
 
+    project.available_steps = []
+
+
     project.available_step_ids = available_step_ids
 
 
@@ -667,6 +745,9 @@ $("body").on "change.project.test_type", ()->
 $("body").on "change.project.product_type", ()->
   if project.product_type
     $(".rf-configure-button").fadeIn()
+
+  if wizard_form.is_persisted.apply(wizard_form)
+    update_price()
 
 
 
@@ -800,6 +881,15 @@ init_loaded_project = ()->
 
 
 
+$("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
+  $step = $(this)
+  step_id = $step.attr("step")
+  $progress_step = $("steps-progress .progress .step[step=#{step_id}]")
+  if e.type == 'step_completed'
+    $progress_step.addClass("proceeded")
+  else
+    $progress_step.removeClass("proceeded")
+
 
 # initialize wizard
 init_loaded_project()
@@ -816,3 +906,5 @@ init_tags_input()
 
 # step 4
 show_or_hide_auth_credentials_inputs()
+
+
