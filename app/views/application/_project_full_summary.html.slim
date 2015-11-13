@@ -107,9 +107,10 @@
             |total
             br
             |cost
-      .columns.large-6
-        = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment" })
-      .columns.large-6.left
+      - if !project.completed?
+        .columns.large-6
+          = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment" })
+      .columns.large-6.left style="clear: left;"
         .promo-code-field
           label for="promo_code"
             |Promo code

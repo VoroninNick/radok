@@ -272,7 +272,13 @@ class Wizard::Test < ActiveRecord::Base
     end
   end
 
+
+
   # step_id
+
+  def to_json
+    to_builder.target!
+  end
 
   def to_builder
     properties = %w(active_step_number auth_login auth_password authentication_required comment completed_at created_at current_step_id expected_tested_at exploratory_description hours_per_tester
@@ -324,6 +330,10 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
 
       #test.president president.to_builder
     end
+  end
+
+  def complete!
+    self.update_attributes!(completed_at: DateTime.now, skip_callbacks: true)
   end
 
 end

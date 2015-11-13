@@ -2,6 +2,7 @@ class PaymentRequest < ActiveRecord::Base
   attr_accessible *attribute_names
 
   belongs_to :test, class: Wizard::Test
+  attr_accessible :test
 
   def to_builder
     Jbuilder.new do |t|
@@ -21,5 +22,9 @@ class PaymentRequest < ActiveRecord::Base
       t.cvv_number cvv_number
       t.test_id test_id
     end
+  end
+
+  def pay_later?
+    self.payment_type == "pay_later"
   end
 end

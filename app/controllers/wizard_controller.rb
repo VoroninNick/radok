@@ -71,8 +71,9 @@ class WizardController < ApplicationController
   def new
     @head_title = "Wizard"
     @project = Wizard::Test.new
-    last_test = Wizard::Test.last
-    id = last_test.id + 1
+    #last_test = Wizard::Test.last
+    #id =  last_test.id + 1
+    id = rand(1000)
     @project.project_name = "Test ##{id}"
     @project.methodology_type ||= "exploratory"
 
@@ -134,9 +135,12 @@ class WizardController < ApplicationController
   end
 
   def payment
-    payment_params = params[:payment]
+
     @payment = PaymentRequest.create(payment_params)
+    @test = @payment.test
     if @payment.save
+      @test.complete!
+      WizardMailer.payment_request_admin_notification(@payment).deliver
       render inline: @payment.to_builder.target!, status: 201
     end
   end
@@ -241,6 +245,13 @@ class WizardController < ApplicationController
     test[:testers_by_platform] = test.delete(:platforms)
 
     test
+  end
+
+  def payment_params
+    p = params[:payment]
+    p[:test_id] = params[:id]
+
+    p
   end
 end
 

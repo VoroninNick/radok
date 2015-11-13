@@ -132,7 +132,7 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FaqRequest, ContactFeedback]
+  config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
 
 
   include_pages_models(config)
@@ -163,7 +163,7 @@ RailsAdmin.config do |config|
   end
 
 
-  %w(FaqRequest ContactFeedback ScheduleCall).each do |name|
+  %w(FaqRequest ContactFeedback ScheduleCall PaymentRequest).each do |name|
     config.model "FormConfigs::#{name}" do
       settings_navigation_label
       visible true

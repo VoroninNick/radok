@@ -534,16 +534,7 @@ showStepsProgress = ()->
 
   $("steps-progress .progress").html(progress_steps_str)
 
-$("body").on "click", ".rf-configure-button", ()->
-  $("#wizard-controller").addClass("configure-mode")
-  hide_unavailable_steps()
-  showStepsProgress()
-  hide_unavailable_platforms()
-  show_full_summary()
-  show_mini_summary()
-  scrollToFirstStep()
-  wizard_form.push.apply(wizard_form)
-  notifyProjectSaved()
+
 
 notifyProjectSaved = ()->
   $(".save-button").hide()
@@ -987,7 +978,20 @@ $("body").on "after_create", ()->
   url = wizard_form.update_url.apply(wizard_form)
   history.pushState(state, title, url);
 
+$("body").on "click", ".rf-configure-button", ()->
 
+  init_configure_mode()
+  scrollToFirstStep()
+  wizard_form.push.apply(wizard_form)
+  notifyProjectSaved()
+
+init_configure_mode = ()->
+  $("#wizard-controller").addClass("configure-mode")
+  hide_unavailable_steps()
+  showStepsProgress()
+  hide_unavailable_platforms()
+  show_full_summary()
+  show_mini_summary()
 
 init_loaded_project = ()->
   str = $("#wizard-controller").attr("test-json")
@@ -997,8 +1001,7 @@ init_loaded_project = ()->
 
 
   if wizard_form.is_persisted.apply(wizard_form)
-    hide_unavailable_steps()
-    hide_unavailable_platforms()
+    init_configure_mode()
 
     console.log "loaded_project: ", project
     console.log "test1"

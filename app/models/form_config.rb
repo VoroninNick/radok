@@ -2,7 +2,7 @@ class FormConfig < ActiveRecord::Base
   attr_accessible *attribute_names
 
   def self.default_emails
-    ['voronin.nick@gmail.com']
+    ['p.korenev@voroninstudio.eu']
   end
 
   def emails

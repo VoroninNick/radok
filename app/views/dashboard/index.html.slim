@@ -10,7 +10,7 @@
             .row
               - @drafts.each do |project|
                 .columns.large-4.item data-test-id=project.id
-                  a.inner href="#{wizard_path}/#{project.id}"
+                  a.inner href=test_path(id: project.id)
                     .project-status
                       |Draft
                     .my-row
@@ -82,7 +82,10 @@
                             = project.project_name
                           = render "project_progress", percent: 55
                           .remaining-time
-                            = project.remaining_time_string
+                            - if project.expected_tested_at
+                              = project.remaining_time_string
+                            - else
+
 
 
     - if @finished_projects.try(&:any?)

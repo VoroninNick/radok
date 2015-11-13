@@ -24,6 +24,8 @@ window.form_types['payment'] = {
     data = $form.serializeArray()
     payment_type = $(".payment-type.active").attr("value")
     data.push({payment_type: payment_type})
+
+    data
 }
 
 $("body").on "click", ".payment-form .payment-type", ()->
@@ -40,3 +42,22 @@ $("body").on "click", ".payment-form .payment-type", ()->
   else
     $(".show-if-pay-later").hide()
     $(".show-if-not-pay-later").show()
+
+
+$("body").on "show_success", ".payment-form", ()->
+  $form = $(this)
+  $countdown = $form.find(".seconds-countdown")
+  ms = parseInt($countdown.text()) * 1000
+  setInterval(
+    ()->
+      val = parseInt($countdown.text())
+      $countdown.text(val - 1)
+    1000
+  )
+
+  setTimeout(
+    ()->
+      window.location = "/dashboard"
+    ms
+  )
+
