@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  full_name: MyString
+  phone: MyString
+  email: MyString
+  comments: MyString
+  payment_type: MyString
+  billing_address: MyString
+  city: MyString
+  zip_code: MyString
+  country: MyString
+  card_holder_name: MyString
+  card_number: MyString
+  exp_month: MyString
+  exp_year: MyString
+  cvv_number: MyString
+  test_id: 1
+
+two:
+  full_name: MyString
+  phone: MyString
+  email: MyString
+  comments: MyString
+  payment_type: MyString
+  billing_address: MyString
+  city: MyString
+  zip_code: MyString
+  country: MyString
+  card_holder_name: MyString
+  card_number: MyString
+  exp_month: MyString
+  exp_year: MyString
+  cvv_number: MyString
+  test_id: 1

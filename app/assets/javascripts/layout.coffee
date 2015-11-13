@@ -83,13 +83,31 @@ $("body").on "submit", "form:not([no-processing])", (event)->
 
   $form = $(this)
   $form.find(".rf-input").addClass("touched")
-  $form.validateForm()
+  type = $form.attr("type")
+
+  if window.form_types && window.form_types[type]
+    form_type = window.form_types[type]
+  else
+    form_type = {}
+
+  if form_type.validateForm
+    form_type.validateForm.call($form)
+  else
+    $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
   console.log "valid_form", valid_form
   if valid_form
     $form_errors = $form.find(".form-errors")
-    form_data = $form.serializeArray()
-    url = $form.attr("action")
+
+    if form_type.serialize
+      form_data = form_type.serialize.call($form)
+    else
+      form_data = $form.serializeArray()
+
+    if form_type.url
+      url = form_type.url.apply($form)
+    else
+      url = $form.attr("action")
     method = $form.attr("ajax-method") || $form.attr("method") || 'GET'
     $form_content = $form.find(".form-content")
     show_preloader = $form.attr("show-preloader") != undefined

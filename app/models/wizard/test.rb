@@ -15,13 +15,20 @@ class Wizard::Test < ActiveRecord::Base
   belongs_to :product_type, class_name: Wizard::ProductType
   belongs_to :test_type, class_name: Wizard::TestType
 
+
+
+
   has_and_belongs_to_many :project_languages, class_name: Wizard::ProjectLanguage, join_table: :wizard_test_project_languages
   has_and_belongs_to_many :report_languages, class_name: Wizard::ReportLanguage, join_table: :wizard_test_report_languages
+
+  has_many :payment_requests
 
   attr_accessible :project_languages, :project_language_ids
   attr_accessible :report_languages, :report_language_ids
 
   attr_accessible :product_type, :test_type
+  attr_accessible :payment_requests, :payment_request_ids
+
 
 
 

@@ -133,6 +133,14 @@ class WizardController < ApplicationController
     end
   end
 
+  def payment
+    payment_params = params[:payment]
+    @payment = PaymentRequest.create(payment_params)
+    if @payment.save
+      render inline: @payment.to_builder.target!, status: 201
+    end
+  end
+
   def destroy
     test_id = params[:id].to_i
     test = Wizard::Test.delete(test_id)

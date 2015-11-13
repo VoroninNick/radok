@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   scope "wizard" do
     root to: "wizard#new", as: "short_wizard"
-
+    post ":id/payment", to: "wizard#payment", as: :test_payment
     delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
     post ":id/:asset_field_name", to: "wizard#upload_test_case_files"
     delete "/:id", to: "wizard#destroy"

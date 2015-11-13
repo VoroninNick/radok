@@ -27,13 +27,13 @@
         .or
           |or
       .form
-        form.form.payment-form novalidate="" name="payment_form" method="post" resource="payment" show-success="" show-preloader=""
+        form.form.payment-form novalidate="" name="payment_form" method="post" resource="payment" show-success="" show-preloader="" type="payment"
           .form-content
             .inputs
               .row
                 label.columns.large-12
                   |Choose payment method below or schedule a call by "Pay later"
-                label.payment-type ng-model="payment_type" ng-click="payment_type = 'visa_and_master_card'" ng-class="{active: payment_type == 'visa_and_master_card'}"
+                label.payment-type value="visa_and_master_card" ng-model="payment_type" ng-click="payment_type = 'visa_and_master_card'" ng-class="{active: payment_type == 'visa_and_master_card'}"
                   .image-wrap
                     .master-card-svg-wrap ng-include="'/assets/master_card.svg'"
                       = embedded_svg_from_assets "master_card"
@@ -43,7 +43,7 @@
                     |Pay with credit card
                 .payment-type-separator
                   |Or
-                label.payment-type ng-model="payment_type" ng-click="payment_type = 'paypal'" ng-class="{active: payment_type == 'paypal'}"
+                label.payment-type value="paypal" ng-model="payment_type" ng-click="payment_type = 'paypal'" ng-class="{active: payment_type == 'paypal'}"
                   .image-wrap
                     .paypal-card-svg-wrap ng-include="'/assets/paypal.svg'"
                       = embedded_svg_from_assets "paypal"
@@ -51,7 +51,7 @@
                     |Pay with PayPal
                 .payment-type-separator
                   |Or
-                label.payment-type ng-model="payment_type" ng-click="payment_type = 'pay_later'" ng-class="{active: payment_type == 'pay_later'}"
+                label.payment-type.pay-later value="pay_later" ng-model="payment_type" ng-click="payment_type = 'pay_later'" ng-class="{active: payment_type == 'pay_later'}"
                   .image-wrap
                     .pay-later-svg-wrap ng-include="'/assets/rf-icon-time.svg'"
                       = embedded_svg_from_assets "rf-icon-time"
@@ -60,57 +60,57 @@
               .row.field-groups-row
 
                 / pay later
-                .fields-group.hide ng-show="payment_type == 'pay_later'"
+                .fields-group.hide.show-if-pay-later ng-show="payment_type == 'pay_later'"
                   .header
                     |Contact information
                   .columns.large-6.left-column
                     .inputs
                       /rf-input ng-model="payment.full_name" name="full_name" required=""
-                      = rf_input name: "full_name", required: true, label: "Full name"
+                      = rf_input name: "payment[full_name]", required: true, label: "Full name"
                       /rf-input ng-model="payment.phone" name="phone"
-                      = rf_input name: "phone", label: "Phone"
+                      = rf_input name: "payment[phone]", label: "Phone"
                       /rf-input ng-model="payment.email" name="full_name" required="" is-email=""  n-inputs-height="2"
-                      = rf_input name: "email", required: true, type: "email", label: "Email"
+                      = rf_input name: "payment[email]", required: true, type: "email", label: "Email"
                   .columns.large-6.left-column
                     /rf-input type="text" name="comment" ng-model="" label="Your comments..."  n-inputs-height="2"
-                    = rf_input name: "comment", label: "Your comments...", type: "text"
+                    = rf_input name: "payment[comment]", label: "Your comments...", type: "text"
 
 
                 / pay now
-                .columns.large-6.fields-group ng-show="payment_type != 'pay_later'"
+                .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                   .header
                     |Billing info
                   /rf-input ng-model="payment.full_name" name="full_name" required=""
-                  = rf_input name: "full_name", required: true, label: "Full name"
+                  = rf_input name: "payment[full_name]", required: true, label: "Full name"
                   /rf-input ng-model="payment.billing_address" name="billing_address" required=""
-                  = rf_input name: "billing_address", required: true, label: "Billing address"
+                  = rf_input name: "payment[billing_address]", required: true, label: "Billing address"
                   .row
                     .columns.large-6
                       /rf-input ng-model="payment.city" name="city" required=""
-                      = rf_input name: "city", required: true, label: "City", required_message: "City"
+                      = rf_input name: "payment[city]", required: true, label: "City", required_message: "City"
                     .columns.large-6
                       /rf-input ng-model="payment.zip_code" name="zip_code" required=""
-                      = rf_input name: "zip_code", required: true, label: "ZIP code", required_message: "ZIP code"
+                      = rf_input name: "payment[zip_code]", required: true, label: "ZIP code", required_message: "ZIP code"
                   /rf-input ng-model="payment.country" name="country" required=""
-                  = rf_input name: "country", required: true, label: "Country"
+                  = rf_input name: "payment[country]", required: true, label: "Country"
 
 
-                .columns.large-6.fields-group ng-show="payment_type != 'pay_later'"
+                .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                   .header
                     |Credit card info
                   /rf-input ng-model="payment.cardholder_name" name="cardholder_name"
-                  = rf_input name: "cardholder_name", label: "Cardholder name"
+                  = rf_input name: "payment[cardholder_name]", label: "Cardholder name"
                   /rf-input ng-model="payment.card_number" name=""
-                  = rf_input label: "Card number"
+                  = rf_input name: "payment[card_number]", label: "Card number"
                   .row
                     .columns.large-6
                       /rf-input ng-model="payment.card_expire_month" name="card_expire_month" label="Ex month"
-                      = rf_input label: "Exp. month"
+                      = rf_input name: "payment[exp_month]", label: "Exp. month"
                     .columns.large-6
                       /rf-input ng-model="payment.card_expire_year" name="card_expire_year" label="Exp. year"
-                      = rf_input label: "Exp. year"
+                      = rf_input name: "payment[exp_year]", label: "Exp. year"
                   /rf-input ng-model="payment.cvv2_number" name="cvv2_number" label="CVV2/CVC2 number"
-                  = rf_input label: "CVV2/CVC2 number"
+                  = rf_input name: "payment[cvv_number]", label: "CVV2/CVC2 number"
 
 
               /.caps-lock-warning ng-show="isCapsLockOn"
