@@ -1,8 +1,5 @@
 class WizardMailer < ApplicationMailer
   def payment_request_admin_notification(req)
-    #self.default_url_options[:host] = request.host_with_port
-
-
 
     to = FormConfigs::PaymentRequest.first.try(&:emails) || FormConfigs::PaymentRequest.default_emails
     @resource = req
