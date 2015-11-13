@@ -21,6 +21,24 @@ Array::last = ()->
   this[this.length]
 
 
+window.byString = (s, o = window) ->
+  s = s.replace(/\[(\w+)\]/g, '.$1')
+  # convert indexes to properties
+  s = s.replace(/^\./, '')
+  # strip a leading dot
+  a = s.split('.')
+  i = 0
+  n = a.length
+  while i < n
+    k = a[i]
+    if k of o
+      o = o[k]
+    else
+      return
+    ++i
+  o
+
+
 
 window.is_present = (val) ->
   if val == null || val == undefined

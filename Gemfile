@@ -122,3 +122,5 @@ gem 'roadie-rails'
 gem 'html2slim'
 
 gem 'react-rails'
+
+gem 'opal'

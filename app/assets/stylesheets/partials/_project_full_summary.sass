@@ -64,8 +64,13 @@ $wizard-summary-horizontal-padding: ($wizard-step-counter-diameter + rem-calc(30
 
   .platforms
     .platform
-      width: 100%
+      //width: 100%
+      width: percentage(1/3)
       padding: 0
+      float: left
+
+      &:nth-child(3n+1)
+        clear: left
     .platform-name
       +platform-name
     .platform-svg
@@ -180,3 +185,5 @@ $wizard-summary-horizontal-padding: ($wizard-step-counter-diameter + rem-calc(30
     vertical-align: top
     width: 30px
     padding: 0
+
+

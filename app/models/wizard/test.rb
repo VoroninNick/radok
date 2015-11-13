@@ -18,8 +18,8 @@ class Wizard::Test < ActiveRecord::Base
   has_and_belongs_to_many :project_languages, class_name: Wizard::ProjectLanguage, join_table: :wizard_test_project_languages
   has_and_belongs_to_many :report_languages, class_name: Wizard::ReportLanguage, join_table: :wizard_test_report_languages
 
-  attr_accessible :project_languages
-  attr_accessible :report_languages
+  attr_accessible :project_languages, :project_language_ids
+  attr_accessible :report_languages, :report_language_ids
 
   attr_accessible :product_type, :test_type
 
@@ -63,6 +63,14 @@ class Wizard::Test < ActiveRecord::Base
     platform_ids = platforms.map{|k, p| p['id'].to_i }
     platforms_to_remove = Wizard::TestPlatform.where(test_id: self.id).where.not(platform_id: platform_ids)
     platforms_to_remove.delete_all
+  end
+
+  def test_type_name
+    test_type.try(&:name)
+  end
+
+  def product_type_name
+    product_type.try(&:name)
   end
 
   def testers_by_platform
@@ -158,12 +166,12 @@ class Wizard::Test < ActiveRecord::Base
 
   def project_languages
     #[:english, :ukrainian, :russian]
-    self['project_languages'].try{|s| JSON.parse(s)} || []
+    self['project_languages'].try{|s| JSON.parse(s)} || [Wizard::ProjectLanguage.first.name]
   end
 
   def report_languages
     #[:english, :ukrainian]
-    self['report_languages'].try{|s| JSON.parse(s)} || []
+    self['report_languages'].try{|s| JSON.parse(s)} || [Wizard::ReportLanguage.first.name]
   end
 
   def project_access__url
@@ -259,7 +267,57 @@ class Wizard::Test < ActiveRecord::Base
 
   # step_id
 
+  def to_builder
+    properties = %w(active_step_number auth_login auth_password authentication_required comment completed_at created_at current_step_id expected_tested_at exploratory_description hours_per_tester
+id methodology_type percent_completed proceeded_steps_count product_type_id project_name project_url project_version state successful test_type_id test_type_name product_type_name tested_at updated_at user_id)
 
+    Jbuilder.new do |t|
+      # def prop(prop_name)
+      #   test.send(prop_name, send(prop_name))
+      # end
+      #prop :active_step_number
+      t.id id
+      t.user_id user_id
+      t.test_type_id test_type_id
+      t.test_type test_type_name
+      t.product_type_id product_type_id
+      t.product_type product_type_name
+
+      # platforms
+      t.total_testers_count total_testers_count
+
+      # test_info
+
+      t.project_languages project_languages
+      t.report_languages report_languages
+
+      t.auth_login auth_login
+      t.auth_password auth_password
+      t.authentication_required authentication_required
+      t.comment comment
+      t.completed_at completed_at
+      t.created_at created_at
+      t.updated_at updated_at
+      t.current_step_id current_step_id
+
+      t.exploratory_description exploratory_description
+      t.hours_per_tester hours_per_tester
+      t.methodology_type methodology_type
+      t.percent_completed percent_completed
+      t.proceeded_steps_count proceeded_steps_count
+      t.project_name project_name
+      t.project_url project_url
+      t.project_version project_version
+      t.state state
+
+      t.expected_tested_at expected_tested_at
+      t.tested_at tested_at
+      t.successful successful
+
+
+      #test.president president.to_builder
+    end
+  end
 
 end
 

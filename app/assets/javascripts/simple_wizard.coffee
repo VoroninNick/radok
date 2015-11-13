@@ -21,16 +21,25 @@ window.input_types = {
   "string" : {
     dom_value : (input)->
       $(input).find("input").val()
+
+    set_dom_value : (value)->
+      $(this).find("input").val(value)
   }
 
   "url" : {
     dom_value : (input)->
       $(input).find("input").val()
+
+    set_dom_value : (value)->
+      $(this).find("input").val(value)
   }
 
   "text" : {
     dom_value : (input)->
       $(input).find("textarea").val()
+
+    set_dom_value : (value)->
+      $(this).find("textarea").val(value)
   }
 
   "radio-button" : {
@@ -39,11 +48,20 @@ window.input_types = {
       model = $(input).attr("model")
       value = $(".input.#{type}[model='#{model}'] input:checked").val()
       value
+
+    set_dom_value : (value)->
+      type = $(this).attr("as")
+      model = $(this).attr("model")
+      value = $(".input.#{type}[model='#{model}'] input:checked").val()
+      value
   }
 
   "image-radio-button" : {
     dom_value : (input)->
       window.input_types['radio-button'].dom_value(input)
+
+    set_dom_value : (value)->
+      input_types['radio-button'].set_dom_value.call(this, value)
   }
 
   "collection-checkboxes" : {
@@ -52,12 +70,34 @@ window.input_types = {
       $input.find(".option input:checked").map(
         (index, item)->
           return $(item).val()
-      )
+      ).toArray()
+
+    set_dom_value : (value)->
+      $input = $(this)
+      $input.find(".option input:checked").prop("checked", false)
+      for element in value
+        $input.find(".option input").filter("[value='#{element}']").prop("checked", true)
   }
 
   "platforms" : {
     dom_value : (input)->
       project.selected_platforms
+
+    set_dom_value : (value)->
+
+  }
+
+  "tags" : {
+    dom_value : (input)->
+      $input = $(input)
+      val = $input.find("input").val()
+      if !val.length
+        return []
+      else
+        return val.split(",")
+
+    set_dom_value : (value)->
+
   }
 
 }
@@ -68,14 +108,9 @@ window.step_types = {
     completed : false
     checkIsCompleted : ()->
       completed = project.total_price > 0
-      $step = $(this)
-      data_completed = $step.data("completed")
-      if data_completed != completed
-        $step.data('completed', completed)
-        if completed
-          $step.trigger("step_completed")
-        else
-          $step.trigger("step_uncompleted")
+
+      completed
+
 
 
 
@@ -84,17 +119,18 @@ window.step_types = {
 
   'project_info' : {
     checkIsCompleted : ()->
-      true
+      (project.project_name && project.project_name.length) && (project.project_version && project.project_version.length) && (project.project_languages && project.project_languages.length) \
+      && (project.report_languages && project.report_languages.length)
   }
 
   'project_components' : {
     checkIsCompleted : ()->
-      true
+      (project.exploratory_instructions && project.exploratory_instructions.length)
   }
 
   'project_access' : {
     checkIsCompleted : ()->
-      true
+      (project.project_url && project.project_url.length)
   }
 
 
@@ -196,6 +232,7 @@ update_price = ()->
   selected_platform_ids = []
 
   total_price = 0
+  total_testers_count = 0
 
   $visible_platforms.each ->
 
@@ -257,11 +294,21 @@ update_price = ()->
       p.price
   ).sum()
 
+  total_testers_count = selected_platforms.map(
+    (p)->
+      p.testers_count
+  ).sum()
+
+  project.total_testers_count = total_testers_count
+
   project.total_price = total_price
 
   project.test_platform_bindings = test_platform_bindings
 
   project.selected_platforms = selected_platforms
+
+  $platforms_field.trigger("change.project.total_testers_count")
+
 
   $platforms_field.trigger("change.project.test_platform_bindings")
   $platforms_field.trigger("change.project.total_price")
@@ -380,8 +427,27 @@ $("body").on "change keyup dom_change", ".input[model]", (e)->
 
   $step = $(this).closest(".wizard-step")
   step_type = $step.attr("type")
+  console.log "step_type: ", step_type
   if step_types[step_type]
-    step_types[step_type].checkIsCompleted.apply($step)
+    completed = step_types[step_type].checkIsCompleted.apply($step)
+
+    data_completed = $step.data("completed")
+    if data_completed != completed
+      $step.data('completed', completed)
+      if completed
+        $step.addClass("completed")
+        $step.trigger("step_completed")
+
+      else
+        $step.removeClass("completed")
+        $step.trigger("step_uncompleted")
+
+
+  stringified_value = value
+  if Array.isArray(value)
+    stringified_value = value.join(", ")
+
+  $("[data-bind='#{model}']").text(stringified_value)
 
   if wizard_form.is_persisted.apply(wizard_form)
     save_timeout_id = $wizard_controller.data("save_timeout_id")
@@ -395,9 +461,17 @@ $("body").on "change keyup dom_change", ".input[model]", (e)->
 
     $wizard_controller.data("save_timeout_id", save_timeout_id)
 
+  valid_project = $(".configuration-steps .wizard-step:not(.hide):not(.completed)").length == 0
+  $checkout_button = $(".checkout-button, .rf-confirm-button")
+  if valid_project
+    $checkout_button.removeAttr("disabled")
+  else
+    $checkout_button.attr("disabled", "disabled")
 
-
-
+$("body").on "change.project.total_testers_count", ()->
+  model = "project.total_testers_count"
+  value = project.total_testers_count
+  $("[data-bind='#{model}']").text(value)
 
 
 
@@ -426,6 +500,8 @@ scrollToStep = (step_id)->
     $visible_steps.filter(".wizard-step[step=#{project.current_step_id}]")
 
     top = $visible_steps.filter("[step=#{step_id}]").offset().top - $("#header").height() - 50
+
+    console.log "top: ", top
     $("html, body").animate({scrollTop: top})
 
     return true
@@ -521,6 +597,7 @@ $("body").on "change", ".project_product_type", ->
   hide_unavailable_platforms()
 
 
+
 show_full_summary = ()->
   $("#wizard-full-summary").removeClass("hide")
 
@@ -559,7 +636,7 @@ hide_unavailable_platforms = ()->
   )
 
 get_test_type_name = ()->
-  $("[model*=test_type].checked").attr("value").toLowerCase()
+  project.test_type || $("[model*=test_type].checked").attr("value").toLowerCase()
 
 hide_unavailable_steps = ()->
   $step = $(".project-components-step")
@@ -654,7 +731,7 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
 
     $target = $current_step
     if !$target || !$target.length
-      $target ?= $("body")
+      $target = $("body")
 
 
 
@@ -693,7 +770,37 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
 $("body").on "change.project.current_step_id", ()->
   step_id = project.current_step_id
   $step = $(".wizard-step[step=#{step_id}]")
+  $(".wizard-step.active").removeClass("active")
+  $step.addClass("active")
   number = $step.find(".wizard-step-counter").attr("data-number")
+  if !project.next_step_id
+    $(".rf-next-step-button").hide()
+    $(".rf-go-to-summary-button").fadeIn()
+  else
+    $(".rf-go-to-summary-button").hide()
+
+    $(".rf-next-step-button").fadeIn()
+
+
+  #alert((project.current_step_id).toString())
+  if !!project.current_step_id
+    $mini_summary_large_confirm_button = $("#wizard-summary .rf-confirm-button")
+    $mini_summary_large_confirm_button.hide()
+
+$("body").on "click", ".rf-go-to-summary-button", ()->
+  $(".wizard-step.active").removeClass("active")
+  top = $("#wizard-full-summary").offset().top - $("#header").height() - 50
+  $("html, body").animate({scrollTop: top})
+
+  project.prev_step_id = project.current_step_id
+  project.current_step_id = null
+
+  $button = $(this)
+  $button.hide()
+
+  $mini_summary_large_confirm_button = $("#wizard-summary .rf-confirm-button")
+
+  $mini_summary_large_confirm_button.fadeIn()
 
 
 $("body").on "change.project.available_next_step", ()->
@@ -742,12 +849,21 @@ $("body").on "change.project.test_type", ()->
   if project.test_type
     $("#project-product-type").fadeIn()
 
+  $exploratory_instructions_block = $("#wizard-full-summary .exploratory_instructions_block")
+  if wizard_form.is_persisted.apply(wizard_form) && project.methodology_type == "exploratory"
+    $exploratory_instructions_block.fadeIn()
+  else
+    $exploratory_instructions_block.fadeOut()
+
 $("body").on "change.project.product_type", ()->
   if project.product_type
     $(".rf-configure-button").fadeIn()
 
   if wizard_form.is_persisted.apply(wizard_form)
     update_price()
+    $platforms_step = $(".wizard-step[type=platforms]")
+    step_types['platforms'].checkIsCompleted.apply($platforms_step)
+    showStepsProgress()
 
 
 
@@ -856,6 +972,9 @@ $("body").on "click", ".rf-wizard-test-files-upload-button", (e)->
   $input.click()
 
 
+
+
+
 #$("body").on "disappear", ".wizard-step", ()->
 #  $(this)
 
@@ -874,10 +993,34 @@ init_loaded_project = ()->
   str = $("#wizard-controller").attr("test-json")
   if str
     data = JSON.parse(str)
-    $.merge(window.project, data)
+    $.extend(window.project, data)
 
-  change_step(project.current_step_id)
-  scrollToStep(project.current_step_id)
+
+  if wizard_form.is_persisted.apply(wizard_form)
+    hide_unavailable_steps()
+    hide_unavailable_platforms()
+
+    console.log "loaded_project: ", project
+    console.log "test1"
+    change_step(project.current_step_id, null, false)
+    console.log "test2"
+    scrollToStep(project.current_step_id)
+
+    console.log "test3"
+
+    console.log "project", project
+
+    $(".input[model][as]").each ()->
+      $input = $(this)
+      type = $input.attr("as")
+      model = $input.attr("model")
+      value = byString(model);
+      current_value = input_types[type].dom_value($input)
+      if value != current_value
+        input_types[type].set_dom_value.call($input, value)
+        $input.trigger("change")
+        $input.trigger("dom_change")
+        $input.trigger("change.#{model}")
 
 
 
@@ -892,7 +1035,10 @@ $("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
 
 
 # initialize wizard
+window.project ?= {}
 init_loaded_project()
+
+
 
 
 init_string_inputs()
@@ -908,3 +1054,22 @@ init_tags_input()
 show_or_hide_auth_credentials_inputs()
 
 
+
+$(".wizard-step").on "disappear", ()->
+  console.log "disappear"
+  $wizard_full_summary = $("#wizard-full-summary")
+  active_summary = $wizard_full_summary.filter(":appeared").length > 0
+
+  if active_summary
+    project.current_step_id = null
+    project.prev_step_id = project.available_step_ids[project.available_step_ids.length]
+    project.next_step_id = false
+  #else
+
+
+#$(window).on "scroll", ()->
+  #$wizard_full_summary = $("#wizard-full-summary")
+  #active_summary = $wizard_full_summary.filter(":appeared").length > 0
+
+  #if active_summary
+  #  console.log "active_summary"

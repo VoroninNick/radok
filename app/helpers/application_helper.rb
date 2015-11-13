@@ -38,7 +38,7 @@ module ApplicationHelper
 
   def rf_button(**options)
 
-
+    options[:html] ||= {}
     options[:svg] ||= false
     options[:title] ||= false
     options[:subtitle] ||= false

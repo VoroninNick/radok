@@ -47,3 +47,7 @@
 # require models/project
 # require wizard_scripts
 #= require mail_form
+
+
+
+#= require payment_form

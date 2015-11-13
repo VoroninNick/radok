@@ -133,15 +133,22 @@
                   a href="" ng-click="openForgotPasswordPopup()"
                     |Forgot your password?
             .actions
-              .columns.large-5
+              .columns.large-4
                 /rf-button align-content="left" raised="false" title="< Return to Wizard"
                 /= rf_button raised: false, title: "< Return to Wizard"
                 a.return_to_wizard href=""
                   |< Return to Wizard
-              .columns.large-6.text-right
+              .columns.large-8.text-right
                 .price-wrap
+                  .total-cost-label
+                    |Total cost:
+                  .total-price
+                    .currency
+                      |$
+                    span data-bind="total_price"
+                      |0
                 /rf-button align-content="left"  title="Pay" svg="/assets/rf-rocket-up-right.svg"
-                = rf_button title: "Pay", svg: "rf-rocket-up-right"
+                = rf_button title: "Pay", svg: "rf-rocket-up-right", full_width: false, class: "payment-pay-button"
 
 
           .preloader.hide

@@ -110,22 +110,26 @@ class WizardController < ApplicationController
   end
 
   def create
-    test = Wizard::Test.create(test_params)
-    test.user_id = current_user.try(&:id)
-    if test.save
-      render json: test
+    @test = Wizard::Test.create(test_params)
+    @test.user_id = current_user.try(&:id)
+    if @test.save
+      #render json: @test
+      #render "show.json", status: 201
+      render inline: @test.to_builder.target!, status: 201
     end
   end
 
   def update
 
-    test = Wizard::Test.find(params[:id])
+    @test = Wizard::Test.find(params[:id])
 
 
 
-    test.update(test_params)
-    if test.save
-      render json: test
+    @test.update(test_params)
+    if @test.save
+      #render json: test
+      #render "show.json", status: 200
+      render inline: @test.to_builder.target!, status: 200
     end
   end
 
@@ -222,6 +226,8 @@ class WizardController < ApplicationController
     test = params[:test]
     test[:test_type_id] = Wizard::TestType.find_by_name(test.delete(:test_type)).try(&:id)
     test[:product_type_id] = Wizard::TestType.find_by_name(test.delete(:product_type)).try(&:id)
+    test[:project_language_ids] = Wizard::ProjectLanguage.where(name: test.delete(:project_languages)).map(&:id)
+    test[:report_language_ids] = Wizard::ReportLanguage.where(name: test.delete(:report_languages)).map(&:id)
 
 
     test[:testers_by_platform] = test.delete(:platforms)

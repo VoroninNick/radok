@@ -11,26 +11,26 @@
         .property
           .property-label
             |Project name
-          .property-value
+          .property-value data-bind="project.project_name"
             = project.project_name
 
         .property
           .property-label
             |Version
-          .property-value
+          .property-value data-bind="project.project_version"
             = project.project_version
 
       .columns.large-6
         .property
           .property-label
             |Type of test
-          .property-value
+          .property-value data-bind="project.test_type"
             = project.test_type.try &:name
 
         .property
           .property-label
             |Type of product
-          .property-value
+          .property-value data-bind="project.product_type"
             = project.product_type.try &:name
       .columns.large-12.large-indent
         .row
@@ -38,7 +38,7 @@
             .property-label
               |Your product will be tested on the following platforms:
 
-            .columns.large-4.platforms
+            .clearfix.platforms
               - project.platforms.each do |platform_key, platform|
               /- if platform[:testers_count] > 0
                 .platform
@@ -59,8 +59,9 @@
           .svg-wrap
             = embedded_svg_from_assets("user")
           .text
-            = project.total_testers_count
-            |&nbsp; testers
+            span data-bind="project.total_testers_count"
+              = project.total_testers_count
+            |&thinsp; testers
           br
           .svg-wrap
             = embedded_svg_from_assets("clock")
@@ -75,21 +76,21 @@
       .columns.large-6
         .property-label
           |Your product is in:
-        .property-value
+        .property-value data-bind="project.project_languages"
           = project.project_languages.join(", ")
 
       .columns.large-6
         .property-label
           |Bugs will be reported in:
-        .property-value
+        .property-value data-bind="project.report_languages"
           = project.report_languages.join(", ")
       .columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
         .property-label
           |Here is project url:
-        .property-value
+        .property-value data-bind="project.project_url"
           a href=project.project_access__url
             = project.project_access__url
-      .columns.large-12.large-indent ng-show="wizard.comment && wizard.comment.length"
+      .columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
         .property-label
           |You've provided the following instructions:
         .property-input-value
@@ -107,7 +108,7 @@
             br
             |cost
       .columns.large-6
-        = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false)
+        = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment" })
       .columns.large-6.left
         .promo-code-field
           label for="promo_code"

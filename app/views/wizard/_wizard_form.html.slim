@@ -201,7 +201,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
           .help
             |This is unscripted testing. Our testers use your product like any normal user would.
 
-        .input.text.project_exploratory_instructions_input
+        .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions"
           label.placeholder for="project_exploratory_instructions"
             |Please provide testing instructions for the testers here...
           textarea model="project.exploratory_instructions" id="project_exploratory_instructions"
@@ -251,7 +251,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         /.input.files as="files" model="project.test_files"
 
         .columns.large-7
-          .input.url model="project.project_url"
+          .input.url model="project.project_url" as="url"
             input placeholder="http://domain.com"
         .columns.large-1
           span.or

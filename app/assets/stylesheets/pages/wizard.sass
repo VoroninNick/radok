@@ -222,7 +222,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 
 
 
-= wizard-total-cost-currency
+= wizard-total-cost-label
   +font-14
   line-height: 32px
   color: $white-color
@@ -232,6 +232,24 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
   color: $yellow-orange-color
   line-height: 12px
 
+= wizard-total-cost-price-wrap
+  display: inline-block
+  width: rem-calc(130)
+  height: rem-calc(70)
+  background: $light-black-color
+  overflow: hidden
+  padding: 0 rem-calc(16)
+  float: left
+
+= wizard-total-cost-price-wrap-inner
+  display: inline-block
+  position: relative
+  vertical-align: middle
+
+= wizard-total-cost-currency
+  font-size: 1.2rem
+  display: inline
+  vertical-align: super
 #wizard-summary-fixed
   position: relative
 
@@ -257,28 +275,38 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
   .footer
     padding-top: 1px
     .price-wrap
-      display: inline-block
-      width: rem-calc(130)
-      height: rem-calc(70)
-      background: $light-black-color
-      overflow: hidden
-      padding: 0 rem-calc(16)
-      float: left
+      +wizard-total-cost-price-wrap
       .inner
-        display: inline-block
-        position: relative
-        vertical-align: middle
+        +wizard-total-cost-price-wrap-inner
       .currency
-        font-size: 1.2rem
-        display: inline
-        vertical-align: super
+        +wizard-total-cost-currency
 
     .total-cost-label
-      +wizard-total-cost-currency
+      +wizard-total-cost-label
 
     .total-price
       +wizard-total-cost-total-price
 
+
+.popup
+  &.payment
+    .actions
+      .price-wrap
+        +wizard-total-cost-price-wrap
+        text-align: left
+        padding: 0 16px
+        width: 50%
+        .inner
+          +wizard-total-cost-price-wrap-inner
+        .currency
+          +wizard-total-cost-currency
+        .total-cost-label
+          +wizard-total-cost-label
+          color: $white-color
+          font-weight: 400
+        .total-price
+          +wizard-total-cost-total-price
+          font-weight: 400
 
 .wizard
   &.step-disabled-unless-active-or-proceeded
@@ -364,14 +392,16 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
           background-color: rgba($fire-orange-color, 0.6)
 
 
-
+form[for=project]
+  padding: #{$wizard-step-vertical-indent * 2} 0 0 0
 
 .wizard-step
   position: relative
   //padding: $wizard-step-vertical-indent 0
-  margin: $wizard-step-vertical-indent 0
+  //margin: $wizard-step-vertical-indent 0
   border: none
-  padding: 0
+  //padding: 0
+  padding: 0 0 #{$wizard-step-vertical-indent * 2} 0
   //&.completed:not(.review)
     .wizard-step-content
       opacity: 0.3
@@ -1157,7 +1187,7 @@ body
         +font-21
         //line-height: 70px
 
-  &.rf-next-step-button
+  &.rf-next-step-button, &.rf-go-to-summary-button, &.rf-confirm-button
     .svg-wrap
       margin-left: 0
       margin-right: 14px
@@ -1255,8 +1285,9 @@ div.tagsinput span.tag a
   div.tagsinput
     max-width: 100%
 
-.rf-next-step-button.rf-button-without-subtitle
-  line-height: 40px
+.rf-next-step-button, .rf-go-to-summary-button, .rf-confirm-button
+  &.rf-button-without-subtitle
+    line-height: 40px
 
 comment-with-price
   label.comment-label, textarea
@@ -1466,3 +1497,32 @@ comment-with-price
 
     .rf-configure-button
       display: none
+
+.rf-go-to-summary-button, #wizard-summary .rf-confirm-button
+  display: none
+
+  svg
+    width: 25px !important
+    top: 3px !important
+
+    line.my-color
+      stroke: white
+    .stroke-my-color
+      stroke: white
+
+
+.wizard-step
+  &.active
+    .wizard-step-line
+      &:before
+        bottom: 0
+
+    .wizard-step-counter
+      border-color: $sky-blue-color
+
+      &:before
+        background-color: $fire-orange-color
+
+
+
+
