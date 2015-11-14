@@ -4,6 +4,14 @@ String.prototype.in = (args)->
   s = this.toString()
   args.indexOf(s) >= 0
 
+window.diff = (obj1, obj2)->
+  result = {}
+  $.each obj2, (key, value) ->
+    if !obj1.hasOwnProperty(key) or obj1[key] != obj2[key]
+      result[key] = value
+
+  result
+
 String::camelize = () ->
   res = this
   .replace /[\s|_|-](.)/g, ($1) -> $1.toUpperCase()

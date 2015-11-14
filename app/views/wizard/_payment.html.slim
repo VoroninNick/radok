@@ -33,7 +33,7 @@
               .row
                 label.columns.large-12
                   |Choose payment method below or schedule a call by "Pay later"
-                label.payment-type value="visa_and_master_card" ng-model="payment_type" ng-click="payment_type = 'visa_and_master_card'" ng-class="{active: payment_type == 'visa_and_master_card'}"
+                label.payment-type class="#{'active' if PaymentRequest.default_payment_type == 'visa_and_master_card'}" value="visa_and_master_card" ng-model="payment_type" ng-click="payment_type = 'visa_and_master_card'" ng-class="{active: payment_type == 'visa_and_master_card'}"
                   .image-wrap
                     .master-card-svg-wrap ng-include="'/assets/master_card.svg'"
                       = embedded_svg_from_assets "master_card"

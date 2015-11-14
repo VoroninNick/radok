@@ -65,7 +65,7 @@
           br
           .svg-wrap
             = embedded_svg_from_assets("clock")
-          .text
+          .text data-bind="project.hours_per_tester"
             = project.ps__hours
             |&nbsp; hours each
 

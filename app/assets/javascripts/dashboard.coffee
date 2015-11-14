@@ -148,7 +148,10 @@ $("body").on "click", ".delete-draft-button", (event)->
     $button = $(this)
     $draft = $button.closest(".item")
     test_id = parseInt($draft.attr("data-test-id"))
-    $draft.remove()
+    $draft.fadeOut(
+      complete: ()->
+        $draft.remove()
+    )
     $.ajax(
       url: "#{wizard_root_path}/#{test_id}"
       type: "delete"

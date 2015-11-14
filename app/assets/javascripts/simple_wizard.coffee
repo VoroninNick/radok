@@ -140,7 +140,17 @@ window.step_types = {
 
 window.wizard_form = {
   update_model_value : (value)->
+    difference = diff(window.project, value)
     $.extend(window.project, value)
+    $body = $("body")
+    model_name = "project"
+    for k,v of difference
+      full_model_key = "#{model_name}.#{k}"
+      $body.trigger("change.#{full_model_key}")
+    $body.trigger("change.#{model_name}")
+
+
+
   set_model_value : (value)->
     window.project = value
 
@@ -407,13 +417,36 @@ $("body").on "change.project.test_platform_bindings", (e)->
   $full_summary.find(".platforms").html(platforms_html)
 
 
-$("body").on "change keyup dom_change", ".input[model]", (e)->
+#$("body").on "change", "input[model]", ()->
+#  $input = $(this)
+#  model = $(this).attr("model")
+#  value = null
+#  type = $(this).attr("type")
+#  if type.in(w("text url tel")) || type.in(w("radio"))
+#    value = $input.val()
+#  else
+#
+#  assign_model_key(model, value)
+#  notifyProjectHasUnsavedChanges()
+#  $input.trigger("change.#{model}")
+
+
+$("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   #console.log "e : #{e.type}", e
   $input = $(this)
   model = $input.attr("model")
 
-  input_type = $input.attr("as")
-  value = input_types[input_type].dom_value($input)
+  input_type = $input.attr("as") || $input.attr("type")
+  input_data_type = $input.attr("data-type")
+
+
+  if input_type && input_types[input_type]
+    value = input_types[input_type].dom_value($input)
+  else
+    value = $input.val()
+
+  if input_data_type == "integer"
+    value = parseInt(value)
   assign_model_key(model, value)
 
   #console.log "input change"
@@ -427,6 +460,7 @@ $("body").on "change keyup dom_change", ".input[model]", (e)->
 
   $step = $(this).closest(".wizard-step")
   step_type = $step.attr("type")
+
   console.log "step_type: ", step_type
   if step_types[step_type]
     completed = step_types[step_type].checkIsCompleted.apply($step)
@@ -441,6 +475,9 @@ $("body").on "change keyup dom_change", ".input[model]", (e)->
       else
         $step.removeClass("completed")
         $step.trigger("step_uncompleted")
+
+
+
 
 
   stringified_value = value
@@ -777,6 +814,9 @@ $("body").on "change.project.current_step_id", ()->
   if !!project.current_step_id
     $mini_summary_large_confirm_button = $("#wizard-summary .rf-confirm-button")
     $mini_summary_large_confirm_button.hide()
+  else
+    $(".rf-go-to-summary-button").hide()
+
 
 $("body").on "click", ".rf-go-to-summary-button", ()->
   $(".wizard-step.active").removeClass("active")
@@ -1057,6 +1097,9 @@ init_tags_input()
 show_or_hide_auth_credentials_inputs()
 
 
+$(".hour").filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
+
+
 
 $(".wizard-step").on "disappear", ()->
   console.log "disappear"
@@ -1076,3 +1119,11 @@ $(".wizard-step").on "disappear", ()->
 
   #if active_summary
   #  console.log "active_summary"
+
+
+
+$("body").on "change.project.hours_per_tester", ()->
+  $hour_labels = $(".hour")
+  $hour_labels.filter(".selected").removeClass("selected")
+  $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
+  console.log "project.hours_per_tester", project.hours_per_tester

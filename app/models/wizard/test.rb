@@ -154,7 +154,7 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def completed?
-    true
+    completed_at.present?
   end
 
 

@@ -4,6 +4,10 @@ class PaymentRequest < ActiveRecord::Base
   belongs_to :test, class: Wizard::Test
   attr_accessible :test
 
+  def self.default_payment_type
+    "visa_and_master_card"
+  end
+
   def to_builder
     Jbuilder.new do |t|
       t.full_name full_name
