@@ -670,7 +670,7 @@ hide_unavailable_steps = ()->
   $step = $(".project-components-step")
   test_type_name = get_test_type_name()
   $next_step = $step.next()
-  if test_type_name == 'functional' || test_type_name == 'localization'
+  if test_type_name.toLowerCase() == 'functional' || test_type_name.toLowerCase() == 'localization'
     $step.removeClass("hide")
     $next_step.find(".wizard-step-counter").attr("data-number", 4)
     project.last_step_index = 3
