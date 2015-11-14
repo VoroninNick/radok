@@ -100,7 +100,7 @@ gem 'omniauth-twitter'
 
 gem 'quiet_assets'
 
-local_gem "attachable"
+local_gem "attachable", branch: "rf"
 
 gem 'rails_admin_nestable'
 
