@@ -14,8 +14,8 @@ Rails.application.routes.draw do
     root to: "wizard#new", as: "short_wizard"
 
     post ":id/payment", to: "wizard#payment", as: :test_payment
-    delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
-    post ":id/:asset_field_name", to: "wizard#upload_test_case_files"
+    delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_files"
+    post ":id/:asset_field_name", to: "wizard#upload_files"
     delete "/:id", to: "wizard#destroy"
     get "/:id", to: "wizard#edit_or_show", as: :test
     put "/:id", to: "wizard#update"

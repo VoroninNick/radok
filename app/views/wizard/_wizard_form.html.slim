@@ -228,9 +228,11 @@ form for="project" url=short_wizard_path method="post" json="{}"
           .help
             |You provide a specific list of steps that testers must execute.
 
-        .input.files.test-case-files-input model="project.test_case_files"
+        /.input.files.test-case-files-input model="project.test_case_files"
+        div
+          input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
           = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
-
+          .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
 
 
 
@@ -271,10 +273,10 @@ form for="project" url=short_wizard_path method="post" json="{}"
           span.or
             |or
         .columns.large-4
-          input#test_files.file-upload-input list-selector=".test_files-list" model="project.test_files" data-attachment-name="project.test_files" type="file" multiple=""
+          input#test_files.file-upload-input list-selector=".test_files-list" model="project.test_files" data-attachment-name="test_files" type="file" multiple="" push="false" trigger-changes="false"
           = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-wizard-test-files-upload-button", svg: "upload", size: "medium"
         .columns.large-12
-          .file-upload-files-list.test_files-list model="project.test_files"
+          .file-upload-files-list.test_files-list model="project.test_files" data-attachment-name="test_files"
 
 
         .auth-data

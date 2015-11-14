@@ -1267,7 +1267,9 @@ body
 input.file-upload-input
   display: none
 
-.test_case_files-list
+.test_case_files-list, .file-upload-files-list
+  .file
+    position: relative
   .delete
     &:before
       content: "x"
@@ -1275,6 +1277,23 @@ input.file-upload-input
       display: inline-block
       margin-left: 5px
       cursor: pointer
+
+  .preloader
+    background: url('/assets/preloader.gif') no-repeat
+    background-size: cover
+    display: inline-block
+    padding: 0
+    width: 16px
+    height: 16px
+
+
+    position: relative
+    left: auto
+    top: auto
+    transform: none
+
+  .file-name
+    display: inline-block
 
 div.tagsinput span.tag a
   color: $fire-orange-color

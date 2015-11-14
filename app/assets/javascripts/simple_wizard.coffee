@@ -180,9 +180,15 @@ window.wizard_form = {
     !!@get_model().id
   push : ()->
     self = wizard_form
-    data = {test: project}
+    project_data_for_push = clone(project, {
+      except_keys: w("test_files test_case_files")
+    })
+
+    data = {test: project_data_for_push}
+
     $("form[for]").trigger("before_push")
     res = do_push = true
+
     if res
 
       if self.is_persisted()
@@ -202,14 +208,14 @@ window.wizard_form = {
         data: data
         dataType: 'json'
         success: (response_data)->
-          console.log("success", arguments)
+          #console.log("success", arguments)
           #self.trigger("after_push")
           self.jquery_form.trigger("after_push")
 
           self.update_model_value(response_data)
           self.jquery_form.trigger("after_#{action}")
       }
-      console.log "opts", ajax_options
+      #console.log "opts", ajax_options
       $.ajax(
         ajax_options
       )
@@ -230,9 +236,9 @@ $("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-
 
 $("body").on "change code-change keyup keypress", ".wizard [as=platforms] .option-count input", (e)->
   if e.type == "keypress"
-    console.log "e.which", e.which
+    #console.log "e.which", e.which
     if !( (e.which >= 48 && e.which <= 57) || e.which == 8)
-      console.log "preventDefault for keypress", e.which
+      #console.log "preventDefault for keypress", e.which
       #e.preventDefault()
       return false
 
@@ -468,7 +474,10 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   #console.log "input change"
 
   project.saved = false
-  notifyProjectHasUnsavedChanges()
+
+  disabled_trigger_changes = $input.attr("trigger-changes") == "false"
+  if !disabled_trigger_changes
+    notifyProjectHasUnsavedChanges()
 
   $input.trigger("change.#{model}")
 
@@ -477,7 +486,7 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   $step = $(this).closest(".wizard-step")
   step_type = $step.attr("type")
 
-  console.log "step_type: ", step_type
+  #console.log "step_type: ", step_type
   if step_types[step_type]
     completed = step_types[step_type].checkIsCompleted.apply($step)
 
@@ -502,7 +511,10 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
 
   $("[data-bind='#{model}']").text(stringified_value)
 
-  if wizard_form.is_persisted.apply(wizard_form)
+  disabled_push = $input.attr("push") == 'false'
+
+
+  if !disabled_push && wizard_form.is_persisted.apply(wizard_form)
     save_timeout_id = $wizard_controller.data("save_timeout_id")
     if save_timeout_id
       clearTimeout(save_timeout_id)
@@ -556,7 +568,7 @@ scrollToStep = (step_id)->
 
     top = $visible_steps.filter("[step=#{step_id}]").offset().top - $("#header").height() - 50
 
-    console.log "top: ", top
+    #console.log "top: ", top
     $("html, body").animate({scrollTop: top})
 
     return true
@@ -946,9 +958,11 @@ show_or_hide_exploratory_instructions_input = ()->
   $file_input = $(".test-case-files-input")
 
   if testing_type == 'exploratory'
+    console.log "testing_type(exploratory)", testing_type
     $input.removeClass("hide")
     $file_input.addClass("hide")
   else
+    console.log "testing_type(not-exploratory)", testing_type
     $input.addClass("hide")
     $file_input.removeClass("hide")
 
@@ -976,6 +990,7 @@ $("body").on "change", "input.file-upload-input", ->
 
   list_selector = $input.attr("list-selector")
   $list = $(list_selector)
+
   attachment_name = $input.attr("data-attachment-name")
 
 
@@ -985,7 +1000,7 @@ $("body").on "change", "input.file-upload-input", ->
   new_files_saved_count = 0
   for file in input.files
 
-    $list.append("<div class='file' data-file-name='#{file.name}'>#{file.name}<span class='delete'></span></div>")
+    $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{file.name}'><span class='file-name'>#{file.name}</span><span class='preloader'></span><span class='delete'></span></div>")
     f = {name: file.name}
     reader = new FileReader()
     reader.onload = ->
@@ -1000,11 +1015,17 @@ $("body").on "change", "input.file-upload-input", ->
 
     reader.readAsDataURL(file);
 
-  $input.simpleUpload("#{wizard_root_path}/#{project.id}/#{attachment_name}", {
+
+  data_start_temp_id = ($list.children().last().attr("data-temp-id")  || 0) + 1
+  $input.simpleUpload("#{wizard_root_path}/#{project.id}/#{attachment_name}?data-temp-id-start=#{data_start_temp_id}", {
+
     success: (data)->
       file_name = data.data_file_name
-      $file = $list.find(".file:not(.loaded)").filter("[data-file-name='#{file_name}']")
+      $file = $list.children().filter(":not(.loaded)").filter("[data-file-name='#{file_name}']")
       $file.attr("data-id", data.id)
+      $file.addClass("loaded")
+      $file.find("span.preloader").hide()
+
   })
 
 
@@ -1018,7 +1039,7 @@ $("body").on "click", ".file-upload-files-list .delete", ->
   $list = $(".file-upload-files-list")
   attachment_name = $list.attr("data-attachment-name")
   $.ajax({
-    url: "#{wizard_root_path}/#{wizard.id}/#{attachment_name}/#{asset_id}"
+    url: "#{wizard_root_path}/#{project.id}/#{attachment_name}/#{asset_id}"
     type: "delete"
     dataType: "json"
 
@@ -1077,15 +1098,15 @@ init_loaded_project = ()->
   if wizard_form.is_persisted.apply(wizard_form)
     init_configure_mode()
 
-    console.log "loaded_project: ", project
-    console.log "test1"
+    #console.log "loaded_project: ", project
+    #console.log "test1"
     change_step(project.current_step_id, null, false)
-    console.log "test2"
+    #console.log "test2"
     scrollToStep(project.current_step_id)
 
-    console.log "test3"
+    #console.log "test3"
 
-    console.log "project", project
+    #console.log "project", project
 
     $(".input[model][as]").each ()->
       $input = $(this)
@@ -1136,7 +1157,7 @@ $(".hour").filter("[data-hours=#{project.hours_per_tester}]").addClass("selected
 
 
 $(".wizard-step").on "disappear", ()->
-  console.log "disappear"
+  #console.log "disappear"
   $wizard_full_summary = $("#wizard-full-summary")
   active_summary = $wizard_full_summary.filter(":appeared").length > 0
 
@@ -1160,4 +1181,4 @@ $("body").on "change.project.hours_per_tester", ()->
   $hour_labels = $(".hour")
   $hour_labels.filter(".selected").removeClass("selected")
   $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
-  console.log "project.hours_per_tester", project.hours_per_tester
+  #console.log "project.hours_per_tester", project.hours_per_tester

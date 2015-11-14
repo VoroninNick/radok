@@ -155,7 +155,7 @@ class WizardController < ApplicationController
     end
   end
 
-  def upload_test_case_files
+  def upload_files
     f = params[:file]
     test = Wizard::Test.find(params[:id])
     asset_field_name = params[:asset_field_name]
@@ -164,7 +164,7 @@ class WizardController < ApplicationController
     render status: 201, json: db_file
   end
 
-  def delete_test_case_files
+  def delete_files
     asset_id = params[:asset_id].to_i
     Attachable::Asset.delete(asset_id)
     render json: {}, status: 200

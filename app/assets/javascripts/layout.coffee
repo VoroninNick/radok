@@ -1,7 +1,8 @@
 old_model_binding = false
 
 
-window.wizard_root_path = "/ordering-crowdsourced-testing"
+#window.wizard_root_path = "/ordering-crowdsourced-testing"
+window.wizard_root_path = "/wizard"
 $header_user = $("#header-user")
 window.logged_in = $("html").data().loggedIn == true
 $header_user_dropdown = $header_user.find(".dropdown")
@@ -95,7 +96,7 @@ $("body").on "submit", "form:not([no-processing])", (event)->
   else
     $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
-  console.log "valid_form", valid_form
+  #console.log "valid_form", valid_form
   if valid_form
     $form_errors = $form.find(".form-errors")
 
@@ -439,6 +440,7 @@ $("body").on "change", "#input-file-uploader", ->
   $no_image = $photo_image_wrap.find(".no-image")
   $no_image.addClass("hide")
 
+
   input = this
   file = input.files[0]
   imageType = /image.*/
@@ -522,7 +524,7 @@ $("body").on "click", ".rf-input[type=tags] span.tag a", ()->
 
 if old_model_binding
   $("body").on "keyup change", "[model]", (e)->
-    console.log "e", e.type
+    #console.log "e", e.type
     $rf_input = $(this)
     model = $rf_input.attr("model")
     model_keys = model.split(".")
@@ -534,7 +536,7 @@ if old_model_binding
       target[key] ?= {}
       target = target[key]
     target[last_key] = $(this).val()
-    console.log "target", target
+    #console.log "target", target
 
 $.read_models = ()->
   $("[model]").each ->

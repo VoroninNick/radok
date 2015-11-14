@@ -22,6 +22,17 @@ String::camelize = () ->
 
   res.replace(/^./, res[0].toUpperCase())
 
+
+window.clone = (obj, options = {})->
+  options.except_keys ?= []
+
+  res = $.extend({}, obj)
+  if options.except_keys.length
+    for k in options.except_keys
+      delete res[k]
+
+  res
+
 String::classify = ()->
   this.camelize()
 

@@ -77,11 +77,11 @@ $("[parallax-banner]").each ->
   parallax = new Parallax(this)
 
 activate_carousel_controls = ()->
-  console.log "move", arguments
+  #console.log "move", arguments
   index = $("#home-feedbacks .owl-carousel").data().owlCarousel.currentItem
   $bullets = $("#home-slider-bullets li")
   $bullets.removeClass("active")
-  console.log "banner", index
+  #console.log "banner", index
   $bullets.eq(index).addClass("active")
 
 $("#home-banner #home-slider-carousel").owlCarousel(
