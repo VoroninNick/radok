@@ -888,7 +888,7 @@ init_string_inputs = ()->
       $input.removeClass("not-empty")
 
 init_tags_input = ()->
-  $('.input[model="project.tags"] input').tagsInput({
+  $('.input[model="project.main_components"] input').tagsInput({
     defaultText: ""
     onChange: ()->
       $input = $(this).closest(".input")
@@ -901,8 +901,9 @@ $("body").on "click", ".input.image-radio-button", ()->
 
 
 
-
-
+$("body").on "click", ".input.tags label", ()->
+  $input = $(this).closest(".input")
+  $input.find("div.tagsinput").trigger("click")
 
 
 

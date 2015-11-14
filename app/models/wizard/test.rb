@@ -28,6 +28,9 @@ class Wizard::Test < ActiveRecord::Base
 
   attr_accessible :product_type, :test_type
   attr_accessible :payment_requests, :payment_request_ids
+  attr_accessible :main_components
+
+
 
 
 
@@ -272,7 +275,13 @@ class Wizard::Test < ActiveRecord::Base
     end
   end
 
+  def main_components
+    self['main_components'].try{|s| s.split(",") } || []
+  end
 
+  def main_components=(val)
+    self['main_components'] = val.try{|val| val.join(",")  }
+  end
 
   # step_id
 
@@ -303,10 +312,13 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
 
       t.project_languages project_languages
       t.report_languages report_languages
+      t.project_info_comment project_info_comment
 
       t.auth_login auth_login
       t.auth_password auth_password
       t.authentication_required authentication_required
+      t.project_access_comment project_access_comment
+
       t.comment comment
       t.completed_at completed_at
       t.created_at created_at
@@ -316,6 +328,7 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
       t.exploratory_description exploratory_description
       t.hours_per_tester hours_per_tester
       t.methodology_type methodology_type
+      t.main_components main_components
       t.percent_completed percent_completed
       t.proceeded_steps_count proceeded_steps_count
       t.project_name project_name
