@@ -228,7 +228,23 @@ $("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-
 
 
 
-$("body").on "change code-change", ".wizard [as=platforms] .option-count input", ()->
+$("body").on "change code-change keyup keypress", ".wizard [as=platforms] .option-count input", (e)->
+  if e.type == "keypress"
+    console.log "e.which", e.which
+    if !( (e.which >= 48 && e.which <= 57) || e.which == 8)
+      console.log "preventDefault for keypress", e.which
+      #e.preventDefault()
+      return false
+
+  $input = $(this)
+  original_value = $input.val()
+  value = original_value
+  if value == ""
+    value = "0"
+  if value.length > 0 && value[0] == '0'
+    value = value.slice(1, value.length)
+  if value != original_value
+    $input.val(value)
   update_price()
 
 
@@ -497,13 +513,15 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
     )
 
     $wizard_controller.data("save_timeout_id", save_timeout_id)
+  enable_checkout_button_if_project_valid()
+#  valid_project = $(".configuration-steps .wizard-step:not(.hide):not(.completed)").length == 0
+#  $checkout_button = $(".checkout-button, .rf-confirm-button")
+#  if valid_project
+#    $checkout_button.removeAttr("disabled")
+#  else
+#    $checkout_button.attr("disabled", "disabled")
 
-  valid_project = $(".configuration-steps .wizard-step:not(.hide):not(.completed)").length == 0
-  $checkout_button = $(".checkout-button, .rf-confirm-button")
-  if valid_project
-    $checkout_button.removeAttr("disabled")
-  else
-    $checkout_button.attr("disabled", "disabled")
+
 
 $("body").on "change.project.total_testers_count", ()->
   model = "project.total_testers_count"
@@ -880,9 +898,12 @@ $("body").on "change.project.test_type", ()->
   if project.test_type
     $("#project-product-type").fadeIn()
 
+  enable_checkout_button_if_project_valid()
+
   $exploratory_instructions_block = $("#wizard-full-summary .exploratory_instructions_block")
   if wizard_form.is_persisted.apply(wizard_form) && project.methodology_type == "exploratory"
     $exploratory_instructions_block.fadeIn()
+
   else
     $exploratory_instructions_block.fadeOut()
 
@@ -897,6 +918,19 @@ $("body").on "change.project.product_type", ()->
     showStepsProgress()
 
 
+    #wizard_form.update_model_value({valid: valid_project})
+    #origginal_valid = !!project.valid
+    #if origginal_valid
+
+
+#$("body").on "change.project.valid", ()->
+enable_checkout_button_if_project_valid = ()->
+  valid_project = wizard_form.is_persisted.apply(wizard_form) && $(".configuration-steps .wizard-step:not(.hide):not(.completed)").length == 0
+  $checkout_button = $(".checkout-button, .rf-confirm-button")
+  if valid_project
+    $checkout_button.removeAttr("disabled")
+  else
+    $checkout_button.attr("disabled", "disabled")
 
 $("body").on "change.project.authentication_required", ()->
   show_or_hide_auth_credentials_inputs()

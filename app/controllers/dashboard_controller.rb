@@ -1,10 +1,13 @@
 class DashboardController < ApplicationController
+  before_action :check_user
+
   def index
-    @drafts = Wizard::Test.drafts
+    user_tests = current_user.tests
+    @drafts = user_tests.drafts
 
-    @in_progress_tests = Wizard::Test.processing_projects
+    @in_progress_tests = user_tests.processing_projects
 
-    @finished_projects = Wizard::Test.tested_projects
+    @finished_projects = user_tests.tested_projects
 
     a = @finished_projects.to_a
 
@@ -19,5 +22,11 @@ class DashboardController < ApplicationController
 
   def project
     @project = Wizard::Test.last
+  end
+
+  def check_user
+    if !current_user
+      redirect_to new_user_session_path
+    end
   end
 end
