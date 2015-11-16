@@ -6,22 +6,7 @@
 .wizard-controller ng-controller="Wizard"
 form for="project" url=short_wizard_path method="post" json="{}"
   fieldset.wizard-step step="1"
-    #project-test-type
-      .columns.large-12
-        .label.text-center
-          |What type of tests are you looking for?
 
-      - @test_types.each_with_index do |test_type, index|
-        - checked = @project.test_type.try{|t| t.id == test_type.id } || false
-        - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.test_type"; name = "project_test_type"; input_id = "project_test_type_#{index + 1}"
-        .columns.large-4.text-center
-          .input.image-radio-button class="project_test_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
-            input id=input_id value=value name=name type="radio" checked=("checked" if checked)
-            label.image-label for=input_id
-              img src=image
-            label.label for=input_id
-              = label
-      .clearfix
 
     #project-product-type
       .columns.large-12
@@ -39,6 +24,24 @@ form for="project" url=short_wizard_path method="post" json="{}"
             label.label for=input_id
               = label
 
+      .clearfix
+
+
+    #project-test-type
+      .columns.large-12
+        .label.text-center
+          |What type of tests are you looking for?
+
+      - @test_types.each_with_index do |test_type, index|
+        - checked = @project.test_type.try { |t| t.id == test_type.id } || false
+        - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.test_type"; name = "project_test_type"; input_id = "project_test_type_#{index + 1}"
+        .columns.large-4.text-center
+          .input.image-radio-button class="project_test_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
+            input id=input_id value=value name=name type="radio" checked=("checked" if checked)
+            label.image-label for=input_id
+              img src=image
+            label.label for=input_id
+              = label
       .clearfix
 
 

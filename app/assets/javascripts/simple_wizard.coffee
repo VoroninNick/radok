@@ -662,6 +662,9 @@ $("body").on "change", ".project_test_type", ()->
     hide_unavailable_steps()
     showStepsProgress()
 
+
+
+
 $("body").on "change", ".project_product_type", ->
   hide_unavailable_platforms()
 
@@ -918,9 +921,16 @@ $("body").on "click", ".input.tags label", ()->
 
 
 
+$("body").on "change.project.product_type", ()->
+  if project.product_type
+    $("#project-test-type").fadeIn()
+
+
+
 $("body").on "change.project.test_type", ()->
   if project.test_type
     $("#project-product-type").fadeIn()
+    $(".rf-configure-button").fadeIn()
 
   enable_checkout_button_if_project_valid()
 
@@ -932,8 +942,8 @@ $("body").on "change.project.test_type", ()->
     $exploratory_instructions_block.fadeOut()
 
 $("body").on "change.project.product_type", ()->
-  if project.product_type
-    $(".rf-configure-button").fadeIn()
+  #if project.product_type
+  #  $(".rf-configure-button").fadeIn()
 
   if wizard_form.is_persisted.apply(wizard_form)
     update_price()
