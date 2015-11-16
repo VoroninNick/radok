@@ -13,9 +13,7 @@ class WizardController < ApplicationController
     @wizard_options = {
         step_disabled_unless_active_or_proceeded: false
     }
-    if server_machine?
-      return render "in_development"
-    end
+
     render "new_new"
   end
 
@@ -123,6 +121,8 @@ class WizardController < ApplicationController
   def update
 
     @test = Wizard::Test.find(params[:id])
+
+    #return render inline: test_params.to_json
 
 
 
@@ -237,12 +237,12 @@ class WizardController < ApplicationController
   def test_params
     test = params[:test]
     test[:test_type_id] = Wizard::TestType.find_by_name(test.delete(:test_type)).try(&:id)
-    test[:product_type_id] = Wizard::TestType.find_by_name(test.delete(:product_type)).try(&:id)
+    test[:product_type_id] = Wizard::ProductType.find_by_name(test.delete(:product_type)).try(&:id)
     test[:project_language_ids] = Wizard::ProjectLanguage.where(name: test.delete(:project_languages)).map(&:id)
     test[:report_language_ids] = Wizard::ReportLanguage.where(name: test.delete(:report_languages)).map(&:id)
+    test[:exploratory_description] = test.delete(:exploratory_instructions)
 
-
-    test[:testers_by_platform] = test.delete(:platforms)
+    test[:testers_by_platform] = test.delete(:test_platforms_bindings).try{|bindings| bindings.map{|k, b| b['platform_id'] = b.delete('subitem_id').try(&:to_i); b['test_id'] = test['id'].to_i; b['testers_count'] = b['testers_count'].to_i  ; b }  }
 
     test
   end

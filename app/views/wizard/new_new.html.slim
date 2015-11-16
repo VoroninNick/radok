@@ -1,28 +1,29 @@
 .wizard class="#{@wizard_options.try{|hash| hash.keep_if{|k, v|  !!v }.keys.map(&:to_s).map(&:humanize).map(&:parameterize).join(" ")   } }"
-  #wizard-controller  class="#{'configure-mode' if @created}" test-json=(@project.to_json if @created) data-product-type-names=@product_type_names data-test-type-names=@test_type_names
+  #wizard-controller  class="#{'configure-mode' if @project.persisted?}" test-json=(@project.to_json if @project.persisted?) data-product-type-names=@product_type_names data-test-type-names=@test_type_names
     = render "page_banner"
     #wizard-content
       #wizard-steps
         = render "wizard_form"
 
 
-      #wizard-help
-        #wizard-help-fixed
-          .header
-            |Welcome!
-          .content
-            #wizard-help-welcome
-              |Please choose&nbsp;
-              span.highlighted-text
-                |Type of test
-              |&nbsp;and&nbsp;
-              span.highlighted-text
-                |Platform
-              |&nbsp;to proceed with the test wizard
+      - if !@project.persisted?
+        #wizard-help
+          #wizard-help-fixed
+            .header
+              |Welcome!
+            .content
+              #wizard-help-welcome
+                |Please choose&nbsp;
+                span.highlighted-text
+                  |Type of test
+                |&nbsp;and&nbsp;
+                span.highlighted-text
+                  |Platform
+                |&nbsp;to proceed with the test wizard
 
 
-          .footer
-            = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
+            .footer
+              = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
 
 
       #wizard-summary
@@ -46,12 +47,13 @@
 
             p.test-type-and-product-type
               |You ordered&thinsp;
-              span.highlighted-text data-bind="tot__type_of_test"
+              span.highlighted-text data-bind="project.test_type"
+                = @project.test_type_name
               span.highlighted-text
                 |&thinsp;test
               |&thinsp;for&thinsp;
-              span.highlighted-text data-bind="top__type_of_product"
-
+              span.highlighted-text data-bind="project.product_type"
+                = @project.product_type_name
 
             /p.current-task
                     |Please select platforms to be tested

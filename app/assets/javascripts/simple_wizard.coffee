@@ -107,7 +107,7 @@ window.step_types = {
   'platforms' : {
     completed : false
     checkIsCompleted : ()->
-      completed = project.total_price > 0
+      completed = project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length)
 
       completed
 
@@ -181,7 +181,7 @@ window.wizard_form = {
   push : ()->
     self = wizard_form
     project_data_for_push = clone(project, {
-      except_keys: w("test_files test_case_files")
+      except_keys: w("test_files test_case_files platforms selected_platforms")
     })
 
     data = {test: project_data_for_push}
@@ -230,7 +230,11 @@ $("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-
     html_class = "radio-button"
   $(".input.#{html_class}[model='#{model}']").removeClass("checked").addClass("unchecked")
 
+  $html_input = $input.find("input")
+  value = $html_input.val()
+
   $input.addClass("checked").removeClass("unchecked")
+  wizard_form.update_model_value(value)
 
 
 
@@ -255,7 +259,7 @@ $("body").on "change code-change keyup keypress", ".wizard [as=platforms] .optio
 
 
 update_price = ()->
-  test_platform_bindings = []
+  test_platforms_bindings = []
   $platforms_field = $("[as=platforms]")
   $platforms = $platforms_field.find(".platform")
   $visible_platforms = $platforms.filter(":not(.hide)")
@@ -271,6 +275,7 @@ update_price = ()->
     $platform = $(this)
     $platform_subitems = $platform.find(".option-count")
     #platform = {}
+
     platform_id = parseInt($platform.attr("data-id"))
     platform_testers_count = 0
     $platform_subitems.each ->
@@ -285,7 +290,7 @@ update_price = ()->
       platform_index = null
 
       if testers_count > 0
-        test_platform_bindings.push(test_platform_binding)
+        test_platforms_bindings.push(test_platform_binding)
 
 
         p = selected_platforms.filter(
@@ -335,14 +340,14 @@ update_price = ()->
 
   project.total_price = total_price
 
-  project.test_platform_bindings = test_platform_bindings
+  project.test_platforms_bindings = test_platforms_bindings
 
   project.selected_platforms = selected_platforms
 
   $platforms_field.trigger("change.project.total_testers_count")
 
 
-  $platforms_field.trigger("change.project.test_platform_bindings")
+  $platforms_field.trigger("change.project.test_platforms_bindings")
   $platforms_field.trigger("change.project.total_price")
   $platforms_field.trigger("change.project.selected_platforms")
   #$platforms_field.trigger("change.#{model}")
@@ -351,14 +356,16 @@ $("body").on "change.project.total_price", ()->
   price = project.total_price
   $(".full-summary-total-cost .total-price").text(price)
   $("[data-bind=total_price]").text(price)
+  showStepsProgress()
 
-$("body").on "change.project.test_platform_bindings", (e)->
+
+$("body").on "change.project.test_platforms_bindings", (e)->
   $platforms_field = $(".wizard [as=platforms]")
 
   $options = $platforms_field.find(".option-count")
   $options.addClass("empty")
-  if project.test_platform_bindings && project.test_platform_bindings.length
-    for b in project.test_platform_bindings
+  if project.test_platforms_bindings && project.test_platforms_bindings.length
+    for b in project.test_platforms_bindings
       $options.filter("[platform-subitem-id=#{b.subitem_id}]").removeClass("empty")
 
       #b.attr("platform-subitem-id")
@@ -408,7 +415,7 @@ $("body").on "change.project.test_platform_bindings", (e)->
 
       selected_children = p.children.filter(
         (subitem)->
-          project.test_platform_bindings.map(
+          project.test_platforms_bindings.map(
             (b)->
               b.subitem_id
           ).indexOf(subitem.id) >= 0
@@ -452,6 +459,27 @@ $("body").on "change.project.test_platform_bindings", (e)->
 #  notifyProjectHasUnsavedChanges()
 #  $input.trigger("change.#{model}")
 
+window.check_for_step_completeness = ()->
+  $step = $(this)
+  step_type = $step.attr("type")
+
+  #console.log "step_type: ", step_type
+  console.log "check_for_step_completeness:: before if", step_type
+  if step_types[step_type]
+    console.log "check_for_step_completeness:: inside if"
+    completed = step_types[step_type].checkIsCompleted.apply($step)
+
+    data_completed = $step.data("completed")
+    if data_completed != completed
+      $step.data('completed', completed)
+      if completed
+        $step.addClass("completed")
+        $step.trigger("step_completed")
+
+      else
+        $step.removeClass("completed")
+        $step.trigger("step_uncompleted")
+
 
 $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   #console.log "e : #{e.type}", e
@@ -484,24 +512,7 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   $wizard_controller = $(".wizard-controller")
 
   $step = $(this).closest(".wizard-step")
-  step_type = $step.attr("type")
-
-  #console.log "step_type: ", step_type
-  if step_types[step_type]
-    completed = step_types[step_type].checkIsCompleted.apply($step)
-
-    data_completed = $step.data("completed")
-    if data_completed != completed
-      $step.data('completed', completed)
-      if completed
-        $step.addClass("completed")
-        $step.trigger("step_completed")
-
-      else
-        $step.removeClass("completed")
-        $step.trigger("step_uncompleted")
-
-
+  check_for_step_completeness.apply($step)
 
 
 
@@ -579,7 +590,7 @@ show_mini_summary = ()->
 
 
 
-showStepsProgress = ()->
+window.showStepsProgress = ()->
   $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
   progress_steps_str = ""
   steps_count = $visible_steps.length
@@ -957,15 +968,18 @@ show_or_hide_exploratory_instructions_input = ()->
   $input = $(".project_exploratory_instructions_input")
 
   $file_input = $(".test-case-files-input")
+  $test_case_inputs_wrap = $("#test-case-driven-inputs-wrap")
 
   if testing_type == 'exploratory'
     console.log "testing_type(exploratory)", testing_type
     $input.removeClass("hide")
-    $file_input.addClass("hide")
+    #$file_input.addClass("hide")
+    $test_case_inputs_wrap.addClass("hide")
   else
     console.log "testing_type(not-exploratory)", testing_type
     $input.addClass("hide")
-    $file_input.removeClass("hide")
+    #$file_input.removeClass("hide")
+    $test_case_inputs_wrap.removeClass("hide")
 
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
@@ -978,6 +992,17 @@ show_or_hide_auth_credentials_inputs = ()->
   else
     $credentials_inputs.addClass("hide")
 
+
+show_or_hide_auth_test_driven_development_inputs = ()->
+  methodology_type = $("[model*='project.methodology_type'] input:checked").val() == 'true'
+  $input = $("#test-case-driven-inputs-wrap")
+
+  $another_inputs = $(".project-auth-login, .project-auth-password")
+
+  if methodology_type = "exploratory"
+    $another_inputs.addClass("hide")
+  else
+    $another_inputs.removeClass("hide")
 
 
 
@@ -1124,6 +1149,7 @@ init_loaded_project = ()->
 
 
 $("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
+
   $step = $(this)
   step_id = $step.attr("step")
   $progress_step = $("steps-progress .progress .step[step=#{step_id}]")
@@ -1132,25 +1158,36 @@ $("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
   else
     $progress_step.removeClass("proceeded")
 
+  console.log "e.type: ", e.type
+  console.log "step_id: ", step_id
+
 
 # initialize wizard
 window.project ?= {}
+window.platforms = JSON.parse($("[as=platforms]").attr("options"))
 init_loaded_project()
+#update_price()
+check_for_step_completeness.apply($('.wizard-step[type=platforms]'))
+showStepsProgress()
+#console.log "platform_bindings: ", project.test_platforms_bindings
+#console.log "total_price: ", project.total_price
 
 
 
 
 init_string_inputs()
-window.platforms = JSON.parse($("[as=platforms]").attr("options"))
+
 
 
 # step 3
 show_or_hide_exploratory_instructions_input()
+
 init_tags_input()
 
 
 # step 4
 show_or_hide_auth_credentials_inputs()
+
 
 
 $(".hour").filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")

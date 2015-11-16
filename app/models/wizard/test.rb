@@ -26,15 +26,9 @@ class Wizard::Test < ActiveRecord::Base
   attr_accessible :project_languages, :project_language_ids
   attr_accessible :report_languages, :report_language_ids
 
-  attr_accessible :product_type, :test_type
+  attr_accessible :product_type, :product_type_id, :test_type
   attr_accessible :payment_requests, :payment_request_ids
   attr_accessible :main_components
-
-
-
-
-
-
 
 
 
@@ -50,30 +44,72 @@ class Wizard::Test < ActiveRecord::Base
   def testers_by_platform=(platforms)
     return if platforms.nil?
 
-    puts "testers_by_platform="
-    puts platforms.inspect
-    platforms.each do |k , p|
-      platform_id = p['id'].to_i
-      count = p['count'].to_i
-      test_platform_binding = Wizard::TestPlatform.where(platform_id: platform_id, test_id: self.id).first
-      if test_platform_binding.nil?
-        test_platform_binding = Wizard::TestPlatform.new(test_id: self.id, platform_id: platform_id, testers_count: count)
+    request_platform_bindings = platforms.map{|p| pp = {}; pp[:platform_id] = p[:platform_id]; pp[:testers_count] = p[:testers_count]; pp }
+    current_platform_bindings = test_platforms_bindings.pluck_to_hash(:platform_id, :testers_count)
+    current_platform_binding_ids = current_platform_bindings.map{|p| p[:platform_id] }
 
-        test_platform_binding.save
-
-      elsif test_platform_binding.testers_count != count
-        #test_platform_binding.testers_count = count
-        test_platform_binding.update(testers_count: 5)
-      end
+    request_platform_ids = request_platform_bindings.map{|p| p[:platform_id] }
+    platform_ids_to_remove = current_platform_binding_ids.select{|current_platform_id| !request_platform_ids.include?(current_platform_id)  }
 
 
+    new_platform_bindings = request_platform_bindings.select{|b| !current_platform_binding_ids.include?(b[:platform_id])  }
 
+    # platform_bindings_to_update = request_platform_bindings.select{|b| current_platform_binding_ids.include?(b[:platform_id]) }.map do |existing_binding|
+    #   existing_binding.map do |b|
+    #     current_platform_bindings.select{|cb| b[:platform_id] == cb[:platform_id]}.first
+    #   end
+    # end
 
+    platform_bindings_to_update = request_platform_bindings.select{|b| current_platform_binding_ids.include?(b[:platform_id]) }
+
+    self.test_platforms_bindings.where(platform_id: platform_ids_to_remove, test_id: self.id).delete_all
+    new_platform_bindings.each do |b|
+      self.test_platforms_bindings.create!(platform_id: b[:platform_id], test_id: b[:test_id], testers_count: b[:testers_count])
     end
-    platform_ids = platforms.map{|k, p| p['id'].to_i }
-    platforms_to_remove = Wizard::TestPlatform.where(test_id: self.id).where.not(platform_id: platform_ids)
-    platforms_to_remove.delete_all
+
+    platform_bindings_to_update.each do |b|
+      p = self.test_platforms_bindings.where(platform_id: b[:platform_id]).first;
+      if p[:testers_count] != b[:testers_count]
+        p.update_attributes!(testers_count: b[:testers_count])
+      end
+    end
+
+    puts "params_platforms: #{platforms}"
+    puts "new_platform_bindings: #{new_platform_bindings}"
+    puts "current_platform_bindings: #{current_platform_bindings.inspect}"
+    puts "request_platform_bindings: #{request_platform_bindings.inspect}"
+    puts "request_platform_ids: #{request_platform_ids.inspect}"
+    puts "remove_ids: #{ platform_ids_to_remove.inspect }"
+
+
+    #Wizard::TestPlatform.where(platform_id: platform_ids_to_remove, test_id: self.id).delete_all
+    #
+    # puts "testers_by_platform="
+    # puts platforms.inspect
+    # platforms.each do |k , p|
+    #   platform_id = p['id'].to_i
+    #   count = p['count'].to_i
+    #   test_platform_binding = Wizard::TestPlatform.where(platform_id: platform_id, test_id: self.id).first
+    #   if test_platform_binding.nil?
+    #     test_platform_binding = Wizard::TestPlatform.new(test_id: self.id, platform_id: platform_id, testers_count: count)
+    #
+    #     test_platform_binding.save
+    #
+    #   elsif test_platform_binding.testers_count != count
+    #     #test_platform_binding.testers_count = count
+    #     test_platform_binding.update(testers_count: 5)
+    #   end
+    #
+    #
+    #
+    #
+    # end
+    # platform_ids = platforms.map{|k, p| p['id'].to_i }
+    # platforms_to_remove = Wizard::TestPlatform.where(test_id: self.id).where.not(platform_id: platform_ids)
+    # platforms_to_remove.delete_all
   end
+
+
 
   def test_type_name
     test_type.try(&:name)
@@ -175,17 +211,25 @@ class Wizard::Test < ActiveRecord::Base
   # end
 
   def project_languages
-    #[:english, :ukrainian, :russian]
-    self['project_languages'].try{|s| JSON.parse(s)} || [Wizard::ProjectLanguage.first.name]
+    super.pluck(:name)
+  end
+
+  def project_languages=(value)
+    langs = Wizard::ProjectLanguage.where(name: value)
+    super langs
   end
 
   def report_languages
-    #[:english, :ukrainian]
-    self['report_languages'].try{|s| JSON.parse(s)} || [Wizard::ReportLanguage.first.name]
+    super.pluck(:name)
+  end
+
+  def report_languages=(value)
+    langs = Wizard::ReportLanguage.where(name: value)
+    super langs
   end
 
   def project_access__url
-    "http://voroninstudio.eu"
+    self['project_url']
   end
 
   # def platforms
@@ -325,7 +369,7 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
       t.updated_at updated_at
       t.current_step_id current_step_id
 
-      t.exploratory_description exploratory_description
+      t.exploratory_instructions exploratory_description
       t.hours_per_tester hours_per_tester
       t.methodology_type methodology_type
       t.main_components main_components

@@ -1,10 +1,13 @@
 window.w = (str)->
   str.split(' ')
 String.prototype.in = (args)->
-  s = this.toString()
-  args.indexOf(s) >= 0
+  if args && args.indexOf
+    s = this.toString()
+    args.indexOf(s) >= 0
 
 window.diff = (obj1, obj2)->
+  if typeof obj1 != 'object' || typeof obj2 != 'object'
+    return null
   result = {}
   $.each obj2, (key, value) ->
     if !obj1.hasOwnProperty(key) or obj1[key] != obj2[key]
@@ -13,6 +16,9 @@ window.diff = (obj1, obj2)->
   result
 
 String::camelize = () ->
+  if !this || !this.replace
+    return null
+
   res = this
   .replace /[\s|_|-](.)/g, ($1) -> $1.toUpperCase()
   .replace /[\s|_|-]/g, ''
@@ -34,6 +40,8 @@ window.clone = (obj, options = {})->
   res
 
 String::classify = ()->
+  if !this || !this.camelize
+    return this
   this.camelize()
 
 Array::last = ()->

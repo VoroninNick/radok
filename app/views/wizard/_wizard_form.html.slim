@@ -12,10 +12,11 @@ form for="project" url=short_wizard_path method="post" json="{}"
           |What type of tests are you looking for?
 
       - @test_types.each_with_index do |test_type, index|
+        - checked = @project.test_type.try{|t| t.id == test_type.id } || false
         - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.test_type"; name = "project_test_type"; input_id = "project_test_type_#{index + 1}"
         .columns.large-4.text-center
-          .input.image-radio-button class="project_test_type" as="image-radio-button" model=model image=image label=label value=value
-            input id=input_id value=value name=name type="radio"
+          .input.image-radio-button class="project_test_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
+            input id=input_id value=value name=name type="radio" checked=("checked" if checked)
             label.image-label for=input_id
               img src=image
             label.label for=input_id
@@ -28,10 +29,11 @@ form for="project" url=short_wizard_path method="post" json="{}"
           |For what type of product?
 
       - @product_types.each_with_index do |test_type, index|
+        - checked = @project.test_type.try{|t| t.id == test_type.id } || false
         - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.product_type"; name = "project_product_type"; input_id = "project_product_type_#{index + 1}"
         .columns.large-3.text-center
-          .input.image-radio-button class="project_product_type" as="image-radio-button" model=model image=image label=label value=value
-            input id=input_id value=value name=name type="radio"
+          .input.image-radio-button class="project_product_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
+            input id=input_id value=value name=name type="radio" checked=("checked" if checked )
             label.image-label for=input_id
               img src=image
             label.label for=input_id
@@ -106,7 +108,9 @@ form for="project" url=short_wizard_path method="post" json="{}"
           |On what platforms would you like your product to be tested?
         .input.platforms-input as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms" platforms-by-product-type=@platform_ids_by_product_type.to_json
           .clearfix
+          - sorted_platform_bindings = @project.testers_by_platform.sort{|a,b| a[:platform_id] <=> a[:platform_id] }
           - Wizard::Platform.roots.each do |platform|
+
             .platform data-id=platform.id
               .name.platform-label
                 = platform.name
@@ -114,11 +118,14 @@ form for="project" url=short_wizard_path method="post" json="{}"
                 = embedded_svg_from_assets("user")
               .platform-options
                 - platform.children.each do |c|
-                  .option-count platform-subitem-id=c.id
+                  - binding = sorted_platform_bindings.select { |b| b[:platform_id] == c.id }.first
+                  - binding_current_testers_count = binding.try { |b| b[:testers_count] } || 0
+
+                  .option-count platform-subitem-id=c.id class="#{ binding_current_testers_count > 0 ? 'not-empty' : 'empty' }"
                     .platform-option-label
                       = c.name
                     .input-wrap
-                      input value="0" pattern='[0-9]*' type='text'
+                      input pattern='[0-9]*' type='text' value="#{binding_current_testers_count}"
                       label class='decrement' for='platform-1-subitem-1'
                       label class='increment' for='platform-1-subitem-1'
             /.option-count platform-subitem-id=
@@ -170,7 +177,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
             - @project_languages.each_with_index do |language, index|
               - input_id = "project_project_languages_#{index + 1}"
               span.option
-                input id=input_id type="checkbox" value=language
+                input id=input_id type="checkbox" value=language checked=("checked" if @project.project_languages.include?(language))
                 label.custom-checkbox for=input_id
                 label for=input_id
                   |#{language}
@@ -183,7 +190,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
             - @report_languages.each_with_index do |language, index|
               - input_id = "project_report_languages_#{index + 1}"
               span.option
-                input id=input_id type="checkbox" value=language
+                input id=input_id type="checkbox" value=language checked=("checked" if @project.report_languages.include?(language))
                 label.custom-checkbox for=input_id
                 label for=input_id
                   |#{language}
@@ -194,6 +201,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
           label.placeholder for="project_info_comment"
             |Your comments and additional instructions can be here...
           textarea model="project.project.project_info_comment" id="project_info_comment"
+            = @project.project_info_comment
 
         /..input.string as="string" model="project.project_name" value=@project.project_name
         /.input.string model="project.project_version" value=@project.project_version
@@ -214,7 +222,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         .label
           |What methodology are you looking for?
 
-        .input.radio-button model="project.methodology_type"  class="#{@project.exploratory? ? 'checked' : 'unchecked' }"
+        .input.radio-button model="project.methodology_type"  class="#{@project.exploratory? ? 'checked' : 'unchecked' }" value="exploratory"
           input type="radio" value="exploratory" id="project_methodology_type_exploratory" name="project_methodology_type" checked=('checked' if @project.exploratory?)
           label.custom-radio-button for="project_methodology_type_exploratory"
           label for="project_methodology_type_exploratory"
@@ -226,8 +234,9 @@ form for="project" url=short_wizard_path method="post" json="{}"
           label.placeholder for="project_exploratory_instructions"
             |Please provide testing instructions for the testers here...
           textarea model="project.exploratory_instructions" id="project_exploratory_instructions"
+            = @project.exploratory_description
 
-        .input.radio-button model="project.methodology_type" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }"
+        .input.radio-button model="project.methodology_type" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }" value="test-case-driven"
           input type="radio" value="test_case_driven" id="methodology_type_test_case_driven" name="project_methodology_type" checked=('checked' if @project.test_case_driven?)
           label.custom-radio-button for="methodology_type_test_case_driven"
           label for="methodology_type_test_case_driven"
@@ -236,10 +245,16 @@ form for="project" url=short_wizard_path method="post" json="{}"
             |You provide a specific list of steps that testers must execute.
 
         /.input.files.test-case-files-input model="project.test_case_files"
-        div
+        div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
           input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
           = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
           .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
+            - @project.test_case_files.each do |asset|
+              .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
+                span class='file-name'
+                  |#{asset.data_file_name}
+
+                span class='delete'
 
 
 
@@ -252,7 +267,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
           .input.tags as="tags" model="project.main_components"
             label.placeholder
               |Type components here, separate by commas...
-            input type="text"
+            input type="text" value=@project.main_components.join(",")
 
 
 
@@ -275,7 +290,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
 
         .columns.large-7
           .input.url model="project.project_url" as="url"
-            input placeholder="http://domain.com"
+            input placeholder="http://domain.com" value=@project.project_url
         .columns.large-1
           span.or
             |or
@@ -284,7 +299,12 @@ form for="project" url=short_wizard_path method="post" json="{}"
           = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-wizard-test-files-upload-button", svg: "upload", size: "medium"
         .columns.large-12
           .file-upload-files-list.test_files-list model="project.test_files" data-attachment-name="test_files"
+            - @project.test_files.each do |asset|
+              .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
+                span class='file-name'
+                  |#{asset.data_file_name}
 
+                span class='delete'
 
         .auth-data
           .label
@@ -321,6 +341,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
             label.placeholder for="project_access_comment"
               |Your comments and additional instructions can be here...
             textarea model="project.project_access_comment" id="project_access_comment"
+              = @project.project_access_comment
 
         /.input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="No, it does not require a username or password" value="false" checked=(!@project.authentication_required?)
         /.input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=(@project.authentication_required?)
