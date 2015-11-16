@@ -14,9 +14,11 @@ class WizardController < ApplicationController
         step_disabled_unless_active_or_proceeded: false
     }
 
-
-
-    render "new_new"
+    if !@project.completed?
+      render "new_new"
+    else
+      redirect_to  dashboard_project_path(id: @project.id)
+    end
   end
 
   def set_wizard_options
