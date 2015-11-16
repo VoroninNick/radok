@@ -211,7 +211,12 @@ class Wizard::Test < ActiveRecord::Base
   # end
 
   def project_languages
-    super.pluck(:name)
+    langs = super.pluck(:name)
+    if langs.empty?
+      return [Wizard::ProjectLanguage.first.name]
+    else
+      return langs
+    end
   end
 
   def project_languages=(value)
@@ -220,7 +225,12 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def report_languages
-    super.pluck(:name)
+    langs = super.pluck(:name)
+    if langs.empty?
+      return [Wizard::ReportLanguage.first.name]
+    else
+      return langs
+    end
   end
 
   def report_languages=(value)
@@ -351,6 +361,7 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
 
       # platforms
       t.total_testers_count total_testers_count
+      t.platforms_comment platforms_comment
 
       # test_info
 
@@ -361,6 +372,11 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
       t.auth_login auth_login
       t.auth_password auth_password
       t.authentication_required authentication_required
+
+      t.contact_person_name contact_person_name
+      t.contact_person_email contact_person_email
+      t.contact_person_phone contact_person_phone
+
       t.project_access_comment project_access_comment
 
       t.comment comment

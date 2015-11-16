@@ -464,9 +464,9 @@ window.check_for_step_completeness = ()->
   step_type = $step.attr("type")
 
   #console.log "step_type: ", step_type
-  console.log "check_for_step_completeness:: before if", step_type
+  #console.log "check_for_step_completeness:: before if", step_type
   if step_types[step_type]
-    console.log "check_for_step_completeness:: inside if"
+    #console.log "check_for_step_completeness:: inside if"
     completed = step_types[step_type].checkIsCompleted.apply($step)
 
     data_completed = $step.data("completed")
@@ -494,6 +494,8 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
     value = input_types[input_type].dom_value($input)
   else
     value = $input.val()
+
+  console.error "input_type: ", input_type
 
   if input_data_type == "integer"
     value = parseInt(value)
@@ -927,10 +929,12 @@ $("body").on "change.project.product_type", ()->
 
 
 
+
 $("body").on "change.project.test_type", ()->
   if project.test_type
     $("#project-product-type").fadeIn()
-    $(".rf-configure-button").fadeIn()
+    $(".rf-configure-button, .rf-step-configure-button").fadeIn()
+
 
   enable_checkout_button_if_project_valid()
 
@@ -981,12 +985,12 @@ show_or_hide_exploratory_instructions_input = ()->
   $test_case_inputs_wrap = $("#test-case-driven-inputs-wrap")
 
   if testing_type == 'exploratory'
-    console.log "testing_type(exploratory)", testing_type
+    #console.log "testing_type(exploratory)", testing_type
     $input.removeClass("hide")
     #$file_input.addClass("hide")
     $test_case_inputs_wrap.addClass("hide")
   else
-    console.log "testing_type(not-exploratory)", testing_type
+    #console.log "testing_type(not-exploratory)", testing_type
     $input.addClass("hide")
     #$file_input.removeClass("hide")
     $test_case_inputs_wrap.removeClass("hide")
@@ -1109,8 +1113,9 @@ $("body").on "after_create", ()->
   url = wizard_form.update_url.apply(wizard_form)
   history.pushState(state, title, url);
 
-$("body").on "click", ".rf-configure-button", ()->
-
+$("body").on "click", ".rf-configure-button, .rf-step-configure-button", ()->
+  $(".rf-step-configure-button").attr("style", "")
+  $(".rf-step-configure-button").fadeOut()
   init_configure_mode()
   scrollToFirstStep()
   wizard_form.push.apply(wizard_form)
@@ -1168,11 +1173,12 @@ $("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
   else
     $progress_step.removeClass("proceeded")
 
-  console.log "e.type: ", e.type
-  console.log "step_id: ", step_id
+  #console.log "e.type: ", e.type
+  #console.log "step_id: ", step_id
 
 
 # initialize wizard
+
 window.project ?= {}
 window.platforms = JSON.parse($("[as=platforms]").attr("options"))
 init_loaded_project()

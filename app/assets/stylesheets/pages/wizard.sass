@@ -101,7 +101,7 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
   padding-right: $wizard-summary-width
 
 #wizard-help
-  margin-top: $wizard-step-vertical-indent
+  margin-top: #{$wizard-step-vertical-indent * 2}
   width: $wizard-summary-width
   height: auto
   position: absolute
@@ -1175,7 +1175,7 @@ body
         padding-top: 3rem
 
 .rf-button
-  &.rf-configure-button
+  &.rf-configure-button, &.rf-step-configure-button
     .svg-wrap
       margin-left: 0
       margin-right: 17px
@@ -1223,12 +1223,16 @@ body
 #wizard-controller
   #wizard-summary
     display: none
+  .rf-step-configure-button
+    display: none
 
   &.configure-mode
     #wizard-help
       display: none
     #wizard-summary
       display: block
+    .rf-step-configure-button
+      display: none !important
 
 .wizard-platforms-step
   platform.first
@@ -1514,7 +1518,7 @@ comment-with-price
     #project-test-type
       display: none
 
-    .rf-configure-button
+    .rf-configure-button, &.rf-step-configure-button
       display: none
 
 .rf-go-to-summary-button, #wizard-summary .rf-confirm-button
@@ -1544,4 +1548,8 @@ comment-with-price
 
 
 
-
+.star
+  &:before
+    content: "*"
+    color: #FFA500
+    margin-left: 3px
