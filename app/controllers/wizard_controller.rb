@@ -14,6 +14,8 @@ class WizardController < ApplicationController
         step_disabled_unless_active_or_proceeded: false
     }
 
+
+
     render "new_new"
   end
 

@@ -6,9 +6,12 @@ window.form_types['payment'] = {
     #selector = ".rf-input"
     if payment_type == 'pay_later'
       selector = ".show-if-pay-later .rf-input"
+      another_selector =  ".show-if-not-pay-later .rf-input"
     else
       selector = ".show-if-not-pay-later .rf-input"
+      another_selector = ".show-if-pay-later .rf-input"
 
+    $form.find(another_selector).removeClass("invalid")
     $form.find(selector).each ->
 
       $rf_input = $(this)
