@@ -27,7 +27,10 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     if resource.errors.empty?
       sign_in(resource_name, resource)
       set_flash_message(:notice, :confirmed) if is_flashing_format?
-      respond_with_navigational(resource){ redirect_to(after_confirmation_path_for(resource_name, resource), flash: {confirmation_congratulations: true }) }
+
+      uncompleted_tests = current_user.tests
+
+      respond_with_navigational(resource){ redirect_to(after_confirmation_path_for(resource_name, resource), flash: {confirmation_congratulations: true, uncompleted_tests: uncompleted_tests }) }
 
 
     else

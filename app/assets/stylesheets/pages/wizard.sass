@@ -1335,8 +1335,10 @@ comment-with-price
         span
           display: inline-block
           text-align: center
+
           label
             display: block
+
 
       &.option-large-3
         .options
@@ -1456,13 +1458,23 @@ comment-with-price
 
 
 
+
     label.custom-checkbox
       +custom-checkbox-button
+      position: relative
+      top: 4px
+      margin-right: 10px
 
     .option
+
+
       &.checked, input:checked ~
         label.custom-checkbox
           +custom-checkbox-button-checked
+
+
+
+
 
     input
       &[type=checkbox]
@@ -1481,11 +1493,20 @@ comment-with-price
 
 
 
+.input
+  &.collection-checkboxes
+    .options
+      .option
+        display: inline-block
+        float: left
+        margin-right: 35px
+        margin-bottom: 10px
 
 
 
 
 .option-count
+
 
 .platform-option-label
   float: left
@@ -1568,6 +1589,9 @@ comment-with-price
 .with-distance
   padding-bottom: 20px
 
+.with-input-distance
+  margin-top: 40px
+
 
 .image-radio-button
   label.label
@@ -1593,3 +1617,32 @@ comment-with-price
   &.not-empty
     .hiding-placeholder
       display: none !important
+
+[step="2"]
+  .wizard-step-content
+    > .label
+      padding-bottom: 20px
+      height: auto !important
+
+.rf-wizard-test-files-upload-button
+  height: 30px !important
+
+  .svg-wrap
+    top: -4px !important
+    position: relative !important
+    margin-left: 0 !important
+    margin-right: 15px !important
+
+  svg
+    height: 30px !important
+
+  .button-title
+    line-height: 30px !important
+    font-size: 18px !important
+    position: relative !important
+    top: -1px !important
+
+.nested-input-group
+  padding-left: 35px
+
+.input-with-indent

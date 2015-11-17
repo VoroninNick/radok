@@ -116,6 +116,19 @@ class WizardController < ApplicationController
     @test = Wizard::Test.create(test_params)
     @test.user_id = current_user.try(&:id)
     if @test.save
+      if current_user.nil?
+        id = @test.id
+        if !session[:tests]
+          session[:tests] = [id]
+        else
+          if !session[:tests].include?(id)
+            session[:tests] << id
+          end
+        end
+        return render inline: session[:tests].inspect
+      end
+
+
       #render json: @test
       #render "show.json", status: 201
       render inline: @test.to_builder.target!, status: 201

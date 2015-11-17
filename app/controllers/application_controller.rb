@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
 
 
   def developer_machine?
-    Rails.application.config.action_mailer.default_url_options[:host].scan(/localhost/).any?
+    ActionMailer::Base.default_url_options[:host].scan(/localhost/).any?
   end
 
   def server_machine?

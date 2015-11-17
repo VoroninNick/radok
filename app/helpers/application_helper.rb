@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def host_name
-    Rails.application.config.action_mailer.default_url_options[:host]
+    ActionMailer::Base.default_url_options[:host]
   end
 
   def skype_login

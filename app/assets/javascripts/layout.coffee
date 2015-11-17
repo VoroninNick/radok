@@ -72,8 +72,8 @@ $("body").on "click", "[open-popup]", (event)->
     $current_popup.addClass("hide")
     popup_name = $this.attr("open-popup")
 
-    if $this.attr("requires-auth")
-      openPopup("sign-in")
+    if $this.attr("requires-auth") && $("html").attr("data-logged-in") != "true"
+      openPopup("user_pages__static_sign_in")
     else
       openPopup(popup_name)
 

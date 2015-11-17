@@ -28,7 +28,7 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
 
     = popup "user_pages/static_sign_in"
     = popup "user_pages/forgot_password"
-    - if flash[:confirmation_congratulations]
+    - if flash[:confirmation_congratulations] || false
       = popup "user_pages/confirmation_congratulations", visible: true
 
     = popup "user_pages/faq_request_success"

@@ -31,6 +31,13 @@ class Users::SessionsController < Devise::SessionsController
         return render json: { user: { errors: { login: :unconfirmed } } }, status: 401
       end
 
+      #return render inline: session[:tests].inspect
+
+      test_ids = session[:tests]
+      if test_ids.try(&:any?)
+        Wizard::Test.where(id: test_ids).where("user_id is null").update_all(user_id: (resource.id || 234))
+      end
+
       sign_in(resource_name, resource)
 
     else
