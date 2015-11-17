@@ -38,3 +38,5 @@ bower.json
 /public
 /vendor
 /.idea
+
+/config/settings
