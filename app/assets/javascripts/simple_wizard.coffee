@@ -750,7 +750,7 @@ $("body").on "click", ".option-count .decrement, .option-count .increment", ->
     $input.trigger("dom_change")
 
 
-$("body").on "change", ".input.string, .input.text", ()->
+$("body").on "change keyup", ".input.string, .input.text", ()->
   $input = $(this)
   if $input.hasClass("string")
     val = $input.find("input").val()

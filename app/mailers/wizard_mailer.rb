@@ -10,8 +10,7 @@ class WizardMailer < ApplicationMailer
         template_name: "payment_request_admin_notification",
         layout: false,
         to: to,
-        subject: "New Payment Request",
-        from: "10g-force"
+        subject: "New Payment Request"
     )
   end
 end

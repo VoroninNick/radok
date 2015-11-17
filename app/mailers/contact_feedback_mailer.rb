@@ -8,8 +8,7 @@ class ContactFeedbackMailer < ApplicationMailer
         template_name: "faq_request",
         layout: false,
         to: to,
-        subject: "New Contact feedback",
-        from: "Radok force"
+        subject: "New Contact feedback"
     )
   end
 
@@ -22,8 +21,7 @@ class ContactFeedbackMailer < ApplicationMailer
         template_name: "schedule_call",
         layout: false,
         to: to,
-        subject: "New Schedule call request",
-        from: "Radok force"
+        subject: "New Schedule call request"
     )
   end
 end

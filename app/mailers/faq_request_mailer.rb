@@ -8,8 +8,7 @@ class FaqRequestMailer < ApplicationMailer
         template_name: "faq_request",
         layout: false,
         to: to,
-        subject: "New FAQ Request",
-        from: "Radok force"
+        subject: "New FAQ Request"
     )
   end
 end

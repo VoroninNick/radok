@@ -9,7 +9,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
 
 
     #project-product-type
-      .columns.large-12
+      .columns.large-12.with-distance
         .label.text-center
           |For what type of product?
 
@@ -28,7 +28,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
 
 
     #project-test-type
-      .columns.large-12
+      .columns.large-12.with-distance
         .label.text-center
           |What type of tests are you looking for?
 
@@ -43,7 +43,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
             label.label for=input_id
               = label
       .clearfix
-    .button-wrap style="margin: 0 auto; position: relative; width: 200px; max-width: 100%;"
+    .button-wrap style="margin: 30px auto 0 auto; position: relative; width: 200px; max-width: 100%;"
       = rf_button(class: "rf-step-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
 
 
@@ -62,6 +62,8 @@ form for="project" url=short_wizard_path method="post" json="{}"
       .wizard-step-content
         .label
           |On what platforms would you like your product to be tested?
+        .blue-header
+          |Platform / Testers per platform
         .input.platforms-input as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms" platforms-by-product-type=@platform_ids_by_product_type.to_json
           .clearfix
           - sorted_platform_bindings = @project.testers_by_platform.sort{|a,b| a[:platform_id] <=> a[:platform_id] }
@@ -102,10 +104,10 @@ form for="project" url=short_wizard_path method="post" json="{}"
                 input id=html_input_id name="hours_per_tester" type="radio" value=hour model="project.hours_per_tester" data-type="integer"
         .clearfix
 
-        label.label
+        label.label.your-comment-label
           |Your comment
         .input.text.project-platforms-comment_input as="text" model="project.platforms_comment"
-          label.placeholder for="project_platforms_comment"
+          label.placeholder.hiding-placeholder for="project_platforms_comment"
             |Your comments and additional instructions can be here...
           textarea model="project.project.platforms_comment" id="project_platforms_comment"
             = @project.platforms_comment
@@ -165,10 +167,10 @@ form for="project" url=short_wizard_path method="post" json="{}"
                 label for=input_id
                   |#{language}
 
-        label.label
+        label.label.your-comment-label
           |Your comment
         .input.text.project-info-comment_input as="text" model="project.project_info_comment"
-          label.placeholder for="project_info_comment"
+          label.placeholder.hiding-placeholder for="project_info_comment"
             |Your comments and additional instructions can be here...
           textarea model="project.project.project_info_comment" id="project_info_comment"
             = @project.project_info_comment
@@ -325,10 +327,10 @@ form for="project" url=short_wizard_path method="post" json="{}"
           input type="text" id="project_contact_person_phone" value=@project.contact_person_phone
 
         .columns.large-12
-          label.label
+          label.label.your-comment-label
             |Your comment
           .input.text.project-access-comment_input as="text" model="project.project_access_comment"
-            label.placeholder for="project_access_comment"
+            label.placeholder.hiding-placeholder for="project_access_comment"
               |Your comments and additional instructions can be here...
             textarea model="project.project_access_comment" id="project_access_comment"
               = @project.project_access_comment

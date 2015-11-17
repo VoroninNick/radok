@@ -124,3 +124,5 @@ gem 'html2slim'
 gem 'react-rails'
 
 gem 'opal'
+
+gem 'rails_config'

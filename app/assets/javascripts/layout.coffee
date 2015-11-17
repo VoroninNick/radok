@@ -31,7 +31,7 @@ $(".menu").on "click", ".has-dropdown", ->
   $this = $(this)
   $this.toggleClass("opened")
 
-openPopup = (popup_name)->
+window.openPopup = (popup_name)->
   $popup = $("[id=#{popup_name}_popup]")
   $popup.removeClass("hide")
   if !$popup.hasClass("initialized")
@@ -72,7 +72,10 @@ $("body").on "click", "[open-popup]", (event)->
     $current_popup.addClass("hide")
     popup_name = $this.attr("open-popup")
 
-    openPopup(popup_name)
+    if $this.attr("requires-auth")
+      openPopup("sign-in")
+    else
+      openPopup(popup_name)
 
 
 $.fn.valid = ->

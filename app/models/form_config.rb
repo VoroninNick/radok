@@ -3,6 +3,7 @@ class FormConfig < ActiveRecord::Base
 
   def self.default_emails
     ['p.korenev@voroninstudio.eu']
+    #'<partido12@gmail.com>'
   end
 
   def emails
