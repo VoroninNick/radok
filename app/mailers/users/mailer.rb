@@ -1,12 +1,12 @@
 class Users::Mailer < ApplicationMailer
-  include Devise::Mailers::Helpers
-  include EmailsHelper
-  include Roadie::Rails::Automatic
-
-  helper :emails
-
-
-  layout "users/mailer"
+  # include Devise::Mailers::Helpers
+  # include EmailsHelper
+  # include Roadie::Rails::Automatic
+  #
+  # helper :emails
+  #
+  #
+  # layout "users/mailer"
 
   def confirmation_instructions(record, token, opts={})
     @token = token

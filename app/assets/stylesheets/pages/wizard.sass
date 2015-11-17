@@ -1614,6 +1614,8 @@ comment-with-price
   height: 25px !important
 
 .input
+  .hiding-placeholder
+    top: 0 !important
   &.not-empty
     .hiding-placeholder
       display: none !important
@@ -1644,5 +1646,26 @@ comment-with-price
 
 .nested-input-group
   padding-left: 35px
+  padding-top: 10px
 
 .input-with-indent
+  margin-top: 5px !important
+  margin-bottom: 5px !important
+
+.file-upload-files-list
+  margin-top: 12px !important
+
+  .file
+    margin: 7px 0 !important
+
+
+.input.radio-button
+  .custom-radio-button + label
+    vertical-align: top
+
+.input.text.project_exploratory_instructions_input
+  //margin-top: 10px !important
+
+.input, .nested-input-group
+  & + .input.radio-button
+    margin-top: 25px !important

@@ -1236,3 +1236,7 @@ $("body").on "change.project.hours_per_tester", ()->
   $hour_labels.filter(".selected").removeClass("selected")
   $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
   #console.log "project.hours_per_tester", project.hours_per_tester
+
+
+
+$("body").on "keyup", ".input[as=tags]", ()->

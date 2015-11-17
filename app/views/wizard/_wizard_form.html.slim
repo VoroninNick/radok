@@ -201,11 +201,12 @@ form for="project" url=short_wizard_path method="post" json="{}"
           .help
             |This is unscripted testing. Our testers use your product like any normal user would.
 
-        .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions"
-          label.placeholder for="project_exploratory_instructions"
-            |Please provide testing instructions for the testers here...
-          textarea model="project.exploratory_instructions" id="project_exploratory_instructions"
-            = @project.exploratory_description
+        .nested-input-group
+          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions"
+            label.placeholder.hiding-placeholder for="project_exploratory_instructions"
+              |Please provide testing instructions for the testers here...
+            textarea model="project.exploratory_instructions" id="project_exploratory_instructions"
+              = @project.exploratory_description
 
         .input.radio-button model="project.methodology_type" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }" value="test-case-driven"
           input type="radio" value="test_case_driven" id="methodology_type_test_case_driven" name="project_methodology_type" checked=('checked' if @project.test_case_driven?)
@@ -214,18 +215,18 @@ form for="project" url=short_wizard_path method="post" json="{}"
             |Test-case driven
           .help
             |You provide a specific list of steps that testers must execute.
+        .nested-input-group
+          /.input.files.test-case-files-input model="project.test_case_files"
+          div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
+            input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
+            = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
+            .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
+              - @project.test_case_files.each do |asset|
+                .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
+                  span class='file-name'
+                    |#{asset.data_file_name}
 
-        /.input.files.test-case-files-input model="project.test_case_files"
-        div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
-          input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
-          = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
-          .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
-            - @project.test_case_files.each do |asset|
-              .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
-                span class='file-name'
-                  |#{asset.data_file_name}
-
-                span class='delete'
+                  span class='delete'
 
 
 
@@ -307,27 +308,27 @@ form for="project" url=short_wizard_path method="post" json="{}"
 
         .clearfix
 
-        label.label
+        label.label.with-input-distance
           |Contact person
 
 
-        .input.string.project-contact-person-name model="project.contact_person_name" as="string"
+        .input.string.project-contact-person-name.input-with-indent model="project.contact_person_name" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_name"
             |Name
           input type="text" id="project_contact_person_name" value=@project.contact_person_name
 
-        .input.string.project-contact-person-email model="project.contact_person_email" as="string"
+        .input.string.project-contact-person-email.input-with-indent model="project.contact_person_email" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_email"
             |Email
           input type="text" id="project_contact_person_name" value=@project.contact_person_email
 
-        .input.string.project-contact-person-phone model="project.contact_person_phone" as="string"
+        .input.string.project-contact-person-phone.input-with-indent model="project.contact_person_phone" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_email"
             |Phone
           input type="text" id="project_contact_person_phone" value=@project.contact_person_phone
 
-        .columns.large-12
-          label.label.your-comment-label
+        .columns.large-12 style="padding-left: 0;"
+          label.label.your-comment-label.with-input-distance
             |Your comment
           .input.text.project-access-comment_input as="text" model="project.project_access_comment"
             label.placeholder.hiding-placeholder for="project_access_comment"

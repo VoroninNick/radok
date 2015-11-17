@@ -1,4 +1,6 @@
 class WizardMailer < ApplicationMailer
+
+
   def payment_request_admin_notification(req)
 
     to = FormConfigs::PaymentRequest.first.try(&:emails) || FormConfigs::PaymentRequest.default_emails
