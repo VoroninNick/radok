@@ -7,7 +7,7 @@ class FormConfig < ActiveRecord::Base
   end
 
   def emails
-    em = (email_receivers || "").split(",")
+    em = (email_receivers || "").split("\r\n")
     if em.empty?
       return self.class.default_emails
     else
