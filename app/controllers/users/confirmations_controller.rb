@@ -29,8 +29,14 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       set_flash_message(:notice, :confirmed) if is_flashing_format?
 
       uncompleted_tests = current_user.tests
+      anonymous_test_ids = session[:tests]
 
-      respond_with_navigational(resource){ redirect_to(after_confirmation_path_for(resource_name, resource), flash: {confirmation_congratulations: true, uncompleted_tests: uncompleted_tests }) }
+      test_ids = session[:tests]
+      if test_ids.try(&:any?)
+        Wizard::Test.where(id: test_ids).where("user_id is null").update_all(user_id: (resource.id ))
+      end
+
+      respond_with_navigational(resource){ redirect_to(after_confirmation_path_for(resource_name, resource), flash: {confirmation_congratulations: true, uncompleted_tests: uncompleted_tests, anonymous_test_ids: anonymous_test_ids }) }
 
 
     else

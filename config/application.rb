@@ -24,7 +24,7 @@ module RadokForce
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.assets.precompile += %w(modernizr.js svg_images.js angular_app.js not_found.css)
+    config.assets.precompile += %w(modernizr.js svg_images.js angular_app.js not_found.css mailer.css)
 
 
   end

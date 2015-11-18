@@ -94,6 +94,8 @@ class PagesController < ApplicationController
 
 
     @show_plans_section_header = true
+
+    #flash[:anonymous_test_ids] = [458, 459, 460]
   end
 
   def devices

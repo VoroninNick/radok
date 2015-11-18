@@ -12,10 +12,19 @@
               .text.semibold.text-center
                 |You're successfully created account and logged in!
 
+              - if anonymous_test_ids.try(&:any?)
+                .uncompleted-tests-wrap.anonymous-tests-wrap
+                  .text.semibold.text-center
+                    |You have uncompleted tests. Do you want to complete them now? In any case you can access them later from your dashboard.
 
-              .uncompleted-tests-wrap
-                .text.semibold.text-center
-                  |You have uncompleted tests. Do you want to complete them now? In any case you can access them later from your dashboard.
+                  .row
+                    - tests = Wizard::Test.where(id: anonymous_test_ids)
+                    - tests.each do |test|
+                      .columns.large-4.test class="#{'large-centered' if tests.count == 1}"
+                        a href=test_path(id: test.id)
+                          = image_tag(test.test_type.image.url(:original))
+                          span
+                            = test.project_name
 
 
               .actions

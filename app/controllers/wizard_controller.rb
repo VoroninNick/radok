@@ -125,7 +125,7 @@ class WizardController < ApplicationController
             session[:tests] << id
           end
         end
-        return render inline: session[:tests].inspect
+       # return render inline: session[:tests].inspect
       end
 
 
