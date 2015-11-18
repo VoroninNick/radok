@@ -63,6 +63,8 @@ form for="project" url=short_wizard_path method="post" json="{}"
         .label
           |On what platforms would you like your product to be tested?
         .blue-header
+          |Platform / Testers per platform
+
         .input.platforms-input as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms" platforms-by-product-type=@platform_ids_by_product_type.to_json
           .clearfix
           - sorted_platform_bindings = @project.testers_by_platform.sort{|a,b| a[:platform_id] <=> a[:platform_id] }
@@ -126,24 +128,27 @@ form for="project" url=short_wizard_path method="post" json="{}"
           |What is the name of this wonderful project?
           span.star
 
-        .input.string as="string" model="project.project_name" value=@project.project_name
+        .input.string.has-error-label as="string" model="project.project_name" value=@project.project_name required="true"
           label.placeholder.hiding-placeholder for="project_project_name"
             |Project name
-            span.star
+          label.error.error-required
+            |Please enter project name
           input type="text" id="project_project_name" value=@project.project_name
 
         label.label.with-input-distance for="project_project_version"
           |What is version number of the new release that you'd like us to test?
           span.star
-        .input.string as="string" model="project.project_version" value=@project.project_version
+        .input.string.has-error-label as="string" model="project.project_version" value=@project.project_version required="true"
           label.placeholder.hiding-placeholder for="project_project_version"
             |Project version
+          label.error.error-required
+            |Please enter project version
           input type="text" id="project_project_version" value=@project.project_version
 
         label.label.with-input-distance
           |In what language(s) is the project?
           span.star
-        .input.collection-checkboxes as="collection-checkboxes" model="project.project_languages"
+        .input.collection-checkboxes as="collection-checkboxes" model="project.project_languages" min="1" required="true"
           .options
             - @project_languages.each_with_index do |language, index|
               - input_id = "project_project_languages_#{index + 1}"
@@ -152,11 +157,15 @@ form for="project" url=short_wizard_path method="post" json="{}"
                 label.custom-checkbox for=input_id
                 label for=input_id
                   |#{language}
+
             .clearfix
+          label.error.error-required
+            |Please choose one or more languages
 
         label.label.with-input-distance
           |In what language(s) should the bugs be reported?
-        .input.collection-checkboxes.clearfix as="collection-checkboxes" model="project.report_languages"
+          span.star
+        .input.collection-checkboxes.clearfix as="collection-checkboxes" model="project.report_languages" min="1" required="true"
           .options
             - @report_languages.each_with_index do |language, index|
               - input_id = "project_report_languages_#{index + 1}"
@@ -165,6 +174,10 @@ form for="project" url=short_wizard_path method="post" json="{}"
                 label.custom-checkbox for=input_id
                 label for=input_id
                   |#{language}
+            .clearfix
+
+          label.error.error-required
+            |Please choose one or more languages
 
         label.label.your-comment-label.with-input-distance.clear
           |Your comment
@@ -236,9 +249,11 @@ form for="project" url=short_wizard_path method="post" json="{}"
           p.help
             |Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
 
-          .input.tags as="tags" model="project.main_components"
-            label.placeholder
+          .input.tags as="tags" model="project.main_components" required="true"
+            label.placeholder.hiding-placeholder
               |Type components here, separate by commas...
+            label.error.error-required
+              |Type components here, separate by &laquo;ENTER&raquo;
             input type="text" value=@project.main_components.join(",")
 
 
@@ -277,6 +292,11 @@ form for="project" url=short_wizard_path method="post" json="{}"
                   |#{asset.data_file_name}
 
                 span class='delete'
+
+        .columns.large-12
+          label#test-url-or-files-required-error.error.error-required
+            |Please type url or upload at least one file
+
 
         .auth-data
           .label

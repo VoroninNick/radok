@@ -68,4 +68,8 @@
         return
       $(this).get(0).tagName.toLowerCase()
 
+
+    $.fn.hasAttribute = (attr)->
+      $(this).attr(attr) != undefined
+
 )(jQuery)

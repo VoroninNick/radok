@@ -251,7 +251,7 @@ $("body").on "change code-change keyup keypress", ".wizard [as=platforms] .optio
   value = original_value
   if value == ""
     value = "0"
-  if value.length > 0 && value[0] == '0'
+  if value.length > 1 && value[0] == '0'
     value = value.slice(1, value.length)
   if value != original_value
     $input.val(value)
@@ -351,6 +351,80 @@ update_price = ()->
   $platforms_field.trigger("change.project.total_price")
   $platforms_field.trigger("change.project.selected_platforms")
   #$platforms_field.trigger("change.#{model}")
+
+
+window.input_value = ()->
+  $input = $(this)
+  input_type = $input.attr("as") || $input.attr("type")
+  input_data_type = $input.attr("data-type")
+
+
+  if input_type && input_types[input_type]
+    value = input_types[input_type].dom_value($input)
+  else
+    value = $input.val()
+
+  console.error "input_type: ", input_type
+
+  if input_data_type == "integer"
+    value = parseInt(value)
+
+  return value
+
+window.validate_input = (value)->
+  $input = $(this)
+  input_type = $input.attr("as")
+  input_type_class = input_types[input_type]
+  if value == undefined
+    value = input_value.call($input)
+
+  # validation
+  validation_options = {
+    required: $input.hasAttribute("required")
+    min: $input.attr("min")
+  }
+
+  validation_result = {}
+  if validation_options.required
+    if (!value || !value.length)
+      validation_result.required = false
+    else
+      validation_result.required = true
+
+
+  if input_type_class && input_type_class.validate
+    r = input_type_class.validate()
+    validation_result = $.extend(validation_result, r)
+
+
+  invalid_classes = []
+  valid_classes = []
+  for k, v of validation_result
+    if !v
+      invalid_classes.push("invalid-#{k}")
+    else
+      valid_classes.push("invalid-#{k}")
+
+  valid = invalid_classes.length == 0
+  invalid = !valid
+
+
+
+  $input.removeClass(valid_classes.join(" "))
+  $input.addClass(invalid_classes.join(" "))
+
+  if invalid
+    $input.addClass("invalid")
+  else
+    $input.removeClass("invalid")
+
+  # / validation
+
+window.validate_inputs_on_init = ()->
+  $(".input[model], input[model]").each ()->
+    $input = $(this)
+
+    validate_input.call($input)
 
 $("body").on "change.project.total_price", ()->
   price = project.total_price
@@ -481,24 +555,18 @@ window.check_for_step_completeness = ()->
         $step.trigger("step_uncompleted")
 
 
+
+
+
+
 $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   #console.log "e : #{e.type}", e
   $input = $(this)
   model = $input.attr("model")
 
-  input_type = $input.attr("as") || $input.attr("type")
-  input_data_type = $input.attr("data-type")
+  value = input_value.call($input)
 
-
-  if input_type && input_types[input_type]
-    value = input_types[input_type].dom_value($input)
-  else
-    value = $input.val()
-
-  console.error "input_type: ", input_type
-
-  if input_data_type == "integer"
-    value = parseInt(value)
+  validate_input.call($input, value)
   assign_model_key(model, value)
 
   #console.log "input change"
@@ -765,23 +833,40 @@ $("body").on "change keyup", ".input.string, .input.text", ()->
 
 
 
-$("body").on "focusin focusout", ".input", (e)->
-  if e.type == 'focusin'
-    $(this).addClass("focus")
+$("body").on "focus focusin focusout", ".input", (e)->
+  $input = $(this)
+  if e.type == 'focusout' && !$input.hasClass("touched")
+    $input.addClass("touched")
+    $input.trigger("touched")
+  if e.type == 'focusin' || e.type == 'focus'
+    $input.addClass("focus")
   else
-    $(this).removeClass("focus")
+    $input.removeClass("focus")
 
   #console.log "e", e.type
-  if e.type == 'focusin'
-    $step = $(this).closest(".wizard-step")
+  if e.type == 'focusin' || e.type == 'focus'
+    $step = $input.closest(".wizard-step")
     step_id = parseInt($step.attr("step"))
     change_step(step_id, $step, false)
+
+
+$("body").on "click", ".input.collection-checkboxes", ()->
+  $input = $(this)
+  $input.addClass("touched")
 
 
 
 
 change_step = (step_id, $current_step = null, check_for_current_step_id = true)->
   if !check_for_current_step_id || step_id != project.current_step_id
+
+    # validate current step before change
+    $current_step ?= $(".wizard-step[step=#{project.current_step_id}]")
+    $current_step.addClass("changed-from-this")
+    $current_step.find(".input").each ()->
+      $input = $(this)
+      validate_input.call($input)
+
     #console.log "change_step: step_id: ", step_id
     project.current_step_id = step_id
 
@@ -906,9 +991,21 @@ init_string_inputs = ()->
 init_tags_input = ()->
   $('.input[model="project.main_components"] input').tagsInput({
     defaultText: ""
+    onRemoveTag: ()->
+      $input = $(this).closest(".input")
+      $input.trigger("change")
+
+    onAddTag: ()->
+      $input = $(this).closest(".input")
+      $input.trigger("change")
     onChange: ()->
       $input = $(this).closest(".input")
       $input.trigger("change")
+      empty = $input.children().filter("input").val().length > 0
+      if empty
+        $input.addClass("empty").removeClass("not-empty")
+      else
+        $input.addClass("not-empty").removeClass("empty")
   })
 
 
@@ -1069,14 +1166,20 @@ $("body").on "change", "input.file-upload-input", ->
   })
 
 
+  $input.trigger("upload_files.#{attachment_name}")
+
+
 
 $("body").on "click", ".file-upload-files-list .delete", ->
+  console.log "delete 1"
+
   $file = $(this).closest('.file')
   file_index = $file.index()
   asset_id = $file.attr("data-id")
+  $list = $file.closest(".file-upload-files-list")
   $file.remove()
   assets.test_case_files.splice(file_index, 1)
-  $list = $(".file-upload-files-list")
+
   attachment_name = $list.attr("data-attachment-name")
   $.ajax({
     url: "#{wizard_root_path}/#{project.id}/#{attachment_name}/#{asset_id}"
@@ -1084,6 +1187,10 @@ $("body").on "click", ".file-upload-files-list .delete", ->
     dataType: "json"
 
   })
+
+  $list.trigger("delete_files.#{attachment_name}")
+
+  console.log("delete 2")
 
 
 
@@ -1177,6 +1284,23 @@ $("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
   #console.log "step_id: ", step_id
 
 
+validate_project_access_test_url_and_files = ()->
+  valid = (project.project_url && project.project_url.length > 0 ) || $(".test_files-list").children().length > 0
+  console.log "validate_project_access_test_url_and_files: ", valid
+  $error = $("#test-url-or-files-required-error")
+
+
+  if valid
+    $error.fadeOut()
+  else
+    $error.fadeIn()
+
+$("body").on "upload_files.test_files delete_files.test_files change.project.project_url", ()->
+  validate_project_access_test_url_and_files()
+
+$("body").on "delete_files.test_files", ()->
+  console.log "delete 3"
+
 # initialize wizard
 
 window.project ?= {}
@@ -1188,7 +1312,7 @@ showStepsProgress()
 #console.log "platform_bindings: ", project.test_platforms_bindings
 #console.log "total_price: ", project.total_price
 
-
+validate_inputs_on_init()
 
 
 init_string_inputs()

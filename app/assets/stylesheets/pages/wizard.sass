@@ -850,7 +850,7 @@ form[for=project]
         color: $sky-blue-color
 
   &.empty
-    > label, .platform-option-label
+    > label, .platform-option-label, .input-wrap input
       color: $light-gray-text-color
 
 
@@ -1673,6 +1673,12 @@ comment-with-price
 
 
 
+// validation for wizard
+
+#wizard-content
+  .error
+    color: $fire-orange-color
+    font-size: $font-size-14
 
 // anonymous tests wrap in popup
 
@@ -1699,3 +1705,47 @@ comment-with-price
 
     &:hover
       opacity: 1
+
+
+
+.input
+  .error
+    display: none
+
+
+.input.tags
+
+
+.input.touched.invalid, .wizard-step.changed-from-this .input.invalid
+  input
+    border-color: $fire-orange-color
+  .error
+    display: block
+
+  &.tags
+    input
+      border-color: transparent
+    &.invalid
+      .tagsinput
+        border-color: $fire-orange-color
+
+    &.focus
+      .error, .placeholder
+        display: none !important
+
+  &.string, &.text, &.url, &.tags
+    .error
+      position: absolute
+      line-height: 30px
+      padding: 0 12px
+
+
+
+
+
+  .placeholder
+    &.hiding-placeholder
+      display: none !important
+
+
+
