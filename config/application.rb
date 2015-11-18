@@ -25,7 +25,5 @@ module RadokForce
     config.active_record.raise_in_transactional_callbacks = true
 
     config.assets.precompile += %w(modernizr.js svg_images.js angular_app.js not_found.css mailer.css)
-
-
   end
 end

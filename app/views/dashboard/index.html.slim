@@ -80,7 +80,7 @@
                           .type-of-test-logo ng-include="project.type_of_test_logo"
                           .project-name
                             = project.project_name
-                          = render "project_progress", percent: 55
+                          = render "project_progress", percent: project.percent_completed_counter
                           .remaining-time
                             - if project.expected_tested_at
                               = project.remaining_time_string

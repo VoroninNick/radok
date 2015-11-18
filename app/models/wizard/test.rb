@@ -110,6 +110,23 @@ class Wizard::Test < ActiveRecord::Base
   end
 
 
+  def platform_roots
+    root_ids = platforms.map(&:root_id).uniq
+    roots = Wizard::Platform.find(root_ids)
+    return roots
+    # roots_collection = []
+    # roots.each do |r|
+    #   root_info = { platform: r }
+    #   root_info
+    # end
+
+    #bindings = test_platforms_bindings.map{|b| {test_id: b.test_id, platform_id: b.platform_id, root_id: b.platform.root_id} }
+    #bindings = test_platforms_bindings
+    #root_ids = bindings.map{|b| b.platform.root_id }.uniq
+    #root_ids.map{|root_id| root = Wizard::Platform.find(root_id); root.platforms }
+    #root_ids.map{|group_id| g = {}; g[:id] = group_id; g[:platform_ids] = binding_ids.select{|p| p[:root_id] == group_id }.map{|p| p[:id] }; g  }
+  end
+
 
   def test_type_name
     test_type.try(&:name)
@@ -189,14 +206,40 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def percent_completed_counter
-    16
+    percent_completed || 0
   end
 
   def completed?
     completed_at.present?
   end
 
+  def localization_test?
+    self.test_type.name.downcase == "localization"
+  end
 
+  def functional_test?
+    self.test_type.name.downcase == "functional"
+  end
+
+  def usability_test?
+    self.test_type.name.downcase == "usability"
+  end
+
+  def test_mobile_app?
+    self.product_type.name.downcase == "mobile apps"
+  end
+
+  def test_responsive_website?
+    self.product_type.name.downcase == "responsive website"
+  end
+
+  def test_software?
+    self.product_type.name.downcase == "software"
+  end
+
+  def test_games?
+    self.product_type.name.downcase == "games"
+  end
 
   def report_name
     "Bugfix report v2.56"

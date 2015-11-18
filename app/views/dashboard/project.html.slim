@@ -23,24 +23,28 @@
       .managed-by-header
         |Managed by
       .managed-by-avatar
-        = image_tag("profile_image.jpg")
+        - if @project.user.avatar.exists?(:profile_image)
+          img src=@project.user.avatar.url(:profile_image)
+        - else
+          = image_tag("profile_image.jpg")
+
       .managed-by-name
-        = "Oleksandra Shevchenko"
+        = @project.user.name_or_username
   .columns.large-4.project-short-info-column.total-cost
     .inner
       .total-cost-header
         |Total cost
       .total-cost-value
         |$&nbsp;
-        span animate-number="" value="5488"
+        span animate-number="" value=@project.total_price
           = 0
   .columns.large-4.project-short-info-column.project-progress
     .inner
       .project-progress-header
         |Project progress
       .project-progress-value
-        = render "project_progress", percent: 55
+        = render "project_progress", percent: @project.percent_completed_counter
 
 
 .row
-  = render "project_full_summary", project: @project
+  = render "project_super_full_summary", project: @project

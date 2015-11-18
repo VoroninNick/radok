@@ -12,6 +12,13 @@ class Wizard::Platform < ActiveRecord::Base
 
   do_not_validate_attachment_file_type :avatar
 
+  scope :by_test_id, ->(test_id) do
+    #platform_ids = Wizard::TestPlatform.where(test_id: test_id).pluck(:platform_id); where(id: platform_ids)
+    joins(:test_platforms_bindings).where(wizard_test_platforms: { test_id: test_id })
+  end
+
+
+
 
   def recursive_to_hash
     res = {name: name, id: id}
