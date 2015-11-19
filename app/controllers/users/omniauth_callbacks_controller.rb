@@ -17,8 +17,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
-    return render inline: "provider: #{@user.provider}; uid: #{@user.uid}; persisted: #{@user.persisted?}; email: #{@user.email}; id: #{@user.id}; password: #{@user.password}; first_name: #{@user.first_name}; last_name: #{@user.last_name}; confirmation_required?: #{@user.send(:confirmation_required?).inspect}"
-
+    #return render inline: "provider: #{@user.provider}; uid: #{@user.uid}; persisted: #{@user.persisted?}; email: #{@user.email}; id: #{@user.id}; password: #{@user.password}; first_name: #{@user.first_name}; last_name: #{@user.last_name}; confirmation_required?: #{@user.send(:confirmation_required?).inspect}"
+    #return render inline: request.env["omniauth.auth"].inspect
     #return render inline: "persisted: #{@user.persisted?.inspect}" + @user.inspect
     if @user.persisted?
       sign_in resource_name, @user
@@ -26,7 +26,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       #set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
-      #session["devise.#{name}_data"] = request.env["omniauth.auth"]
+      session["devise.#{name}_data"] = request.env["omniauth.auth"]
       #redirect_to new_user_registration_url
       #url_to_redirect = "/sign-up/facebook"
       #url_to_redirect = "/sign-in/facebook" if sign_in

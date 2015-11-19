@@ -37,12 +37,13 @@ class User < ActiveRecord::Base
   def self.from_omniauth(auth)
     auth.try do |auth|
       user = where("(provider = ? and uid = ?) or email = ?", auth[:provider], auth[:uid], auth[:info][:email]).first
-      user ||= create do |user|
+      user ||= new do |user|
         user.email = auth[:info][:email]
         user.password = Devise.friendly_token[0,20]
         user.first_name = auth[:info][:first_name]   # assuming the user model has a name
         user.last_name = auth[:info][:last_name]
-        #user.image = auth.info.image # assuming the user model has an image
+
+        user.avatar = auth.info.image.gsub(/\Ahttp:/, "https:") # assuming the user model has an image
       end
     end
   end

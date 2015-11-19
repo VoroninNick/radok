@@ -53,4 +53,4 @@
 
 #= require payment_form
 
-#= require social
+# require social
