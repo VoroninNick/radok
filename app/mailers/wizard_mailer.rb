@@ -15,4 +15,5 @@ class WizardMailer < ApplicationMailer
         subject: "New Payment Request"
     )
   end
+
 end

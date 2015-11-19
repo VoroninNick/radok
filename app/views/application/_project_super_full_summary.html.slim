@@ -90,6 +90,18 @@
 
       .columns.large-6
         .property-label
+          |Project name:
+        .property-value data-bind="project.project_languages"
+          = project.project_name
+
+      .columns.large-6
+        .property-label
+          |Project version:
+        .property-value data-bind="project.project_languages"
+          = project.project_version
+
+      .columns.large-6.clear
+        .property-label
           |Your product is in:
         .property-value data-bind="project.project_languages"
           = project.project_languages.join(", ")
@@ -99,6 +111,79 @@
           |Bugs will be reported in:
         .property-value data-bind="project.report_languages"
           = project.report_languages.join(", ")
+      - if project.project_info_comment.present?
+        .columns.large-12
+          .property-label
+            |Project info comment:
+          .property-value data-bind="project.project_languages"
+            = project.project_info_comment
+      - if project.test_plan?
+        .clearfix
+        hr
+        - if project.exploratory?
+          .columns.large-12
+            .property-label
+              |Exploratory instructions:
+            .property-value data-bind="project.project_languages"
+              = project.exploratory_description
+        - else
+          .columns.large-12
+            .property-label
+              |Test-case driven files:
+            .property-value data-bind="project.project_languages"
+              - project.test_case_files.each do |f|
+                .file
+                  a href=f.url
+                    = f.data_file_name
+
+        .columns.large-12
+          .property-label
+            |Project main components:
+          .property-value data-bind="project.project_languages"
+            - project.main_components.each do |c|
+              .component
+                = c
+      .clearfix
+      hr
+      - if project.project_url.present?
+        .columns.large-12
+          .property-label
+            |Url to be tested:
+          .property-value data-bind="project.project_languages"
+            = project.project_url
+      - if project.test_files.any?
+        .columns.large-12
+          .property-label
+            |Files to be tested:
+          .property-value
+            - project.test_files.each do |f|
+              .file
+                a href=f.url
+                  = f.data_file_name
+      - if project.authentication_required
+        .columns.large-12
+          .property-label
+            |This project requires authentication:
+          .property-value
+            |username: #{project.auth_login}
+            br
+            |password: #{project.auth_password}
+      - if project.contact_person?
+        - contact_person = project.contact_person
+        .columns.large-12
+          .property-label
+            |Contact person:
+          .property-value
+            = raw(contact_person.map{|k, v| "#{k}: #{v}" }.join("<br/>"))
+      - if project.project_access_comment.present?
+        .columns.large-12
+          .property-label
+            |Project access comment:
+          .property-value
+            = project.project_access_comment
+
+
+
       .columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
         .property-label
           |Here is project url:

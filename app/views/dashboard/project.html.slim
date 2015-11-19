@@ -47,4 +47,11 @@
 
 
 .row
+  - if @project.admin_comment.present?
+    .columns.large-12
+      h1
+        |Admin comment:
+    .columns.large-12
+      = raw @project.admin_comment
+    .clearfix
   = render "project_super_full_summary", project: @project

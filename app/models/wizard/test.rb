@@ -377,7 +377,10 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def main_components=(val)
-    self['main_components'] = val.try{|val| val.join(",")  }
+    if val.respond_to?(:join)
+      val = val.join(",")
+    end
+    self['main_components'] = val
   end
 
   # step_id
@@ -446,6 +449,26 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
 
       #test.president president.to_builder
     end
+  end
+
+  def contact_person?
+    contact_person.present?
+  end
+
+  def contact_person
+    h = {}
+    %w(name email phone).each do |prop|
+      val = send("contact_person_#{prop}")
+      if val.present?
+        h[prop.to_sym] = val
+      end
+    end
+
+    h
+  end
+
+  def test_plan?
+    localization_test? || functional_test?
   end
 
   def complete!

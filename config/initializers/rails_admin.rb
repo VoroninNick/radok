@@ -477,4 +477,49 @@ RailsAdmin.config do |config|
     field :changefreq
     field :priority
   end
+
+  config.model Wizard::Test do
+    edit do
+      group :basic do
+        field :test_type
+        field :product_type
+      end
+
+      group :platforms do
+        field :hours_per_tester
+      end
+
+      group :project_info do
+        field :project_name
+        field :project_version
+        field :project_languages, :text
+        field :report_languages, :text
+        field :project_info_comment
+      end
+
+      group :test_plan do
+        field :methodology_type
+        field :exploratory_description
+        field :test_case_files
+        field :main_components
+      end
+
+      group :project_access do
+        field :project_url
+        field :test_files
+        field :authentication_required
+        field :auth_login
+        field :auth_password
+        field :contact_person_name
+        field :contact_person_email
+        field :contact_person_phone
+        field :project_access_comment
+      end
+
+      group :other do
+        field :total_price
+        field :admin_comment, :ck_editor
+      end
+    end
+  end
 end

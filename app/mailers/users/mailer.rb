@@ -23,4 +23,9 @@ class Users::Mailer < ApplicationMailer
     @token = token
     devise_mail(record, :unlock_instructions, opts)
   end
+
+  def welcome_email(record, provider = nil, opts = {})
+    @provider = provider
+    devise_mail(record, :welcome_email, opts)
+  end
 end

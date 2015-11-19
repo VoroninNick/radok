@@ -122,4 +122,8 @@ class User < ActiveRecord::Base
     return username
   end
 
+  def send_social_welcome_email(provider = nil)
+    Users::Mailer.welcome_email(self, provider).deliver
+  end
+
 end

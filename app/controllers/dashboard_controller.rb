@@ -21,7 +21,7 @@ class DashboardController < ApplicationController
   end
 
   def project
-    @project = Wizard::Test.last
+    @project = Wizard::Test.find(params[:id])
   end
 
   def check_user

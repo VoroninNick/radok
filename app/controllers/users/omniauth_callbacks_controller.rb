@@ -35,6 +35,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.skip_confirmation!
       @user.saved_at = DateTime.now
       if @user.save!
+        @user.send_social_welcome_email(name)
         sign_in :user, @user
       end
       redirect_to "/"
