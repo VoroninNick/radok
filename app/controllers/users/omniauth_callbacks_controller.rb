@@ -28,9 +28,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       #url_to_redirect = "/sign-up/facebook"
       #url_to_redirect = "/sign-in/facebook" if sign_in
 
-      @user.confirmed_at = DateTime.now
-
-      if @user.save
+      #@user.confirmed_at = DateTime.now
+      @user.skip_confirmation!
+      if @user.save!
         sign_in resource_name, @user
       end
       redirect_to "/"

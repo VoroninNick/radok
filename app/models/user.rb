@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :tests, class_name: Wizard::Test
 
   attr_accessible *attribute_names
+  attr_accessible :confirmed_at
   
   attr_accessible :email, :password, :password_confirmation
 
