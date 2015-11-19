@@ -32,7 +32,7 @@ module ApplicationHelper
     "10g.force"
   end
 
-  def linked_in_url
+  def linkedin_url
     "https://www.linkedin.com/grp/home?gid=8415315"
   end
 

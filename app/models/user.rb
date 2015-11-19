@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          #:authentication_keys => [:login]
   #include DeviseTokenAuth::Concerns::User
 
-  self.omniauth_providers = [:facebook, :github, :google_oauth2, :linked_in]
+  self.omniauth_providers = [:facebook, :github, :google_oauth2, :linkedin]
 
   has_many :tests, class_name: Wizard::Test
 
