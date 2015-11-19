@@ -17,8 +17,8 @@
         a href=links[:linkedin] ng-click="authenticate_via_social('linkedin')"
           .social-icon-wrap.ng-scope
             = embedded_svg_from_assets "rf-social-linked-in"
-      /li
-        a ng-click="authenticate_via_social('github')"
-        /! ngInclude: '/assets/github.svg'
-        .social-icon-wrap.ng-scope
-          = embedded_svg_from_assets "github"
+      - if links[:github].present?
+        li
+          a href=links[:github] ng-click="authenticate_via_social('github')"
+            .social-icon-wrap.ng-scope
+              = embedded_svg_from_assets "github"
