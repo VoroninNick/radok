@@ -9,10 +9,11 @@
         a.facebook-login href=links[:facebook]
           .social-icon-wrap.ng-scope
             = embedded_svg_from_assets "rf-social-facebook"
-      li
-        a href=links[:twitter] ng-click="authenticate_via_social('twitter')"
-          .social-icon-wrap.ng-scope
-            = embedded_svg_from_assets "rf-social-twitter"
+      - if links[:twitter].present?
+        li
+          a href=links[:twitter] ng-click="authenticate_via_social('twitter')"
+            .social-icon-wrap.ng-scope
+              = embedded_svg_from_assets "rf-social-twitter"
       li
         a href=links[:linkedin] ng-click="authenticate_via_social('linkedin')"
           .social-icon-wrap.ng-scope
