@@ -12,6 +12,7 @@
 #= require jquery.clickout
 #= require footable/dist/footable.min
 #= require footable/dist/footable.sort.min
+#= require jquery.cookie/jquery.cookie
 # require jquery-validation/dist/jquery.validate.min
 #= require jquery.tagsinput/src/jquery.tagsinput.js
 # require jquery.serialize-hash
@@ -51,3 +52,5 @@
 
 
 #= require payment_form
+
+#= require social

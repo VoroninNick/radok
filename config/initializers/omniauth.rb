@@ -11,7 +11,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   provider :github, '7c153b36621a11e7671a', '6df628a3fb4e63869372972a0b5f94aba2e11fe6'#, scope: "user:email,user:follow"
 
-  provider :google_oauth2, "514836369419-inlr5a4im5bir2u2cl38sqsbdujtkqe4.apps.googleusercontent.com", "Dau-5iDpCwSGutY_C7R0INx5"
+  #provider :google_oauth2, "514836369419-inlr5a4im5bir2u2cl38sqsbdujtkqe4.apps.googleusercontent.com", "Dau-5iDpCwSGutY_C7R0INx5"
+  provider :google_oauth2, Settings['omniauth.google_oauth2.client_id'], Settings['omniauth.google_oauth2.client_secret']
 
   provider :linkedin, "77wi6ez9os0qxe", "WG85tBcFg8zpULDz"
 
