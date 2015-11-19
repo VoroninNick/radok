@@ -31,8 +31,8 @@ class User < ActiveRecord::Base
 
   #attr_accessor :login
 
-  #validates :username, :email, presence: true
-  validates :email, :username, uniqueness: true
+  validates :email, presence: true
+  validates :email, uniqueness: true
 
   def self.from_omniauth(auth)
     auth.try do |auth|
