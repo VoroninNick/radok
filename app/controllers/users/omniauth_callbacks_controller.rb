@@ -47,6 +47,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     specific_provider(:google_oauth2)
   end
 
+  def github
+    specific_provider(:github)
+  end
+
 
   def redirect_callbacks
     #return render inline: "hi"
