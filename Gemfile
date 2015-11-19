@@ -126,3 +126,5 @@ gem 'react-rails'
 gem 'opal'
 
 gem 'rails_config'
+
+gem 'activerecord-session_store'
