@@ -7,7 +7,7 @@
       .content
         form.form.login-form action=user_session_path method="post" novalidate="" show-preloader="" resource="user" close-on-success="true" reload-on-success="true"
           .form-content
-            /.oauth-login
+            .oauth-login
               .header
                 | Login using social networks
               = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: "/users/auth/twitter?sign-in",  google_plus: "/users/auth/google_oauth2?sign-in"}
