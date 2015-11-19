@@ -31,7 +31,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       #@user.confirmed_at = DateTime.now
       @user.skip_confirmation!
       if @user.save!
-        sign_in resource_name, @user
+        sign_in :user, @user
       end
       redirect_to "/"
       #redirect_to "/sign-up/#{name}"

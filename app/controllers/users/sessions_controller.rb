@@ -31,6 +31,8 @@ class Users::SessionsController < Devise::SessionsController
         return render json: { user: { errors: { login: :unconfirmed } } }, status: 401
       end
 
+
+
       #return render inline: session[:tests].inspect
 
       test_ids = session[:tests]
