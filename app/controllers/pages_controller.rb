@@ -38,6 +38,7 @@ class PagesController < ApplicationController
 
 
   def home
+    #return render inline: session.keys.inspect
     @home_slides = [
         {images: ["/assets/radok-web-banner-layer-1.png", "/assets/radok-web-banner-layer-2.png", "/assets/radok-web-banner-layer-3.png"], title: "We test mobile, web apps and games.", description: "Professional crowd testing team are ready to start testing your software product immediately", button: { title: "Start now", subtitle: ("no registration required" unless current_user), svg: "rf-rocket-up-right.svg", class: "start-now-button", sref: "wizard", href: wizard_path  } },
         {images: ["/assets/banners/2/radok-web-banner2-layer-1.png", "/assets/banners/2/radok-web-banner2-layer-2b.png", "/assets/banners/2/radok-web-banner2-layer-3b.png"], title: "We have a bunch of different devices to test on", description: "Professional crowd testing team are ready to start testing your software product immediately", button: { title: "Check out", svg: "rf-rocket-up-right.svg", class: "start-now-button", sref: "wizard", href: devices_path  } }
