@@ -4,7 +4,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   #provider :facebook, "1594981080756392", "ecab8a1969ce2ca2e28a7d273c0ab784"
   #provider :facebook, "777676205684450", "1458fbcb799e3bbc7bbc94ac3812c43d"
-  provider :facebook, "574720446011703", "1a56643ae3aa26eb1008dae30118b620", scope: "email,public_profile"
+  #provider :facebook, "574720446011703", "1a56643ae3aa26eb1008dae30118b620", scope: "email,public_profile"
+  provider :facebook, "196514890685884", "b91edd861c35dd1a8bdd0bfbde786922", scope: "email,public_profile"
 
   provider :github, '7c153b36621a11e7671a', '6df628a3fb4e63869372972a0b5f94aba2e11fe6'#, scope: "user:email,user:follow"
 
