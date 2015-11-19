@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "session", to: "application#session_inspect"
   get "w", to: "wizard#new_and_allow"
   scope "emails", controller: "emails" do
     root action: :index, as: :emails
