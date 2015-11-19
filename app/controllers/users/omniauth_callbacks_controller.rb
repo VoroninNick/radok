@@ -25,7 +25,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       #set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
       data = session["devise.#{name}_data"] = request.env["omniauth.auth"]
-      render inline: data.inspect
+      render inline: ((data.inspect) + "=====================name:" + data['info']['name'].inspect + "======email: #{data['info']['email'].inspect}" )
       #redirect_to new_user_registration_url
       #url_to_redirect = "/sign-up/facebook"
       #url_to_redirect = "/sign-in/facebook" if sign_in
