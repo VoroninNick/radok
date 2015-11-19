@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
     render template: "errors/access_denied", layout: "not_found"
   end
 
+  def session_inspect
+    return render inline: session.to_hash.inspect
+  end
+
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
