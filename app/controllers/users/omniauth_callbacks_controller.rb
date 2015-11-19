@@ -17,7 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
-    return render inline: "provider: #{@user.provider}; uid: #{@user.uid}; persisted: #{@user.persisted?}"
+    return render inline: "provider: #{@user.provider}; uid: #{@user.uid}; persisted: #{@user.persisted?}; email: #{@user.email}; id: #{@user.id}; password: #{@user.password}; first_name: #{@user.first_name}; last_name: #{@user.last_name}; confirmation_required?: #{@user.confirmation_required?.inspect}"
 
     #return render inline: "persisted: #{@user.persisted?.inspect}" + @user.inspect
     if @user.persisted?
