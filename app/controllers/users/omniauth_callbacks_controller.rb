@@ -27,8 +27,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       #redirect_to new_user_registration_url
       #url_to_redirect = "/sign-up/facebook"
       #url_to_redirect = "/sign-in/facebook" if sign_in
-      @user.save
-      sign_in resource_name, @user
+      if @user.save
+        sign_in resource_name, @user
+      end
       redirect_to "/"
       #redirect_to "/sign-up/#{name}"
     end
