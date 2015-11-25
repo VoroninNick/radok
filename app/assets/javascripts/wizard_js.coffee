@@ -24,3 +24,4 @@
 
 
 #= require simple_wizard
+#= require simple_wizard_mobile

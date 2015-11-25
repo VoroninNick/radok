@@ -6,6 +6,15 @@ window.price_per_hour = 29
 window.assets ?= {}
 window.assets.test_case_files ?= []
 
+window.small = (size = 640)->
+  ratio = window.devicePixelRatio
+  ratio ?= 1
+  width = window.innerWidth
+  if width <= size || width / ratio <= size
+    return true
+  else
+    return false
+
 assign_model_key = (model, val)->
   model_keys = model.split(".")
   last_key = model_keys[model_keys.length - 1]
@@ -1021,10 +1030,12 @@ $("body").on "click", ".input.tags label", ()->
 
 
 $("body").on "change.project.product_type", ()->
+  $project_test_type = $("#project-test-type")
   if project.product_type
-    $("#project-test-type").fadeIn()
-
-
+    $project_test_type.fadeIn()
+  if small() && !project.test_type
+    top = $project_test_type.offset().top
+    $("body").animate({scrollTop: top})
 
 
 $("body").on "change.project.test_type", ()->
@@ -1364,3 +1375,5 @@ $("body").on "change.project.hours_per_tester", ()->
 
 
 $("body").on "keyup", ".input[as=tags]", ()->
+
+
