@@ -16,273 +16,273 @@ $mobile-menu-upper-bound: 768px
 $desktop-menu-lower-bound: 769px
 
 #header
-  height: $header-height
-  background: $header-bg-color
-  position: relative
+	height: $header-height
+	background: $header-bg-color
+	position: relative
 #fixed-header
-  position: fixed
-  height: inherit
-  width: 100%
-  background: inherit
-  z-index: $header-z-index
-
+	//position: fixed
+	position: relative
+	height: inherit
+	width: 100%
+	background: inherit
+	z-index: $header-z-index
 #header-row
-  +grid-row
-  //position: relative
+	+grid-row
+	//position: relative
 #header-logo
-  +grid-column(3)
-  height: $header-height
-  a
-    position: relative
-    height: 100%
-    display: inline-block
-  img
-    margin-top: rem-calc(5)
-    max-height: 100%
-    height: 60px
+	+grid-column(3)
+	height: $header-height
+	a
+		position: relative
+		height: 100%
+		display: inline-block
+	img
+		margin-top: rem-calc(5)
+		max-height: 100%
+		height: 60px
 
 
 #header-menu
-  +grid-column(8, $float: right)
-  height: $header-height
+	+grid-column(8, $float: right)
+	height: $header-height
 .header-menu-item
-  +grid-column(3, $collapse: true)
-  //padding: 0 rem-calc(1)
-  height: $header-height
-  padding-left: 1px
-  > a
+	+grid-column(3, $collapse: true)
+	//padding: 0 rem-calc(1)
+	height: $header-height
+	padding-left: 1px
+	> a
 
-    display: block
-    line-height: $header-height
-    height: $header-height
-    color: $header-menu-item-color
-    font-size: 1rem
-    font-weight: 600
-    text-decoration: none
-    text-align: center
-    position: relative
+		display: block
+		line-height: $header-height
+		height: $header-height
+		color: $header-menu-item-color
+		font-size: 1rem
+		font-weight: 600
+		text-decoration: none
+		text-align: center
+		position: relative
 
-    &:before, &:after
-      height: 6px
-      background: $light-gray-text-color
-      content: ""
-      display: block
-      width: 100%
-      position: absolute
-      top: 0
-    &:after
-      width: 0
-      z-index: 1
-      +transition_all(all 0.5s)
+		&:before, &:after
+			height: 6px
+			background: $light-gray-text-color
+			content: ""
+			display: block
+			width: 100%
+			position: absolute
+			top: 0
+		&:after
+			width: 0
+			z-index: 1
+			+transition_all(all 0.5s)
 
-  &.active, &:hover
-    > a
-      cursor: pointer
-      &:after
-        width: 100%
-        background: $fire-orange-color
-  &:not(.active):hover
-    > a
-      color: $fire-orange-color
-  &.active
-    > a
-      color: $light-gray-text-color
-      cursor: default
-
-
+	&.active, &:hover
+		> a
+			cursor: pointer
+			&:after
+				width: 100%
+				background: $fire-orange-color
+	&:not(.active):hover
+		> a
+			color: $fire-orange-color
+	&.active
+		> a
+			color: $light-gray-text-color
+			cursor: default
 
 
 
-  &.has-dropdown
-    > a
-      > span
-        padding-right: 15px
-        position: relative
-        display: inline-block
 
-        &:after
 
-          content: ""
-          //display: inline-block
-          display: block
-          width: 0
-          height: 0
-          border-style: solid
-          border-width: 6px 3px 0 3px
-          border-color: $light-black-color transparent transparent transparent
-          position: absolute
-          right: 2px
-          top: 37px
+	&.has-dropdown
+		> a
+			> span
+				padding-right: 15px
+				position: relative
+				display: inline-block
 
-      &:hover
-        > span
-          &:after
-            border-top-color: $fire-orange-color
-      //position: relative
-    &.opened
-      > a
-        > span
-          &:after
-            border-width: 0 3px 6px 3px
-            border-color: transparent transparent $fire-orange-color transparent
-      .dropdown
-        opacity: 1
-        top: $header-height
-        display: block !important
+				&:after
+
+					content: ""
+					//display: inline-block
+					display: block
+					width: 0
+					height: 0
+					border-style: solid
+					border-width: 6px 3px 0 3px
+					border-color: $light-black-color transparent transparent transparent
+					position: absolute
+					right: 2px
+					top: 37px
+
+			&:hover
+				> span
+					&:after
+						border-top-color: $fire-orange-color
+			//position: relative
+		&.opened
+			> a
+				> span
+					&:after
+						border-width: 0 3px 6px 3px
+						border-color: transparent transparent $fire-orange-color transparent
+			.dropdown
+				opacity: 1
+				top: $header-height
+				display: block !important
 
 
 
 .dropdown
-  top: $header-height
-  //display: none
-  //display: block
-  height: 40px
-  position: absolute
-  width: 100%
-  background: $fire-orange-color
-  left: 0
-  text-align: center
-  //top: -100px
-  opacity: 0
-  //opacity: 0
-  //+transition_all('top 1s, opacity 0.15s 0.85s')
-  +transition_all('all 1s ')
-  ul
-    display: inline-block
-    padding: 0
-    margin: 0
-    list-style: none
-    text-align: center
-    li
-      display: inline-block
-      height: 40px
-      line-height: 40px
-      padding: 0 24px
-      a
-        color: #fff
-        text-decoration: none
+	top: $header-height
+	//display: none
+	//display: block
+	height: 40px
+	position: absolute
+	width: 100%
+	background: $fire-orange-color
+	left: 0
+	text-align: center
+	//top: -100px
+	opacity: 0
+	//opacity: 0
+	//+transition_all('top 1s, opacity 0.15s 0.85s')
+	+transition_all('all 1s ')
+	ul
+		display: inline-block
+		padding: 0
+		margin: 0
+		list-style: none
+		text-align: center
+		li
+			display: inline-block
+			height: 40px
+			line-height: 40px
+			padding: 0 24px
+			a
+				color: #fff
+				text-decoration: none
 
 .dropdowns
-  position: absolute
-  top: 0
-  left: 0
-  width: 100%
-  .dropdown
-    &:not(.ng-hide)
-      z-index: 1
+	position: absolute
+	top: 0
+	left: 0
+	width: 100%
+	.dropdown
+		&:not(.ng-hide)
+			z-index: 1
 
-      opacity: 1
+			opacity: 1
 
 
 
 top-nav, .top-nav
-  display: inline-block
-  float: left
-  width: calc(100% - #{$header-height})
+	display: inline-block
+	float: left
+	width: calc(100% - #{$header-height})
 
-  .menu
-    background: $header-bg-color
+	.menu
+		background: $header-bg-color
 
 #header-user
-  width: 80px
-  height: $header-height
-  display: inline-block
-  float: right
-  cursor: pointer
-  .dropdown
-    opacity: 1
+	width: 80px
+	height: $header-height
+	display: inline-block
+	float: right
+	cursor: pointer
+	.dropdown
+		opacity: 1
 
 
 
-  .inner
-    +font-14-light
-    vertical-align: middle
-    display: inline-block
-    line-height: 16px
-    .svg-wrap
-      svg
-        fill: #fff
-        width: 35px
-        height: 35px
-    .subtitle
-      color: #fff
+	.inner
+		+font-14-light
+		vertical-align: middle
+		display: inline-block
+		line-height: 16px
+		.svg-wrap
+			svg
+				fill: #fff
+				width: 35px
+				height: 35px
+		.subtitle
+			color: #fff
 
-  .user-icon
-    display: block
-    text-align: center
-    line-height: $header-height
-    width: $header-height
-    height: $header-height
-    position: relative
-    &:after
-      content: ""
-      // css triangle
-      width: 0
-      height: 0
-      border-style: solid
-      border-width: 10px 40px 0 40px
-      border-color: $sky-blue-color transparent transparent transparent
-      position: absolute
-      top: $header-height
-      left: 0
-      z-index: 1
+	.user-icon
+		display: block
+		text-align: center
+		line-height: $header-height
+		width: $header-height
+		height: $header-height
+		position: relative
+		&:after
+			content: ""
+			// css triangle
+			width: 0
+			height: 0
+			border-style: solid
+			border-width: 10px 40px 0 40px
+			border-color: $sky-blue-color transparent transparent transparent
+			position: absolute
+			top: $header-height
+			left: 0
+			z-index: 1
 
-  .dropdowns
-    position: absolute
-    top: -40px
-    width: 100%
+	.dropdowns
+		position: absolute
+		top: -40px
+		width: 100%
 
-  .dropdown
-    width: 220px
-    height: 160px // 120px
-    background: $white-color
-    position: relative
-    top: 1px
-    left: -70px
-    padding: 12px
+	.dropdown
+		width: 220px
+		height: 160px // 120px
+		background: $white-color
+		position: relative
+		top: 1px
+		left: -70px
+		padding: 12px
 
-    button.my-dashboard-button-link
-      margin: 24px 0 16px 0
+		button.my-dashboard-button-link
+			margin: 24px 0 16px 0
 
-      &.wizard-button
-        //display: none !important
-        margin-top: 0
+			&.wizard-button
+				//display: none !important
+				margin-top: 0
 
-    .links
-      a
-        color: $sky-blue-color
-        +font-12-light
-        text-decoration: none
+		.links
+			a
+				color: $sky-blue-color
+				+font-12-light
+				text-decoration: none
 
-  &.unlogged
-    background: $sky-blue-color
+	&.unlogged
+		background: $sky-blue-color
 
-    &:hover
-      background: $fire-orange-color
-      //&:after
-        background: $fire-orange-color
-      //svg
-        fill: $fire-orange-color !important
-      .user-icon
-        &:after
-          border-top-color: $fire-orange-color
+		&:hover
+			background: $fire-orange-color
+			//&:after
+				background: $fire-orange-color
+			//svg
+				fill: $fire-orange-color !important
+			.user-icon
+				&:after
+					border-top-color: $fire-orange-color
 
 
 
-  &.logged-in
-    background: $light-gray-text-color
+	&.logged-in
+		background: $light-gray-text-color
 
-    .user-icon
-      &:after
-        border-top-color: $light-gray-text-color
+		.user-icon
+			&:after
+				border-top-color: $light-gray-text-color
 
-    .image-wrap
-      img
-        border-radius: 50%
-    &.no-avatar
-      svg
-        width: 40px
-        height: 40px
+		.image-wrap
+			img
+				border-radius: 50%
+		&.no-avatar
+			svg
+				width: 40px
+				height: 40px
 
 
 
@@ -292,188 +292,203 @@ top-nav, .top-nav
 // ---------------------------------------
 // =======================================
 @media #{$screen} and (max-width: 1128px)
-  #header-user
-    .dropdown
-      left: -140px
+	#header-user
+		.dropdown
+			left: -140px
 @media #{$screen} and (max-width: 810px) and (min-width: $desktop-menu-lower-bound)
-  #header-menu
-    padding-right: 0
-    width: 75%
+	#header-menu
+		padding-right: 0
+		width: 75%
 
 
 //@media #{$screen} and (max-width: 700px) and (min-width: 641px)
-  .header-menu-item
-    padding-left: 0
-    margin-left: 1px
-    width: auto
-    > a
-      width: auto
-      position: relative
-      padding: 0 6px
+	.header-menu-item
+		padding-left: 0
+		margin-left: 1px
+		width: auto
+		> a
+			width: auto
+			position: relative
+			padding: 0 6px
 
 
 @media #{$screen} and (min-width: $desktop-menu-lower-bound)
-  .menu-item
-    .dropdown
-      display: none !important
+	.menu-item
+		.dropdown
+			display: none !important
 
 @media #{$screen} and (max-width: #{$mobile-menu-upper-bound})
-  .menu-item
-    .dropdown
-      top: 0 !important
-      opacity: 1 !important
-      display: none !important
-  .dropdowns
-    display: none !important
-  #header-logo
-    width: auto
-    img
-      margin-top: 0
+	.menu-item
+		.dropdown
+			top: 0 !important
+			opacity: 1 !important
+			display: none !important
+	.dropdowns
+		display: none !important
+	#header-logo
+		width: auto
+		img
+			margin-top: 0
 
-  #header, #header-logo, #header-menu, #header-user, #header-user .user-icon
-    height: $small-header-height
-  #header-menu
-    padding-right: 0
-    width: auto
-  #header-user
-    .user-icon
-      &:after
-        top: $small-header-height
-  top-nav, .top-nav
-    display: none
-    //display: block
-    position: absolute
-    width: 100%
-    left: 0
-    top: 60px
-    height: auto
-    z-index: 2
+	#header, #header-logo, #header-menu, #header-user, #header-user .user-icon
+		height: $small-header-height
+	#header-menu
+		padding-right: 0
+		width: auto
+	#header-user
+		.user-icon
+			&:after
+				top: $small-header-height
+	top-nav, .top-nav
+		display: none
+		//display: block
+		position: absolute
+		width: 100%
+		left: 0
+		top: 60px
+		height: auto
+		z-index: 2
 
-    .menu
-      position: relative
-      height: $header-height
-      .menu-item
-        background: rgba($light-black-color, 1)
-        display: block
-        height: 62px
-        float: none
-        width: 100%
-        > a
-          color: white
-          line-height: 60px
-          height: 60px
-          &:before, &:after
-            display: none
-        &.active
-          > a
-            color: $sky-blue-color
-        &
-          border-bottom: 2px solid $fire-orange-color
-        &:last-child
-          border-bottom: none
-          height: 60px
+		.menu
+			position: relative
+			height: $header-height
+			.menu-item
+				background: rgba($light-black-color, 1)
+				display: block
+				height: 62px
+				float: none
+				width: 100%
+				> a
+					color: white
+					line-height: 60px
+					height: 60px
+					&:before, &:after
+						display: none
+				&.active
+					> a
+						color: $sky-blue-color
+				&
+					border-bottom: 2px solid $fire-orange-color
+				&:last-child
+					border-bottom: none
+					height: 60px
 
-        &.has-dropdown
-          > a
-            &:after
-              content: "+"
-              display: block
-              position: absolute
-              right: 1px
-              left: auto
-              height: 58px
-              width: 70px
-              background: #414143
-              top: 1px
-              font-size: 40px
-              font-weight: 300
-            > span
-              &:after
-                display: none
+				&.has-dropdown
+					> a
+						&:after
+							content: "+"
+							display: block
+							position: absolute
+							right: 1px
+							left: auto
+							height: 58px
+							width: 70px
+							background: #414143
+							top: 1px
+							font-size: 40px
+							font-weight: 300
+						> span
+							&:after
+								display: none
 
-    // when menu opened
-  #body.mobile-menu-opened
-    overflow: hidden
-    &:before
-      content: ""
-      position: fixed
-      top: 60px
-      height: 100%
-      width: 100%
-      background: rgba(0, 0, 0, 0.6)
-      z-index: 10
-  #header
-    &.mobile-menu-opened
-      top-nav, .top-nav
-        display: block
+		// when menu opened
+	#body.mobile-menu-opened
+		//overflow: hidden
 
-        .menu
-          position: relative
-      .header-menu-item
-        &.has-dropdown
-          &.opened
-            height: auto
-            .dropdown
-              display: block !important
-          .dropdown
-            position: relative
-            height: auto
-            top: 0
+		&:before
+			content: ""
+			position: fixed
+			//top: 60px
+			top: 0
+			height: 100%
+			width: 100%
+			background: rgba(0, 0, 0, 0.6)
+			z-index: 10
+			
+		#header
+			&
+				top-nav, .top-nav
+					display: block
 
-            ul
-              width: 100%
-              display: block
-              li
-                display: block
-                float: none
-                width: 100%
-                height: 61px
-                border-bottom: 1px solid $light-black-color
+					.menu
+						position: relative
+				.header-menu-item
+					&.has-dropdown
+						&.opened
+							height: auto
+							.dropdown
+								display: block !important
+						.dropdown
+							position: relative
+							height: auto
+							top: 0
 
-                a
-                  line-height: 60px
+							ul
+								width: 100%
+								display: block
+								li
+									display: block
+									float: none
+									width: 100%
+									height: 61px
+									border-bottom: 1px solid $light-black-color
 
-                &:last-child
-                  border-bottom: 0
-                  height: 60px
+									a
+										line-height: 60px
 
-  #header-mobile-menu-button-wrap
-    cursor: pointer
-    display: block
-    float: right
-    width: 60px
-    height: 60px
-    .inner
-      background: $sky-blue-color
-      position: relative
-      top: 20px
-      left: 15px
-      &, &:before, &:after
-        height: 4px
-        width: 30px
-        display: block
-      &:before, &:after
-        content: ""
-        position: absolute
-        left: 0
-      &:before
-        top: 8px
-        background: $yellow-orange-color
-      &:after
-        top: 16px
-        background: $fire-orange-color
+									&:last-child
+										border-bottom: 0
+										height: 60px
 
-  #header-user
-    &.logged-in
-      .user-icon
-        line-height: 60px
-    &.unlogged
-      .inner
-        svg
-          width: 28px
-          height: 28px
-          margin-top: -14px
-          position: relative
+	#header-mobile-menu-button-wrap
+		cursor: pointer
+		display: block
+		float: right
+		width: 60px
+		height: 60px
+		.inner
+			background: $sky-blue-color
+			position: relative
+			top: 20px
+			left: 15px
+			&, &:before, &:after
+				height: 4px
+				width: 30px
+				display: block
+			&:before, &:after
+				content: ""
+				position: absolute
+				left: 0
+			&:before
+				top: 8px
+				background: $yellow-orange-color
+			&:after
+				top: 16px
+				background: $fire-orange-color
+
+	#body.mobile-menu-opened
+		#header-mobile-menu-button-wrap
+			.inner
+				+transform( rotate(45deg))
+				top: 30px
+
+				&:before
+					display: none
+				&:after
+					transform: rotate(-90deg)
+					top: 0
+
+	#header-user
+		&.logged-in
+			.user-icon
+				line-height: 60px
+		&.unlogged
+			.inner
+				svg
+					width: 28px
+					height: 28px
+					margin-top: -14px
+					position: relative
 
 // =======================================
 // ---------------------------------------
@@ -482,188 +497,188 @@ top-nav, .top-nav
 // =======================================
 
 #wrap
-  min-height: 100%
-  padding-bottom: $footer-height
+	min-height: 100%
+	padding-bottom: $footer-height
 
-$footer-text-color:  $dark-gray-color
+$footer-text-color:	$dark-gray-color
 #footer
-  padding: 15px 0 0 0
-  margin-top: -#{$footer-height}
-  height: $footer-height
-  background-color: $footer-background-color
+	padding: 15px 0 0 0
+	margin-top: -#{$footer-height}
+	height: $footer-height
+	background-color: $footer-background-color
 
-  color: $footer-text-color
-  +font-14-light
+	color: $footer-text-color
+	+font-14-light
 
-  .copyright
-    margin-top: 24px
-  .developed-by
-    .vs-logo
-      svg
-        fill: $dark-gray-color
+	.copyright
+		margin-top: 24px
+	.developed-by
+		.vs-logo
+			svg
+				fill: $dark-gray-color
 
-  .social-icons
-    ul
-      list-style: none
-      padding: 0
-      margin-bottom: 24px
-    li
-      display: inline-block
-      margin: 0 10px
-      &:first-child
-        margin-left: 0
+	.social-icons
+		ul
+			list-style: none
+			padding: 0
+			margin-bottom: 24px
+		li
+			display: inline-block
+			margin: 0 10px
+			&:first-child
+				margin-left: 0
 
-  .menu
-    ul
-      list-style: none
-      padding: 0
-      margin-bottom: 20px
-    li
-      display: inline-block
-      &:after
-        display: inline-block
-        content: ""
-        border-left: 2px solid $white-color
-        width: 2px
-        height: 16px
-        margin: 0 10px
-      &:last-child
-        &:after
-          display: none
+	.menu
+		ul
+			list-style: none
+			padding: 0
+			margin-bottom: 20px
+		li
+			display: inline-block
+			&:after
+				display: inline-block
+				content: ""
+				border-left: 2px solid $white-color
+				width: 2px
+				height: 16px
+				margin: 0 10px
+			&:last-child
+				&:after
+					display: none
 
-    a
-      color: $sky-blue-color
-      text-transform: uppercase
-      +font-16-semibold
-      line-height: 16px
-      vertical-align: top
-  .sublinks
-    color: $footer-text-color
-    ul
-      list-style: none
-      padding: 0
-    li
-      display: inline-block
-      margin: 0 14px
-      &:first-child
-        margin-left: 0
-    a
-      color: $footer-text-color
-      +font-12
+		a
+			color: $sky-blue-color
+			text-transform: uppercase
+			+font-16-semibold
+			line-height: 16px
+			vertical-align: top
+	.sublinks
+		color: $footer-text-color
+		ul
+			list-style: none
+			padding: 0
+		li
+			display: inline-block
+			margin: 0 14px
+			&:first-child
+				margin-left: 0
+		a
+			color: $footer-text-color
+			+font-12
 
 
 #footer
-  .subscribe-block
-    label.header
-      padding-bottom: 12px
-      display: inline-block
-    .copyright
-      margin-top: 24px
+	.subscribe-block
+		label.header
+			padding-bottom: 12px
+			display: inline-block
+		.copyright
+			margin-top: 24px
 #footer-subscribe-input
-  +white-input
+	+white-input
 #subscribe-button
-  width: 55px
-  height: $simple-form-input-height
-  vertical-align: top
-  margin-left: 1px
-  .svg-wrap
-    top: -2px
-    margin: 0
-    position: relative
-    svg
-      vertical-align: initial
+	width: 55px
+	height: $simple-form-input-height
+	vertical-align: top
+	margin-left: 1px
+	.svg-wrap
+		top: -2px
+		margin: 0
+		position: relative
+		svg
+			vertical-align: initial
 
 $page-banner-height: 230px
 $page-banner-mobile-height: 150px
 .page-banner
-  position: relative
-  height: $page-banner-height
-  background: $light-black-color
-  text-align: center
-  background-position: center center
-  background-repeat: no-repeat
-  img
-    height: 100%
-  > .row
-    position: absolute
-    top: 50%
-    left: 50%
-    text-align: right
-    +transform(translate(-50%, -50%))
-    .description-block
-      padding-right: 15px
-      right: 0
-      width: 100%
-      //max-width: 500px
-      max-width: 325px
-      text-align: left
-      display: inline-block
-      .title
-        color: $white-color
-        +font-32-semibold
-      .description
-        color: $sky-blue-color
-        +font-14-light
+	position: relative
+	height: $page-banner-height
+	background: $light-black-color
+	text-align: center
+	background-position: center center
+	background-repeat: no-repeat
+	img
+		height: 100%
+	> .row
+		position: absolute
+		top: 50%
+		left: 50%
+		text-align: right
+		+transform(translate(-50%, -50%))
+		.description-block
+			padding-right: 15px
+			right: 0
+			width: 100%
+			//max-width: 500px
+			max-width: 325px
+			text-align: left
+			display: inline-block
+			.title
+				color: $white-color
+				+font-32-semibold
+			.description
+				color: $sky-blue-color
+				+font-14-light
 
-  @media #{$small-only}
-    background-image: none !important
-    height: $page-banner-mobile-height
-    .description-block
-      text-align: center
-      max-width: none !important
+	@media #{$small-only}
+		background-image: none !important
+		height: $page-banner-mobile-height
+		.description-block
+			text-align: center
+			max-width: none !important
 
 
 
 
 button.my-dashboard-button-link
-  width: 100%
-  height: 36px
-  position: relative
-  padding: 0 0 0 40px
-  .svg-wrap
-    display: inline-block
-    position: absolute
-    left: 0
-    top: 0
-    height: 36px
-    width: 36px
-    svg
-      //width:
-      height: 24px
-      margin-left: 6px
-  .button-title
-    +semibold
+	width: 100%
+	height: 36px
+	position: relative
+	padding: 0 0 0 40px
+	.svg-wrap
+		display: inline-block
+		position: absolute
+		left: 0
+		top: 0
+		height: 36px
+		width: 36px
+		svg
+			//width:
+			height: 24px
+			margin-left: 6px
+	.button-title
+		+semibold
 
-  &.wizard-button
-    .svg-wrap
-      width: 21px
+	&.wizard-button
+		.svg-wrap
+			width: 21px
 
 @media #{$screen} and (max-width: 980px) and (min-width: 641px)
-  #wrap
-    padding-bottom: 212px
-  #footer
-    height: 212px
-    margin-top: -212px
+	#wrap
+		padding-bottom: 212px
+	#footer
+		height: 212px
+		margin-top: -212px
 
 @media #{$small-only}
-  #wrap
-    padding-bottom: $small-footer-height
-  #footer
-    height: $small-footer-height
-    margin-top: -#{$small-footer-height}
-    text-align: center
-    padding-top: 35px
-    .social-icons
-      ul
-        margin-bottom: 40px
-    .sublinks
-      ul
-        margin-bottom: 50px
-    .subscribe-block
-      text-align: left
-    input
-      width: calc(100% - 61px)
-      max-width: none
+	#wrap
+		padding-bottom: $small-footer-height
+	#footer
+		height: $small-footer-height
+		margin-top: -#{$small-footer-height}
+		text-align: center
+		padding-top: 35px
+		.social-icons
+			ul
+				margin-bottom: 40px
+		.sublinks
+			ul
+				margin-bottom: 50px
+		.subscribe-block
+			text-align: left
+		input
+			width: calc(100% - 61px)
+			max-width: none
 
 
 // ================================================
@@ -673,39 +688,39 @@ button.my-dashboard-button-link
 // ================================================
 
 #loading-bar-spinner
-  display: none !important
-  .spinner-icon
-    border-top-color: $fire-orange-color
-    border-left-color: $fire-orange-color
+	display: none !important
+	.spinner-icon
+		border-top-color: $fire-orange-color
+		border-left-color: $fire-orange-color
 
 
 #loading-bar
-  .bar
-    background: $fire-orange-color
-    height: 6px
-  .peg
-    height: 6px
-    +box-shadow(none)
-    //+box-shadow($fire-orange-color 1px 0 6px 1px)
-  &:before
-    content: ""
-    background: rgba(255, 255, 255, 1)
-    display: block
-    width: 100%
-    position: fixed
-    left: 0
-    top: 0
-    height: 100%
-    z-index: 10
-    +transition_all(all 0.3s)
-  &.ng-leave
-    &:before
-      //background: rgba($fire-orange-color, 1)
-  .ngdialog-open &
-    display: none !important
+	.bar
+		background: $fire-orange-color
+		height: 6px
+	.peg
+		height: 6px
+		+box-shadow(none)
+		//+box-shadow($fire-orange-color 1px 0 6px 1px)
+	&:before
+		content: ""
+		background: rgba(255, 255, 255, 1)
+		display: block
+		width: 100%
+		position: fixed
+		left: 0
+		top: 0
+		height: 100%
+		z-index: 10
+		+transition_all(all 0.3s)
+	&.ng-leave
+		&:before
+			//background: rgba($fire-orange-color, 1)
+	.ngdialog-open &
+		display: none !important
 
 #home-feedbacks .carousel-wrapper .owl-carousel
-  margin-top: 40px
+	margin-top: 40px
 
 .page-banner .button-container
-  margin-top: 30px
+	margin-top: 30px
