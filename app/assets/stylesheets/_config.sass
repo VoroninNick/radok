@@ -288,7 +288,10 @@ h4, .h4
 	+h4
 
 
-= small($base-size: 640px)
-	@media only screen and (max-width: #{$base-size * 1.5}) and (min-device-pixel-ratio: 1.5), only screen and (max-width: $base-size)
-		@content
-
+= small($base-size: 640px, $include-normal-ratio: true)
+	@if $include-normal-ratio
+		@media only screen and (max-width: #{$base-size * 1.5}) and (min-device-pixel-ratio: 1.5), only screen and (max-width: $base-size)
+			@content
+	@else
+		@media only screen and (max-width: #{$base-size * 1.5}) and (min-device-pixel-ratio: 1.5)
+			@content

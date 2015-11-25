@@ -1806,3 +1806,12 @@ comment-with-price
 	.option-count
 		.increment, .decrement
 			opacity: 1 !important
+
++small($include-normal-ratio: false)
+	.hours-per-tester
+		.available-hours
+			.hour
+				@for $i from 1 through 5
+					&:nth-child(#{$i})
+						width: #{36px + (4px * $i)}
+
