@@ -1811,7 +1811,11 @@ comment-with-price
 	.hours-per-tester
 		.available-hours
 			.hour
-				@for $i from 1 through 5
+				//+transform(scale(0.9))
+				zoom: 0.85
+				//@for $i from 1 through 5
 					&:nth-child(#{$i})
 						width: #{36px + (4px * $i)}
+						height: #{36px + (4px * $i)}
+
 

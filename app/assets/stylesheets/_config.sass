@@ -289,9 +289,15 @@ h4, .h4
 
 
 = small($base-size: 640px, $include-normal-ratio: true)
+
+	$min-ratio: 1.5
+	$min-res: $min-ratio * 96dpi
+
+	$str1 : "only screen and (max-width: #{$base-size * $min-ratio}) and (min-device-pixel-ratio: #{$min-ratio}), only screen and (max-width: #{$base-size * $min-ratio}) and (min-resolution: #{$min-res})"
+
 	@if $include-normal-ratio
-		@media only screen and (max-width: #{$base-size * 1.5}) and (min-device-pixel-ratio: 1.5), only screen and (max-width: $base-size)
+		@media #{$str1}, only screen and (max-width: $base-size)
 			@content
 	@else
-		@media only screen and (max-width: #{$base-size * 1.5}) and (min-device-pixel-ratio: 1.5)
+		@media #{$str1}
 			@content
