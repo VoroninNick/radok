@@ -165,7 +165,7 @@ RailsAdmin.config do |config|
   end
 
   config.model Wizard::PromoCode do
-    field :password
+    field :password, :string
     field :percentage_discount
   end
 
