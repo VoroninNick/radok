@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
     root to: "wizard#new", as: "short_wizard"
 
+    post ":id/promo_code", to: "wizard#promo_code"
     post ":id/payment", to: "wizard#payment", as: :test_payment
     delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_files"
     post ":id/:asset_field_name", to: "wizard#upload_files"

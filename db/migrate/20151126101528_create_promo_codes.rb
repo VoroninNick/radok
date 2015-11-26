@@ -1,6 +1,6 @@
 class CreatePromoCodes < ActiveRecord::Migration
   def change
-    create_table :promo_codes do |t|
+    create_table :wizard_promo_codes do |t|
       t.string :password
       t.float :percentage_discount
 

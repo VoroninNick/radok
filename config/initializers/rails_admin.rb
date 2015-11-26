@@ -138,7 +138,7 @@ RailsAdmin.config do |config|
   include_pages_models(config)
   include_models(config, MetaData, Page, SitemapElement, Banner, HtmlBlock, KeyedHtmlBlock)
 
-  include_models(config, PromoCode)
+  include_models(config, Wizard::PromoCode)
 
 
   config.model Wizard::TestPlatform do
@@ -164,7 +164,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model PromoCode do
+  config.model Wizard::PromoCode do
     field :password
     field :percentage_discount
   end
@@ -525,6 +525,7 @@ RailsAdmin.config do |config|
 
       group :other do
         field :total_price
+        #field :total_price_with_discount
         field :admin_comment, :ck_editor
       end
     end

@@ -23,12 +23,15 @@ class Wizard::Test < ActiveRecord::Base
 
   has_many :payment_requests
 
+  belongs_to :promo_code, class_name: Wizard::PromoCode
+
   attr_accessible :project_languages, :project_language_ids
   attr_accessible :report_languages, :report_language_ids
 
   attr_accessible :product_type, :product_type_id, :test_type
   attr_accessible :payment_requests, :payment_request_ids
   attr_accessible :main_components
+  attr_accessible :promo_code
 
 
 
@@ -383,7 +386,26 @@ class Wizard::Test < ActiveRecord::Base
     self['main_components'] = val
   end
 
+  def total_price_with_discount
+    price = self.total_price
+    if percentage_discount?
+      coefficient = 1 - (percentage_discount.to_f / 100)
+      #return coefficient
+      return (price * coefficient).ceil
+    end
+
+    price
+  end
+
   # step_id
+
+  def percentage_discount
+    self.promo_code.try{|c| c.percentage_discount.to_i } || 0
+  end
+
+  def percentage_discount?
+    percentage_discount > 0
+  end
 
   def to_json
     to_builder.target!
@@ -446,6 +468,7 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
       t.tested_at tested_at
       t.successful successful
 
+      t.percentage_discount percentage_discount
 
       #test.president president.to_builder
     end

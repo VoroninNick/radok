@@ -112,9 +112,19 @@
         .columns.large-6
           = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment", "requires-auth": "true" })
       .columns.large-6.left style="clear: left;"
-        .promo-code-field
-          label for="promo_code"
+        .promo-code-field class="#{'success' if project.percentage_discount?}"
+          label.waiting-preloader
+            |Sending promo code...
+          label.field-label for="promo_code"
             |Promo code
-          input type="text" placeholder="XXXX"
+          label.error.error-invalid for="promo_code"
+            |Invalid promo code
+          label.success-label
+            |You have &thinsp;
+            span.percentage-discount data-bind="project.percentage_discount"
+              - if project.percentage_discount?
+                = project.percentage_discount
+            |% discount!
+          input id="promo_code" type="text" placeholder="XXXX" disabled=("disabled" if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
           button.ok
             = embedded_svg_from_assets "rf-icon-ok"

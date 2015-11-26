@@ -162,6 +162,24 @@ class WizardController < ApplicationController
     end
   end
 
+  def promo_code
+    test_id = params[:id]
+    @test = Wizard::Test.find(test_id)
+    promo_code_params = params[:promo_code]
+    promo_code = Wizard::PromoCode.where(password: promo_code_params[:password]).first
+    if promo_code
+      @test.promo_code = promo_code
+
+      if @test.save
+        render json: promo_code, status: 200
+      else
+        render json: {}, status: 500
+      end
+    else
+      render json: {}, status: 500
+    end
+  end
+
   def destroy
     test_id = params[:id].to_i
     test = Wizard::Test.delete(test_id)
@@ -233,6 +251,8 @@ class WizardController < ApplicationController
 
     render json: data
   end
+
+
 
   def delete_dashboard_project
     id = params[:id].try(&:to_i)

@@ -322,6 +322,12 @@ update_price = ()->
           p.hours_count = platform_testers_count * (project.hours_per_tester || 1)
           p.price = p.hours_count * price_per_hour
 
+          if project.percentage_discount > 0
+            p.price *= 1 - (project.percentage_discount / 100)
+            p.price = Math.ceil(p.price)
+
+
+
 
 
         platform_index = selected_platform_ids.indexOf(platform_id)
@@ -368,7 +374,8 @@ window.input_value = ()->
   input_data_type = $input.attr("data-type")
 
 
-  if input_type && input_types[input_type]
+
+  if !$input.filter("input").length && input_type && input_types[input_type]
     value = input_types[input_type].dom_value($input)
   else
     value = $input.val()
@@ -1375,5 +1382,51 @@ $("body").on "change.project.hours_per_tester", ()->
 
 
 $("body").on "keyup", ".input[as=tags]", ()->
+
+
+$("body").on "click", ".promo-code-field button", ()->
+  $button = $(this)
+  $promo_code_field = $button.closest(".promo-code-field")
+  $label = $promo_code_field.find("label")
+  $invalid_code_error = $(".error-invalid")
+  $input = $promo_code_field.find("input")
+  $waiting_label = $promo_code_field.find(".waiting")
+
+  password = $input.val()
+
+  data = { promo_code: { password: password } }
+  url = $("form[for=project]").attr("url") + "/" + project.id + "/promo_code"
+  $.ajax(
+    data: data
+    dataType: 'json'
+    type: "post"
+    url: url
+    success: (res)->
+      project.percentage_discount = res.percentage_discount
+      $promo_code_field.removeClass("waiting")
+      $promo_code_field.addClass("success")
+      $(".percentage-discount").text(project.percentage_discount)
+      update_price()
+#      setTimeout(
+#        ()->
+#          $promo_code_field.addClass("hide")
+#
+#        3000
+#      )
+
+    error: ()->
+      #$label.hide()
+      #$invalid_code_error.show()
+      $promo_code_field.removeClass("waiting")
+      $promo_code_field.addClass("invalid")
+
+
+
+      $input.removeAttr("disabled")
+
+  )
+
+  $promo_code_field.addClass("waiting")
+  $input.attr("disabled", "disabled")
 
 
