@@ -1403,7 +1403,7 @@ $("body").on "click", ".promo-code-field button", ()->
     url: url
     success: (res)->
       project.percentage_discount = res.percentage_discount
-      $promo_code_field.removeClass("waiting")
+      $promo_code_field.removeClass("waiting invalid")
       $promo_code_field.addClass("success")
       $(".percentage-discount").text(project.percentage_discount)
       update_price()
