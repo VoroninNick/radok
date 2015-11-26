@@ -527,7 +527,7 @@ RailsAdmin.config do |config|
         field :total_price
         #field :total_price_with_discount
         field :percentage_discount do
-          readonly true
+          read_only true
         end
         field :admin_comment, :ck_editor
       end
