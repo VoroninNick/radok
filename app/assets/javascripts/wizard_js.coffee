@@ -22,6 +22,6 @@
 # require models/project
 # require wizard_scripts
 
-
+#= require css-zoom
 #= require simple_wizard
 #= require simple_wizard_mobile
