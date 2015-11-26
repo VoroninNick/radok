@@ -138,6 +138,8 @@ RailsAdmin.config do |config|
   include_pages_models(config)
   include_models(config, MetaData, Page, SitemapElement, Banner, HtmlBlock, KeyedHtmlBlock)
 
+  include_models(config, PromoCode)
+
 
   config.model Wizard::TestPlatform do
     visible false
@@ -160,6 +162,11 @@ RailsAdmin.config do |config|
       field :name
       field :devices
     end
+  end
+
+  config.model PromoCode do
+    field :password
+    field :percentage_discount
   end
 
 
