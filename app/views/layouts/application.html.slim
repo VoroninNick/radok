@@ -15,6 +15,7 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
     = csrf_meta_tags
 
   body#body
+    = render "google_tag_manager"
     #wrap
       = render 'header'
       main
@@ -42,4 +43,3 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
     - if content_for?(:javascript)
       = content_for :javascript
 
-    = render "google_tag_manager"
