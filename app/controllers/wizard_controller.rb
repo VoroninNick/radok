@@ -36,6 +36,8 @@ class WizardController < ApplicationController
 
     @platform_ids_by_product_type = Wizard::ProductType.platform_ids_by_product_type
 
+
+
   end
 
   def old_wizard
@@ -154,6 +156,19 @@ class WizardController < ApplicationController
   def payment
 
     @payment = PaymentRequest.create(payment_params)
+    @test = @payment.test
+    if @payment.save
+      @test.complete!
+      WizardMailer.payment_request_admin_notification(@payment).deliver
+      render inline: @payment.to_builder.target!, status: 201
+    end
+  end
+
+
+  def pay_later
+    pay_later_params = params[:pay_later]
+    pay_later_params[:test_id] = params[:id]
+    @payment = PaymentRequest.create(pay_later_params)
     @test = @payment.test
     if @payment.save
       @test.complete!

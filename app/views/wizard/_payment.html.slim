@@ -31,9 +31,9 @@
           .form-content
             .inputs
               .row
-                label.columns.large-12
+                label.columns.large-12.choose-payment-method-title
                   |Choose payment method below or schedule a call by "Pay later"
-                label.payment-type class="#{'active' if PaymentRequest.default_payment_type == 'visa_and_master_card'}" value="visa_and_master_card" ng-model="payment_type" ng-click="payment_type = 'visa_and_master_card'" ng-class="{active: payment_type == 'visa_and_master_card'}"
+                label.payment-type.first class="#{'active' if PaymentRequest.default_payment_type == 'visa_and_master_card'}" value="visa_and_master_card" ng-model="payment_type" ng-click="payment_type = 'visa_and_master_card'" ng-class="{active: payment_type == 'visa_and_master_card'}"
                   .image-wrap
                     .master-card-svg-wrap ng-include="'/assets/master_card.svg'"
                       = embedded_svg_from_assets "master_card"
@@ -49,9 +49,9 @@
                       = embedded_svg_from_assets "paypal"
                   .title
                     |Pay with PayPal
-                .payment-type-separator
+                /.payment-type-separator
                   |Or
-                label.payment-type.pay-later value="pay_later" ng-model="payment_type" ng-click="payment_type = 'pay_later'" ng-class="{active: payment_type == 'pay_later'}"
+                /label.payment-type.pay-later value="pay_later" ng-model="payment_type" ng-click="payment_type = 'pay_later'" ng-class="{active: payment_type == 'pay_later'}"
                   .image-wrap
                     .pay-later-svg-wrap ng-include="'/assets/rf-icon-time.svg'"
                       = embedded_svg_from_assets "rf-icon-time"

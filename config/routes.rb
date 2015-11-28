@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     post ":id/promo_code", to: "wizard#promo_code"
     post ":id/payment", to: "wizard#payment", as: :test_payment
+    post ":id/pay-later", to: "wizard#pay_later", as: :pay_later
     delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_files"
     post ":id/:asset_field_name", to: "wizard#upload_files"
     delete "/:id", to: "wizard#destroy"

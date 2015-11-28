@@ -1,17 +1,17 @@
-= html_block_with_fallback :schedule_call
+= html_block_with_fallback :pay_later
   .popup.schedule-call
     .form-partial.schedule-call
       .header
         .title
-          |Schedule call
+          |Pay later
       .content
         .form
-          form.form.schedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
+          form.form.schedule-call-form novalidate="" action="/pay-later" method="post" show-preloader="" resource="pay_later" show-success="" type="pay_later"
             .form-content
               .inputs
-                = rf_input label: "Phone", required: true, name: "call[phone]"
-                = rf_input label: "Name", name: "call[name]"
-                = rf_input label: "Description", name: "call[description]"
+                = rf_input label: "Phone", required: true, name: "pay_later[phone]"
+                = rf_input label: "Name", name: "pay_later[name]"
+                = rf_input label: "Description", name: "pay_later[description]"
               .actions
                 .columns.large-5
                   .sign-up-invitation

@@ -33,7 +33,7 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
       = popup "user_pages/confirmation_congratulations", visible: true, uncompleted_tests: flash[:uncompleted_tests], anonymous_test_ids: flash[:anonymous_test_ids]
 
     = popup "user_pages/faq_request_success"
-    = popup "wizard/schedule_call"
+    = popup "wizard/schedule_call", title: @schedule_call_title
 
 
     script src="http://maps.google.com/maps/api/js?sensor=false&amp;libraries=geometry&amp;v=3.13"

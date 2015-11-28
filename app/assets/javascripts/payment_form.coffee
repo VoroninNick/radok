@@ -31,6 +31,11 @@ window.form_types['payment'] = {
     data
 }
 
+window.form_types['pay_later'] = {
+  url : ()->
+    $("form[for=project]").attr("url") + "/" + project.id + "/pay-later"
+}
+
 $("body").on "click", ".payment-form .payment-type", ()->
   $active_payment_type = $(".payment-form .payment-type.active")
   $active_payment_type.removeClass("active")
@@ -47,7 +52,7 @@ $("body").on "click", ".payment-form .payment-type", ()->
     $(".show-if-not-pay-later").show()
 
 
-$("body").on "show_success", ".payment-form", ()->
+$("body").on "show_success", ".payment-form, .pay-later", ()->
   $form = $(this)
   $countdown = $form.find(".seconds-countdown")
   ms = parseInt($countdown.text()) * 1000

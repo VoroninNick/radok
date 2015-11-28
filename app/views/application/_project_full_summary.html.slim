@@ -108,10 +108,8 @@
             |total
             br
             |cost
-      - if !project.completed?
-        .columns.large-6
-          = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" })
-      .columns.large-6.left style="clear: left;"
+
+      .columns.large-6
         .promo-code-field class="#{'success' if project.percentage_discount?}"
           label.waiting-preloader
             |Sending promo code...
@@ -128,3 +126,11 @@
           input id="promo_code" type="text" placeholder="XXXX" disabled=("disabled" if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
           button.ok
             = embedded_svg_from_assets "rf-icon-ok"
+      .clearfix
+      - if !project.completed?
+        .full-summary-pay-buttons
+          .columns.large-6
+            = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" })
+          .columns.large-6
+            = rf_button(class: "rf-confirm-button rf-pay-later-button", full_width: true, svg: "rf-rocket-up-right", title: "Pay later", subtitle: "some short description", disabled: false, html: { "open-popup": "pay_later" })
+          .clearfix
