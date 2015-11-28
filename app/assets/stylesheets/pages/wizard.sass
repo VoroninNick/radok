@@ -502,7 +502,7 @@ form[for=project]
 
 
 
-.wizard-step-counter, .wizard-full-summary-icon
+.wizard-step-counter, .wizard-full-summary-icon, .invalid-steps-list .step-number
 	background: #FFF
 	border: 1px solid $dark-gray-color
 	border-radius: 50%
@@ -1819,3 +1819,26 @@ comment-with-price
 						height: #{36px + (4px * $i)}
 
 
+.invalid-steps-list
+	padding-bottom: 1rem
+	.step
+		position: relative
+		padding-left: 60px
+	.step-name
+		font-size: 1.3125rem
+		font-weight: 500
+		line-height: 50px
+	.step-number
+		&:before
+			background-color: $fire-orange-color
+
+
+#platforms-empty-error
+	display: block
+	margin-bottom: 3rem
+
+.platforms-input
+
+	&:not(.touched)
+		& ~ #platforms-empty-error
+			display: none !important

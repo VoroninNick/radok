@@ -144,4 +144,21 @@ class ApplicationController < ActionController::Base
   helper_method :developer_machine?, :server_machine?
 
   helper_method :menu_items
+
+
+  before_action :redirect_to_without_slash
+  def redirect_to_without_slash
+    url = request.original_url
+    ends_with_slash = url.scan(/\/\Z/).any?
+    is_root = home_path(only_path: false) == url
+    if ends_with_slash && !is_root
+      redirect_to url[0, url.length - 1], status: 301
+    end
+
+
+    # if ends_with_slash && (params[:format].blank? || params[:format].to_s != 'html' )
+    #   str = request.original_url
+    #   redirect_to str[0, str.length - 1]
+    # end
+  end
 end

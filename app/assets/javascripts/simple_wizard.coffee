@@ -448,6 +448,13 @@ $("body").on "change.project.total_price", ()->
   $("[data-bind=total_price]").text(price)
   showStepsProgress()
 
+  $error = $("#platforms-empty-error")
+  if price > 0
+    $error.fadeOut()
+  else
+    $error.fadeIn()
+
+
 
 $("body").on "change.project.test_platforms_bindings", (e)->
   $platforms_field = $(".wizard [as=platforms]")
@@ -815,7 +822,11 @@ $("body").on "click", ".option-count .decrement, .option-count .increment", ->
   decrement = !increment
   $input_wrap = $btn.closest(".input-wrap")
   $option_count = $input_wrap.closest(".option-count")
+  $platforms_input = $option_count.closest("div.platforms-input")
+  if $platforms_input.hasClass("touched")
+    $platforms_input.addClass("touched")
   $input = $input_wrap.find("input")
+
   $input.focus()
   step = 1
   value = parseInt($input.val()) || 0
@@ -1075,15 +1086,29 @@ $("body").on "change.project.product_type", ()->
     #origginal_valid = !!project.valid
     #if origginal_valid
 
+window.get_test_invalid_steps = ()->
+  $(".configuration-steps .wizard-step:not(.hide):not(.completed)")
+
+is_valid_project = (steps)->
+
+  valid_project = wizard_form.is_persisted.apply(wizard_form)
+  if valid_project
+    if !steps
+      steps = get_test_invalid_steps()
+    valid_project = steps.length == 0
+
+  return valid_project
 
 #$("body").on "change.project.valid", ()->
 enable_checkout_button_if_project_valid = ()->
-  valid_project = wizard_form.is_persisted.apply(wizard_form) && $(".configuration-steps .wizard-step:not(.hide):not(.completed)").length == 0
+
   $checkout_button = $(".checkout-button, .rf-confirm-button")
-  if valid_project
-    $checkout_button.removeAttr("disabled")
-  else
-    $checkout_button.attr("disabled", "disabled")
+  disabled_when_test_has_errors = false
+  if disabled_when_test_has_errors
+    if is_valid_project()
+      $checkout_button.removeAttr("disabled")
+    else
+      $checkout_button.attr("disabled", "disabled")
 
 $("body").on "change.project.authentication_required", ()->
   show_or_hide_auth_credentials_inputs()
@@ -1428,5 +1453,81 @@ $("body").on "click", ".promo-code-field button", ()->
 
   $promo_code_field.addClass("waiting")
   $input.attr("disabled", "disabled")
+
+
+$(".checkout-button, .rf-confirm-button").on "click", (e)->
+  $button = $(this)
+  $invalid_test_steps = get_test_invalid_steps()
+  if !is_valid_project($invalid_test_steps)
+    $popup = $("#invalid_fields_popup")
+    openPopup($popup)
+    $invalid_steps_list = $popup.find("div.invalid-steps-list")
+    invalid_steps_list_items_html = ""
+    $invalid_test_steps.each ()->
+      $step = $(this)
+      step_name = $step.attr("data-name")
+      step_number = $step.find(".wizard-step-counter").attr("data-number")
+      step_id = $step.attr("step")
+
+      invalid_fields_html = ""
+
+      $fields = $step.find(".input.invalid, :not(.input) .error:visible")
+      $fields.each ()->
+
+        $this = $(this)
+        $field = $this
+
+        if $this.filter(".error").length
+          if $this.closest(".input").length > 0
+            return
+
+        if $this.filter(".input").length
+
+          field_name = $field.attr("data-name") || $field.find(".placeholder").text()
+          field_html_id = $field.attr("id") || $field.attr("data-input-id") || $field.find("input, textarea").attr("id")
+        else if $this.filter(".error").length
+          field_name = $field.attr("data-field-name") || $field.attr('data-group-name') || $field.text()
+          field_html_id = $field.attr("for") || $field.attr("data-input-id")
+
+
+
+
+        if field_html_id
+          field_link = "##{field_html_id}"
+        else
+          field_link = false
+
+        href_str = ""
+        if field_link
+          href_str = "href='#{field_link}'"
+
+        invalid_fields_html += "<div><a class='invalid-field-link' #{href_str}>#{field_name}</a></div>"
+
+
+
+      invalid_steps_list_items_html += "<div step-id='#{step_id}' class='step'><div class='step-number' data-number='#{step_number}'></div><div class='step-name'>#{step_name}</div><div class='invalid-fields-list'>#{invalid_fields_html}</div></div>"
+
+    $invalid_steps_list.html(invalid_steps_list_items_html)
+    return false
+
+
+$(".popup.invalid-fields").on "click", ".invalid-field-link", (e)->
+  $link = $(this)
+  e.preventDefault()
+  $link.closeDialog()
+  selector = $link.attr("href")
+  scroll_to_step = true
+  $target = null
+  if scroll_to_step
+    step_id = $link.closest("div.step").attr("step-id")
+    $target = $(".wizard-step").filter("[step=#{step_id}]")
+  else
+    $target = $(selector)
+
+
+  top = $target.offset().top - 128
+
+
+  $("body").animate(scrollTop: top)
 
 

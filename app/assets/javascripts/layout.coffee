@@ -32,11 +32,18 @@ $(".menu").on "click", ".has-dropdown", ->
   $this.toggleClass("opened")
 
 window.openPopup = (popup_name)->
-  $popup = $("[id=#{popup_name}_popup]")
-  $popup.removeClass("hide")
-  if !$popup.hasClass("initialized")
-    $popup.addClass("initialized")
-    $popup.find("input[type=password]").capsChecker()
+  if typeof popup_name == 'string'
+    $popup = $("[id=#{popup_name}_popup]")
+  else if popup_name instanceof(jQuery)
+    $popup = popup_name
+  else
+    $popup = null
+
+  if $popup && $popup.length
+    $popup.removeClass("hide")
+    if !$popup.hasClass("initialized")
+      $popup.addClass("initialized")
+      $popup.find("input[type=password]").capsChecker()
 
 $("[disable-click-on-active]").on "click", ".active", (event)->
   $this = $(this)
