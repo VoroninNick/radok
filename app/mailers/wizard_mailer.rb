@@ -16,4 +16,20 @@ class WizardMailer < ApplicationMailer
     )
   end
 
+  def pay_later_request_admin_notification(req)
+
+    to = FormConfigs::PaymentRequest.first.try(&:emails) || FormConfigs::PaymentRequest.default_emails
+    @resource = req
+    @test = @resource.test
+    mail(
+        #template_path: "views/mailers/faq_request",
+        template_path: "mailers/wizard",
+        template_name: "pay_later_request_admin_notification",
+        layout: false,
+        to: to,
+        subject: "New Pay Later Request"
+    )
+  end
+
+
 end

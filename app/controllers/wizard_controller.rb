@@ -172,7 +172,7 @@ class WizardController < ApplicationController
     @test = @payment.test
     if @payment.save
       @test.complete!
-      WizardMailer.payment_request_admin_notification(@payment).deliver
+      WizardMailer.pay_later_request_admin_notification(@payment).deliver
       render inline: @payment.to_builder.target!, status: 201
     end
   end

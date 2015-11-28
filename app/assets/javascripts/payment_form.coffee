@@ -52,7 +52,7 @@ $("body").on "click", ".payment-form .payment-type", ()->
     $(".show-if-not-pay-later").show()
 
 
-$("body").on "show_success", ".payment-form, .pay-later", ()->
+$("body").on "show_success", ".payment-form, .pay-later-form", ()->
   $form = $(this)
   $countdown = $form.find(".seconds-countdown")
   ms = parseInt($countdown.text()) * 1000
@@ -63,9 +63,14 @@ $("body").on "show_success", ".payment-form, .pay-later", ()->
     1000
   )
 
+  if $form.hasClass("pay-later-form")
+    redirect_location = "/dashboard/project/#{project.id}"
+  else
+    redirect_location = "/dashboard"
+
   setTimeout(
     ()->
-      window.location = "/dashboard"
+      window.location = redirect_location
     ms
   )
 
