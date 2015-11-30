@@ -146,7 +146,7 @@ class ApplicationController < ActionController::Base
   helper_method :menu_items
 
 
-  before_action :redirect_to_without_slash
+  #before_action :redirect_to_without_slash
   def redirect_to_without_slash
     url = request.original_url
     ends_with_slash = url.scan(/\/\Z/).any?
