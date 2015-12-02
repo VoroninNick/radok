@@ -116,7 +116,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         .input.text.project-platforms-comment_input as="text" model="project.platforms_comment" data-name="Your comment"
           label.placeholder.hiding-placeholder for="project_platforms_comment"
             |Your comments and additional instructions can be here...
-          textarea model="project.project.platforms_comment" id="project_platforms_comment"
+          textarea id="project_platforms_comment"
             = @project.platforms_comment
 
 
@@ -137,7 +137,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         .input.string.has-error-label as="string" model="project.project_name" value=@project.project_name required="true"
           label.placeholder.hiding-placeholder for="project_project_name"
             |Project name
-          label.error.error-required
+          label.error.error-required for="project_project_name"
             |Please enter project name
           input type="text" id="project_project_name" value=@project.project_name
 
@@ -147,7 +147,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         .input.string.has-error-label as="string" model="project.project_version" value=@project.project_version required="true"
           label.placeholder.hiding-placeholder for="project_project_version"
             |Project version
-          label.error.error-required
+          label.error.error-required for="project_project_version"
             |Please enter project version
           input type="text" id="project_project_version" value=@project.project_version
 
@@ -190,7 +190,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         .input.text.project-info-comment_input as="text" model="project.project_info_comment"
           label.placeholder.hiding-placeholder for="project_info_comment"
             |Your comments and additional instructions can be here...
-          textarea model="project.project.project_info_comment" id="project_info_comment"
+          textarea id="project_info_comment"
             = @project.project_info_comment
 
         /..input.string as="string" model="project.project_name" value=@project.project_name
@@ -212,7 +212,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         .label
           |What methodology are you looking for?
 
-        .input.radio-button model="project.methodology_type"  class="#{@project.exploratory? ? 'checked' : 'unchecked' }" value="exploratory"
+        .input.radio-button model="project.methodology_type" as="radio-button"  class="#{@project.exploratory? ? 'checked' : 'unchecked' }" value="exploratory"
           input type="radio" value="exploratory" id="project_methodology_type_exploratory" name="project_methodology_type" checked=('checked' if @project.exploratory?)
           label.custom-radio-button for="project_methodology_type_exploratory"
           label for="project_methodology_type_exploratory"
@@ -224,10 +224,10 @@ form for="project" url=short_wizard_path method="post" json="{}"
           .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions"
             label.placeholder.hiding-placeholder for="project_exploratory_instructions"
               |Please provide testing instructions for the testers here...
-            textarea model="project.exploratory_instructions" id="project_exploratory_instructions"
+            textarea id="project_exploratory_instructions"
               = @project.exploratory_description
 
-        .input.radio-button model="project.methodology_type" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }" value="test-case-driven"
+        .input.radio-button model="project.methodology_type" as="radio-button" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }" value="test-case-driven"
           input type="radio" value="test_case_driven" id="methodology_type_test_case_driven" name="project_methodology_type" checked=('checked' if @project.test_case_driven?)
           label.custom-radio-button for="methodology_type_test_case_driven"
           label for="methodology_type_test_case_driven"
@@ -281,13 +281,13 @@ form for="project" url=short_wizard_path method="post" json="{}"
         /.input.url as="url" model="project.project_url"
         /.input.files as="files" model="project.test_files"
 
-        .columns.large-7 style="padding-left: 0;"
+        .columns.large-7.small-padding-right-0 style="padding-left: 0; "
           .input.url model="project.project_url" as="url"
             input placeholder="http://domain.com" value=@project.project_url
         .columns.large-1 style="text-align: center;"
           span.or
             |or
-        .columns.large-4
+        .columns.large-4.small-padding-0
           input#test_files.file-upload-input list-selector=".test_files-list" model="project.test_files" data-attachment-name="test_files" type="file" multiple="" push="false" trigger-changes="false"
           = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-wizard-test-files-upload-button", svg: "upload", size: "medium"
         .columns.large-12
@@ -323,11 +323,11 @@ form for="project" url=short_wizard_path method="post" json="{}"
 
 
           .nested-input-group
-            .input.string.project-auth-login.input-with-indent model="project.auth_login"
+            .input.string.project-auth-login.input-with-indent as="string" model="project.auth_login"
               label.placeholder.hiding-placeholder for="project_auth_login"
                 |Username
               input type="text" id="project_project_name" value=@project.project_name
-            .input.string.project-auth-password model="project.auth_password"
+            .input.string.project-auth-password model="project.auth_password" as="string"
               label.placeholder.hiding-placeholder for="project_auth_password"
                 |Password
               input type="text" id="project_project_name" value=@project.project_name
@@ -353,13 +353,13 @@ form for="project" url=short_wizard_path method="post" json="{}"
             |Phone
           input type="text" id="project_contact_person_phone" value=@project.contact_person_phone
 
-        .columns.large-12 style="padding-left: 0;"
+        .columns.large-12.small-padding-0 style="padding-left: 0;"
           label.label.your-comment-label.with-input-distance
             |Your comment
           .input.text.project-access-comment_input as="text" model="project.project_access_comment"
             label.placeholder.hiding-placeholder for="project_access_comment"
               |Your comments and additional instructions can be here...
-            textarea model="project.project_access_comment" id="project_access_comment"
+            textarea id="project_access_comment"
               = @project.project_access_comment
 
 

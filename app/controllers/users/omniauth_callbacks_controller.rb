@@ -86,7 +86,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def passthru
     #render inline: "hi"
+    return render inline: request.referer
     super
+
   end
 
 

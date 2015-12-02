@@ -1,304 +1,309 @@
 //.popup
-  -webkit-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
-  -moz-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
-  box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
+	-webkit-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
+	-moz-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
+	box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
 
 .ngdialog.ngdialog-theme-rf-light-gray
-  .ngdialog-content
-    font-family: $fira-sans-font-family
-    width: 540px
-    padding: 0
+	.ngdialog-content
+		font-family: $fira-sans-font-family
+		width: 540px
+		padding: 0
 
-    .ngdialog-close
-      height: 50px
-      width: 50px
-      &:before
-        top: 17px
-        left: 17px
-        height: 16px
-        width: 16px
-        font-size: 35px
-        line-height: 16px
-        color: #F5EFEF
+		.ngdialog-close
+			height: 50px
+			width: 50px
+			&:before
+				top: 17px
+				left: 17px
+				height: 16px
+				width: 16px
+				font-size: 35px
+				line-height: 16px
+				color: #F5EFEF
 
 
-  &.ngdialog-payment
-    .ngdialog-content
-      width: 700px
+	&.ngdialog-payment
+		.ngdialog-content
+			width: 700px
 
 .form-partial
-  > .header
-    height: 50px
-    background: $sky-blue-color
-    color: $light-black-color
-    text-transform: uppercase
-    +font-18-semibold
-    line-height: 50px
-    padding: 0 30px
-  > .content
-    background: $white-color
-    padding: 0 15px
-    color: $light-black-color
-    +font-14-light
+	> .header
+		height: 50px
+		background: $sky-blue-color
+		color: $light-black-color
+		text-transform: uppercase
+		+font-18-semibold
+		line-height: 50px
+		padding: 0 30px
+	> .content
+		background: $white-color
+		padding: 0 15px
+		color: $light-black-color
+		+font-14-light
 
-    .light-text-color
-      color: $gray-text-color
-    a
-      text-decoration: none
-      color: $sky-blue-color
-
-
-  .oauth-login, .oauth-sign-up
-    padding-top: 24px
-    text-align: center
-    +font-16-semibold
-
-    ul
-      list-style: none
-      padding: 0
-      margin: 20px 0 32px 0
-    li
-      display: inline-block
-      width: 32px
-      height: 32px
-      margin-left: 20px
-      //background: red
-      border-radius: 50%
-      &:first-child
-        margin-left: 0
+		.light-text-color
+			color: $gray-text-color
+		a
+			text-decoration: none
+			color: $sky-blue-color
 
 
 
+		+small
+			padding: 0
 
 
-  .terms-of-use-info
-    //background: #fff
-    padding-top: 10px
-    text-align: center
-    +font-14-light-italic
-    color: $gray-text-color
-    line-height: 16px
-  .additional-information-slider
-    margin-top: 30px
-    text-align: center
-    &:not(.opened)
-      color: $sky-blue-color
-      cursor: pointer
+	.oauth-login, .oauth-sign-up
+		padding-top: 24px
+		text-align: center
+		+font-16-semibold
+
+		ul
+			list-style: none
+			padding: 0
+			margin: 20px 0 32px 0
+		li
+			display: inline-block
+			width: 32px
+			height: 32px
+			margin-left: 20px
+			//background: red
+			border-radius: 50%
+			&:first-child
+				margin-left: 0
 
 
 
 
 
-  &.forgot-password
-    .text
-      padding: 20px 0
-      line-height: 1.5
-    .actions
-      > *:first-child
-        line-height: 18px
-        display: inline-block
-  .page &
-    width: 100%
-    max-width: 540px
-    margin: 50px auto 50px auto
+	.terms-of-use-info
+		//background: #fff
+		padding-top: 10px
+		text-align: center
+		+font-14-light-italic
+		color: $gray-text-color
+		line-height: 16px
+	.additional-information-slider
+		margin-top: 30px
+		text-align: center
+		&:not(.opened)
+			color: $sky-blue-color
+			cursor: pointer
+
+
+
+
+
+	&.forgot-password
+		.text
+			padding: 20px 0
+			line-height: 1.5
+		.actions
+			> *:first-child
+				line-height: 18px
+				display: inline-block
+	.page &
+		width: 100%
+		max-width: 540px
+		margin: 50px auto 50px auto
 
 
 
 
 .form
-  .actions
-    > *:first-child
-      //width: 166px
-      color: $gray-text-color
-      display: inline-block
-      text-align: center
-      vertical-align: middle
+	.actions
+		> *:first-child
+			//width: 166px
+			color: $gray-text-color
+			display: inline-block
+			text-align: center
+			vertical-align: middle
 
-    > *:nth-child(2)
-      //width: 310px
-      display: inline-block
-      button
-        width: 100%
-        height: 70px
-        text-transform: uppercase
-        +font-28-bold
+		> *:nth-child(2)
+			//width: 310px
+			display: inline-block
+			button
+				width: 100%
+				height: 70px
+				text-transform: uppercase
+				+font-28-bold
 
-  .input
-    padding-bottom: 16px
-    &:last-child
-      padding-bottom: 0
-    label
-      +font-14-light
-    input
-      border: 1px $gray-text-color solid
-      height: 30px
-      width: 100%
-      display: inline-block
-      max-width: none
-      background: rgba(0,0,0,0)
+	.input
+		padding-bottom: 16px
+		&:last-child
+			padding-bottom: 0
+		label
+			+font-14-light
+		input
+			border: 1px $gray-text-color solid
+			height: 30px
+			width: 100%
+			display: inline-block
+			max-width: none
+			background: rgba(0,0,0,0)
 
-      +semibold
-      &:focus
-        background-color: $sky-blue-color
-        color: #fff
-        ~ .show-password-button, ~ .hide-password-button
-          svg
-            path
-              fill: rgba(255, 255, 255, 0.8)
-          &:hover
-            svg
-              path
-                fill: rgba(255, 255, 255, 1)
+			+semibold
+			&:focus
+				background-color: $sky-blue-color
+				color: #fff
+				~ .show-password-button, ~ .hide-password-button
+					svg
+						path
+							fill: rgba(255, 255, 255, 0.8)
+					&:hover
+						svg
+							path
+								fill: rgba(255, 255, 255, 1)
 
-    &.password
-      padding: 20px 0
+		&.password
+			padding: 20px 0
 
-      input
-        height: 50px
-      .show-password-button, .hide-password-button
-        top: 12px
+			input
+				height: 50px
+			.show-password-button, .hide-password-button
+				top: 12px
 
-    select
-      height: 30px
-      background: rgba(0, 0, 0, 0)
-    .input-wrap
-      position: relative
-    .show-password-button, .hide-password-button
-      position: absolute
-      right: 9px
-      top: 2px
-      cursor: pointer
+		select
+			height: 30px
+			background: rgba(0, 0, 0, 0)
+		.input-wrap
+			position: relative
+		.show-password-button, .hide-password-button
+			position: absolute
+			right: 9px
+			top: 2px
+			cursor: pointer
 
 
-      svg
-        width: 26px
-        height: 26px
-        path
-          fill: $gray-text-color
-      &:hover
-        svg
-          path
-            fill: $sky-blue-color
-  .forgot-password-link-wrap
-    text-align: right
-  .sign-up-invitation
+			svg
+				width: 26px
+				height: 26px
+				path
+					fill: $gray-text-color
+			&:hover
+				svg
+					path
+						fill: $sky-blue-color
+	.forgot-password-link-wrap
+		text-align: right
+	.sign-up-invitation
 
-  .actions
-    line-height: 70px
-    height: 70px
-    margin: 40px 0 0 0
+	.actions
+		line-height: 70px
+		height: 70px
+		margin: 40px 0 0 0
 
 
 .payment-type
-  display: inline-block
-  width: grid-calc(3, 12)
-  float: left
+	display: inline-block
+	width: grid-calc(3, 12)
+	float: left
 
-  .title
-    +font-12-light
-    text-align: center
+	.title
+		+font-12-light
+		text-align: center
 
-  svg
-    width: 100%
-    height: 100%
-    display: block
-  .image-wrap
-    height: 100px
+	svg
+		width: 100%
+		height: 100%
+		display: block
+	.image-wrap
+		height: 100px
 
 .payment-type-separator
-  height: 100px
-  display: inline-block
-  float: left
-  width: grid-calc(1.5, 12)
-  text-align: center
-  vertical-align: top
-  line-height: 100px
+	height: 100px
+	display: inline-block
+	float: left
+	width: grid-calc(1.5, 12)
+	text-align: center
+	vertical-align: top
+	line-height: 100px
 
 .master-card-svg-wrap, .visa-card-svg-wrap, .paypal-card-svg-wrap
-  max-width: 64px
-  max-height: 40px
-  display: block
+	max-width: 64px
+	max-height: 40px
+	display: block
 .master-card-svg-wrap
-  margin: 12px 0 0 10px
+	margin: 12px 0 0 10px
 .visa-card-svg-wrap
-  margin: -10px 0 0 40px
+	margin: -10px 0 0 40px
 .paypal-card-svg-wrap
-  top: 27px
-  position: relative
-  left: 28px
+	top: 27px
+	position: relative
+	left: 28px
 
 .payment-type:not(.active)
-  .pay-later-svg-wrap
-    svg
-      &, & *
-        fill: #8a8b8d !important
-  .paypal-card-svg-wrap
-    #pay, #pal
-      //fill: $light-gray-color
-    #pay
-      fill: #999a9c
-    #pal
-      fill: #a5a6a8
-  // 999a9c
-  .master-card-svg-wrap
-    #Rectangle-1
-      fill: #999a9c
-    #right-round
-      fill: #c7c8ca
-    #left-round
-      fill: #9fa0a2
-  .visa-card-svg-wrap
-    #Rectangle-1
-      fill: #999a9c
-    #Rectangle-2
-      fill: #b8b9bb
-    .letter
-      fill: #9a9b9d
-    #v-up
-      fill: #b7b8ba
+	.pay-later-svg-wrap
+		svg
+			&, & *
+				fill: #8a8b8d !important
+	.paypal-card-svg-wrap
+		#pay, #pal
+			//fill: $light-gray-color
+		#pay
+			fill: #999a9c
+		#pal
+			fill: #a5a6a8
+	// 999a9c
+	.master-card-svg-wrap
+		#Rectangle-1
+			fill: #999a9c
+		#right-round
+			fill: #c7c8ca
+		#left-round
+			fill: #9fa0a2
+	.visa-card-svg-wrap
+		#Rectangle-1
+			fill: #999a9c
+		#Rectangle-2
+			fill: #b8b9bb
+		.letter
+			fill: #9a9b9d
+		#v-up
+			fill: #b7b8ba
 
 
 .pay-later-svg-wrap
-  max-width: 70px
-  position: relative
-  top: 16px
-  left: 20px
+	max-width: 70px
+	position: relative
+	top: 16px
+	left: 20px
 
 .payment-form
-  textarea[name=comment]
-    height: 140px
-  .fields-group
-    > .columns.large-6
-      &:nth-last-child(1)
-        padding-right: 0
-      &:nth-last-child(2)
-        padding-left: 0
-  .payment-type
-    .image-wrap
-      background: #e6e7e9
-      border: 1px solid $light-gray-text-color
-    &.active
-      .image-wrap
-        border-color: $sky-blue-color
-        border-width: 2px
+	textarea[name=comment]
+		height: 140px
+	.fields-group
+		> .columns.large-6
+			&:nth-last-child(1)
+				padding-right: 0
+			&:nth-last-child(2)
+				padding-left: 0
+	.payment-type
+		.image-wrap
+			background: #e6e7e9
+			border: 1px solid $light-gray-text-color
+		&.active
+			.image-wrap
+				border-color: $sky-blue-color
+				border-width: 2px
 .field-groups-row
-  margin-top: 45px
+	margin-top: 45px
 
 .popup
-  &.payment
-    .actions
-      .button-wrap, .price-wrap
-        padding: 0
+	&.payment
+		.actions
+			.button-wrap, .price-wrap
+				padding: 0
 
-      .payment-pay-button
-        width: 50%
-      .price-wrap
-        height: 70px
-        width: 50%
-        background: $light-black-color
-        float: left
+			.payment-pay-button
+				width: 50%
+			.price-wrap
+				height: 70px
+				width: 50%
+				background: $light-black-color
+				float: left
 
 
-  &.confirmation-congratulations
-    .form-content
-      padding-bottom: 30px
+	&.confirmation-congratulations
+		.form-content
+			padding-bottom: 30px

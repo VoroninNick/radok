@@ -247,6 +247,8 @@ $("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-
 
 
 
+
+
 $("body").on "change code-change keyup keypress", ".wizard [as=platforms] .option-count input", (e)->
   if e.type == "keypress"
     #console.log "e.which", e.which
@@ -588,6 +590,7 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   model = $input.attr("model")
 
   value = input_value.call($input)
+  #console.log "inspect: model: #{model}: ", value
 
   validate_input.call($input, value)
   assign_model_key(model, value)
@@ -620,6 +623,7 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
 
   if !disabled_push && wizard_form.is_persisted.apply(wizard_form)
     save_timeout_id = $wizard_controller.data("save_timeout_id")
+    console.log "inspect: project_main_components: ", project.main_components
     if save_timeout_id
       clearTimeout(save_timeout_id)
     save_timeout_id = setTimeout(
@@ -845,18 +849,28 @@ $("body").on "click", ".option-count .decrement, .option-count .increment", ->
     $input.trigger("dom_change")
 
 
-$("body").on "change keyup", ".input.string, .input.text", ()->
+set_presence_class = ()->
   $input = $(this)
-  if $input.hasClass("string")
+  if $input.hasClass("string") || $input.hasClass("tags")
     val = $input.find("input").val()
   else
     val = $input.find("textarea").val()
+
+
+  if $input.hasClass("tags")
+    console.log "tags: ", is_present(val)
+
 
 
   if is_present(val)
     $input.addClass("not-empty").removeClass("empty")
   else
     $input.addClass("empty").removeClass("not-empty")
+
+inputs_selector_for_presence =  ".input.string, .input.text, .input[as=tags]"
+
+$("body").on "change keyup", inputs_selector_for_presence, ()->
+  set_presence_class.call(this)
 
 
 
@@ -1016,19 +1030,34 @@ init_string_inputs = ()->
       $input.removeClass("not-empty")
 
 init_tags_input = ()->
-  $('.input[model="project.main_components"] input').tagsInput({
+  $input = $('.input[model="project.main_components"] input')
+  val = $input.val()
+  $input_wrap = $input.closest(".input")
+
+  console.log "init_tags_input: ", is_present(val)
+
+  if is_present(val)
+    $input_wrap.addClass("not-empty").removeClass("empty")
+  else
+    $input_wrap.addClass("empty").removeClass("not-empty")
+
+  $input.tagsInput({
     defaultText: ""
     onRemoveTag: ()->
-      $input = $(this).closest(".input")
-      $input.trigger("change")
+      $html_input = $(this)
+      $input = $html_input.closest(".input")
+      #alert("tag removed: res: #{$html_input.val()}")
+      $html_input.trigger("change")
 
     onAddTag: ()->
-      $input = $(this).closest(".input")
-      $input.trigger("change")
+      $html_input = $(this)
+      $input = $html_input.closest(".input")
+      $html_input.trigger("change")
     onChange: ()->
-      $input = $(this).closest(".input")
-      $input.trigger("change")
-      empty = $input.children().filter("input").val().length > 0
+      $html_input = $(this)
+      $input = $html_input.closest(".input")
+      $html_input.trigger("change")
+      empty = !($input.children().filter("input").val().length)
       if empty
         $input.addClass("empty").removeClass("not-empty")
       else
@@ -1109,6 +1138,8 @@ enable_checkout_button_if_project_valid = ()->
       $checkout_button.removeAttr("disabled")
     else
       $checkout_button.attr("disabled", "disabled")
+
+
 
 $("body").on "change.project.authentication_required", ()->
   show_or_hide_auth_credentials_inputs()
@@ -1326,6 +1357,9 @@ $("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
   #console.log "e.type: ", e.type
   #console.log "step_id: ", step_id
 
+init_option_count_inputs = ()->
+  if Modernizr.touchevents
+    $("body .option-count input").attr("type", "number")
 
 validate_project_access_test_url_and_files = ()->
   valid = (project.project_url && project.project_url.length > 0 ) || $(".test_files-list").children().length > 0
@@ -1350,13 +1384,16 @@ window.project ?= {}
 window.platforms = JSON.parse($("[as=platforms]").attr("options"))
 init_loaded_project()
 #update_price()
+
+init_option_count_inputs()
 check_for_step_completeness.apply($('.wizard-step[type=platforms]'))
 showStepsProgress()
 #console.log "platform_bindings: ", project.test_platforms_bindings
 #console.log "total_price: ", project.total_price
 
 validate_inputs_on_init()
-
+$(inputs_selector_for_presence).each ()->
+  set_presence_class.call(this)
 
 init_string_inputs()
 
@@ -1472,6 +1509,7 @@ $(".checkout-button, .rf-confirm-button").on "click", (e)->
       invalid_fields_html = ""
 
       $fields = $step.find(".input.invalid, :not(.input) .error:visible")
+      $fields.filter(".input").addClass("touched")
       $fields.each ()->
 
         $this = $(this)
@@ -1482,7 +1520,6 @@ $(".checkout-button, .rf-confirm-button").on "click", (e)->
             return
 
         if $this.filter(".input").length
-
           field_name = $field.attr("data-name") || $field.find(".placeholder").text()
           field_html_id = $field.attr("id") || $field.attr("data-input-id") || $field.find("input, textarea").attr("id")
         else if $this.filter(".error").length
