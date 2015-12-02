@@ -14,13 +14,13 @@
                 = rf_input label: "Email", name: "pay_later[email]", required: true
                 = rf_input label: "Description", name: "pay_later[comment]", type: "text"
               .actions
-                .columns.large-5
+                .columns.small-5
                   .sign-up-invitation
                     |No account?&nbsp;
                     a ng-click="openSignUpPopup()"
                       |Sign up
 
-                .columns.large-7
+                .columns.small-7
                   = rf_button(title: "Call me")
 
 
