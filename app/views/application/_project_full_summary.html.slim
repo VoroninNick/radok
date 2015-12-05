@@ -91,46 +91,46 @@
         .property-value data-bind="project.project_url"
           a href=project.project_access__url
             = project.project_access__url
-      .columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
+      /.columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
         .property-label
           |You've provided the following instructions:
         .property-input-value
           textarea.instructions
             = project.instructions
+      .price-and-buttons
+        .columns.large-6
+          .full-summary-total-cost
+            .dollar
+              |$
+            .total-price
+              |0
+            .total-cost-label
+              |total
+              br
+              |cost
 
-      .columns.large-6
-        .full-summary-total-cost
-          .dollar
-            |$
-          .total-price
-            |0
-          .total-cost-label
-            |total
-            br
-            |cost
-
-      .columns.large-6
-        .promo-code-field class="#{'success' if project.percentage_discount?}"
-          label.waiting-preloader
-            |Sending promo code...
-          label.field-label for="promo_code"
-            |Promo code
-          label.error.error-invalid for="promo_code"
-            |Invalid promo code
-          label.success-label
-            |You have &thinsp;
-            span.percentage-discount data-bind="project.percentage_discount"
-              - if project.percentage_discount?
-                = project.percentage_discount
-            |% discount!
-          input id="promo_code" type="text" placeholder="XXXX" disabled=("disabled" if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
-          button.ok
-            = embedded_svg_from_assets "rf-icon-ok"
-      .clearfix
-      - if !project.completed?
-        .full-summary-pay-buttons
-          .columns.medium-6.small-margin-bottom-24
-            = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" })
-          .columns.medium-6
-            = rf_button(class: "rf-confirm-button rf-pay-later-button", full_width: true, svg: "rf-rocket-up-right", title: "Pay later", subtitle: "some short description", disabled: false, html: { "open-popup": "pay_later" })
-          .clearfix
+        .columns.large-6
+          .promo-code-field class="#{'success' if project.percentage_discount?}"
+            label.waiting-preloader
+              |Sending promo code...
+            label.field-label for="promo_code"
+              |Promo code
+            label.error.error-invalid for="promo_code"
+              |Invalid promo code
+            label.success-label
+              |You have &thinsp;
+              span.percentage-discount data-bind="project.percentage_discount"
+                - if project.percentage_discount?
+                  = project.percentage_discount
+              |% discount!
+            input id="promo_code" type="text" placeholder="XXXX" disabled=("disabled" if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
+            button.ok
+              = embedded_svg_from_assets "rf-icon-ok"
+        .clearfix
+        - if !project.completed?
+          .full-summary-pay-buttons
+            .columns.medium-6.small-margin-bottom-24
+              = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" })
+            .columns.medium-6
+              = rf_button(class: "rf-confirm-button rf-pay-later-button", full_width: true, svg: "rf-rocket-up-right", title: "Pay later", subtitle: "some short description", disabled: false, html: { "open-popup": "pay_later" })
+            .clearfix
