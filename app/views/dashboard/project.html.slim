@@ -18,18 +18,19 @@
           = @project.report_name
 
 .row.project-short-info
-  .columns.large-4.project-short-info-column.managed-by
-    .inner
-      .managed-by-header
-        |Managed by
-      .managed-by-avatar
-        - if @project.user.avatar.exists?(:profile_image)
-          img src=@project.user.avatar.url(:profile_image)
-        - else
-          = image_tag("profile_image.jpg")
+  - if @project.user
+    .columns.large-4.project-short-info-column.managed-by
+      .inner
+        .managed-by-header
+          |Managed by
+        .managed-by-avatar
+          - if @project.user.try{|u| u.avatar.exists?(:profile_image) }
+            img src=@project.user.avatar.url(:profile_image)
+          - else
+            = image_tag("profile_image.jpg")
 
-      .managed-by-name
-        = @project.user.name_or_username
+        .managed-by-name
+          = @project.user.name_or_username
   .columns.large-4.project-short-info-column.total-cost
     .inner
       .total-cost-header

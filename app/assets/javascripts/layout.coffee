@@ -1,4 +1,5 @@
 old_model_binding = false
+$preloader = null
 
 
 #window.wizard_root_path = "/ordering-crowdsourced-testing"
@@ -148,7 +149,8 @@ $("body").on "submit", "form:not([no-processing])", (event)->
         show_success = $form.attr("show-success") != undefined
         close_on_success = $form.attr("close-on-success")
         reload_on_success = $form.attr("reload-on-success")
-        $preloader.addClass("hide") if !reload_on_success
+
+        $preloader.addClass("hide") if !reload_on_success && $preloader && $preloader.length
 
         show_success_popup = $form.attr("success-popup")
         if show_success_popup && show_success_popup.length

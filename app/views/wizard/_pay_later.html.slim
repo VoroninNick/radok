@@ -9,10 +9,12 @@
           form.form.schedule-call-form.pay-later-form novalidate="" action="/pay-later" method="post" show-preloader="" resource="pay_later" show-success="" type="pay_later"
             .form-content
               .inputs
-                = rf_input label: "Phone", required: true, name: "pay_later[phone]"
-                = rf_input label: "Name", name: "pay_later[full_name]"
-                = rf_input label: "Email", name: "pay_later[email]", required: true
-                = rf_input label: "Description", name: "pay_later[comment]", type: "text"
+                .columns.large-12
+                  = rf_input label: "Phone", required: true, name: "pay_later[phone]"
+                  = rf_input label: "Name", name: "pay_later[full_name]"
+                  = rf_input label: "Email", name: "pay_later[email]", required: true
+                  = rf_input label: "Description", name: "pay_later[comment]", type: "text"
+                .clearfix
               .actions
                 .columns.small-6.medium-5
                   .sign-up-invitation

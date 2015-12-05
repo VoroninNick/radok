@@ -21,7 +21,7 @@ class DashboardController < ApplicationController
   end
 
   def project
-    @project = Wizard::Test.find(params[:id])
+    @project = Wizard::Test.find(params[:id]) rescue render_not_found
   end
 
   def check_user
