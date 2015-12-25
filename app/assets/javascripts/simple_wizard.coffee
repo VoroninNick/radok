@@ -2,7 +2,7 @@ window.project ?= {}
 
 $wizard_controller = $("#wizard-controller")
 
-window.price_per_hour = $wizard_controller.attr("data-hour-price")
+window.price_per_hour = parseInt($wizard_controller.attr("data-hour-price"))
 
 
 window.assets ?= {}
