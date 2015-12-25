@@ -1,8 +1,10 @@
 window.project ?= {}
 
-$wizard_controller = $("#wizard-controller")
+window.$wizard_controller = $("#wizard-controller")
 
 window.price_per_hour = parseInt($wizard_controller.attr("data-hour-price"))
+
+log_input_value = false
 
 
 window.assets ?= {}
@@ -384,7 +386,8 @@ window.input_value = ()->
   else
     value = $input.val()
 
-  console.error "input_type: ", input_type
+  if log_input_value
+    console.error "input_type: ", input_type
 
   if input_data_type == "integer"
     value = parseInt(value)
@@ -1363,9 +1366,12 @@ init_option_count_inputs = ()->
   if Modernizr.touchevents
     $("body .option-count input").attr("type", "number")
 
+log_project_access_test_url_and_files = false
+
 validate_project_access_test_url_and_files = ()->
   valid = (project.project_url && project.project_url.length > 0 ) || $(".test_files-list").children().length > 0
-  console.log "validate_project_access_test_url_and_files: ", valid
+  if log_project_access_test_url_and_files
+    console.log "validate_project_access_test_url_and_files: ", valid
   $error = $("#test-url-or-files-required-error")
 
 
