@@ -131,7 +131,7 @@ form for="project" url=short_wizard_path method="post" json="{}"
         /= f.input :project_version, label: "What is version number of the new release that you'd like us to test?"
 
         label.label for="project_project_name"
-          |What is the name of this wonderful project?
+          |What is the name of this project?
           span.star
 
         .input.string.has-error-label as="string" model="project.project_name" value=@project.project_name required="true"

@@ -114,22 +114,41 @@ RailsAdmin.config do |config|
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
+  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks Pricing TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
+
+  form_config_models = [FormConfigs::ContactFeedback, FormConfigs::FaqRequest, FormConfigs::PaymentRequest, FormConfigs::ScheduleCall]
+
+  only_configurable_models = [*form_config_models, *page_model_names, WizardSettings]
+  read_only_models = []
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
+    new do
+      except(only_configurable_models + read_only_models)
+    end
     export
     bulk_delete
-    show
-    edit
-    delete
-    show_in_app
+    show do
+      except only_configurable_models
+    end
+    edit do
+      except read_only_models
+    end
+    delete do
+      except(only_configurable_models + read_only_models)
+    end
+    show_in_app do
+      except read_only_models
+    end
 
     ## With an audit adapter, you can add:
     # history_index
     # history_show
 
-    nestable
+    nestable do
+      #only [Industry, Team, Member, Benefit, UserFeedback, EmployeeFeedback, ProcessStep]
+    end
   end
 
   config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
@@ -140,6 +159,17 @@ RailsAdmin.config do |config|
 
   include_models(config, Wizard::PromoCode)
 
+  include_models config, WizardText
+
+  include_models config, WizardSettings
+
+
+  config.model WizardSettings do
+    settings_navigation_label
+
+    field :hour_price
+    field :enable_credit_card_payment_method
+  end
 
   config.model Wizard::TestPlatform do
     visible false
@@ -530,6 +560,30 @@ RailsAdmin.config do |config|
           read_only true
         end
         field :admin_comment, :ck_editor
+      end
+    end
+  end
+
+  config.model WizardText do
+    edit do
+      field :wizard_help_slim, :code_mirror do
+        config do
+          {
+              lineNumbers: true,
+              mode: 'application/x-slim',
+              theme: 'ambiance',
+          }
+        end
+
+        assets do
+          {
+              mode: %w(  xml htmlembedded htmlmixed coffeescript javascript ruby  css markdown  slim).map{|s| "/assets/codemirror/modes/#{s}.js" },
+              selected: "/assets/codemirror/modes/slim.js",
+              theme: '/assets/codemirror/themes/ambiance.css',
+          }
+        end
+
+
       end
     end
   end

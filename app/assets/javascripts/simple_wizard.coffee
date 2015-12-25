@@ -1,6 +1,8 @@
 window.project ?= {}
 
-window.price_per_hour = 29
+$wizard_controller = $("#wizard-controller")
+
+window.price_per_hour = $wizard_controller.attr("data-hour-price")
 
 
 window.assets ?= {}
@@ -771,7 +773,7 @@ show_full_summary = ()->
   $("#wizard-full-summary").removeClass("hide")
 
 is_configure_mode = ()->
-  $("#wizard-controller").hasClass("configure-mode")
+  $wizard_controller.hasClass("configure-mode")
 
 
 
@@ -1303,7 +1305,7 @@ $("body").on "click", ".rf-configure-button, .rf-step-configure-button", ()->
   notifyProjectSaved()
 
 init_configure_mode = ()->
-  $("#wizard-controller").addClass("configure-mode")
+  $wizard_controller.addClass("configure-mode")
   hide_unavailable_steps()
   showStepsProgress()
   hide_unavailable_platforms()
@@ -1311,7 +1313,7 @@ init_configure_mode = ()->
   show_mini_summary()
 
 init_loaded_project = ()->
-  str = $("#wizard-controller").attr("test-json")
+  str = $wizard_controller.attr("test-json")
   if str
     data = JSON.parse(str)
     $.extend(window.project, data)

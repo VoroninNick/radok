@@ -230,4 +230,16 @@ module ApplicationHelper
     end
   end
 
+  def phone_number
+    "+18885354852"
+  end
+
+  def formatted_phone_number
+    "+1-888-535-4852"
+  end
+
+  def hour_price
+    39
+  end
+
 end

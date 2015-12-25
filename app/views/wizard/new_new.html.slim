@@ -1,5 +1,5 @@
 .wizard class="#{@wizard_options.try{|hash| hash.keep_if{|k, v|  !!v }.keys.map(&:to_s).map(&:humanize).map(&:parameterize).join(" ")   } }"
-  #wizard-controller  class="#{'configure-mode' if @project.persisted?}" test-json=(@project.to_json if @project.persisted?) data-product-type-names=@product_type_names data-test-type-names=@test_type_names
+  #wizard-controller data-hour-price=WizardSettings.hour_price class="#{'configure-mode' if @project.persisted?}" test-json=(@project.to_json if @project.persisted?) data-product-type-names=@product_type_names data-test-type-names=@test_type_names
     = render "page_banner"
     #wizard-content
       #wizard-steps
@@ -7,23 +7,24 @@
 
 
       - if !@project.persisted?
-        #wizard-help
-          #wizard-help-fixed
-            .header
-              |Welcome!
-            .content
-              #wizard-help-welcome
-                |Please choose&nbsp;
-                span.highlighted-text
-                  |Type of test
-                |&nbsp;and&nbsp;
-                span.highlighted-text
-                  |Platform
-                |&nbsp;to proceed with the test wizard
+        == slim(:wizard_help_slim)
+          #wizard-help
+            #wizard-help-fixed
+              .header
+                |Welcome!
+              .content
+                #wizard-help-welcome
+                  |Please choose&nbsp;
+                  span.highlighted-text
+                    |Type of test
+                  |&nbsp;and&nbsp;
+                  span.highlighted-text
+                    |Platform
+                  |&nbsp;to proceed with the test wizard
 
 
-            .footer
-              = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
+              .footer
+                = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
 
 
       #wizard-summary
@@ -49,24 +50,9 @@
                 .columns.large-6
                   |Platforms:
                 .columns.large-3.icon.human
-                  /= svg_placeholder "user"
-                  /ng-include src="'/assets/user.svg'"
                   = embedded_svg_from_assets("user", class: "user")
                 .columns.large-3.icon.hours
-                  /= svg_placeholder "clock"
-                  /ng-include src="'/assets/clock.svg'"
                   = embedded_svg_from_assets("clock", class: "clock")
-              .rows
-                /.row
-                  .columns.large-6
-                    |{{platform.name}}
-                  .columns.large-3
-                    |{{platform.testers_count}}
-                  .columns.large-3
-                    |{{platform.hours_count}}
-
-          /.total-price
-                    |total price: {{wizard.total_price}}
 
           .save-button ng-click="saveProject()"
             /= svg_placeholder "download"

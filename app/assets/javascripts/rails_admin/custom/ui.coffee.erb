@@ -1,0 +1,4 @@
+#= require codemirror
+<% %w(xml htmlembedded htmlmixed coffeescript javascript ruby  css markdown  slim).each do |mode| %>
+#= require codemirror/modes/<%= mode %>
+<% end %>
