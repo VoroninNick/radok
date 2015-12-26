@@ -16,7 +16,6 @@ window.current_test = null
 
 
 init_wizard_summary_fixed = ()->
-
   $summary_fixed = $('#wizard-summary-fixed')
   scroll_top = $(window).scrollTop()
   $summary = $('#wizard-summary')
@@ -25,12 +24,26 @@ init_wizard_summary_fixed = ()->
   #fixed = scroll_top >= summary_top
   #fixed = scroll_top >= $('#header').height() + $('#wizard-banner').height()
   fixed = scroll_top >= $('.page-banner').height()
+  summary_height = $summary_fixed.height()
 
   console.log(fixed)
   if fixed
     $summary_fixed.addClass("fixed-top")
+
   else
     $summary_fixed.removeClass("fixed-top")
+
+
+  diff = $("#footer").offset().top - ( summary_top + summary_height )
+  transform_px = diff
+  console.log "diff: ", diff
+  if transform_px != 0
+    $summary_fixed.css({transform: "translateY(#{transform_px}px)"})
+    $summary_fixed.addClass("transform_px").removeClass("no_transform_px")
+  else
+    $summary_fixed.css({transform: ""})
+    $summary_fixed.addClass("no_transform_px").removeClass("transform_px")
+
 
 $(window).on('scroll', init_wizard_summary_fixed)
 $(document).on('ready page:load', init_wizard_summary_fixed)

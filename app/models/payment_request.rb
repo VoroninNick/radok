@@ -5,7 +5,16 @@ class PaymentRequest < ActiveRecord::Base
   attr_accessible :test
 
   def self.default_payment_type
-    "visa_and_master_card"
+    #"visa_and_master_card"
+    "paypal"
+  end
+
+  def self.default_payment_type_paypal?
+    default_payment_type == 'paypal'
+  end
+
+  def self.default_payment_type_visa_and_master_card?
+    default_payment_type == 'visa_and_master_card'
   end
 
   def to_builder

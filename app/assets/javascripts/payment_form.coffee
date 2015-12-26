@@ -44,12 +44,24 @@ $("body").on "click", ".payment-form .payment-type", ()->
   $payment_type.addClass("active")
 
   pay_later = $payment_type.hasClass("pay-later")
+
+  paypal = $payment_type.attr("value") == 'paypal'
+
   if pay_later
     $(".show-if-pay-later").removeClass("hide").show()
     $(".show-if-not-pay-later").hide()
   else
     $(".show-if-pay-later").hide()
     $(".show-if-not-pay-later").show()
+
+
+
+  if paypal
+    $(".show-if-paypal").show()
+    $(".show-if-not-paypal").hide()
+  else
+    $(".show-if-paypal").hide()
+    $(".show-if-not-paypal").show()
 
 
 $("body").on "show_success", ".payment-form, .pay-later-form", ()->

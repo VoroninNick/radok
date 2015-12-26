@@ -587,7 +587,7 @@ window.check_for_step_completeness = ()->
 
 
 
-
+log_project_main_components = false
 
 $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   #console.log "e : #{e.type}", e
@@ -628,7 +628,8 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
 
   if !disabled_push && wizard_form.is_persisted.apply(wizard_form)
     save_timeout_id = $wizard_controller.data("save_timeout_id")
-    console.log "inspect: project_main_components: ", project.main_components
+    if log_project_main_components
+      console.log "inspect: project_main_components: ", project.main_components
     if save_timeout_id
       clearTimeout(save_timeout_id)
     save_timeout_id = setTimeout(
@@ -853,7 +854,7 @@ $("body").on "click", ".option-count .decrement, .option-count .increment", ->
 
     $input.trigger("dom_change")
 
-
+log_tags = false
 set_presence_class = ()->
   $input = $(this)
   if $input.hasClass("string") || $input.hasClass("tags")
@@ -862,7 +863,7 @@ set_presence_class = ()->
     val = $input.find("textarea").val()
 
 
-  if $input.hasClass("tags")
+  if $input.hasClass("tags") && log_tags
     console.log "tags: ", is_present(val)
 
 
@@ -1038,8 +1039,8 @@ init_tags_input = ()->
   $input = $('.input[model="project.main_components"] input')
   val = $input.val()
   $input_wrap = $input.closest(".input")
-
-  console.log "init_tags_input: ", is_present(val)
+  if log_tags
+    console.log "init_tags_input: ", is_present(val)
 
   if is_present(val)
     $input_wrap.addClass("not-empty").removeClass("empty")
