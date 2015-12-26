@@ -62,11 +62,11 @@
                   .title
                     |Pay later
 
-              .show-if-paypal
+              div class=("show-if-paypal" if !WizardSettings.enabled_credit_card_payment_method?)
                 .row.field-groups-row
 
                   / pay later
-                  .fields-group.hide.show-if-pay-later ng-show="payment_type == 'pay_later'"
+                  .fields-group.hide.show-if-pay-later
                     .header
                       |Contact information
                     .columns.large-6.left-column
@@ -117,9 +117,10 @@
                         = rf_input name: "payment[exp_year]", label: "Exp. year"
                     /rf-input ng-model="payment.cvv2_number" name="cvv2_number" label="CVV2/CVC2 number"
                     = rf_input name: "payment[cvv_number]", label: "CVV2/CVC2 number"
-              .show-if-not-paypal style=("display: none" if PaymentRequest.default_payment_type_paypal?)
-                .h3.payment-method-coming-soon
-                  |Coming soon
+              - if !WizardSettings.enabled_credit_card_payment_method?
+                .show-if-not-paypal style=("display: none" if PaymentRequest.default_payment_type_paypal?)
+                  .h3.payment-method-coming-soon
+                    |Coming soon
 
                 /.caps-lock-warning ng-show="isCapsLockOn"
                   |Warning: Caps-lock is on
@@ -146,7 +147,7 @@
                   /= rf_button raised: false, title: "< Return to Wizard"
                   a.return_to_wizard href=""
                     |< Return to Wizard
-                .columns.small-7.large-8.text-right.show-if-paypal
+                .columns.small-7.large-8.text-right class=("show-if-paypal" if !WizardSettings.enabled_credit_card_payment_method?)
                   .price-wrap
                     .total-cost-label
                       |Total cost:
