@@ -180,7 +180,7 @@ window.wizard_form = {
 
   update_url : ()->
     self = wizard_form
-    if self.url[@url.length - 1] == '/'
+    if self.url[self.url.length - 1] == '/'
       @url + @get_model().id
     else
       @url + "/" + @get_model().id
