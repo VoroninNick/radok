@@ -169,6 +169,7 @@ RailsAdmin.config do |config|
 
     field :hour_price
     field :enable_credit_card_payment_method
+    field :enable_paypal_payment_method
   end
 
   config.model Wizard::TestPlatform do

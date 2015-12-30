@@ -12,4 +12,15 @@ class WizardSettings < ActiveRecord::Base
 
     res
   end
+
+  def self.enabled_paypal_payment_method?
+    res = WizardSettings.first.try(&:enable_paypal_payment_method)
+    res ||= false
+
+    res
+  end
+
+  def self.enabled_any_payment_method?
+    enabled_credit_card_payment_method? || enabled_paypal_payment_method?
+  end
 end

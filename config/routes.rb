@@ -11,8 +11,12 @@ Rails.application.routes.draw do
   wizard_path = "/ordering-crowdsourced-testing"
 
   scope "wizard" do
-
     root to: "wizard#new", as: "short_wizard"
+  end
+
+  scope wizard_path do
+
+    root to: "wizard#new", as: "wizard"
 
     post ":id/promo_code", to: "wizard#promo_code"
     post ":id/payment", to: "wizard#payment", as: :test_payment
@@ -49,7 +53,7 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboard#index"
   get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
-  get "#{wizard_path}", to: "wizard#render_in_development", as: "wizard"
+  #get "#{wizard_path}", to: "wizard#new", as: "wizard"
   DynamicRouter.load
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"

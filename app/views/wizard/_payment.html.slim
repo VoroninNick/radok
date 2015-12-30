@@ -62,63 +62,64 @@
                   .title
                     |Pay later
 
-              div class=("show-if-paypal" if !WizardSettings.enabled_credit_card_payment_method?)
-                .row.field-groups-row
+              - if WizardSettings.enabled_any_payment_method?
+                div class=("show-if-paypal" if WizardSettings.enabled_paypal_payment_method?)
+                  .row.field-groups-row
 
-                  / pay later
-                  .fields-group.hide.show-if-pay-later
-                    .header
-                      |Contact information
-                    .columns.large-6.left-column
-                      .inputs
-                        /rf-input ng-model="payment.full_name" name="full_name" required=""
-                        = rf_input name: "payment[full_name]", required: true, label: "Full name", value: u.try(&:full_name)
-                        /rf-input ng-model="payment.phone" name="phone"
-                        = rf_input name: "payment[phone]", label: "Phone", value: u.try(&:phone)
-                        /rf-input ng-model="payment.email" name="full_name" required="" is-email=""  n-inputs-height="2"
-                        = rf_input name: "payment[email]", required: true, type: "email", label: "Email", value: u.try(&:email)
-                    .columns.large-6.left-column
-                      /rf-input type="text" name="comment" ng-model="" label="Your comments..."  n-inputs-height="2"
-                      = rf_input name: "payment[comment]", label: "Your comments...", type: "text"
-
-
-                  / pay now
-                  .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
-                    .header
-                      |Billing info
-                    /rf-input ng-model="payment.full_name" name="full_name" required=""
-                    = rf_input name: "payment[full_name]", required: true, label: "Full name", value: u.try(&:full_name)
-                    /rf-input ng-model="payment.billing_address" name="billing_address" required=""
-                    = rf_input name: "payment[billing_address]", required: true, label: "Billing address", value: u.try(&:billing_address)
-                    .row
-                      .columns.large-6
-                        /rf-input ng-model="payment.city" name="city" required=""
-                        = rf_input name: "payment[city]", required: true, label: "City", required_message: "City", value: u.try(&:city)
-                      .columns.large-6
-                        /rf-input ng-model="payment.zip_code" name="zip_code" required=""
-                        = rf_input name: "payment[zip_code]", required: true, label: "ZIP code", required_message: "ZIP code", value: u.try(&:zip_code)
-                    /rf-input ng-model="payment.country" name="country" required=""
-                    = rf_input name: "payment[country]", required: true, label: "Country", value: u.try(&:country)
+                    / pay later
+                    .fields-group.hide.show-if-pay-later
+                      .header
+                        |Contact information
+                      .columns.large-6.left-column
+                        .inputs
+                          /rf-input ng-model="payment.full_name" name="full_name" required=""
+                          = rf_input name: "payment[full_name]", required: true, label: "Full name", value: u.try(&:full_name)
+                          /rf-input ng-model="payment.phone" name="phone"
+                          = rf_input name: "payment[phone]", label: "Phone", value: u.try(&:phone)
+                          /rf-input ng-model="payment.email" name="full_name" required="" is-email=""  n-inputs-height="2"
+                          = rf_input name: "payment[email]", required: true, type: "email", label: "Email", value: u.try(&:email)
+                      .columns.large-6.left-column
+                        /rf-input type="text" name="comment" ng-model="" label="Your comments..."  n-inputs-height="2"
+                        = rf_input name: "payment[comment]", label: "Your comments...", type: "text"
 
 
-                  .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
-                    .header
-                      |Credit card info
-                    /rf-input ng-model="payment.cardholder_name" name="cardholder_name"
-                    = rf_input name: "payment[cardholder_name]", label: "Cardholder name"
-                    /rf-input ng-model="payment.card_number" name=""
-                    = rf_input name: "payment[card_number]", label: "Card number"
-                    .row
-                      .columns.large-6
-                        /rf-input ng-model="payment.card_expire_month" name="card_expire_month" label="Ex month"
-                        = rf_input name: "payment[exp_month]", label: "Exp. month"
-                      .columns.large-6
-                        /rf-input ng-model="payment.card_expire_year" name="card_expire_year" label="Exp. year"
-                        = rf_input name: "payment[exp_year]", label: "Exp. year"
-                    /rf-input ng-model="payment.cvv2_number" name="cvv2_number" label="CVV2/CVC2 number"
-                    = rf_input name: "payment[cvv_number]", label: "CVV2/CVC2 number"
+                    / pay now
+                    .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
+                      .header
+                        |Billing info
+                      /rf-input ng-model="payment.full_name" name="full_name" required=""
+                      = rf_input name: "payment[full_name]", required: true, label: "Full name", value: u.try(&:full_name)
+                      /rf-input ng-model="payment.billing_address" name="billing_address" required=""
+                      = rf_input name: "payment[billing_address]", required: true, label: "Billing address", value: u.try(&:billing_address)
+                      .row
+                        .columns.large-6
+                          /rf-input ng-model="payment.city" name="city" required=""
+                          = rf_input name: "payment[city]", required: true, label: "City", required_message: "City", value: u.try(&:city)
+                        .columns.large-6
+                          /rf-input ng-model="payment.zip_code" name="zip_code" required=""
+                          = rf_input name: "payment[zip_code]", required: true, label: "ZIP code", required_message: "ZIP code", value: u.try(&:zip_code)
+                      /rf-input ng-model="payment.country" name="country" required=""
+                      = rf_input name: "payment[country]", required: true, label: "Country", value: u.try(&:country)
+
+
+                    .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
+                      .header
+                        |Credit card info
+                      /rf-input ng-model="payment.cardholder_name" name="cardholder_name"
+                      = rf_input name: "payment[cardholder_name]", label: "Cardholder name"
+                      /rf-input ng-model="payment.card_number" name=""
+                      = rf_input name: "payment[card_number]", label: "Card number"
+                      .row
+                        .columns.large-6
+                          /rf-input ng-model="payment.card_expire_month" name="card_expire_month" label="Ex month"
+                          = rf_input name: "payment[exp_month]", label: "Exp. month"
+                        .columns.large-6
+                          /rf-input ng-model="payment.card_expire_year" name="card_expire_year" label="Exp. year"
+                          = rf_input name: "payment[exp_year]", label: "Exp. year"
+                      /rf-input ng-model="payment.cvv2_number" name="cvv2_number" label="CVV2/CVC2 number"
+                      = rf_input name: "payment[cvv_number]", label: "CVV2/CVC2 number"
               - if !WizardSettings.enabled_credit_card_payment_method?
-                .show-if-not-paypal style=("display: none" if PaymentRequest.default_payment_type_paypal?)
+                div class=("show-if-not-paypal" if WizardSettings.enabled_any_payment_method? && !WizardSettings.enabled_paypal_payment_method? ) style=("display: none" if PaymentRequest.default_payment_type_paypal? && WizardSettings.enabled_any_payment_method?)
                   .h3.payment-method-coming-soon
                     |Coming soon
 
@@ -147,17 +148,18 @@
                   /= rf_button raised: false, title: "< Return to Wizard"
                   a.return_to_wizard href=""
                     |< Return to Wizard
-                .columns.small-7.large-8.text-right class=("show-if-paypal" if !WizardSettings.enabled_credit_card_payment_method?)
-                  .price-wrap
-                    .total-cost-label
-                      |Total cost:
-                    .total-price
-                      .currency
-                        |$
-                      span data-bind="total_price"
-                        |0
-                  /rf-button align-content="left"  title="Pay" svg="/assets/rf-rocket-up-right.svg"
-                  = rf_button title: "Pay", svg: "rf-rocket-up-right", full_width: false, class: "payment-pay-button"
+                - if WizardSettings.enabled_any_payment_method?
+                  .columns.small-7.large-8.text-right class=("show-if-paypal" if !WizardSettings.enabled_credit_card_payment_method?)
+                    .price-wrap
+                      .total-cost-label
+                        |Total cost:
+                      .total-price
+                        .currency
+                          |$
+                        span data-bind="total_price"
+                          |0
+                    /rf-button align-content="left"  title="Pay" svg="/assets/rf-rocket-up-right.svg"
+                    = rf_button title: "Pay", svg: "rf-rocket-up-right", full_width: false, class: "payment-pay-button"
 
 
 

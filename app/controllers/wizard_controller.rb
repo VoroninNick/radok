@@ -64,9 +64,9 @@ class WizardController < ApplicationController
 
     set_page_metadata("wizard")
 
-    if server_machine?
-      return render "in_development"
-    end
+    # if server_machine?
+    #   return render "in_development"
+    # end
 
 
     render "new"
