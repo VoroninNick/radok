@@ -104,6 +104,10 @@ class WizardController < ApplicationController
     render "new_new"
   end
 
+  def short_wizard
+    redirect_to wizard_path
+  end
+
   def render_in_development
     render "in_development"
   end

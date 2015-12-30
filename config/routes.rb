@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   wizard_path = "/ordering-crowdsourced-testing"
 
   scope "wizard" do
-    root to: "wizard#new", as: "short_wizard"
+    root to: "wizard#short_wizard", as: "short_wizard"
   end
 
   scope wizard_path do
