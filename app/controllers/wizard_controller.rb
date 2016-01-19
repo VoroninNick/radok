@@ -15,6 +15,8 @@ class WizardController < ApplicationController
     }
 
     if !@project.completed?
+      set_page_metadata("wizard")
+      @head_title = @project.project_name
       render "new"
     else
       redirect_to  dashboard_project_path(id: @project.id)

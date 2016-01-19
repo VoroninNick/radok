@@ -114,7 +114,7 @@ RailsAdmin.config do |config|
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
-  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks NotFound Pricing SignIn TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks NotFound Pricing Profile SignIn SignUp TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [FormConfigs::ContactFeedback, FormConfigs::FaqRequest, FormConfigs::PaymentRequest, FormConfigs::ScheduleCall]
 
@@ -283,6 +283,23 @@ RailsAdmin.config do |config|
 
   config.model Pages::SignIn do
     pages_navigation_label
+
+    edit do
+      field :seo_tags
+    end
+  end
+
+  config.model Pages::Profile do
+    pages_navigation_label
+
+    edit do
+      field :seo_tags
+    end
+  end
+
+  config.model Pages::SignUp do
+    pages_navigation_label
+
 
     edit do
       field :seo_tags

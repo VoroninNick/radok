@@ -22,6 +22,7 @@ class DashboardController < ApplicationController
 
   def project
     @project = Wizard::Test.find(params[:id]) rescue render_not_found
+    @head_title = "#{@project.try(:project_name)} - Dashboard"
   end
 
   def check_user

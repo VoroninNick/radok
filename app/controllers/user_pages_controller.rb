@@ -4,6 +4,8 @@ class UserPagesController < ApplicationController
     #return render inline: social_params(params[:provider]).inspect
     @user = User.new
 
+    set_page_metadata("sign_up")
+
     provider = params[:provider]
     if provider == 'facebook'
       @user.email = social_params['info']['email']
@@ -57,6 +59,8 @@ class UserPagesController < ApplicationController
     if @user.nil?
       authenticate_user!
     end
+
+    set_page_metadata("profile")
 
     if request.post?
       @user.update(params[:user])
