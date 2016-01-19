@@ -4,7 +4,7 @@ class FaqArticlesController < ApplicationController
     #@article = @faq_articles.published.first
     article_url_fragment = FaqArticle.published.pluck(:url_fragment).first
     #render "index"
-    redirect_to action: :show, status: 302, id: article_url_fragment
+    redirect_to faq_article_path(id: article_url_fragment), status: 302
   end
 
   def show

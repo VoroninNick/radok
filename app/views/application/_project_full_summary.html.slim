@@ -124,8 +124,12 @@
                   = project.percentage_discount
               |% discount!
             input id="promo_code" type="text" placeholder="XXXX" disabled=("disabled" if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
+
             button.ok
               = embedded_svg_from_assets "rf-icon-ok"
+            .cancel-promo-code
+
+
         .clearfix
         - if !project.completed?
           .full-summary-pay-buttons

@@ -1274,6 +1274,14 @@ body
 			display: block
 			margin-left: 38px
 
+= delete_button
+	&:before
+		content: "x"
+		color: $fire-orange-color
+		display: inline-block
+		margin-left: 5px
+		cursor: pointer
+
 
 input.file-upload-input
 	display: none
@@ -1282,12 +1290,7 @@ input.file-upload-input
 	.file
 		position: relative
 	.delete
-		&:before
-			content: "x"
-			color: $fire-orange-color
-			display: inline-block
-			margin-left: 5px
-			cursor: pointer
+		+delete_button
 
 	.preloader
 		background: url('/assets/preloader.gif') no-repeat
@@ -1445,6 +1448,22 @@ comment-with-price
 			&.checked, input:checked ~ label.custom-radio-button
 				+custom-radio-button-checked
 
+		&.collection-radio-buttons
+			.option
+				.custom-radio-button
+					+custom-radio-button
+					margin-right: rem-calc(10)
+					position: relative
+					top: 4px
+				.label
+					+radio-button-label
+				input
+					display: none
+
+				&.checked, input:checked ~ label.custom-radio-button
+					+custom-radio-button-checked
+
+
 		&.text, &.without-label
 			.placeholder
 				top: 40px
@@ -1501,7 +1520,7 @@ comment-with-price
 
 
 .input
-	&.collection-checkboxes
+	&.collection-checkboxes, &.collection-radio-buttons
 		.options
 			.option
 				display: inline-block
@@ -1677,7 +1696,9 @@ comment-with-price
 	& + .input.radio-button
 		margin-top: 25px !important
 
-
+.input.radio-button
+	& + &
+		margin-top: rem-calc(10) !important
 
 
 // validation for wizard
@@ -1904,3 +1925,15 @@ comment-with-price
 	text-align: center
 	margin-top: 30px
 	margin-bottom: 50px
+
+
+input#promo_code
+	width: 130px
+
+.cancel-promo-code
+	+delete_button
+
+	.promo-code-field &
+		display: none
+	.promo-code-field.success &
+		display: inline-block

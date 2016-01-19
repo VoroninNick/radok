@@ -10,5 +10,6 @@ class Banner < ActiveRecord::Base
 
   def set_default_title_html_tag
     self.title_html_tag = "div" if self.title_html_tag.blank?
+    try
   end
 end

@@ -1,8 +1,12 @@
 class ApplicationController < ActionController::Base
   #include DeviseTokenAuth::Concerns::SetUserByToken
-  include MetaDataHelper
-  include ImageHelper
-  include PagesHelper
+  include ActionView::Helpers::OutputSafetyHelper
+  include ActionView::Helpers::AssetUrlHelper
+  include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::UrlHelper
+  include Cms::Helpers::MetaDataHelper
+  include Cms::Helpers::ImageHelper
+  include Cms::Helpers::PagesHelper
   include Rails.application.routes.url_helpers
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -85,47 +89,6 @@ class ApplicationController < ActionController::Base
     else
       return unlogged_user_menu
     end
-  end
-
-  def set_page_metadata(page = nil)
-    page_class_name = nil
-    page_instance = nil
-    if page
-      case page
-        when String
-          page_class_name = "Pages::#{page.camelize}"
-      end
-      page_class = page_class_name.constantize rescue nil
-
-      if page.is_a?(ActiveRecord::Base)
-        page_instance = page
-        if page_instance.respond_to?(:has_seo_tags?) && page_instance.has_seo_tags?
-          @page_metadata = page_instance.seo_tags
-        end
-      end
-    else
-      page_class = params[:page_class_name].try(&:constantize)
-    end
-
-
-
-    @page_class = page_class
-    page_instance ||= page_class.try(&:first)
-    @page_metadata ||= page_instance.try(&:seo_tags)
-
-    @page_metadata ||= { head_title: page_class.try(&:default_head_title) }
-
-    if @page_metadata[:head_title].blank?
-      if page_instance.respond_to?(:name)
-        @page_metadata[:head_title] = page_instance.name
-      end
-    end
-
-    @page_instance = page_instance
-  end
-
-  def set_resource_metadata(resource)
-
   end
 
   def set_page_banner

@@ -10,19 +10,20 @@
             .form-content
               .inputs
                 .columns.large-12
-                  = rf_input label: "Phone", required: true, name: "pay_later[phone]"
-                  = rf_input label: "Name", name: "pay_later[full_name]"
-                  = rf_input label: "Email", name: "pay_later[email]", required: true
+                  = rf_input label: "Phone", required: true, name: "pay_later[phone]", value: current_user.try(:phone)
+                  = rf_input label: "Name", name: "pay_later[full_name]", value: current_user.try(:name_or_username)
+                  = rf_input label: "Email", name: "pay_later[email]", required: true, value: current_user.try(:email)
                   = rf_input label: "Description", name: "pay_later[comment]", type: "text"
                 .clearfix
               .actions
-                .columns.small-6.medium-5
-                  .sign-up-invitation
-                    |No account?&nbsp;
-                    a ng-click="openSignUpPopup()"
-                      |Sign up
+                - if !current_user
+                  .columns.small-6.medium-5
+                    .sign-up-invitation
+                      |No account?&nbsp;
+                      a
+                        |Sign up
 
-                .columns.small-6.medium-7
+                .columns.right.small-6.medium-7
                   = rf_button(title: "Call me")
 
 

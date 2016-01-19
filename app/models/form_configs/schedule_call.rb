@@ -1,3 +1,3 @@
-class FormConfigs::ScheduleCall < FormConfig
+class FormConfigs::ScheduleCall < Cms::FormConfig
 
 end

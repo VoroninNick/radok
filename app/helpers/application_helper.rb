@@ -239,7 +239,7 @@ module ApplicationHelper
   end
 
   def hour_price
-    39
+    WizardSettings.hour_price
   end
 
 end

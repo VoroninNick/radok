@@ -169,15 +169,15 @@ form for="project" url=wizard_path method="post" json="{}"
             |Please choose one or more languages
 
         label.label.with-input-distance
-          |In what language(s) should the bugs be reported?
+          |In what language should the bugs be reported?
           span.star
-        .input.collection-checkboxes.clearfix as="collection-checkboxes" model="project.report_languages" min="1" required="true"
+        .input.collection-radio-buttons.clearfix as="collection-radio-buttons" model="project.report_languages" min="1" required="true"
           .options
             - @report_languages.each_with_index do |language, index|
               - input_id = "project_report_languages_#{index + 1}"
               span.option
-                input id=input_id type="checkbox" value=language checked=("checked" if @project.report_languages.include?(language))
-                label.custom-checkbox for=input_id
+                input id=input_id type="radio" name="project[report_languages]" value=language checked=("checked" if @project.report_languages.include?(language))
+                label.custom-radio-button for=input_id
                 label for=input_id
                   |#{language}
             .clearfix
@@ -326,11 +326,11 @@ form for="project" url=wizard_path method="post" json="{}"
             .input.string.project-auth-login.input-with-indent as="string" model="project.auth_login"
               label.placeholder.hiding-placeholder for="project_auth_login"
                 |Username
-              input type="text" id="project_project_name" value=@project.project_name
+              input type="text" id="project_auth_login" value=@project.auth_login
             .input.string.project-auth-password model="project.auth_password" as="string"
               label.placeholder.hiding-placeholder for="project_auth_password"
                 |Password
-              input type="text" id="project_project_name" value=@project.project_name
+              input type="text" id="project_auth_password" value=@project.auth_password
 
         .clearfix
 

@@ -46,7 +46,7 @@ init_wizard_summary_fixed = ()->
 
 
 
-  console.log "transform_px: ", transform_px
+  #console.log "transform_px: ", transform_px
   #console.log "footer_window_top: ", footer_window_top
 
   if transform_px != 0

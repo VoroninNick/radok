@@ -100,7 +100,18 @@ gem 'omniauth-twitter'
 
 gem 'quiet_assets'
 
-local_gem "attachable", branch: "rf"
+
+local = ENV["LOCAL"]
+
+if local
+  gem 'cms', path: "/media/data/pasha/gems/cms"
+  gem "attachable", path: "/media/data/pasha/gems/attachable"
+else
+  gem 'cms', github: "pkorenev/cms"
+  gem "attachable", github: "VoroninNick/attachable"
+end
+
+
 
 gem 'rails_admin_nestable'
 
@@ -129,3 +140,8 @@ gem 'rails_config'
 
 gem 'activerecord-session_store'
 
+gem 'pry-rails'
+
+gem 'require_reloader'
+
+gem 'rack-page_caching'

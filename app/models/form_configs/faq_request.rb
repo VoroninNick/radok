@@ -1,3 +1,3 @@
-class FormConfigs::FaqRequest < FormConfig
+class FormConfigs::FaqRequest < Cms::FormConfig
 
 end

@@ -114,7 +114,7 @@ RailsAdmin.config do |config|
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
-  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks Pricing TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks NotFound Pricing SignIn TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [FormConfigs::ContactFeedback, FormConfigs::FaqRequest, FormConfigs::PaymentRequest, FormConfigs::ScheduleCall]
 
@@ -151,17 +151,23 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
+  config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, Cms::FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
 
 
   include_pages_models(config)
-  include_models(config, MetaData, Page, SitemapElement, Banner, HtmlBlock, KeyedHtmlBlock)
+  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Banner)
 
   include_models(config, Wizard::PromoCode)
 
   include_models config, WizardText
 
   include_models config, WizardSettings
+
+  config.model Cms::MetaTags do
+    field :title
+    field :keywords
+    field :description
+  end
 
 
   config.model WizardSettings do
@@ -225,43 +231,8 @@ RailsAdmin.config do |config|
   #   settings_navigation_label
   # end
 
-  config.model FormConfig do
+  config.model Cms::FormConfig do
     visible false
-  end
-
-
-
-  config.model KeyedHtmlBlock do
-    configure_codemirror_html_field :content
-    pages_navigation_label
-    weight 50
-
-    list do
-      field :key
-    end
-
-    edit do
-      field :key
-      field :content
-    end
-  end
-
-  config.model HtmlBlock do
-    visible false
-    configure_codemirror_html_field(:content)
-
-    edit do
-      field :key
-      field :content
-    end
-
-    nested do
-      field :key do
-        hide
-      end
-
-      field :content
-    end
   end
 
   config.model Banner do
@@ -274,16 +245,6 @@ RailsAdmin.config do |config|
       field :background_image
       field :button_label
       field :button_url
-    end
-  end
-
-  config.model MetaData do
-    visible false
-
-    nested do
-      field :head_title
-      field :keywords
-      field :description
     end
   end
 
@@ -317,6 +278,22 @@ RailsAdmin.config do |config|
 
     edit do
       page_fields
+    end
+  end
+
+  config.model Pages::SignIn do
+    pages_navigation_label
+
+    edit do
+      field :seo_tags
+    end
+  end
+
+  config.model Pages::NotFound do
+    pages_navigation_label
+
+    edit do
+      field :seo_tags
     end
   end
 
@@ -508,7 +485,7 @@ RailsAdmin.config do |config|
 
 
 
-  config.model SitemapElement do
+  config.model Cms::SitemapElement do
     visible false
 
     field :display_on_sitemap

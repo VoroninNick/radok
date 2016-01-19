@@ -1,3 +1,3 @@
-class FormConfigs::PaymentRequest < FormConfig
+class FormConfigs::PaymentRequest < Cms::FormConfig
 
 end

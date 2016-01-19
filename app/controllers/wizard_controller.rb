@@ -15,7 +15,7 @@ class WizardController < ApplicationController
     }
 
     if !@project.completed?
-      render "new_new"
+      render "new"
     else
       redirect_to  dashboard_project_path(id: @project.id)
     end
@@ -40,37 +40,7 @@ class WizardController < ApplicationController
 
   end
 
-  def old_wizard
-    @head_title = "Wizard"
-    @project = Wizard::Test.new
-    last_test = Wizard::Test.last
-    id = last_test.id + 1
-    @project.project_name = "Test ##{id}"
-    @project.methodology_type ||= "exploratory"
 
-    @intro_step = true
-
-    @all_platforms = Wizard::Platform.roots
-
-    (@all_platforms.map(&:id) - @project.platforms.map(&:id)).each do |p_id|
-      p = @all_platforms.where(id: p_id).first
-      p.testers_count ||= 0
-      @project.platforms << p
-    end
-
-    @wizard_options = {
-        step_disabled_unless_active_or_proceeded: false
-    }
-
-    set_page_metadata("wizard")
-
-    # if server_machine?
-    #   return render "in_development"
-    # end
-
-
-    render "new"
-  end
 
   def new
     @head_title = "Wizard"
@@ -101,7 +71,7 @@ class WizardController < ApplicationController
 
 
 
-    render "new_new"
+    render "new"
   end
 
   def short_wizard
@@ -197,6 +167,18 @@ class WizardController < ApplicationController
     else
       render json: {}, status: 500
     end
+  end
+
+  def cancel_promo_code
+    test_id = params[:id]
+    @test = Wizard::Test.find(test_id)
+    @test.promo_code = nil
+    if @test.save
+      render json: {}, status: 200
+    else
+      render json: {}, status: 400
+    end
+
   end
 
   def destroy

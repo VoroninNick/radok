@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "session", to: "application#session_inspect"
   get "w", to: "wizard#new_and_allow"
   scope "emails", controller: "emails" do
     root action: :index, as: :emails
@@ -19,6 +18,7 @@ Rails.application.routes.draw do
     root to: "wizard#new", as: "wizard"
 
     post ":id/promo_code", to: "wizard#promo_code"
+    delete ":id/promo_code", to: "wizard#cancel_promo_code", as: "cancel_promo_code"
     post ":id/payment", to: "wizard#payment", as: :test_payment
     post ":id/pay-later", to: "wizard#pay_later", as: :pay_later
     delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_files"
@@ -31,18 +31,9 @@ Rails.application.routes.draw do
 
   end
 
-  #get "wizard", to: "wiza", as: "short_wizard"
-  #get "wizard", to: redirect(wizard_path), as: "short_wizard"
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call"
-
-  # delete "#{wizard_path}/:id/:asset_field_name/:asset_id", to: "wizard#delete_test_case_files"
-  # post "#{wizard_path}:id/:asset_field_name", to: "wizard#upload_test_case_files"
-  # delete "#{wizard_path}/:id", to: "wizard#destroy"
-  # get "#{wizard_path}/:id", to: "wizard#edit_or_show"
-  # put "#{wizard_path}/:id", to: "wizard#update"
-  # post "#{wizard_path}", to: "wizard#create", as: "wizard"
 
   post "update_subscription", to: "user_pages#update_subscription"
   match "/profile", to: "user_pages#profile", via: [:get, :post]
@@ -64,16 +55,8 @@ Rails.application.routes.draw do
     get "sign-in/:provider", to: "users/sessions#create"
   end
 
-  #mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-  #                                      registrations: "users/registrations",
-  #                                      omniauth_callbacks: "users/omniauth_callbacks"
-  #                                  }
-
-  #devise_for :users, controllers: {registrations: "users/registrations"}
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  #root to: 'home#index'
-  get "about/leaders", to: "about#leaders"
   post "contact_feedback", to: "contact#contact_feedback"
   post "faq-request", to: "faq_articles#request_question"
   get "faq_articles", to: "faq_articles#articles", as: :faq_index
@@ -83,78 +66,11 @@ Rails.application.routes.draw do
   get "wizard/new_test_available_steps"
   get "wizard/available_platforms_by_product_type/:product_type", to: "wizard#available_platforms_by_product_type"
 
-  scope "ng" do
-    root to: "angular#index", as: :ng_root
-    #get 'wizard', to: "angular#wizard"
-  end
-
   get "/svg_images", to: "home#svg_images"
 
 
   post "/save_project", to: "wizard#save_project"
 
-  get "ng_wizard", to: "wizard#ng_wizard"
-
   match "*not_found_url", to: "errors#not_found", via: [:get, :post, :put, :patch, :update, :delete, :create]
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end
 
-
-# add_column :users, :first_name, :string
-# add_column :users, :last_name, :string
-# add_column :users, :country, :string
-# add_column :users, :company_url, :string

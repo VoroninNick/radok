@@ -1,5 +1,5 @@
 class SitemapController < ApplicationController
   def index
-    @entries = SitemapElement.entries([:en])
+    @entries = Cms::SitemapElement.entries([:en])
   end
 end

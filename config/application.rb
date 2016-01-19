@@ -24,8 +24,12 @@ module RadokForce
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.assets.precompile += %w(modernizr-all.min.js svg_images.js angular_app.js not_found.css mailer.css)
+    config.assets.precompile += %w(modernizr-all.min.js not_found.css mailer.css)
 
     config.assets.precompile += %w(codemirror.js codemirror/*)
+
+    if Rails.env.development?
+      #RequireReloader.watch_local_gems!
+    end
   end
 end

@@ -1,3 +1,3 @@
-class FormConfigs::ContactFeedback < FormConfig
+class FormConfigs::ContactFeedback < Cms::FormConfig
 
 end

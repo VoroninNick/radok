@@ -1,6 +1,6 @@
 .page
   = render "page_banner"
-  #dashboard-projects
+  #dashboard-projects data-wizard-root=wizard_path
     - if @drafts.try(&:any?)
       .drafts
         .row

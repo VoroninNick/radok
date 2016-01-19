@@ -7,6 +7,11 @@ window.price_per_hour = parseInt($wizard_controller.attr("data-hour-price"))
 log_input_value = false
 
 
+
+
+
+
+
 window.assets ?= {}
 window.assets.test_case_files ?= []
 
@@ -90,6 +95,13 @@ window.input_types = {
       $input.find(".option input:checked").prop("checked", false)
       for element in value
         $input.find(".option input").filter("[value='#{element}']").prop("checked", true)
+  }
+
+  "collection-radio-buttons" : {
+    dom_value : (input)->
+      window.input_types["collection-checkboxes"].dom_value.apply(this, arguments)
+    set_dom_value : (value)->
+      window.input_types["collection-checkboxes"].set_dom_value.apply(this, arguments)
   }
 
   "platforms" : {
@@ -192,6 +204,7 @@ window.wizard_form = {
     #!!@get_model().id
     !!@get_model().id
   push : ()->
+    console.log "console.log from push"
     self = wizard_form
     project_data_for_push = clone(project, {
       except_keys: w("test_files test_case_files platforms selected_platforms")
@@ -233,6 +246,8 @@ window.wizard_form = {
         ajax_options
       )
 }
+
+
 
 $("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-button", ()->
   $input = $(this)
@@ -592,10 +607,23 @@ log_project_main_components = false
 $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   #console.log "e : #{e.type}", e
   $input = $(this)
+  $html_input = $input.filter("input")
+  if !$html_input.length
+    $html_input = $input.find("input")
+  ignore = (e.type == 'keyup' && $html_input.length && (e.which == 13))
+
+  if ignore
+    return false
+
+
+
+
   model = $input.attr("model")
 
   value = input_value.call($input)
   #console.log "inspect: model: #{model}: ", value
+
+
 
   validate_input.call($input, value)
   assign_model_key(model, value)
@@ -668,6 +696,7 @@ scrollToFirstStep = ()->
 
 
 scrollToStep = (step_id)->
+  console.log "scrollToStep: ", step_id
   if step_id == undefined || step_id == null
     return
   $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
@@ -1300,7 +1329,8 @@ $("body").on "after_create", ()->
   url = wizard_form.update_url.apply(wizard_form)
   history.pushState(state, title, url);
 
-$("body").on "click", ".rf-configure-button, .rf-step-configure-button", ()->
+$("body").on "click", ".rf-configure-button, .rf-step-configure-button", (e)->
+  console.log "click: .rf-configure-button, .rf-step-configure-button ", e
   $(".rf-step-configure-button").attr("style", "")
   $(".rf-step-configure-button").fadeOut()
   init_configure_mode()
@@ -1321,6 +1351,8 @@ init_loaded_project = ()->
   if str
     data = JSON.parse(str)
     $.extend(window.project, data)
+
+
 
 
   if wizard_form.is_persisted.apply(wizard_form)
@@ -1450,12 +1482,18 @@ $("body").on "change.project.hours_per_tester", ()->
   $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
   #console.log "project.hours_per_tester", project.hours_per_tester
 
+$("body").on "keypress", "input", (e)->
+  $input = $(this)
+  $wrap = $input.closest(".input")
 
+  if e.which == 13 && ($input.attr('type') == 'text' || $wrap.hasClass("string") || $wrap.hasClass("url") )
+    return false
 
 $("body").on "keyup", ".input[as=tags]", ()->
 
 
-$("body").on "click", ".promo-code-field button", ()->
+$("body .promo-code-field button").on "click", (e)->
+  e.preventDefault()
   $button = $(this)
   $promo_code_field = $button.closest(".promo-code-field")
   $label = $promo_code_field.find("label")
@@ -1467,6 +1505,7 @@ $("body").on "click", ".promo-code-field button", ()->
 
   data = { promo_code: { password: password } }
   url = $("form[for=project]").attr("url") + "/" + project.id + "/promo_code"
+  console.log "before_ajax: url: ", url
   $.ajax(
     data: data
     dataType: 'json'
@@ -1476,14 +1515,8 @@ $("body").on "click", ".promo-code-field button", ()->
       project.percentage_discount = res.percentage_discount
       $promo_code_field.removeClass("waiting invalid")
       $promo_code_field.addClass("success")
-      $(".percentage-discount").text(project.percentage_discount)
+      $(".percentage-discount").show().text(project.percentage_discount)
       update_price()
-#      setTimeout(
-#        ()->
-#          $promo_code_field.addClass("hide")
-#
-#        3000
-#      )
 
     error: ()->
       #$label.hide()
@@ -1494,6 +1527,48 @@ $("body").on "click", ".promo-code-field button", ()->
 
 
       $input.removeAttr("disabled")
+
+  )
+
+  $promo_code_field.addClass("waiting")
+  $input.attr("disabled", "disabled")
+
+$("body .promo-code-field .cancel-promo-code").on "click", (e)->
+
+  e.preventDefault()
+  $button = $(this)
+  $promo_code_field = $button.closest(".promo-code-field")
+  $label = $promo_code_field.find("label")
+  $invalid_code_error = $(".error-invalid")
+  $input = $promo_code_field.find("input")
+  $waiting_label = $promo_code_field.find(".waiting")
+
+
+
+  data = {  }
+  url = $("form[for=project]").attr("url") + "/" + project.id + "/promo_code"
+  console.log "before_ajax: url: ", url
+  $.ajax(
+    data: data
+    dataType: 'json'
+    type: "delete"
+    url: url
+    success: (res)->
+      project.percentage_discount = 0
+      $promo_code_field.removeClass("waiting invalid")
+      $promo_code_field.removeClass("success")
+      $input.removeAttr("disabled")
+      $(".percentage-discount").hide()
+      update_price()
+
+
+    error: ()->
+      $promo_code_field.removeClass("waiting")
+      $promo_code_field.addClass("invalid")
+
+
+
+      $input.attr("disabled", "disabled")
 
   )
 
@@ -1576,4 +1651,14 @@ $(".popup.invalid-fields").on "click", ".invalid-field-link", (e)->
 
   $("body").animate(scrollTop: top)
 
+
+$("form[for]").on "submit", (e)->
+  e.preventDefault()
+  return false
+
+
+
+$("form[for]").on "keyup", "input", (e)->
+  if e.which == 13
+    return false
 
