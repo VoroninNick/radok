@@ -45,9 +45,15 @@ def forms_navigation_label
 end
 
 def page_fields(hide_content = false)
-  configure_codemirror_html_field(:content)
+  #configure_codemirror_html_field(:content)
   field :banner
-  field :content if !hide_content
+  field :content, :text do
+    def value
+      bindings[:object].content
+    end
+  end  if !hide_content
+
+
   html_block_fields
   field :url
   field :seo_tags
@@ -56,18 +62,19 @@ end
 
 def configure_codemirror_html_field(name)
   configure name, :code_mirror do
-    theme = "monokai" # night
+    theme = "night" # night
+    mode = 'css'
 
     assets do
       {
-          mode: '/assets/codemirror/modes/xml.js',
+          mode: "/assets/codemirror/modes/#{mode}.js",
           theme: "/assets/codemirror/themes/#{theme}.css",
       }
     end
 
     config do
       {
-          mode: 'xml',
+          mode: mode,
           theme: theme,
       }
     end
@@ -408,7 +415,8 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      page_fields(true)
+      page_fields
+
     end
   end
 
