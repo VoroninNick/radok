@@ -6,20 +6,6 @@
       .text
         |Summary
     #wizard-full-summary-content.row
-
-      .columns.large-6
-        /.property
-          .property-label
-            |Project name
-          .property-value data-bind="project.project_name"
-            = project.project_name
-
-        /.property
-          .property-label
-            |Version
-          .property-value data-bind="project.project_version"
-            = project.project_version
-
       .columns.large-6
         .property
           .property-label
@@ -54,17 +40,6 @@
                           .count
                             = binding.testers_count
               - project.platforms.each do |platform_key, platform|
-      /- if platform[:testers_count] > 0
-                .platform
-                  .platform-svg
-                    = embedded_svg_from_assets(platform[:logo_path])
-                  .platform-name
-                    = platform[:name]
-                  .platform-subitems
-                    - platform[:platform_subitems].each do |subitem|
-                      - if subitem[:count] > 0
-                        .platform-subitem
-                          = subitem[:name]
 
       .columns.large-12.total-testers-count.large-indent
         .property-label
@@ -88,55 +63,56 @@
       .columns.large-12.large-indent
         hr
 
-      .columns.large-6
+      .columns.large-6.property
         .property-label
           |Project name:
         .property-value data-bind="project.project_languages"
           = project.project_name
 
-      .columns.large-6
+      .columns.large-6.property
         .property-label
           |Project version:
         .property-value data-bind="project.project_languages"
           = project.project_version
 
-      .columns.large-6.clear
+      .columns.large-6.property.clear
         .property-label
           |Your product is in:
         .property-value data-bind="project.project_languages"
           = project.project_languages.join(", ")
 
-      .columns.large-6
+      .columns.large-6.property
         .property-label
           |Bugs will be reported in:
         .property-value data-bind="project.report_languages"
           = project.report_languages.join(", ")
       - if project.project_info_comment.present?
-        .columns.large-12
+        .columns.large-12.property
           .property-label
             |Project info comment:
           .property-value data-bind="project.project_languages"
             = project.project_info_comment
       - if project.test_plan?
         .clearfix
-        hr
+        .columns.large-12.large-indent
+          hr
         - if project.exploratory?
-          .columns.large-12
+          .columns.large-12.property
             .property-label
               |Exploratory instructions:
             .property-value data-bind="project.project_languages"
               = project.exploratory_description
         - else
-          .columns.large-12
+          .columns.large-12.property
             .property-label
               |Test-case driven files:
-            .property-value data-bind="project.project_languages"
+            .property-value.text-transform-none data-bind="project.project_languages"
               - project.test_case_files.each do |f|
                 .file
                   a href=f.url
                     = f.data_file_name
 
-        .columns.large-12
+        .columns.large-12.property
           .property-label
             |Project main components:
           .property-value data-bind="project.project_languages"
@@ -144,15 +120,16 @@
               .component
                 = c
       .clearfix
-      hr
+      .columns.large-12.large-indent
+        hr
       - if project.project_url.present?
-        .columns.large-12
+        .columns.large-12.property
           .property-label
             |Url to be tested:
-          .property-value data-bind="project.project_languages"
+          .property-value.text-transform-none data-bind="project.project_languages"
             = project.project_url
       - if project.test_files.any?
-        .columns.large-12
+        .columns.large-12.property
           .property-label
             |Files to be tested:
           .property-value
@@ -161,22 +138,28 @@
                 a href=f.url
                   = f.data_file_name
       - if project.authentication_required
-        .columns.large-12
+        .columns.large-12.property
           .property-label
             |This project requires authentication:
           .property-value
-            |username: #{project.auth_login}
+            |username:
+            span.text-transform-none
+              |&thinsp;&thinsp;
+              |#{project.auth_login}
             br
-            |password: #{project.auth_password}
+            |password:
+            span.text-transform-none
+              |&thinsp;&thinsp;
+              |#{project.auth_password}
       - if project.contact_person?
         - contact_person = project.contact_person
-        .columns.large-12
+        .columns.large-12.property
           .property-label
             |Contact person:
           .property-value
             = raw(contact_person.map{|k, v| "#{k}: #{v}" }.join("<br/>"))
       - if project.project_access_comment.present?
-        .columns.large-12
+        .columns.large-12.property
           .property-label
             |Project access comment:
           .property-value
@@ -184,13 +167,13 @@
 
 
 
-      .columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
+      /.columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
         .property-label
           |Here is project url:
-        .property-value data-bind="project.project_url"
+        .property-value.text-transform-none data-bind="project.project_url"
           a href=project.project_access__url
             = project.project_access__url
-      .columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
+      /.columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
         .property-label
           |You've provided the following instructions:
         .property-input-value

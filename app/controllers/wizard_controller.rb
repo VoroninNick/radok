@@ -37,9 +37,6 @@ class WizardController < ApplicationController
     @report_languages = Wizard::ReportLanguage.all.pluck(:name)
 
     @platform_ids_by_product_type = Wizard::ProductType.platform_ids_by_product_type
-
-
-
   end
 
 

@@ -9,6 +9,9 @@ log_input_value = false
 
 
 
+#$(window).on "unload", (e)->
+#  e.preventDefault()
+#  return false
 
 
 

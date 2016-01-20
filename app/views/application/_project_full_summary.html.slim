@@ -88,7 +88,7 @@
       .columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
         .property-label
           |Here is project url:
-        .property-value data-bind="project.project_url"
+        .property-value.text-transform-none data-bind="project.project_url"
           a href=project.project_access__url
             = project.project_access__url
       /.columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"

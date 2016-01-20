@@ -13,9 +13,9 @@ form for="project" url=wizard_path method="post" json="{}"
         .label.text-center
           |For what type of product?
 
-      - @product_types.each_with_index do |test_type, index|
-        - checked = @project.test_type.try{|t| t.id == test_type.id } || false
-        - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.product_type"; name = "project_product_type"; input_id = "project_product_type_#{index + 1}"
+      - @product_types.each_with_index do |product_type, index|
+        - checked = @project.product_type.try{|t| t.id == product_type.id } || false
+        - value = product_type.name; label = product_type.name; image=product_type.image.url(:original); model = "project.product_type"; name = "project_product_type"; input_id = "project_product_type_#{index + 1}"
         .columns.large-3.small-6.medium-3.text-center
           .input.image-radio-button class="project_product_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
             input id=input_id value=value name=name type="radio" checked=("checked" if checked )
@@ -95,7 +95,7 @@ form for="project" url=wizard_path method="post" json="{}"
           .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=("Time (hours per tester)")
             | Time (hours per tester)
           p
-            | How much effort would you like each tester to spend testing tour product?
+            | How much effort would you like each tester to spend testing your product?
           .available-hours
             /! ngRepeat: hour in wizard.hours
 
