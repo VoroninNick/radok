@@ -1,5 +1,9 @@
 class SitemapController < ApplicationController
   def index
-    @entries = Cms::SitemapElement.entries([:en])
+    @content = Pages.sitemap_xml.try(:content)
+    if @content.blank?
+      @entries = Cms::SitemapElement.entries([:en])
+    end
+
   end
 end
