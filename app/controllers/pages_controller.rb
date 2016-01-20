@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :set_page_metadata
-  before_action :set_page_banner, except: [:home]
+  before_action :set_page_banner, except: [:home, :robots_txt]
 
 
   def self.actions
@@ -109,5 +109,9 @@ class PagesController < ApplicationController
         operating_systems: 48,
         screen_sizes: 25
     }
+  end
+
+  def robots_txt
+    render template: "pages/robots.txt"
   end
 end

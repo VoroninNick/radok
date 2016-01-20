@@ -114,7 +114,7 @@ RailsAdmin.config do |config|
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
-  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks NotFound Pricing Profile SignIn SignUp TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [FormConfigs::ContactFeedback, FormConfigs::FaqRequest, FormConfigs::PaymentRequest, FormConfigs::ScheduleCall]
 
@@ -256,6 +256,17 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model Pages::RobotsTxt do
+    pages_navigation_label
+    edit do
+      field :content, :text do
+        def value
+          bindings[:object].content
+        end
+      end
+    end
+  end
+
   config.model Pages::About do
     pages_navigation_label
     weight -200
@@ -286,6 +297,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :seo_tags
+      field :sitemap_record
     end
   end
 
@@ -294,6 +306,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :seo_tags
+      field :sitemap_record
     end
   end
 
@@ -303,6 +316,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :seo_tags
+      field :sitemap_record
     end
   end
 
@@ -311,6 +325,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :seo_tags
+      field :sitemap_record
     end
   end
 
@@ -340,6 +355,7 @@ RailsAdmin.config do |config|
     edit do
       field :banner
       field :seo_tags
+      field :sitemap_record
 
     end
   end
