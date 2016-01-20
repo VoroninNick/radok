@@ -114,4 +114,8 @@ class PagesController < ApplicationController
   def robots_txt
     render template: "pages/robots.txt"
   end
+
+  def terms_of_use
+
+  end
 end

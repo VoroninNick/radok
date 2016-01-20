@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_page_banner
-    @banner ||= @page_instance.banner
+    @banner ||= @page_instance.try(:banner)
   end
 
 
