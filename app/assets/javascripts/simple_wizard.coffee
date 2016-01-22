@@ -27,7 +27,7 @@ window.small = (size = 640)->
   else
     return false
 
-assign_model_key = (model, val)->
+window.get_model_target = (model)->
   model_keys = model.split(".")
   last_key = model_keys[model_keys.length - 1]
   target = window
@@ -36,6 +36,21 @@ assign_model_key = (model, val)->
       break
     target[key] ?= {}
     target = target[key]
+
+  target
+
+window.get_model_value = (model)->
+  model_keys = model.split(".")
+  last_key = model_keys[model_keys.length - 1]
+  target = get_model_target(model)
+
+  target[last_key]
+
+
+assign_model_key = (model, val)->
+  model_keys = model.split(".")
+  last_key = model_keys[model_keys.length - 1]
+  target = get_model_target(model)
   target[last_key] = val
 
 window.input_types = {
@@ -128,6 +143,13 @@ window.input_types = {
 
   }
 
+#  files : {
+#    dom_value : (input)->
+#      $input = $(input)
+#      model = $input.attr("model")
+#      assign_model_key()
+#  }
+
 }
 
 window.step_types = {
@@ -135,7 +157,7 @@ window.step_types = {
   'platforms' : {
     completed : false
     checkIsCompleted : ()->
-      completed = project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length)
+      completed = project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)
 
       completed
 
@@ -153,12 +175,19 @@ window.step_types = {
 
   'project_components' : {
     checkIsCompleted : ()->
-      (project.exploratory_instructions && project.exploratory_instructions.length)
+      any_components = project.main_components && project.main_components.length
+      if !any_components
+        return false
+
+      if project.methodology_type == 'exploratory'
+        return (project.exploratory_instructions && project.exploratory_instructions.length > 0)
+      else
+        return (project.test_case_files && project.test_case_files.length > 0)
   }
 
   'project_access' : {
     checkIsCompleted : ()->
-      (project.project_url && project.project_url.length)
+      return (!!project.project_url && project.project_url.length > 0) || (!!project.test_files && project.test_files.length > 0)
   }
 
 
@@ -410,6 +439,7 @@ window.input_value = ()->
   if input_data_type == "integer"
     value = parseInt(value)
 
+
   return value
 
 window.validate_input = (value)->
@@ -608,18 +638,20 @@ window.check_for_step_completeness = ()->
 log_project_main_components = false
 
 $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
+
   #console.log "e : #{e.type}", e
   $input = $(this)
+
   $html_input = $input.filter("input")
   if !$html_input.length
     $html_input = $input.find("input")
   ignore = (e.type == 'keyup' && $html_input.length && (e.which == 13))
 
+  if e.type == 'change' && $html_input.attr("model") == 'project.test_files'
+    console.log "add file event"
+
   if ignore
     return false
-
-
-
 
   model = $input.attr("model")
 
@@ -629,7 +661,9 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
 
 
   validate_input.call($input, value)
-  assign_model_key(model, value)
+  ignore_model = $html_input.attr('type') == 'file'
+  if !ignore_model
+    assign_model_key(model, value)
 
   #console.log "input change"
 
@@ -645,8 +679,6 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
 
   $step = $(this).closest(".wizard-step")
   check_for_step_completeness.apply($step)
-
-
 
   stringified_value = value
   if Array.isArray(value)
@@ -1002,15 +1034,26 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
     #console.log "status", { available_step_ids: available_step_ids, available_next_step: available_next_step, next_step_id: project.next_step_id, available_prev_step: available_prev_step, prev_step_id: project.prev_step_id }
 
 
-    $target.trigger("change.project.current_step_id")
+    $('body').trigger("change.project.current_step_id")
 
 
 $("body").on "change.project.current_step_id", ()->
+  console.log "project.current_step_id", project.current_step_id
+  if project.current_step_id == null
+    prev_step_number = parseInt($('.wizard-step:visible:last .wizard-step-counter').attr('data-number'))
   step_id = project.current_step_id
   $step = $(".wizard-step[step=#{step_id}]")
   $(".wizard-step.active").removeClass("active")
   $step.addClass("active")
   number = $step.find(".wizard-step-counter").attr("data-number")
+
+  prev_step_number ?= number - 1
+  $prev_step_number = $('.go-back-button .prev-step-number')
+
+  if prev_step_number > 0
+    $prev_step_number.text(prev_step_number)
+  else
+    $prev_step_number.text("")
   if !project.next_step_id
     $(".rf-next-step-button").hide()
     $(".rf-go-to-summary-button").fadeIn()
@@ -1036,12 +1079,15 @@ $("body").on "click", ".rf-go-to-summary-button", ()->
   project.prev_step_id = project.current_step_id
   project.current_step_id = null
 
+
   $button = $(this)
   $button.hide()
 
   $mini_summary_large_confirm_button = $("#wizard-summary .rf-confirm-button")
 
   $mini_summary_large_confirm_button.fadeIn()
+
+  $('body').trigger("change.project.current_step_id")
 
 
 $("body").on "change.project.available_next_step", ()->
@@ -1240,15 +1286,13 @@ $("body").on "change", "input.file-upload-input", ->
   list_selector = $input.attr("list-selector")
   $list = $(list_selector)
 
+  model = $input.attr('model')
+
   attachment_name = $input.attr("data-attachment-name")
-
-
-
 
   new_files_length = input.files.length
   new_files_saved_count = 0
   for file in input.files
-
     $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{file.name}'><span class='file-name'>#{file.name}</span><span class='preloader'></span><span class='delete'></span></div>")
     f = {name: file.name}
     reader = new FileReader()
@@ -1256,7 +1300,7 @@ $("body").on "change", "input.file-upload-input", ->
 #console.log "reader.load", arguments
       src = reader.result
       f.content = src
-      assets.test_case_files.push(f)
+      get_model_value(model).push(f)
       new_files_saved_count = new_files_saved_count + 1
 
       if new_files_length == new_files_saved_count
@@ -1467,6 +1511,7 @@ $(".wizard-step").on "disappear", ()->
     project.current_step_id = null
     project.prev_step_id = project.available_step_ids[project.available_step_ids.length]
     project.next_step_id = false
+
   #else
 
 
@@ -1642,15 +1687,16 @@ $(".popup.invalid-fields").on "click", ".invalid-field-link", (e)->
   selector = $link.attr("href")
   scroll_to_step = true
   $target = null
+  step_id = $link.closest("div.step").attr("step-id")
   if scroll_to_step
-    step_id = $link.closest("div.step").attr("step-id")
+
     $target = $(".wizard-step").filter("[step=#{step_id}]")
   else
     $target = $(selector)
 
 
   top = $target.offset().top - 128
-
+  change_step(step_id)
 
   $("body").animate(scrollTop: top)
 

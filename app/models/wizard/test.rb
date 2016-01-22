@@ -470,6 +470,9 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
 
       t.percentage_discount percentage_discount
 
+      t.test_case_files test_case_files.pluck(:data_file_name).map{|name| {name: name} }
+      t.test_files test_files.pluck(:data_file_name).map{|name| {name: name} }
+
       #test.president president.to_builder
     end
   end
