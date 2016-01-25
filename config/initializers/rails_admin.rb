@@ -26,6 +26,14 @@ def include_models(config, *models)
   end
 end
 
+def content_field(name = :content)
+  field name, :text do
+    def value
+      bindings[:object].send(name)
+    end
+  end
+end
+
 def pages_navigation_label
   navigation_label do
     I18n.t("admin.navigation_labels.pages")
@@ -47,11 +55,7 @@ end
 def page_fields(hide_content = false)
   #configure_codemirror_html_field(:content)
   field :banner
-  field :content, :text do
-    def value
-      bindings[:object].content
-    end
-  end  if !hide_content
+  content_field  if !hide_content
 
 
   html_block_fields
@@ -96,7 +100,7 @@ def html_block_fields
   if m.respond_to?(:html_block_field_names)
 
     m.html_block_field_names.each do |name|
-      field name.to_sym
+      content_field name.to_sym
     end
   end
 end
@@ -160,9 +164,8 @@ RailsAdmin.config do |config|
 
   config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, Cms::FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
 
-
   include_pages_models(config)
-  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Banner)
+  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Cms::HtmlBlock, Banner)
 
   include_models(config, Wizard::PromoCode)
 
@@ -171,9 +174,17 @@ RailsAdmin.config do |config|
   include_models config, WizardSettings
 
   config.model Cms::MetaTags do
+    visible false
+
     field :title
     field :keywords
     field :description
+  end
+
+  config.model Cms::HtmlBlock do
+    visible false
+
+    field :content
   end
 
 
@@ -266,22 +277,14 @@ RailsAdmin.config do |config|
   config.model Pages::RobotsTxt do
     pages_navigation_label
     edit do
-      field :content, :text do
-        def value
-          bindings[:object].content
-        end
-      end
+      content_field
     end
   end
 
   config.model Pages::SitemapXml do
     pages_navigation_label
     edit do
-      field :content, :text do
-        def value
-          bindings[:object].content
-        end
-      end
+      content_field
     end
   end
 
