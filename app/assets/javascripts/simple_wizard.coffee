@@ -169,19 +169,22 @@ window.step_types = {
 
   'project_info' : {
     checkIsCompleted : ()->
-      (project.project_name && project.project_name.length) && (project.project_version && project.project_version.length) && (project.project_languages && project.project_languages.length) \
-      && (project.report_languages && project.report_languages.length)
+      (project.project_name && project.project_name.length > 0) && (project.project_version && project.project_version.length > 0) && (project.project_languages && project.project_languages.length > 0 ) \
+      && (project.report_languages && project.report_languages.length > 0)
   }
 
   'project_components' : {
     checkIsCompleted : ()->
-      any_components = project.main_components && project.main_components.length
+      any_components = project.main_components && project.main_components.length > 0
       if !any_components
         return false
 
       if project.methodology_type == 'exploratory'
         return (project.exploratory_instructions && project.exploratory_instructions.length > 0)
       else
+        console.log "project.test_case_files: ", project.test_case_files
+        console.log "project.test_case_files.length: ", project.test_case_files.length
+        console.log "(project.test_case_files && project.test_case_files.length > 0) : ", (project.test_case_files && project.test_case_files.length > 0)
         return (project.test_case_files && project.test_case_files.length > 0)
   }
 
@@ -621,6 +624,8 @@ window.check_for_step_completeness = ()->
     #console.log "check_for_step_completeness:: inside if"
     completed = step_types[step_type].checkIsCompleted.apply($step)
 
+    console.log "check_for_step_completeness: completed: ", completed
+
     data_completed = $step.data("completed")
     if data_completed != completed
       $step.data('completed', completed)
@@ -631,6 +636,10 @@ window.check_for_step_completeness = ()->
       else
         $step.removeClass("completed")
         $step.trigger("step_uncompleted")
+
+    #else
+    #  console.log "data_completed: ", data_completed
+    #  console.log "completed: ", completed
 
 
 
@@ -678,7 +687,9 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   $wizard_controller = $(".wizard-controller")
 
   $step = $(this).closest(".wizard-step")
+  #console.log "before check_for_step_completeness"
   check_for_step_completeness.apply($step)
+  #showStepsProgress()
 
   stringified_value = value
   if Array.isArray(value)
@@ -758,6 +769,7 @@ show_mini_summary = ()->
 
 
 window.showStepsProgress = ()->
+  #console.log "showStepsProgress"
   $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
   progress_steps_str = ""
   steps_count = $visible_steps.length
@@ -1038,7 +1050,7 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
 
 
 $("body").on "change.project.current_step_id", ()->
-  console.log "project.current_step_id", project.current_step_id
+  #console.log "project.current_step_id", project.current_step_id
   if project.current_step_id == null
     prev_step_number = parseInt($('.wizard-step:visible:last .wizard-step-counter').attr('data-number'))
   step_id = project.current_step_id
@@ -1279,6 +1291,7 @@ show_or_hide_auth_test_driven_development_inputs = ()->
 
 
 $("body").on "change", "input.file-upload-input", ->
+
   input = this
   $input = $(input)
   $upload_area = $input.closest(".upload-area")
@@ -1289,6 +1302,8 @@ $("body").on "change", "input.file-upload-input", ->
   model = $input.attr('model')
 
   attachment_name = $input.attr("data-attachment-name")
+
+  $step = $input.closest(".wizard-step")
 
   new_files_length = input.files.length
   new_files_saved_count = 0
@@ -1305,6 +1320,8 @@ $("body").on "change", "input.file-upload-input", ->
 
       if new_files_length == new_files_saved_count
         $input.val(null)
+      check_for_step_completeness.apply($step)
+
 
     reader.readAsDataURL(file);
 
@@ -1322,7 +1339,14 @@ $("body").on "change", "input.file-upload-input", ->
   })
 
 
+
+
   $input.trigger("upload_files.#{attachment_name}")
+  $input.trigger("change.#{model}")
+
+  console.log "step", $step
+  console.log "File Upload: ", project.test_case_files[0]
+  check_for_step_completeness.apply($step)
 
 
 
@@ -1334,17 +1358,20 @@ $("body").on "click", ".file-upload-files-list .delete", ->
   asset_id = $file.attr("data-id")
   $list = $file.closest(".file-upload-files-list")
   $file.remove()
-  assets.test_case_files.splice(file_index, 1)
+  model = $list.attr('model')
+  get_model_value(model).splice(file_index, 1)
 
   attachment_name = $list.attr("data-attachment-name")
   $.ajax({
     url: "#{wizard_root_path}/#{project.id}/#{attachment_name}/#{asset_id}"
     type: "delete"
     dataType: "json"
-
   })
 
   $list.trigger("delete_files.#{attachment_name}")
+
+  $step = $list.closest(".wizard-step")
+  check_for_step_completeness.apply($step)
 
   console.log("delete 2")
 
@@ -1377,7 +1404,7 @@ $("body").on "after_create", ()->
   history.pushState(state, title, url);
 
 $("body").on "click", ".rf-configure-button, .rf-step-configure-button", (e)->
-  console.log "click: .rf-configure-button, .rf-step-configure-button ", e
+  #console.log "click: .rf-configure-button, .rf-step-configure-button ", e
   $(".rf-step-configure-button").attr("style", "")
   $(".rf-step-configure-button").fadeOut()
   init_configure_mode()
