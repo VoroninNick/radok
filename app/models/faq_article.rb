@@ -11,7 +11,7 @@ class FaqArticle < ActiveRecord::Base
   validates :name, presence: true
 
   def setup_url_fragment
-    self.url_fragment = self.name.parameterize if url_fragment.blank?
+    self.url_fragment = self.name.parameterize if self.url_fragment.blank?
   end
 
   def self.setup_url_for_all
