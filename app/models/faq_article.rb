@@ -1,5 +1,5 @@
 class FaqArticle < ActiveRecord::Base
-  attr_accessible :published, :name, :content
+  attr_accessible *attribute_names
   has_sitemap_record
 
   scope :published, -> { where(published: 't') }
