@@ -165,7 +165,7 @@ RailsAdmin.config do |config|
   config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, Cms::FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
 
   include_pages_models(config)
-  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Cms::HtmlBlock, Banner)
+  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
 
   include_models(config, Wizard::PromoCode)
 
