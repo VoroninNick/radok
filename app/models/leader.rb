@@ -1,5 +1,5 @@
 class Leader < ActiveRecord::Base
-  attr_accessible :name, :position
+  attr_accessible *attribute_names
   attr_accessible :image
 
   has_attached_file :image, styles: { thumb: "150x150#" }
