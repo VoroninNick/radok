@@ -1,6 +1,6 @@
 $medium-down: "#{$screen} and (max-width:#{upper-bound($medium-range)})"
 $intermediate-breakpoint: em-calc(768)
-$intermediate-range:  ($small-breakpoint  + em-calc(1), $intermediate-breakpoint) !default
+$intermediate-range:	($small-breakpoint	+ em-calc(1), $intermediate-breakpoint) !default
 $intermediate-down: "#{$screen} and (max-width: #{upper-bound($intermediate-range)})"
 $intermediate-up: "#{$screen} and (min-width: #{lower-bound($intermediate-range)})"
 $intermediate-only: "#{$screen} and (min-width: #{lower-bound($intermediate-range)}) and (max-widthL #{upper-bound($intermediate-range)})"
@@ -8,656 +8,658 @@ $faq-menu-breakpoint: $intermediate-down
 $page-row-wrap-padding: 40px 0 65px 0
 
 .clear
-  clear: both
+	clear: both
 
 .sp
-  &:before
-    content: "\00a0"
+	&:before
+		content: "\00a0"
 
 @media #{$intermediate-up}
-  @for $i from 1 through 12
-    .intermediate-#{$i}
-      width: grid-calc($i, 12)
-  .intermediate-uncentered
-    float: $default-float
-    margin-#{$default-float}: 0
-    margin-#{$opposite-direction}: 0
+	@for $i from 1 through 12
+		.intermediate-#{$i}
+			width: grid-calc($i, 12)
+	.intermediate-uncentered
+		float: $default-float
+		margin-#{$default-float}: 0
+		margin-#{$opposite-direction}: 0
 
 
 .text-center
-  text-align: center
+	text-align: center
 .text-right
-  text-align: right
+	text-align: right
 
 .blue-header
-  color: $sky-blue-color
-  text-transform: uppercase
-  font-weight: 600
-  font-size: 18px
+	color: $sky-blue-color
+	text-transform: uppercase
+	font-weight: 600
+	font-size: 18px
 
 .display-block
-  display: block
+	display: block
 
 label, button, input[type=submit], input[type=button]
-  cursor: pointer
+	cursor: pointer
 
 .hide
-  display: none !important
+	display: none !important
 //.invisible
-  display: none !important
+	display: none !important
 
 
 $simple-form-input-height: 36px
 
 button, label, input[type=button], input[type=submit]
-  cursor: pointer
+	cursor: pointer
 
 = white-input
-  border: none
-  height: $simple-form-input-height
-  +font-14-semibold
+	border: none
+	height: $simple-form-input-height
+	+font-14-semibold
 
-  &:first-child
-    margin-top: 0
+	&:first-child
+		margin-top: 0
 
-  &:focus
-    color: white
-    background: $sky-blue-color
+	&:focus
+		color: white
+		background: $sky-blue-color
 
 %simple-contact-form-section
-  background: $white-color
-  padding: 40px 0 80px 0
+	background: $white-color
+	padding: 40px 0 80px 0
 
-  .header
-    @extend %large-section-header-text
-  .subheader
-    @extend %section-subheader-text
+	.header
+		@extend %large-section-header-text
+	.subheader
+		@extend %section-subheader-text
 
-  form
-    margin-top: 4rem
+	form
+		margin-top: 4rem
 
-  input
-    height: $simple-form-input-height
-    margin-top: 11px
+	input
+		height: $simple-form-input-height
+		margin-top: 11px
 
-  input, textarea
-    border: none
+	input, textarea
+		border: none
 
-  input:not([type=button])
-    +white-input
-  textarea
-    height: 130px
-  input:not([type=button]), textarea
-    width: 100%
-    background: #fff
-    max-width: none
+	input:not([type=button])
+		+white-input
+	textarea
+		height: 130px
+	input:not([type=button]), textarea
+		width: 100%
+		background: #fff
+		max-width: none
 
-  @media #{$small-only}
-    textarea
-      margin-top: 11px
+	@media #{$small-only}
+		textarea
+			margin-top: 11px
 
 
 
 = page-row-wrap
-  padding: $page-row-wrap-padding
-  .header
-    +large-section-header-text
-    line-height: 1
-    margin-bottom: 12px
+	padding: $page-row-wrap-padding
+	.header
+		+large-section-header-text
+		line-height: 1
+		margin-bottom: 12px
 
-  .time
-    color: $yellow-orange-color
-    +font-14
-  .description
-    +content-text
-    ul
-      @extend %ul-with-blue-markers
-  .subheader
-    +section-subheader-text
-  svg
-    max-width: 100%
-  .text-column
-    padding-top: 30px
+	.time
+		color: $yellow-orange-color
+		+font-14
+	.description
+		+content-text
+		ul
+			@extend %ul-with-blue-markers
+	.subheader
+		+section-subheader-text
+	svg
+		max-width: 100%
+	.text-column
+		padding-top: 30px
 
-  &:nth-child(2n+1)
-    .text-column
-      float: left
+	&:nth-child(2n+1)
+		.text-column
+			float: left
 
-  &:nth-child(2n+2)
-    background-color: $white-color
-    .image-column
-      float: right
+	&:nth-child(2n+2)
+		background-color: $white-color
+		.image-column
+			float: right
 
 
 
 = button-with-subtitle-and-header
-  height: auto
+	height: auto
 
-  .button
-    +button-with-subtitle
-    width: 300px
-    height: 70px
-    text-align: left
-    padding-left: 80px
-    .button-title
-      +button-title
-    .button-subtitle
-      +button-subtitle
-      +font-14-light
-    .svg-wrap
-      +button-svg-wrap
-      svg
-        +button-svg
-        width: 40px
-        height: 40px
-        left: 15px
-        fill: #fff
+	.button
+		+button-with-subtitle
+		width: 300px
+		height: 70px
+		text-align: left
+		padding-left: 80px
+		.button-title
+			+button-title
+		.button-subtitle
+			+button-subtitle
+			+font-14-light
+		.svg-wrap
+			+button-svg-wrap
+			svg
+				+button-svg
+				width: 40px
+				height: 40px
+				left: 15px
+				fill: #fff
 
 = carousel-indicator-bullet
-  color: $home-text-header-color
-  width: 12px
-  height: 12px
-  margin: 0 15px
-  display: inline-block
-  line-height: 12px
-  font-size: 24px
-  -webkit-user-select: none
-  &:not(.active)
-    cursor: pointer
-  &.active
-    color: $fire-orange-color
+	color: $home-text-header-color
+	width: 12px
+	height: 12px
+	margin: 0 15px
+	display: inline-block
+	line-height: 12px
+	font-size: 24px
+	-webkit-user-select: none
+	&:not(.active)
+		cursor: pointer
+	&.active
+		color: $fire-orange-color
 
 .center-items-vertically
-  @media #{$medium-up}
-    +flexbox
-    > .columns
-      align-self: center
+	@media #{$medium-up}
+		+flexbox
+		> .columns
+			align-self: center
 
 .row-reverse
-  flex-direction: row-reverse
+	flex-direction: row-reverse
 .image-and-text
-  @media #{$small-only}
-    .title
-      text-align: center
-    .svg-wrap
-      margin-bottom: 3rem
-    > .columns + .columns .svg-wrap
-      margin-top: 3rem
-      margin-bottom: 0
+	@media #{$small-only}
+		.title
+			text-align: center
+		.svg-wrap
+			margin-bottom: 3rem
+		> .columns + .columns .svg-wrap
+			margin-top: 3rem
+			margin-bottom: 0
 
 
 = two-horizontal-per-row-mobile
-  @media #{$medium-only}, #{$screen} and (max-width: 480px)
-    .item
-      .header
-        text-align: center
-      .image-wrap
-        text-align: center
+	@media #{$medium-only}, #{$screen} and (max-width: 480px)
+		.item
+			.header
+				text-align: center
+			.image-wrap
+				text-align: center
 
-  @media #{$screen} and (max-width: 480px)
-    .item
-      .image-wrap-outer, .text-outer
-        width: grid-calc(12, 12)
-      .header
-        margin-top: 30px
+	@media #{$screen} and (max-width: 480px)
+		.item
+			.image-wrap-outer, .text-outer
+				width: grid-calc(12, 12)
+			.header
+				margin-top: 30px
 
 .image-column
-  @media #{$small-only}
-    text-align: center
-    .svg-wrap
-      display: inline-block
+	@media #{$small-only}
+		text-align: center
+		.svg-wrap
+			display: inline-block
 
 .small-text-center
-  @media #{$small-only}
-    text-align: center
+	@media #{$small-only}
+		text-align: center
 
 = border-collapse($width: 1px, $color: #888)
-  box-shadow: $width 0 0 0 $color, 0 $width 0 0 $color, $width $width 0 0 $color, $width 0 0 0 $color inset, 0 $width 0 0 $color inset
+	box-shadow: $width 0 0 0 $color, 0 $width 0 0 $color, $width $width 0 0 $color, $width 0 0 0 $color inset, 0 $width 0 0 $color inset
 
 .tab-labels
-  float: left
-  clear: both
-  width: 100%
-  padding: 0
-  margin: 0
-  list-style: none
-  li
-    cursor: pointer
-    position: relative
-    display: inline-block
-    float: left
-    width: grid-calc(4, 12)
-    text-align: center
-    height: 40px
-    line-height: 40px
-    padding: 0 1px
+	float: left
+	clear: both
+	width: 100%
+	padding: 0
+	margin: 0
+	list-style: none
+	li
+		cursor: pointer
+		position: relative
+		display: inline-block
+		float: left
+		width: grid-calc(4, 12)
+		text-align: center
+		height: 40px
+		line-height: 40px
+		padding: 0 1px
 
-    a
-      position: relative
-      display: block
-      width: 100%
-      height: 100%
-      line-height: inherit
+		a
+			position: relative
+			display: block
+			width: 100%
+			height: 100%
+			line-height: inherit
+			text-decoration: none
 
-      &:before, &:after
-        content: ""
-        display: block
-        position: absolute
-        bottom: -9px
-        height: 8px
+			&:before, &:after
+				content: ""
+				display: block
+				position: absolute
+				bottom: -9px
+				height: 8px
 
-      &:before
-        width: 100%
-        background-color: $light-gray-text-color
-      &:after
-        width: 0
-        background-color: $fire-orange-color
+			&:before
+				width: 100%
+				background-color: $light-gray-text-color
+			&:after
+				width: 0
+				background-color: $fire-orange-color
 
-    .icon-wrap
-      vertical-align: top
-      display: inline-block
-      margin-right: 5px
-    .text-label
-      display: inline-block
-      color: $light-gray-text-color
-      +font-18
-    svg
-      width: 20px
-      height: 20px
-      position: relative
-      top: 5px
-      &, & *
-        fill: $light-gray-text-color
+		.icon-wrap
+			vertical-align: top
+			display: inline-block
+			margin-right: 5px
+		.text-label
+			display: inline-block
+			color: $light-gray-text-color
+			+font-18
+		svg
+			width: 20px
+			height: 20px
+			position: relative
+			top: 5px
+			&, & *
+				fill: $light-gray-text-color
 
-    &.active
-      svg
-        &, & *
-          fill: $fire-orange-color
-      .text-label
-        color: $fire-orange-color
-      a
-        &:after
-          width: 100%
+		&.active
+			svg
+				&, & *
+					fill: $fire-orange-color
+			.text-label
+				color: $fire-orange-color
+			a
+				&:after
+					width: 100%
 
 .profile-tab-contents-row-wrap
-  background-color: $white-color
+	background-color: $white-color
 .tab-contents
-  li
-    display: none
-    &.active
-      display: block
+	li
+		display: none
+		&.active
+			display: block
 .delete-account
-  color: $sky-blue-color
-  +font-14-light
-  cursor: pointer
-  text-align: right
+	color: $sky-blue-color
+	+font-14-light
+	cursor: pointer
+	text-align: right
+	margin-top: 100px
 
 .preloader
-  padding: 50px 0 35px 0
-  text-align: center
+	padding: 50px 0 35px 0
+	text-align: center
 .preloader, .success-handler
-  position: absolute
-  top: 50%
-  width: 100%
-  left: 0
-  text-align: center
-  transform: translate(0, -50%)
+	position: absolute
+	top: 50%
+	width: 100%
+	left: 0
+	text-align: center
+	transform: translate(0, -50%)
 
 = input-placeholder
-  color: $light-gray-text-color
-  //top: 15px
-  //top: 30px
-  top: 40px
-  left: 0
-  line-height: 24px
-  height: 30px
-  position: absolute
-  padding: 4px 12px
-  +font-14-light
-  cursor: text
-  +transition_all("all 0.3s")
+	color: $light-gray-text-color
+	//top: 15px
+	//top: 30px
+	top: 40px
+	left: 0
+	line-height: 24px
+	height: 30px
+	position: absolute
+	padding: 4px 12px
+	+font-14-light
+	cursor: text
+	+transition_all("all 0.3s")
 
 = filled-input-placeholder
-  top: 0
+	top: 0
 
 #body
-  form
-    position: relative
-  .rf-input-wrap, rf-input, .rf-input:not(.checkbox-list)
-    display: block
-    position: relative
-    //padding: 20px 0
-    padding: 30px 0 0 0
+	form
+		position: relative
+	.rf-input-wrap, rf-input, .rf-input:not(.checkbox-list)
+		display: block
+		position: relative
+		//padding: 20px 0
+		padding: 30px 0 0 0
 
-    margin-top: 10px
+		margin-top: 10px
 
-    .input-border-wrap
-      position: absolute
-      //top: 15px
-      //top: 10px
-      top: 30px
-      //bottom: 15px
-      //bottom: 10px
-      bottom: 0
-      width: 100%
-      border: 1px solid $light-gray-text-color
+		.input-border-wrap
+			position: absolute
+			//top: 15px
+			//top: 10px
+			top: 30px
+			//bottom: 15px
+			//bottom: 10px
+			bottom: 0
+			width: 100%
+			border: 1px solid $light-gray-text-color
 
-    label
-      +input-placeholder
+		label
+			+input-placeholder
 
-    input, textarea
-      max-width: 100%
-      width: 100%
-      border: none
-      position: relative
-      background: transparent
-      padding: 4px 12px
-      z-index: 1
-      display: block
+		input, textarea
+			max-width: 100%
+			width: 100%
+			border: none
+			position: relative
+			background: transparent
+			padding: 4px 12px
+			z-index: 1
+			display: block
 
-    input
-      &:not([type]), &[type=text], &[type=password]
-        height: 50px
+		input
+			&:not([type]), &[type=text], &[type=password]
+				height: 50px
 
-    &[type=text]
-      &[n-inputs-height='3']
-        textarea
-          //height: 190px
-          height: 230px
-      &[n-inputs-height='2']
-        textarea
-        textarea
-          height: 100px
-    &.focus-in
-      .input-border-wrap
-        border-color: $sky-blue-color
-      label
-        //top: -15px
-        top: 0
-        color: $sky-blue-color
-    &.ng-touched.ng-invalid
-      .input-border-wrap
-        border-color: red
-      .error-messages
-        display: block
-    &.focus-in, &.not-empty
-      label
-        //top: -15px
-        top: 0
+		&[type=text]
+			&[n-inputs-height='3']
+				textarea
+					//height: 190px
+					height: 230px
+			&[n-inputs-height='2']
+				textarea
+				textarea
+					height: 100px
+		&.focus-in
+			.input-border-wrap
+				border-color: $sky-blue-color
+			label
+				//top: -15px
+				top: 0
+				color: $sky-blue-color
+		&.ng-touched.ng-invalid
+			.input-border-wrap
+				border-color: red
+			.error-messages
+				display: block
+		&.focus-in, &.not-empty
+			label
+				//top: -15px
+				top: 0
 
-    .error-messages
-      top: 24px
-      text-align: right
+		.error-messages
+			top: 24px
+			text-align: right
 
-      position: absolute
-      width: 100%
-      bottom: 0
-      color: red
-      padding: 0 12px
-      display: none
-  .rf-button
-    &[disabled]
-      opacity: 0.6
+			position: absolute
+			width: 100%
+			bottom: 0
+			color: red
+			padding: 0 12px
+			display: none
+	.rf-button
+		&[disabled]
+			opacity: 0.6
 
 //input[type=button]
-  background: $fire-orange-color
-  color: white
-  text-transform: uppercase
-  +font-21-semibold
-  float: right
-  padding: 0 15px
-  width: auto
+	background: $fire-orange-color
+	color: white
+	text-transform: uppercase
+	+font-21-semibold
+	float: right
+	padding: 0 15px
+	width: auto
 .rf-button
-  line-height: 1
-  text-align: left
-  &.rf-button
+	line-height: 1
+	text-align: left
+	&.rf-button
 
-  .rf-button-content
-    +flexbox
-  //+button-with-subtitle-and-header
-  &.rf-button-raised
-    background-color: $fire-orange-color
-    height: 70px
-    .svg-wrap
-      line-height: 70px
-      vertical-align: middle
-      //margin: 0 10px
-      //margin: 0 10px
-      display: inline-block
-      svg
-        vertical-align: middle
+	.rf-button-content
+		+flexbox
+	//+button-with-subtitle-and-header
+	&.rf-button-raised
+		background-color: $fire-orange-color
+		height: 70px
+		.svg-wrap
+			line-height: 70px
+			vertical-align: middle
+			//margin: 0 10px
+			//margin: 0 10px
+			display: inline-block
+			svg
+				vertical-align: middle
 
-        &, & *
-          //fill: white
-        .my-color
-          fill: white
+				&, & *
+					//fill: white
+				.my-color
+					fill: white
 
-      &.svg-size-medium
-        svg
-          width: 40px
-          height: 40px
-      &.svg-size-small
-        svg
-          width: 24px
-          height: 24px
-    .button-text-wrap
-      //margin: 0 10px
+			&.svg-size-medium
+				svg
+					width: 40px
+					height: 40px
+			&.svg-size-small
+				svg
+					width: 24px
+					height: 24px
+		.button-text-wrap
+			//margin: 0 10px
 
-      text-align: left
-      .inner
-        position: relative
+			text-align: left
+			.inner
+				position: relative
 
-    .button-subtitle
-      text-transform: none
-      +font-14-light
-      text-align: left
+		.button-subtitle
+			text-transform: none
+			+font-14-light
+			text-align: left
 
-  .button-title
+	.button-title
 
-    +button-title
-    //+font-21-semibold
-    +font-28-semibold
-    display: inline-block
-    text-align: left
+		+button-title
+		//+font-21-semibold
+		+font-28-semibold
+		display: inline-block
+		text-align: left
 
-  &.rf-button-with-subtitle
-    .button-text-wrap
-      .inner
-        //top: 15px
-        top: 13px
-  &.rf-button-without-subtitle
-    line-height: 70px
-    .button-text-wrap
-      .inner
-        //top: 20px
-  &.rf-upload-button
-    line-height: 35px
-  &.rf-button-with-svg
-    .button-text-wrap
-      margin-left: -2px
-  &.rf-button-align-content-center
-    text-align: center
-    .rf-button-content-wrap
-      display: inline-block
+	&.rf-button-with-subtitle
+		.button-text-wrap
+			.inner
+				//top: 15px
+				top: 13px
+	&.rf-button-without-subtitle
+		line-height: 70px
+		.button-text-wrap
+			.inner
+				//top: 20px
+	&.rf-upload-button
+		line-height: 35px
+	&.rf-button-with-svg
+		.button-text-wrap
+			margin-left: -2px
+	&.rf-button-align-content-center
+		text-align: center
+		.rf-button-content-wrap
+			display: inline-block
 
-  &.rf-button-auto-width
-    .svg-wrap
-      margin-left: 10px
-      margin-right: 25px
-  &.rf-button-full-width
-    width: 100%
-    .svg-wrap
-      margin-left: 10px
-      margin-right: 25px
+	&.rf-button-auto-width
+		.svg-wrap
+			margin-left: 10px
+			margin-right: 25px
+	&.rf-button-full-width
+		width: 100%
+		.svg-wrap
+			margin-left: 10px
+			margin-right: 25px
 
-  &.rf-button-unraised
-    background: transparent
-    +font-14-light
-    line-height: 1
-    text-transform: none
+	&.rf-button-unraised
+		background: transparent
+		+font-14-light
+		line-height: 1
+		text-transform: none
 
-    .button-title
-      color: $sky-blue-color
+		.button-title
+			color: $sky-blue-color
 
-    &.rf-button-align-content-left
-      padding: 0
+		&.rf-button-align-content-left
+			padding: 0
 
-  &.rf-button-size-small
-    height: 35px
-    line-height: 35px
-    .svg-wrap
-      line-height: 35px
-      svg
-        width: 24px
-        height: 24px
-    .button-title
-      +font-16
+	&.rf-button-size-small
+		height: 35px
+		line-height: 35px
+		.svg-wrap
+			line-height: 35px
+			svg
+				width: 24px
+				height: 24px
+		.button-title
+			+font-16
 
 
 
 svg
-  max-width: 100%
+	max-width: 100%
 a
-  color: $sky-blue-color
-  text-decoration: none
+	color: $sky-blue-color
+	text-decoration: none
 
 
 
 .steps-completed, steps-progress
-  padding: 0
-  margin: 20px 0 45px 0
-  .progress
-    height: 5px
-    .step
-      position: relative
-      height: inherit
-      padding-left: 1px
-      float: left
-      .inner
-        width: 100%
-        height: 100%
-        position: relative
-        &:before, &:after
-          content: ""
-          height: 100%
-          width: 100%
-          display: block
-          position: absolute
-          top: 0
-          left: 0
-          background: $light-gray-text-color
-      &:not(.proceeded)
-        .inner
-          &:after
-            width: 0
-      &.proceeded
-        .inner
-          &:after
-            background-color: $yellow-orange-color
+	padding: 0
+	margin: 20px 0 45px 0
+	.progress
+		height: 5px
+		.step
+			position: relative
+			height: inherit
+			padding-left: 1px
+			float: left
+			.inner
+				width: 100%
+				height: 100%
+				position: relative
+				&:before, &:after
+					content: ""
+					height: 100%
+					width: 100%
+					display: block
+					position: absolute
+					top: 0
+					left: 0
+					background: $light-gray-text-color
+			&:not(.proceeded)
+				.inner
+					&:after
+						width: 0
+			&.proceeded
+				.inner
+					&:after
+						background-color: $yellow-orange-color
 
 
 
 input[type=radio], input[type=checkbox], .checklist-item input
 
 = basic_option_input
-  display: none
+	display: none
 
-  &:not(.option-image-input)
-    & + label
-      border: 1px solid $light-gray-text-color
-      display: inline-block
-      width: 20px
-      height: 20px
-      margin-right: rem-calc(16)
+	&:not(.option-image-input)
+		& + label
+			border: 1px solid $light-gray-text-color
+			display: inline-block
+			width: 20px
+			height: 20px
+			margin-right: rem-calc(16)
 
-      & + label
-        display: inline-block
-        vertical-align: top
-    //line-height: 20px
+			& + label
+				display: inline-block
+				vertical-align: top
+		//line-height: 20px
 
-    &:not(:checked)
-      & ~ .input-related-content
-        display: none
+		&:not(:checked)
+			& ~ .input-related-content
+				display: none
 
-    &:checked
-      & + label
-        border-color: $sky-blue-color
-        &:before
-          content: ""
-          position: relative
-          display: block
+		&:checked
+			& + label
+				border-color: $sky-blue-color
+				&:before
+					content: ""
+					position: relative
+					display: block
 
-          background: $fire-orange-color
+					background: $fire-orange-color
 .checklist-item
 
 
 checkbox-list
-  &.ng-invalid
-    .question
-      .text
-        //color: #F00
+	&.ng-invalid
+		.question
+			.text
+				//color: #F00
 
 a
-  text-decoration: none
-  &:hover
-    text-decoration: underline
+	text-decoration: none
+	&:hover
+		text-decoration: underline
 
 #body
-  .rf-input:not(.checkbox-list)
-    .error
-      font-weight: 500
-      //color: $yellow-orange-color
-      color: $error-color
-    &.invalid.touched
-      .field-label
-        display: none
+	.rf-input:not(.checkbox-list)
+		.error
+			font-weight: 500
+			//color: $yellow-orange-color
+			color: $error-color
+		&.invalid.touched
+			.field-label
+				display: none
 
-      input
-        &[type=text], &[type=password]
-          //border: 1px solid $yellow-orange-color
-          border: 1px solid $error-color
-      textarea
-        border: 1px solid $error-color
+			input
+				&[type=text], &[type=password]
+					//border: 1px solid $yellow-orange-color
+					border: 1px solid $error-color
+			textarea
+				border: 1px solid $error-color
 
 .rf-input
-  .error
-    span
-      margin-left: 5px
-      &:first-child
-        margin-left: 0
+	.error
+		span
+			margin-left: 5px
+			&:first-child
+				margin-left: 0
 
 .form-errors
-  text-align: center
-  //color: $yellow-orange-color
-  color: $error-color
+	text-align: center
+	//color: $yellow-orange-color
+	color: $error-color
 
 
 .standard-form
-  .header + .subheader
-    max-width: 400px
+	.header + .subheader
+		max-width: 400px
 
 
 .rf-input
-  &:not(.touched)
-    .error
-      display: none !important
-    .field-label
-      display: block !important
+	&:not(.touched)
+		.error
+			display: none !important
+		.field-label
+			display: block !important
 
 #body
-  .wizard-step
-    .rf-input
-      &[type=string], &[type=password]
-        input
-          height: 35px
-        label
-          top: 32px
-        &.not-empty, &.focus-in
-          label
-            top: 0
+	.wizard-step
+		.rf-input
+			&[type=string], &[type=password]
+				input
+					height: 35px
+				label
+					top: 32px
+				&.not-empty, &.focus-in
+					label
+						top: 0
 .url-or-files
-  .or, .button-wrap
-    padding-top: 25px
-  .rf-input
-    top: -15px
+	.or, .button-wrap
+		padding-top: 25px
+	.rf-input
+		top: -15px
 

@@ -28,7 +28,7 @@
                 .icon-wrap
                   = embedded_svg_from_assets "rf-icon-email"
                 .text-label
-                  |Newsletter
+                  |Newsletters
     .profile-tab-contents-row-wrap full-height=""
       .row.profile-tab-contents-row
         .columns.large-12
@@ -100,6 +100,9 @@
                       = rf_input name: "user[zip_code]", label: "ZIP code", value: @user.zip_code
                       = rf_input name: "user[billing_address]", label: "Billing address", value: @user.billing_address
 
+                .columns.large-12
+                  .delete-account
+                    |Delete account
 
             li class="#{'active' if @password_change_tab_active}"
               form#change-password-form novalidate="" resource="user" action="/users/password" method="post" ajax-method="put" show-preloader="" show-on-success=""
@@ -123,17 +126,17 @@
                   = image_tag("preloader.gif")
             li class="#{'active' if @new_letter_tab_active}"
               .header.h4
-                |Subscribe for newsletter
+                |Subscribe for newsletters
               p.large-7
-                |Subscribe to our newsletter and stay updated on the latest developments and special offers!
+                |Subscribe to our newsletters and stay updated on the latest developments and special offers!
 
               form#subscribe-form name="subscribe_form"
                 input#subscribe_form__subscribe type="checkbox" checked=("checked" if @user.subscribed?)
                 label for="subscribe_form__subscribe"
                 label for="subscribe_form__subscribe"
-                  |I want to receive newsletter
+                  |I want to receive newsletters
 
-      .tabcontrol-footer.row
+      /.tabcontrol-footer.row
         .columns.large-2.right
           .delete-account
             |Delete account

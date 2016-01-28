@@ -221,8 +221,10 @@ form for="project" url=wizard_path method="post" json="{}"
             |This is unscripted testing. Our testers use your product like any normal user would.
 
         .nested-input-group
-          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions"
+          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" required="true" data-name="Exploratory instructions"
             label.placeholder.hiding-placeholder for="project_exploratory_instructions"
+              |Please provide testing instructions for the testers here...
+            label.error.error-required for="project_exploratory_instructions"
               |Please provide testing instructions for the testers here...
             textarea id="project_exploratory_instructions"
               = @project.exploratory_description

@@ -51,6 +51,10 @@ class Users::PasswordsController < Devise::PasswordsController
     #super
     new_password = params[:user][:password]
     user = User.find(current_user.id)
+    if user.valid_password?(new_password)
+      return render json: { success: false }, status: 400
+    end
+
     if user.update(password: new_password)
       #user.password = new_password
      # sign_in(resource_name, user)

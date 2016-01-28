@@ -316,12 +316,18 @@ class Wizard::Test < ActiveRecord::Base
     self['hours_per_tester'] || 1
   end
 
-  def price
-    total_testers_count * hours_per_tester * hour_price
+  def price(include_discount = false)
+    res = total_testers_count * hours_per_tester * hour_price
+
+    if include_discount && percentage_discount?
+      return (res * ((100 - percentage_discount).to_f / 100)).to_i
+    end
+
+    res
   end
 
   def hour_price
-    20
+    WizardSettings.hour_price
   end
 
   def steps_completed
@@ -332,6 +338,17 @@ class Wizard::Test < ActiveRecord::Base
     count = self['proceeded_steps_count']
     count ||= 0
     return count
+  end
+
+  def proceeded_steps_hash
+    {
+        platforms: (self.price > 0),
+        project_info: (project_name.present? && project_version.present? && project_languages.any? && report_languages.any?),
+        project_components: ((main_components.any? && (exploratory? ? exploratory_description.present? : test_case_files.any? ) ) if functional_test? || localization_test?),
+        project_access: (project_url.present? || test_files.any?)
+    }.keep_if{|k, v|
+      !v.nil?
+    }
   end
 
   def total_steps_count

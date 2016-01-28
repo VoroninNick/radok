@@ -624,7 +624,7 @@ window.check_for_step_completeness = ()->
     #console.log "check_for_step_completeness:: inside if"
     completed = step_types[step_type].checkIsCompleted.apply($step)
 
-    console.log "check_for_step_completeness: completed: ", completed
+    #console.log "check_for_step_completeness: completed: ", completed
 
     data_completed = $step.data("completed")
     if data_completed != completed
@@ -702,8 +702,8 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
 
   if !disabled_push && wizard_form.is_persisted.apply(wizard_form)
     save_timeout_id = $wizard_controller.data("save_timeout_id")
-    if log_project_main_components
-      console.log "inspect: project_main_components: ", project.main_components
+    #if log_project_main_components
+    #  console.log "inspect: project_main_components: ", project.main_components
     if save_timeout_id
       clearTimeout(save_timeout_id)
     save_timeout_id = setTimeout(
@@ -742,7 +742,7 @@ scrollToFirstStep = ()->
 
 
 scrollToStep = (step_id)->
-  console.log "scrollToStep: ", step_id
+  #console.log "scrollToStep: ", step_id
   if step_id == undefined || step_id == null
     return
   $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
@@ -939,8 +939,8 @@ set_presence_class = ()->
     val = $input.find("textarea").val()
 
 
-  if $input.hasClass("tags") && log_tags
-    console.log "tags: ", is_present(val)
+  #if $input.hasClass("tags") && log_tags
+    #console.log "tags: ", is_present(val)
 
 
 
@@ -1129,8 +1129,8 @@ init_tags_input = ()->
   $input = $('.input[model="project.main_components"] input')
   val = $input.val()
   $input_wrap = $input.closest(".input")
-  if log_tags
-    console.log "init_tags_input: ", is_present(val)
+  #if log_tags
+    #console.log "init_tags_input: ", is_present(val)
 
   if is_present(val)
     $input_wrap.addClass("not-empty").removeClass("empty")
@@ -1344,14 +1344,14 @@ $("body").on "change", "input.file-upload-input", ->
   $input.trigger("upload_files.#{attachment_name}")
   $input.trigger("change.#{model}")
 
-  console.log "step", $step
-  console.log "File Upload: ", project.test_case_files[0]
+  #console.log "step", $step
+  #console.log "File Upload: ", project.test_case_files[0]
   check_for_step_completeness.apply($step)
 
 
 
 $("body").on "click", ".file-upload-files-list .delete", ->
-  console.log "delete 1"
+  #console.log "delete 1"
 
   $file = $(this).closest('.file')
   file_index = $file.index()
@@ -1373,7 +1373,7 @@ $("body").on "click", ".file-upload-files-list .delete", ->
   $step = $list.closest(".wizard-step")
   check_for_step_completeness.apply($step)
 
-  console.log("delete 2")
+  #console.log("delete 2")
 
 
 

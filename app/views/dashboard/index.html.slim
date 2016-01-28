@@ -27,8 +27,10 @@
                             = project.pi__project_name
                           .steps-completed
                             .progress
-                              - (project.total_steps_count.times).each_with_index do |step, index|
-                                .step class="#{'proceeded' if index < project.proceeded_steps_count}" style="width: #{100 / project.total_steps_count}%;"
+                              - steps_hash = project.proceeded_steps_hash
+                              - steps_count = steps_hash.count
+                              - steps_hash.each do |key, proceeded|
+                                .step class="#{'proceeded' if proceeded}" style="width: #{100 / steps_count}%;" title=key
                                   .inner
                           .type-of-test-wrap
                             .type-of-test-icon
