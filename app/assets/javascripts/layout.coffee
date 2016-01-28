@@ -565,7 +565,43 @@ $.read_models = ()->
         $input.prop("checked", "checked")
 
 $(document).on "ready", ->
-  $('.footable').footable();
+  $('.footable').footable({
+    parsers: {
+      alpha: window.footable.options.parsers.alpha, # default alpha & numeric parsers
+      numeric: window.footable.options.parsers.numeric,
+      display_size: (cell)->
+        return $(cell).text()
+
+    },
+    sorters: {
+      alpha: window.footable.options.sorters.alpha, # default alpha & numeric sorters
+      numeric: window.footable.options.sorters.numeric,
+      display_size: (a, b)->
+        arr1 = $.trim(a).split("x").map( (a)-> parseInt(a) )
+        arr2 = $.trim(b).split("x").map( (a)-> parseInt(a) )
+
+        w1 = arr1[0]
+        h1 = arr1[1]
+
+        w2 = arr2[0]
+        h2 = arr2[1]
+
+        if w1 > w2
+          return 1
+        else if w1 == w2
+          return h1 - h2
+        else
+          return -1
+
+        return 1
+        # here you are passed two values from the column and you must return a comparison of the two.
+        if (a == b)
+          return 1
+        if (a < b)
+          return -1
+        return 1;
+    }
+  })
   #$.read_models()
 
 

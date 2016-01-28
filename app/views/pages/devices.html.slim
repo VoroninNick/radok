@@ -61,7 +61,7 @@
                     |Model
                   th
                     |OS
-                  th
+                  th data-type="display_size"
                     |Screen size
               tbody
                 - @devices.each do |device|
@@ -72,5 +72,5 @@
                       = device.model
                     td
                       = device.os
-                    td
+                    td data-type="display_size"
                       = device.screen_pixel_size
