@@ -145,3 +145,5 @@ gem 'pry-rails'
 gem 'require_reloader'
 
 gem 'rack-page_caching'
+
+gem 'mailchimp-api', require: 'mailchimp'

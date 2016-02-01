@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_not_found
-    render template: "errors/not_found", layout: 'not_found'
+    render template: "errors/not_found.html.slim", layout: 'not_found'
   end
 
   helper_method :developer_machine?, :server_machine?

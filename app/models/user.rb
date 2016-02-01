@@ -90,22 +90,30 @@ class User < ActiveRecord::Base
   end
 
 
-  def subscribe!
+  def subscribe!(skip_errors = true)
     subscribe
     save!
   end
 
-  def unsubscribe!
+  def unsubscribe!(skip_errors = true)
     unsubscribe
     save!
   end
 
-  def subscribe
+  def subscribe(skip_errors = true)
     self.subscribed = true
+    email = self.email
+    list_id = MAILCHIMP_DEFAULT_LIST_ID
+    mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
+    mailchimp.lists.subscribe(list_id, {email: email})
   end
 
-  def unsubscribe
+  def unsubscribe(skip_errors = true)
     self.subscribed = false
+    email = self.email
+    list_id = MAILCHIMP_DEFAULT_LIST_ID
+    mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
+    mailchimp.lists.unsubscribe(list_id, {email: email})
   end
 
 

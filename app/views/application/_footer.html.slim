@@ -34,11 +34,24 @@
                 |For testers
       #footer-subscribe-and-copyright-and-developed-by.columns.large-6.medium-6
         .subscribe-block
-          label.header for="footer-subscribe-input"
-            |Subscribe for our latest news and updates:
-          input#footer-subscribe-input type="text" placeholder="youremail@mail.com"
-          /rf-button#subscribe-button svg="/assets/rf-icon-email.svg"
-          = rf_button(svg: "rf-icon-email", id: "subscribe-button")
+          /- if !current_user.try(:subscribed?)
+          form action="/subscribe" method="post" show-preloader="" show-success=""
+            .form-content
+              label.header for="footer-subscribe-input"
+                |Subscribe for our latest news and updates:
+              input#footer-subscribe-input name="email" type="text" placeholder="youremail@mail.com"
+              /rf-button#subscribe-button svg="/assets/rf-icon-email.svg"
+              = rf_button(svg: "rf-icon-email", id: "subscribe-button", html: {type: "submit"})
+            .preloader.hide
+              = image_tag("preloader.gif")
+            .success-handler.hide
+              /p.h4.text-center
+
+              p
+                |You have successfully sent subscription request.
+                br
+                |Please check email for confirmation instructions.
+
         .copyright
           = raw "&copy;&nbsp;2009-#{Date.today.year} 10G Force GmBH. All rights reserved"
         /.developed-by

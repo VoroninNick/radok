@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call"
 
+  post "/subscribe", to: "user_pages#subscribe"
   post "update_subscription", to: "user_pages#update_subscription"
   match "/profile", to: "user_pages#profile", via: [:get, :post]
   post "sign-up", to: "user_pages#registrations__create"

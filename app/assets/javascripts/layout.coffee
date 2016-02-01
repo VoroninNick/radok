@@ -89,6 +89,109 @@ $("body").on "click", "[open-popup]", (event)->
 $.fn.valid = ->
   return true
 
+default_form_success_handler = (data, state, options)->
+  $form = state.$form
+
+  $preloader = state.$preloader
+  $form_content = state.$form_content
+
+  show_success = $form.attr("show-success") != undefined
+  close_on_success = $form.attr("close-on-success")
+  reload_on_success = $form.attr("reload-on-success")
+
+  $preloader.addClass("hide") if !reload_on_success && $preloader && $preloader.length
+
+  show_success_popup = $form.attr("success-popup")
+  if show_success_popup && show_success_popup.length
+    $success_popup = $("#" + show_success_popup)
+    $success_popup.removeClass("hide")
+
+
+  if show_success
+    $success = $form.parent().find(".success-handler")
+    $success.removeClass("hide")
+    $form.trigger("show_success", data)
+
+
+  if close_on_success && !reload_on_success
+    $form.closest(".ngdialog").addClass("hide")
+
+  if reload_on_success
+    window.location.reload()
+
+  show_on_success = $form.attr("show-on-success") != undefined
+  if show_on_success
+    $form_content.removeClass(hide_class)
+    $form.find(".form-message").removeClass("hide")
+
+  $form.trigger("after_success", arguments)
+
+default_form_error_handler = (xhr, state, options)->
+  form_resource_name = state.form_resource_name
+  $form_errors = state.$form_errors
+  $form = state.$form
+  $form_content = state.$form_content
+  hide_class = options.hide_class
+  response_json = xhr.responseJSON
+  resource_data = response_json[form_resource_name]
+  errors_by_field = resource_data.errors if resource_data
+  errors_by_field ?= response_json.errors
+
+  if response_json.error == true
+    $form_errors.removeClass("hide")
+    if response_json.confirmed == false
+      $form_errors.find(".unconfirmed").removeClass("hide")
+    else
+      $form_errors.find(".unconfirmed").addClass("hide")
+  else
+    $form_errors.addClass("hide")
+
+  form_errors = []
+  form_errors = resource_data.form_errors if resource_data
+
+  $form_errors.find(".form-error").addClass("hide")
+  if !isEmpty(form_errors)
+    $form_errors.removeClass("hide")
+    #console.log "error: form_errors: ", form_errors
+    for error_key in form_errors
+#console.log "error: form_errors: for: ", error_key
+      $form_errors.find(".#{error_key}").removeClass("hide")
+  else
+    $form_errors.addClass("hide")
+
+
+
+  #console.log "errors", errors_by_field
+
+  $form.find(".inputs .error").addClass("hide")
+
+  if !isEmpty(errors_by_field)
+    for field_name, errors of errors_by_field
+      #console.log "error field_name", field_name
+      #console.log "error errors", errors
+      $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
+      #console.log "form_resource_name: ", form_resource_name
+      #console.log "field_name: ", field_name
+      $field.addClass("invalid")
+      error_key = errors
+      error_key = errors[0] if Array.isArray(errors)
+      #console.log "error_key", error_key
+      window.$FIELD = $field
+      $error = $field.find(".error.#{error_key}")
+      $error.removeClass("hide")
+
+
+
+  #alert("error")
+  if $form_content.length > 0
+    $form_content.removeClass(hide_class)
+  else
+    $form.removeClass(hide_class)
+  $preloader.addClass("hide")
+  $("[hide-during-send='']").removeClass("hide")
+  #console.log "args: ", arguments
+
+  $form.trigger("after_error", arguments)
 
 $("body").on "submit", "form:not([no-processing])", (event)->
   event.preventDefault()
@@ -107,7 +210,7 @@ $("body").on "submit", "form:not([no-processing])", (event)->
   else
     $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
-  #console.log "valid_form", valid_form
+  console.log "valid_form", valid_form
   if valid_form
     $form_errors = $form.find(".form-errors")
 
@@ -138,6 +241,8 @@ $("body").on "submit", "form:not([no-processing])", (event)->
       $("[hide-during-send='']").addClass("hide")
 
 
+    success_handler = form_type.success_handler || default_form_success_handler
+    error_handler = form_type.error_handler || default_form_error_handler
 
     $.ajax(
       data: form_data
@@ -145,95 +250,22 @@ $("body").on "submit", "form:not([no-processing])", (event)->
       dataType: "json"
       type: method
       success: (data)->
-        #alert("success")
-        show_success = $form.attr("show-success") != undefined
-        close_on_success = $form.attr("close-on-success")
-        reload_on_success = $form.attr("reload-on-success")
-
-        $preloader.addClass("hide") if !reload_on_success && $preloader && $preloader.length
-
-        show_success_popup = $form.attr("success-popup")
-        if show_success_popup && show_success_popup.length
-          $success_popup = $("#" + show_success_popup)
-          $success_popup.removeClass("hide")
-
-
-        if show_success
-          $success = $form.parent().find(".success-handler")
-          $success.removeClass("hide")
-          $form.trigger("show_success", data)
-
-
-        if close_on_success && !reload_on_success
-          $form.closest(".ngdialog").addClass("hide")
-
-        if reload_on_success
-          window.location.reload()
-
-        show_on_success = $form.attr("show-on-success") != undefined
-        if show_on_success
-          $form_content.removeClass(hide_class)
-          $form.find(".form-message").removeClass("hide")
-
+        state = {}
+        state.$form = $form
+        state.$preloader = $preloader
+        state.$form_content = $form_content
+        options = {}
+        success_handler.call(this, data, state, options)
       error: (xhr)->
-        response_json = xhr.responseJSON
-        resource_data = response_json[form_resource_name]
-        errors_by_field = resource_data.errors if resource_data
-        errors_by_field ?= response_json.errors
+        state = {}
+        options = {}
+        state.form_resource_name = form_resource_name
+        state.$form_errors = $form_errors
+        state.$form = $form
+        state.$form_content = $form_content
+        options.hide_class = hide_class
+        error_handler.call(this, xhr, state, options)
 
-        if response_json.error == true
-          $form_errors.removeClass("hide")
-          if response_json.confirmed == false
-            $form_errors.find(".unconfirmed").removeClass("hide")
-          else
-            $form_errors.find(".unconfirmed").addClass("hide")
-        else
-          $form_errors.addClass("hide")
-
-        form_errors = []
-        form_errors = resource_data.form_errors if resource_data
-
-        $form_errors.find(".form-error").addClass("hide")
-        if !isEmpty(form_errors)
-          $form_errors.removeClass("hide")
-          #console.log "error: form_errors: ", form_errors
-          for error_key in form_errors
-            #console.log "error: form_errors: for: ", error_key
-            $form_errors.find(".#{error_key}").removeClass("hide")
-        else
-          $form_errors.addClass("hide")
-
-
-
-        #console.log "errors", errors_by_field
-
-        $form.find(".inputs .error").addClass("hide")
-
-        if !isEmpty(errors_by_field)
-          for field_name, errors of errors_by_field
-            #console.log "error field_name", field_name
-            #console.log "error errors", errors
-            $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
-            #console.log "form_resource_name: ", form_resource_name
-            #console.log "field_name: ", field_name
-            $field.addClass("invalid")
-            error_key = errors
-            error_key = errors[0] if Array.isArray(errors)
-            #console.log "error_key", error_key
-            window.$FIELD = $field
-            $error = $field.find(".error.#{error_key}")
-            $error.removeClass("hide")
-
-
-
-        #alert("error")
-        if $form_content.length > 0
-          $form_content.removeClass(hide_class)
-        else
-          $form.removeClass(hide_class)
-        $preloader.addClass("hide")
-        $("[hide-during-send='']").removeClass("hide")
-        #console.log "args: ", arguments
     )
 
 $("body").on "show_success", "form.forgot-password-form", (event, data)->
@@ -447,6 +479,9 @@ $("body").on "change", "#subscribe_form__subscribe", ->
 
   )
 
+$("body").on "submit", "", ()->
+
+
 $("body").on "change", "#input-file-uploader", ->
   $photo_image_wrap = $(".photo-image-wrap")
   $no_image = $photo_image_wrap.find(".no-image")
@@ -618,3 +653,26 @@ $("body").on "click", ".schedule-call-button", ->
 
 $("body").on "click", "#header-mobile-menu-button-wrap", ()->
   $("body").toggleClass("mobile-menu-opened")
+
+$(".subscribe-block form").on "after_error", (e, xhr, state, options)->
+  response = xhr.responseJSON
+  c = response.code
+  msg = false
+  if c && c.length > 0
+    if c.indexOf("List_RoleEmailMember: ") == 0
+      msg = c.substr("List_RoleEmailMember: ".length)
+  subscribed = response.subscribed
+  if subscribed
+    msg = "This email already subscribed"
+
+
+  $error = state.$form_content.find(".error")
+  if !$error.length
+    $error = $("<label class='error'>#{msg}</label>")
+    state.$form_content.append($error)
+  else
+    $error.text(msg)
+
+
+
+

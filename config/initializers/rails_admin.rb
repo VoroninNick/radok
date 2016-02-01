@@ -600,6 +600,11 @@ RailsAdmin.config do |config|
         field :percentage_discount do
           read_only true
         end
+        field :percent_completed do
+          def value
+            bindings[:object].percent_completed_counter
+          end
+        end
         field :admin_comment, :ck_editor
       end
     end

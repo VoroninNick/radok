@@ -16,6 +16,8 @@ class Wizard::Test < ActiveRecord::Base
   belongs_to :test_type, class_name: Wizard::TestType
 
 
+  has_attachment :report
+
 
 
   has_and_belongs_to_many :project_languages, class_name: Wizard::ProjectLanguage, join_table: :wizard_test_project_languages
@@ -244,8 +246,8 @@ class Wizard::Test < ActiveRecord::Base
     self.product_type.name.downcase == "games"
   end
 
-  def report_name
-    "Bugfix report v2.56"
+  def report_file_name
+    report.try(:data_file_name)
   end
 
   def version_number

@@ -146,9 +146,10 @@
                           |Hours per tester
                         .property-value
                           = project.hours_per_tester
-                      .columns.large-12.property
-                        .report-link
-                          a href="#"
-                            = embedded_svg_from_assets("file-download")
-                            .file-name
-                              |File name
+                      - if project.report.try(:exists?)
+                        .columns.large-12.property
+                          .report-link
+                            a href=project.report.url
+                              = embedded_svg_from_assets("file-download")
+                              .file-name
+                                = project.report_file_bane

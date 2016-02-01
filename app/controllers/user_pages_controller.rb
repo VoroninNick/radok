@@ -90,4 +90,20 @@ class UserPagesController < ApplicationController
 
     render json: { }, status: 200
   end
+
+  def subscribe
+    email = params[:email]
+    u = User.where(email: email).first
+    u ||= User.new(email: email)
+    if u.subscribed?
+      return render json: {subscribed: true}, status: 400
+    end
+
+    begin
+      u.subscribe
+    rescue Exception => e
+      return render json: { code: e.message }, status: 400
+    end
+    return render json: {}, status: 200
+  end
 end

@@ -12,10 +12,11 @@
     - else
       .status-fail
     .download-report
-      a href="#"
-        = embedded_svg_from_assets("file-download")
-        span.report-name
-          = @project.report_name
+      - if @project.report.try(:exists?)
+        a href=@project.report.url
+          = embedded_svg_from_assets("file-download")
+          span.report-name
+            = @project.report_file_name
 
 .row.project-short-info
   - if @project.user

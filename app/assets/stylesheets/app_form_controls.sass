@@ -1,0 +1,11 @@
+input[type=checkbox]
+	display: none
+label.custom-checkbox
+	+custom-checkbox-button
+	position: relative
+	top: 4px
+	margin-right: 10px
+
+input[type=checkbox]:checked
+	& + label.custom-checkbox
+		+custom-checkbox-button-checked

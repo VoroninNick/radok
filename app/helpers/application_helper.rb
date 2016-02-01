@@ -38,12 +38,13 @@ module ApplicationHelper
 
   def rf_button(**options)
 
-    options[:html] ||= {}
+    options[:html] ||= {  }
     options[:svg] ||= false
     options[:title] ||= false
     options[:subtitle] ||= false
     options[:svg_size] ||= :medium
     options[:id] ||= false
+
 
 
     options[:class] = button_class(options)
@@ -139,6 +140,7 @@ module ApplicationHelper
     invalid_message = options[:invalid_message]
     validation = options[:validation]
     taken_message = options[:taken_message]
+
     model = options[:model]
 
 

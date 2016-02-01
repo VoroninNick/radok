@@ -193,8 +193,8 @@
 			.header
 				height: 50px
 				background: $white-color
-				position: static
-				padding: 0 15px
+				position: relative
+				padding: 0 40px 0 15px
 				cursor: pointer
 				+transition_all(all 0.4s)
 				&:hover, &.expanded
@@ -256,10 +256,13 @@
 			height: 50px
 			line-height: 50px
 			vertical-align: top
+			overflow: hidden
 		.dropdown-arrow
 			display: inline-block
 			height: inherit
-			float: right
+			position: absolute
+			right: 15px
+			top: 0
 
 			&.collapsed
 				svg
@@ -431,7 +434,7 @@
 
 
 #dashboard-projects
-	.in-process-tests
+	.in-process-tests, .drafts
 		.item
 			.content
 				.project-name
