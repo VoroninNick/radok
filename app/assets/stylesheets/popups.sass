@@ -234,8 +234,11 @@
 	margin: -10px 0 0 40px
 .paypal-card-svg-wrap
 	top: 27px
-	position: relative
-	left: 28px
+	//position: relative
+	position: absolute
+	//left: 28px
+	left: 50%
+	+transform(translateX(-50%))
 
 .payment-type:not(.active)
 	.pay-later-svg-wrap
@@ -287,6 +290,7 @@
 		.image-wrap
 			background: #e6e7e9
 			border: 1px solid $light-gray-text-color
+			position: relative
 
 		&.active
 			.image-wrap
