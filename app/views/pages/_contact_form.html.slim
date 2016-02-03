@@ -7,34 +7,33 @@
         h1.subheader
           |For any question or comment please contact us via the form and we'll get back to you quickly.
       .columns.large-12
-        .row
-          /form no-validate="" action="/faq-request" method="post" success-popup="user_pages__faq_request_success_popup"
-          form  action="/contact_feedback" method="post"  novalidate="" show-preloader="" resource="contact_feedback" show-success=""
-            .form-content
-              .inputs
-                .row
-                  .columns.large-6
-                    = rf_input(label: "Your name", name: "contact_feedback[name]", required: true)
-                    = rf_input(label: "Email", type: "email", name: "contact_feedback[email]", required: true)
-                    = rf_input(label: "Subject", name: "contact_feedback[subject]", required: true)
 
-                  .columns.large-6
+        /form no-validate="" action="/faq-request" method="post" success-popup="user_pages__faq_request_success_popup"
+        form#contact-feedback-form  action="/contact_feedback" method="post"  novalidate="" show-preloader="" resource="contact_feedback" show-success=""
+          .form-content
+            .inputs
+              div.row
+                .columns.large-6
+                  = rf_input(label: "Your name", name: "contact_feedback[name]", required: true)
+                  = rf_input(label: "Email", type: "email", name: "contact_feedback[email]", required: true)
+                  = rf_input(label: "Subject", name: "contact_feedback[subject]", required: true)
 
-                    = rf_input(type: "text", number_inputs_height: 3, name: "contact_feedback[description]", label: "Message", required: true)
+                .columns.large-6
 
-
+                  = rf_input(type: "text", number_inputs_height: 3, name: "contact_feedback[description]", label: "Message", required: true)
 
 
-              .actions
-                .row.text-right
-                  .columns.large-12
-                    = rf_button(svg: "rf-icon-email", title: "Send message")
 
-            .preloader.hide
-              = image_tag("preloader.gif")
 
-            .success-handler.hide
-              p.h4.text-center
-                |Your message have been successfully sent!
-              p
-                |Our manager will contact you as soon as possible.
+            .actions
+              .text-right
+                = rf_button(svg: "rf-icon-email", title: "Send message")
+
+          .preloader.hide
+            = image_tag("preloader.gif")
+
+          .success-handler.hide
+            p.h4.text-center
+              |Your message have been successfully sent!
+            p
+              |Our manager will contact you as soon as possible.

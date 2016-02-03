@@ -1,90 +1,102 @@
 #profile-header
-  padding: $page-row-wrap-padding
-  .header
-    +h2
-  .subheader
-    +font-18-light
-    color: $sky-blue-color
+	padding: $page-row-wrap-padding
+	.header
+		+h2
+	.subheader
+		+font-18-light
+		color: $sky-blue-color
 
 .ng-jcrop-thumbnail-wrapper
-  border-radius: 50%
+	border-radius: 50%
 
 .photo-image-wrap
-  text-align: center
-  .ready-image
-    .photo-field-label
-      +normal
-      margin: 0 0 10px 0
-    img
-      width: 120px
-      max-width: 120px
-      max-height: 120px
-      border-radius: 50%
-    .change-photo-label
-      color: $sky-blue-color
-      +font-14-light
-      margin: 20px 0 0 0
-      display: inline-block
+	text-align: center
+	.ready-image
+		.photo-field-label
+			+normal
+			margin: 0 0 10px 0
+		img
+			width: 120px
+			max-width: 120px
+			max-height: 120px
+			border-radius: 50%
+		.change-photo-label
+			color: $sky-blue-color
+			+font-14-light
+			margin: 20px 0 0 0
+			display: inline-block
 
 
 .tab-contents
-  padding: 0
-  margin: 0
+	padding: 0
+	margin: 0
 
-  li
-    padding: 50px 0 0 0
+	li
+		padding: 50px 0 0 0
 
 #body
-  .profile-tab-contents-row-wrap
-    +flexbox
-    +flex-direction(column)
-    .profile-tab-contents-row
-      +flex-grow(1)
+	.profile-tab-contents-row-wrap
+		+flexbox
+		+flex-direction(column)
+		.profile-tab-contents-row
+			+flex-grow(1)
 
-    form
+		form
 
-      margin: 0
-  .tabcontrol-footer
-    height: 70px
+			margin: 0
+	.tabcontrol-footer
+		height: 70px
 #input-file-uploader
-  display: none
+	display: none
 
 .change_password_button
-  .svg-wrap
-    margin-right: 20px !important
+	.svg-wrap
+		margin-right: 20px !important
 
 .change_password_button, .contact-form-button, .faq-form-button, .rf-upload-button
-  .button-title
-    +font-21
+	.button-title
+		+font-21
 
 .change_password_button
-  .button-title
-    line-height: 70px
+	.button-title
+		line-height: 70px
 
 .rf-button
-  
-  //&.rf-upload-button
-  &.contact-form-button, &.faq-form-button,  &.rf-upload-button
-    height: 35px
-    .button-title
-      line-height: 35px
-    .svg-wrap
-      &, &.svg-size-medium
-        line-height: 35px
-        svg
-          width: 25px
-          height: 35px
-  &.rf-upload-button
-    background-color: $sky-blue-color
-  &.contact-form-button, &.faq-form-button
-    height: 70px
+	
+	//&.rf-upload-button
+	&.contact-form-button, &.faq-form-button,	&.rf-upload-button
+		height: 35px
+		.button-title
+			line-height: 35px
+		.svg-wrap
+			&, &.svg-size-medium
+				line-height: 35px
+				svg
+					width: 25px
+					height: 35px
+	&.rf-upload-button
+		background-color: $sky-blue-color
+	&.contact-form-button, &.faq-form-button
+		height: 70px
 
 #contact-feedback, #faq-form, .standard-form
-  form
-    .columns
-      &:last-child
-        text-align: right
+	form
+		.columns
+			&:last-child
+				text-align: right
 
 .input-padding
-  padding-top: 20px
-  padding-bottom: 20px
+	padding-top: 20px
+	padding-bottom: 20px
+
+.tab-labels
+	@media #{$screen} and #{max-res(640/1.5)}, #{screen} and (max-width: 640px)
+		li
+			.text-label
+				display: none
+			svg
+				width: 25px
+				height: 25px
+
+#change-password-form, #subscribe-form
+	padding-bottom: 50px

@@ -127,14 +127,26 @@ module ApplicationHelper
     value = options.delete :value
     tag_name = :input
     type = options.delete(:type)
-    tag_name = :textarea if type.to_sym == :text
     input_tag_options = options
-    #input_tag_options[:name] ||= form_prefix
     input_tag_options[:class] ||= ""
     input_tag_options[:class] = "#{input_tag_options[:class]}"
     input_type = :text
     input_type = :password if type.to_s == 'password'
     input_tag_options[:type] = "#{input_type}"
+
+    wrap_class = ""
+
+    if options[:autocomplete] == false
+      input_tag_options.delete :autocomplete
+      input_tag_options[:class] += " autocompleteOff"
+      input_tag_options[:type] = :text
+      wrap_class += "autocomplete-off"
+    end
+    tag_name = :textarea if type.to_sym == :text
+
+    #input_tag_options[:name] ||= form_prefix
+
+
     options[:required_message] ||= "#{options[:label]} is required"
     required_message = options[:required_message]
     invalid_message = options[:invalid_message]
@@ -147,14 +159,18 @@ module ApplicationHelper
     input_tag_content = nil
     input_tag_content = value if tag_name == :textarea
     input_tag_options[:value] = value if tag_name == :input
-    input_tag_options[:autocomplete] = "off" if options[:autocomplete] == false
+
 
     empty = value.blank?
 
     string_input = type.to_s.in?(%w(string email url password tags))
     text_input = type.to_s.in?(%w(text))
 
-    content_tag(:div, class: "rf-input #{'string' if string_input} #{'text' if text_input} #{'empty' if empty} #{'not-empty' if !empty}", model: (model if model.present?), type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
+
+
+
+
+    content_tag(:div, class: "rf-input #{'string' if string_input} #{'text' if text_input} #{'empty' if empty} #{'not-empty' if !empty} #{wrap_class}", model: (model if model.present?), type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
       content_tag(:label, taken_message, class: "hide error taken") +
       content_tag(:label, required_message, class: "hide error required") +
       content_tag(:label, invalid_message, class: "hide error invalid") +

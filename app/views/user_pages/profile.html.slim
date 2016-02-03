@@ -1,4 +1,4 @@
-.page.profile-page-content ng-controller="ProfileController as profile"
+.page.profile-page-content
   #profile-header.header-wrap
     .row.header-row
       .columns.large-6.header-column
@@ -12,19 +12,19 @@
         .columns
           ul.tab-labels
             li class="#{'active' if @personal_data_tab_active}"
-              a ng-click="active_tab_index = 0"
+              a
                 .icon-wrap
                   = embedded_svg_from_assets "rf-icon-user"
                 .text-label
                   |Personal data
             li class="#{'active' if @password_change_tab_active}"
-              a ng-click="active_tab_index = 1"
+              a
                 .icon-wrap
-                  = embedded_svg_from_assets "rf-icon-email"
+                  = embedded_svg_from_assets "rf-icon-password"
                 .text-label
                   |Password change
             li class="#{'active' if @new_letter_tab_active}"
-              a ng-click="active_tab_index = 2"
+              a
                 .icon-wrap
                   = embedded_svg_from_assets "rf-icon-email"
                 .text-label
@@ -40,14 +40,12 @@
                   .photo-image-wrap
                     .ready-image
 
-                      input#input-file-uploader type="file" ngf-select="" ng-model="userAvatarFile" name="userAvatarFile" accept="image/*" ng-change=""
+                      input#input-file-uploader type="file" ngf-select=""  name="userAvatarFile" accept="image/*"
                       div.photo-field-label
                         label for="input-file-uploader"
                           |Your photo
-                      /.jcrop-wrap ng-jcrop="'/assets/wizard_banner_image.png'" selection="image_options.selection" thumbnail="true"
+
                       div
-
-
                         label.image-label for="input-file-uploader" class="#{'hide' unless @user.avatar.exists?}"
                           img src=(@user.avatar.url(:profile_image) if @user.avatar.exists?(:profile_image))
 
@@ -60,41 +58,11 @@
                 .columns.large-8.inputs
                   .row
                     .columns.large-6.inputs-group
-                      /rf-input ng-model="personal_data.email" ng-required="true" is-email="" name="email"
-                      /div
-                        |{{personal_data.email}}
-
-                      /rf-input ng-model="personal_data.username" ng-required=""
-                      /rf-input ng-model="personal_data.full_name"
-                      /rf-input ng-model="personal_data.phone"
-                      /rf-input ng-model="personal_data.email" is-email="" ng-required=""
-                      /my-input name="username" label="Username" model="personal_data.username" required=""
-                      /my-input name="name" label="Full name" model="personal_data.name"
-                      /my-input name="phone" label="Phone number" model="personal_data.phone"
-                      /my-input type="email" label="Email" name="email" model="personal_data.email" required=""
-
                       = rf_input name: "user[username]", label: "Username (required)", required: true, value: @user.username
                       = rf_input name: "user[email]", required: true, label: "Email (required)", value: @user.email
                       = rf_input name: "user[full_name]", label: "Full name", value: @user.full_name
                       = rf_input name: "user[phone]", label: "Phone", value: @user.phone
                     .columns.large-6.inputs-group
-
-
-                      /.inputs-group
-                        .row
-                          .columns.large-6
-                            my-input model="personal_data.city" name="city" label="City"
-                          .columns.large-6
-                            my-input label="ZIP code" name="zip_code" model="personal_data.zip_code"
-                      /rf-input ng-model="personal_data.country"
-                      /rf-input ng-model="personal_data.city"
-                      /rf-input ng-model="personal_data.zip_code"
-                      /rf-input ng-model="personal_data.billing_address"
-                      /my-input label="Country" name="country" model="personal_data.country"
-                      /my-input model="personal_data.city" name="city" label="City"
-                      /my-input label="ZIP code" name="zip_code" model="personal_data.zip_code"
-                      /my-input name="billing_address" model="personal_data.billing_address" label="Billing address"
-
                       = rf_input name: "user[country]", label: "Country", value: @user.country
                       = rf_input name: "user[city]", label: "City", value: @user.city
                       = rf_input name: "user[zip_code]", label: "ZIP code", value: @user.zip_code
@@ -112,22 +80,20 @@
                       |You have successfully changed password
                   .inputs
                     .columns.large-5.large-centered
-                      /rf-input name="old_password" ng-model="password_change.old_password" type="password" ng-required="true" rf-min-length="8"
-                      /= rf_input name: ""
-                      /rf-input name="password" ng-model="password_change.password" type="password" ng-required="true" rf-min-length="8" mismatch="password_change.old_password"
-                      = rf_input name: "user[password]", label: "New password", type: "password", required: true
-                      /rf-input name="password_confirmation" ng-model="password_change.password_confirmation" type="password" match="password_change.password"
+                      = rf_input id: "user_password", name: "user[password]", label: "New password", type: "password", required: true, autocomplete: false
+                    .clearfix
 
-                      /rf-button class="change_password_button" max-button-width="300px" svg-size="small" full-width="" svg="/assets/rf-icon-password.svg" title="Change password" ng-disabled="password_change_form.$invalid" ng-click="change_password()"
+
                   .actions
                     .columns.large-5.large-centered
                       = rf_button title: "change password", svg: "rf-icon-password", full_width: true
+                    .clearfix
                 .preloader.hide
                   = image_tag("preloader.gif")
             li class="#{'active' if @new_letter_tab_active}"
               .header.h4
                 |Subscribe for newsletters
-              p.large-7
+              p.large-12
                 |Subscribe to our newsletters and stay updated on the latest developments and special offers!
 
               form#subscribe-form name="subscribe_form"
@@ -135,9 +101,3 @@
                 label.custom-checkbox for="subscribe_form__subscribe"
                 label for="subscribe_form__subscribe"
                   |I want to receive newsletters
-
-
-      /.tabcontrol-footer.row
-        .columns.large-2.right
-          .delete-account
-            |Delete account

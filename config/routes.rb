@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  #get "chess_timer", to: "application#chess_timer"
   get "robots.txt", to: "pages#robots_txt"
   get "w", to: "wizard#new_and_allow"
   scope "emails", controller: "emails" do

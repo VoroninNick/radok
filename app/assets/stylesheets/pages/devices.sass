@@ -1,34 +1,36 @@
 .footable > thead > tr > th
-  background: $sky-blue-color
-  height: 4rem
-  +font-18
-  +bold
-  text-transform: uppercase
-  border-left-color: white
+	background: $sky-blue-color
+	height: 4rem
+	+font-18
+	+bold
+	text-transform: uppercase
+	border-left-color: white
 
 .footable
-  border-width: 0
-  border: none
-  font-family: $fira-sans-font-family
-  tbody
-    tr
-      background: #e6e7e9
-      &:nth-child(2n)
-        background: #f2f2f2
+	border-width: 0
+	border: none
+	font-family: $fira-sans-font-family
+	tbody
+		tr
+			background: #e6e7e9
+			&:nth-child(2n)
+				background: #f2f2f2
 
 
 .footable > tbody > tr > td
-  border-left-color: white
-  border-top: none
-  border-bottom: none
+	border-left-color: white
+	border-top: none
+	border-bottom: none
 
 #devices-content
-  .statistics
-    text-align: center
-    .counter
-      width: 100%
-    .text
-      margin-top: 20px
+	.statistics
+		padding-bottom: 0
+		text-align: center
+		.counter
+			width: 100%
+		.text
+			margin-top: 10px
+			margin-bottom: 60px
 
 .devices-table-wrap
-  border-bottom: 2px $sky-blue-color solid
+	border-bottom: 2px $sky-blue-color solid

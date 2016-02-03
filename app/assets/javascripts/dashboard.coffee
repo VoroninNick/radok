@@ -187,3 +187,5 @@ initialize_google_map = ->
   });
 
 initialize_google_map()
+
+

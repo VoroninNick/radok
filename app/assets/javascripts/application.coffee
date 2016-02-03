@@ -19,6 +19,7 @@
 #= require simpleUpload.min
 #= require functions
 #= require layout
+#= require profile
 #= require dashboard
 #= require mail_form
 #= require payment_form

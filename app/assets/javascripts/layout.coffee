@@ -1,6 +1,12 @@
 old_model_binding = false
 $preloader = null
 
+$("input.autocompleteOff").attr("autocomplete","off");
+setTimeout ()->
+  $(".rf-input.autocomplete-off[type=password]").each ()->
+    $rf_input = $(this)
+    $rf_input.find("input").attr("type", "password")
+  50
 
 #window.wizard_root_path = "/ordering-crowdsourced-testing"
 window.wizard_root_path = $("form[for]").attr("url") || $("#dashboard-projects").attr("data-wizard-root")
@@ -126,7 +132,7 @@ default_form_success_handler = (data, state, options)->
 
   show_on_success = $form.attr("show-on-success") != undefined
   if show_on_success
-    $form_content.removeClass(hide_class)
+    $form_content.removeClass(options.hide_class)
     $form.find(".form-message").removeClass("hide")
 
   $form.trigger("after_success", arguments)
@@ -187,7 +193,6 @@ default_form_error_handler = (xhr, state, options)->
 
 
 
-  #alert("error")
   if $form_content.length > 0
     $form_content.removeClass(hide_class)
   else
@@ -356,8 +361,9 @@ $.fn.validateInput = ->
 
   if required
     valid = value && value.length
+  #valid = valid && $rf_input.find(".error.remote").length > 0
+
   if valid
-    $rf_input.find(".error.required").addClass("hide")
     $rf_input.find(".error.required").addClass("hide")
   else
     $rf_input.find(".error.required").removeClass("hide")
