@@ -82,14 +82,13 @@ body
 	&.scroll-larger-than-header-height
 		#fixed-header
 			@include transform((translateY(calc(-100% - 10px)) ) )
-	&.scrolled
+	//&.scrolled
 		#fixed-header
 			@include transform(translateY(0))
 	
 
-		&.scrolled, &.visible
-			#fixed-header
-				& + .navigationleft, & ~ .header-logo
-					@include transform(translateY(0))
+	&.scrolled, &.visible
+		#fixed-header
+			@include transform(translateY(0))
 
 	

@@ -75,14 +75,21 @@ handle_scroll = (e)->
       $banner_title.data("translateY", future_translate)
       $banner_title.css("transform", "translateY(#{future_translate}px)")
 
-$("body").on "mouseover", "div#{header_selector}.scrolled, div#{header_selector}.scrolled *", ()->
+
+$("body").on "mouseover", "#header.scrolled div#header-row, #header.scrolled div#header-row *", ()->
+  console.log "mouseover"
   window.top_nav_locked = true
 
-$("body").on "mouseout", "div#{header_selector}.scrolled", (e)->
+$("body").on "mouseout", "div#header.scrolled", (e)->
+  console.log "mouseout"
   $target = $(e.relatedTarget)
-  if $target.closest(".navigationleft").length == 0 && $target.closest(".header-logo").length == 0
+  if $target.closest("#header-row").length == 0
     window.top_nav_locked = false
     setClosingTimeout()
+
+$("body").on "mouseover", "#header-row *", ()->
+  #alert("test")
+
 
 
 
