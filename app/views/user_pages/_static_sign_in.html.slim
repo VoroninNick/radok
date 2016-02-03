@@ -35,9 +35,11 @@
             .actions
               .columns.small-5
                 .sign-up-invitation
-                  | No account?&nbsp;
-                  a href="/sign-up"
-                    |Sign up
+                  .inner
+                    span.no-account
+                      | No account?&nbsp;
+                    a href="/sign-up"
+                      |Sign up
               .columns.small-7
                 = rf_button title: "LOGIN", raised: true, class: "login-button"
 

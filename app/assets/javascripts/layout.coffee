@@ -41,6 +41,7 @@ window.openPopup = (popup_name)->
     $popup = null
 
   if $popup && $popup.length
+    $("body").addClass("opened-popup")
     $popup.removeClass("hide")
     if !$popup.hasClass("initialized")
       $popup.addClass("initialized")
@@ -54,8 +55,12 @@ $("[disable-click-on-active]").on "click", ".active", (event)->
 #  openPopup("user_pages__static_sign_in")
 
 $.fn.closeDialog = ()->
+
   $ng_dialog = $(this).closest(".ngdialog")
   $ng_dialog.addClass("hide")
+
+  if $(".ngdialog").length
+    $("body").removeClass("opened-popup")
 
 $("body").on "click", ".ngdialog-overlay, .ngdialog-close", ->
   $ng_dialog = $(this)

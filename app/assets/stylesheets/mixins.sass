@@ -1,3 +1,7 @@
+@function max-res($width, $ratio: 1.5)
+	@return "(max-width: #{$width}px), (max-width: #{$width * 1.5}px) and (-webkit-min-device-pixel-ratio: 1.5), (max-width: #{$width * 1.5}px) and (min-resolution: #{$ratio * 96}dpi)"
+	//@return "(max-width: #{$width}px), (max-width: #{$width * 1.5}px) and (-webkit-min-device-pixel-ratio: 1.5), (max-width: #{$width * 1.5}px) and (min-resolution: #{$ration * 96}dpi)"
+
 = user-select
 	-ms-user-select: none
 	-moz-user-select: none
