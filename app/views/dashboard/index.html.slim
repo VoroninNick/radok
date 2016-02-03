@@ -14,7 +14,7 @@
           .items.columns.large-12
             .row
               - @drafts.each do |project|
-                .columns.large-4.item data-test-id=project.id
+                .columns.medium-6.large-4.item data-test-id=project.id
                   a.inner href=test_path(id: project.id)
                     .project-status
                       |Draft
@@ -77,7 +77,7 @@
           .items.columns.large-12
             .row
               - @in_progress_tests.each do |project|
-                .columns.large-4.item
+                .columns.medium-6.large-4.item
                   a.inner href=dashboard_project_path(project)
                     .project-status
                       |Testing

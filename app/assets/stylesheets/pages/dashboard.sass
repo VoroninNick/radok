@@ -81,7 +81,7 @@
 			.type-of-test-icon, .hours-icon
 				margin-right: 10px
 			.testers-icon
-				margin-right: 15px
+				margin-right: 10px
 				position: relative
 				top: -4px
 			.type-of-test-icon, .testers-icon, .hours-icon
@@ -103,7 +103,7 @@
 
 			.type-of-test-icon
 				svg
-					width: 24px
+					width: 26px
 					height: 24px
 
 			.type-of-test-icon, .type-of-test, .testing-type, .testers-icon, .total-testers-count, .hours-icon, .hours-count
@@ -442,3 +442,29 @@
 				.project-name
 					height: 54px
 					overflow: hidden
+
+	.drafts
+		@media #{$screen} and (max-width: 680px) and (min-width: 551px)
+			.project-status
+				right: 0
+			.item
+				padding: 0 5px
+				width: 50%
+
+				.testers-icon, .hours-icon
+					margin-right: 0
+
+			.items
+				> .row
+					margin: 0 -10px
+
+	.drafts, .in-process-tests
+		@media #{$screen} and (max-width: 550px)
+			.item
+				&, &:last-child
+					float: none
+					position: relative
+					margin-left: auto
+					margin-right: auto
+					width: 100%
+					max-width: 340px
