@@ -49,3 +49,5 @@ asset "blueimp-file-upload"
 asset "footable"
 
 asset "jquerymy"
+
+asset "jquery.scrollend"

@@ -17,9 +17,12 @@
 #= require jquery-serialize-object/dist/jquery.serialize-object.min
 #= require jquery_appear/jquery.appear
 #= require simpleUpload.min
+#= require jquery.scrolldelta
 #= require functions
 #= require layout
+#= require fixed_header
 #= require profile
 #= require dashboard
 #= require mail_form
 #= require payment_form
+
