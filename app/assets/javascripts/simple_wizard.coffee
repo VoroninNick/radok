@@ -1138,6 +1138,7 @@ init_tags_input = ()->
     $input_wrap.addClass("empty").removeClass("not-empty")
 
   $input.tagsInput({
+    width: 'auto'
     defaultText: ""
     onRemoveTag: ()->
       $html_input = $(this)
