@@ -35,6 +35,14 @@
 .dashboard-projects-header
 	text-align: center
 
+.no-projects
+	margin-top: 128px
+	margin-bottom: 128px
+	position: relative
+	.header
+		font-size: 1.9rem
+		font-weight: 500
+
 
 [collapsable]
 	[collapsable-content]
@@ -123,6 +131,10 @@
 					width: 100px
 					height: 100px
 					display: inline-block
+
+				&:not(.ux)
+					svg
+						width: 85px
 
 			.project-name
 				text-align: center
@@ -468,3 +480,43 @@
 					margin-right: auto
 					width: 100%
 					max-width: 340px
+
+
+.total-testers-count
+	.property-label
+		margin-bottom: 7px
+
+	.svg-wrap.hour
+		svg
+			width: 23px !important
+			//height: 23px
+			margin-left: 4px
+			margin-right: 1px
+
+@media #{$medium-down}
+	.project-short-info
+		height: auto
+		padding-top: 20px
+		padding-bottom: 0 // 20px
+
+	.project-short-info-column
+		height: auto
+		&.total-cost, &.project-progress
+			margin-top: 20px
+
+	.managed-by-header, .total-cost-header, .project-progress-header
+		margin-bottom: 0
+
+	.total-cost-value
+		line-height: 4rem
+		font-size: 3rem
+		font-weight: 300
+
+		span
+			font-weight: 500
+
+	.project-progress-value
+		padding-top: 15px
+
+
+

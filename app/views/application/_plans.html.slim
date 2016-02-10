@@ -9,10 +9,11 @@
           |Self-driven
         .black-bg
           .price-and-text
-            .currency
-              |$
-            .price
-              = hour_price
+            span.price-with-currency
+              .currency
+                |$
+              .price
+                = hour_price
             .price-per
               |/per platform
               br
@@ -53,11 +54,10 @@
             |Not certain what is needed for your app or product?
         .content
           .row
-            .text-content
-              .columns.large-8.large-centered
-                .text-center
-                  |We’ll help you define your testing needs for free!
+            .columns.text-content
+              .row
+                .columns.large-8.large-centered
+                  .text-center
+                    |We’ll help you define your testing needs for free!
             .columns.large-12.button-container
-              rf-button align-content="left" full-width="" title="SCHEDULE" subtitle="a call" svg="/assets/rf-icon-schedule-a-call.svg" class="schedule-call-button" ng-click="scheduleCall()"
-                /button title="SCHEDULE" subtitle="a call" svg="/assets/rf-icon-schedule-a-call.svg" class="schedule-call-button" ng-click="scheduleCall()"
               = rf_button align_content: "left", full_width: true, title: "SCHEDULE", subtitle: "a call", svg: "rf-icon-schedule-a-call", class: "schedule-call-button"

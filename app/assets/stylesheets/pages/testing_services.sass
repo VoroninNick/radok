@@ -1,132 +1,165 @@
 #testing_services__what-we-do
-  .header
-    margin-bottom: 12px
-  .description
-    margin-top: 62px
-  @media #{$small-only}
-    .header
-      text-align: center
-    .subheader
-      width: 450px
-      margin: 0 auto 30px auto
-      max-width: 100%
+	.header
+		margin-bottom: 12px
+	.description
+		margin-top: 62px
+	@media #{$small-only}
+		.header
+			text-align: center
+		.subheader
+			width: 450px
+			margin: 0 auto 30px auto
+			max-width: 100%
 
-    .description
-      width: 580px
-      max-width: 100%
-      margin: 0 auto
+		.description
+			width: 580px
+			max-width: 100%
+			margin: 0 auto
+	+iphone5-down
+		.header
+			text-align: left
 
 #testing_services__test-types
-  .three-images-in-row-wrap
-    padding-bottom: 0
-  .item
-    .header
-      color: $sky-blue-color
+	.three-images-in-row-wrap
+		padding-bottom: 0
+	.item
+		.header
+			color: $sky-blue-color
 
 
 
 #testing_services__what-we-test
-  .section-header
-    margin-bottom: 28px
-    text-align: center
-    .subheader
-      line-height: 1.5
+	.section-header
+		margin-bottom: 28px
+		text-align: center
+		.subheader
+			line-height: 1.5
 
 
 
 
 .two-horizontal-items-per-row
-  +grid-row()
+	+grid-row()
 
-  .item
-    margin-top: 36px
-    margin-bottom: 36px
-    .header
-      color: $sky-blue-color
-      +font-21-semibold
-    .image-wrap
-      svg
-        height: 126px
-        width: 126px
+	.item
+		margin-top: 36px
+		margin-bottom: 36px
+		.header
+			color: $sky-blue-color
+			+font-21-semibold
+		.image-wrap
+			svg
+				height: 126px
+				width: 126px
 
-  +two-horizontal-per-row-mobile
+	+two-horizontal-per-row-mobile
 
 
 
 #testing_services__reasons
-  .header
-    .row
-      +flexbox
-      .columns
-        align-self: center
-    .count
-      +font-200-semibold
-      color: $yellow-orange-color
-    .text
-      +font-26
-      text-transform: uppercase
-  .item
-    padding-left: 78px
-    margin: 10px 0
-    position: relative
+	.header
+		.row
+			+flexbox
+			.columns
+				align-self: center
+		.count
+			+font-200-semibold
+			color: $yellow-orange-color
+		.text
+			+font-26
+			text-transform: uppercase
+	.item
+		padding-left: 78px
+		margin: 10px 0
+		position: relative
 
-    &:before
-      content: attr(data-number)
-      position: absolute
-      background: $light-black-color
-      color: $white-color
-      +font-40-semibold
-      border-radius: 50%
-      width: 48px
-      height: 48px
-      display: block
-      line-height: 48px
-      text-align: center
+		&:before
+			content: attr(data-number)
+			position: absolute
+			background: $light-black-color
+			color: $white-color
+			+font-40-semibold
+			border-radius: 50%
+			width: 48px
+			height: 48px
+			display: block
+			line-height: 48px
+			text-align: center
 
-      left: 0
-    .title
-      color: $sky-blue-color
-      +font-21-semibold
-  @media #{$small-only}
-    .count
-      width: auto
-    .text
-      margin-left: 36px
+			left: 0
+		.title
+			color: $sky-blue-color
+			+font-21-semibold
+	@media #{$small-only}
+		.count
+			width: auto
+		.text
+			margin-left: 36px
 
 #testing-services__what-next
-  .header
-    +h2
-  .button-outer
-    width: 332px
-  .subbutton-text
-    text-align: center
-    color: $light-gray-text-color
-    +font-12
-  .links
-    a
-      +light
-      text-decoration: none
-      color: $sky-blue-color
-      display: inline-block
-      margin: 30px 56px 30px 0
+	padding-top: 35px
+	padding-bottom: 0
+	.header
+		+h2
+		padding-top: 21px
+	.button-outer
+		width: 332px
+		max-width: 100%
+	.subbutton-text
+		text-align: center
+		color: $light-gray-text-color
+		+font-12
+	.links
+		a
+			+light
+			text-decoration: none
+			color: $sky-blue-color
+			display: inline-block
+			margin: 15px 56px 30px 0
 
 
-  @media #{$medium-down}
-    .row
-      max-width: 640px
-    .header
-      text-align: center
-    .links
-      text-align: center
-      a
-        +font-21-semibold
-    .button-outer
-      margin: 0 auto
-  @media #{$screen} and (max-width: 480px)
-    .links
-      a
-        margin-right: 40px
+			&:last-child
+				margin-right: 0
+
+
+	@media #{$medium-down}
+		.button-column
+			text-align: center
+		.row
+			max-width: 640px
+		.header
+			text-align: center
+		.links
+			max-width: 100%
+			text-align: center
+			a
+				+font-21-light
+
+		.button-outer
+			margin: 0 auto
+	@media #{$screen} and (max-width: 480px)
+		.links
+			a
+				//margin-right: 40px
+
+	+iphone5-down
+		padding-bottom: 30px
+
+		.button-column
+			padding-top: 14px
+		.links
+			a
+				margin-right: 0
+				margin-bottom: 0
+				display: block
+
+				&:first-child
+					margin-top: 22px
+
+
+
+
 
 
 #testing_services__reasons__h2
-  margin: 0
+	margin: 0

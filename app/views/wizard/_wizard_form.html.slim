@@ -38,7 +38,7 @@ form for="project" url=wizard_path method="post" json="{}"
         .columns.small-4.text-center
           .input.image-radio-button class="project_test_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
             input id=input_id value=value name=name type="radio" checked=("checked" if checked)
-            label.image-label for=input_id
+            label.image-label class=("ux" if test_type.usability_test?) for=input_id
               img src=image
             label.label for=input_id
               = label

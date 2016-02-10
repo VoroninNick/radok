@@ -219,15 +219,15 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def localization_test?
-    self.test_type.name.downcase == "localization"
+    self.test_type.localization_test?
   end
 
   def functional_test?
-    self.test_type.name.downcase == "functional"
+    self.test_type.functional_test?
   end
 
   def usability_test?
-    self.test_type.name.downcase == "usability"
+    self.test_type.usability_test?
   end
 
   def test_mobile_app?

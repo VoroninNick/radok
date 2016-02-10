@@ -12,4 +12,16 @@ class Wizard::TestType < ActiveRecord::Base
 
   validates :name, uniqueness: true
 
+  def usability_test?
+    self.name.downcase == "usability"
+  end
+
+  def functional_test?
+    self.name.downcase == "functional"
+  end
+
+  def localization_test?
+    self.name.downcase == "localization"
+  end
+
 end

@@ -63,7 +63,7 @@
               = project.total_testers_count
             |&thinsp; testers
           br
-          .svg-wrap
+          .svg-wrap.hour
             = embedded_svg_from_assets("clock")
           .text
             span data-bind="project.hours_per_tester"
@@ -136,5 +136,5 @@
             .columns.medium-6.small-margin-bottom-24
               = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" })
             .columns.medium-6
-              = rf_button(class: "rf-confirm-button rf-pay-later-button", full_width: true, svg: "rf-rocket-up-right", title: "Pay later", subtitle: "some short description", disabled: false, html: { "open-popup": "pay_later" })
+              = rf_button(class: "rf-confirm-button rf-pay-later-button", full_width: true, svg: "rf-rocket-up-right", title: "Pay later", disabled: false, html: { "open-popup": "pay_later" })
             .clearfix

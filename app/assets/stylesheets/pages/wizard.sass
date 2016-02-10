@@ -1473,6 +1473,10 @@ comment-with-price
 				margin-right: 35px
 				margin-bottom: 10px
 
+				+iphone5-down
+					width: 50%
+					margin-right: 0
+
 
 
 
@@ -1512,6 +1516,15 @@ comment-with-price
 
 		.rf-configure-button, &.rf-step-configure-button
 			display: none
+
+	#project-test-type
+		.image-radio-button
+			.image-label
+				&:not(.ux)
+					img
+						width: 82px
+
+
 
 .rf-go-to-summary-button, #wizard-summary .rf-confirm-button
 	display: none
@@ -1738,8 +1751,11 @@ comment-with-price
 				display: inline-block
 			.name
 				float: left
+				clear: left
 			.count
 				float: right
+				color: $yellow-orange-color
+				font-weight: 500
 
 
 
@@ -1784,13 +1800,17 @@ comment-with-price
 	.hours-per-tester
 		.available-hours
 			.hour
-				//+transform(scale(0.9))
 				zoom: 0.8
-				//@for $i from 1 through 5
-					&:nth-child(#{$i})
-						width: #{36px + (4px * $i)}
-						height: #{36px + (4px * $i)}
 
+
++iphone5-down
+	.hours-per-tester
+		.available-hours
+			.hour
+				zoom: 0.68
+
+		&:after
+			font-size: 0.85rem
 
 .invalid-steps-list
 	padding-bottom: 1rem

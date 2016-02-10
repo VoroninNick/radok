@@ -71,7 +71,7 @@ body
 
 
 body
-	height: auto
+	//height: auto
 	
 	
 #fixed-header
@@ -90,5 +90,13 @@ body
 	&.scrolled, &.visible
 		#fixed-header
 			@include transform(translateY(0))
+
+
+
+input
+	&::-webkit-inner-spin-button, &-webkit-outer-spin-button
+		// display: none; <- Crashes Chrome on hover
+		-webkit-appearance: none
+		margin: 0 // <-- Apparently some margin are still there even though it's hidden
 
 	

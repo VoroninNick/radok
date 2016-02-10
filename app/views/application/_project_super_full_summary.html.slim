@@ -52,7 +52,7 @@
               = project.total_testers_count
             |&thinsp; testers
           br
-          .svg-wrap
+          .svg-wrap.hour
             = embedded_svg_from_assets("clock")
           .text
             span data-bind="project.hours_per_tester"
@@ -66,14 +66,15 @@
       .columns.large-6.property
         .property-label
           |Project name:
-        .property-value data-bind="project.project_languages"
+        .property-value.text-transform-none data-bind="project.project_languages"
           = project.project_name
 
-      .columns.large-6.property
-        .property-label
-          |Project version:
-        .property-value data-bind="project.project_languages"
-          = project.project_version
+      - if project.project_version.present?
+        .columns.large-6.property
+          .property-label
+            |Project version:
+          .property-value.text-transform-none data-bind="project.project_languages"
+            = project.project_version
 
       .columns.large-6.property.clear
         .property-label
@@ -184,13 +185,13 @@
         .full-summary-total-cost
           .dollar
             |$
-          .total-price
+          .total-price animate-number="" value=project.price(true)
             |0
           .total-cost-label
             |total
             br
             |cost
-      - if !project.completed?
+      /- if !project.completed?
         .columns.large-6
           = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment", "requires-auth": "true" })
       /.columns.large-6.left style="clear: left;"
