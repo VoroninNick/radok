@@ -22,7 +22,7 @@ class PagesController < ApplicationController
 
   def how_it_works
     #render "static_html/how_it_works"
-    render "default"
+    #render "default"
   end
 
   def testing_services
