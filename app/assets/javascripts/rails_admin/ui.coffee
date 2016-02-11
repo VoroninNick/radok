@@ -56,7 +56,7 @@ $(document).ready ->
   $(document).trigger('rails_admin.dom_ready')
   $(document).trigger('rails_admin:dom_ready')
   $(document).trigger('rails_admin_dom_ready')
-  alert("trigger: rails_admin.dom_ready")
+  console.log("trigger: rails_admin.dom_ready, rails_admin:dom_ready, rails_admin_dom_ready")
 
 $(document).on 'pjax:end', ->
   $(document).trigger('rails_admin.dom_ready')
