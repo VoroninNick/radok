@@ -652,5 +652,11 @@ RailsAdmin.config do |config|
 
   config.model Client do
     nestable_list position_field: :sorting_position
+
+    edit do
+      field :name
+      field :logo
+      field :client_url
+    end
   end
 end
