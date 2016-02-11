@@ -186,6 +186,8 @@ RailsAdmin.config do |config|
   include_templates_models(config)
   include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
 
+  include_models(config, Client)
+
   include_models(config, Wizard::PromoCode)
 
   include_models config, WizardText
