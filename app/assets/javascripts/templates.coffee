@@ -12,7 +12,7 @@
 
 # rails_admin.dom_ready rails_admin:dom_ready rails_admin_dom_ready pjax:end pjax.complete
 $(document).on "ready", (e)->
-  alert(e.type)
+  #alert(e.type)
   $("textarea.my-codemirror:not(initialized)").each ()->
     $textarea = $(this)
     mode = $textarea.attr("mode") || "html"
