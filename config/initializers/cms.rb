@@ -1,0 +1,1 @@
+Cms::Config.default_html_format = :slim
