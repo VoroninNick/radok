@@ -175,6 +175,7 @@ RailsAdmin.config do |config|
     # history_show
 
     nestable do
+      only [Client]
       #only [Industry, Team, Member, Benefit, UserFeedback, EmployeeFeedback, ProcessStep]
     end
   end
@@ -645,5 +646,9 @@ RailsAdmin.config do |config|
         content_field
       end
     end
+  end
+
+  config.model Client do
+    nestable_list position_field: :sorting_position
   end
 end

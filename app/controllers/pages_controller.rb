@@ -31,9 +31,10 @@ class PagesController < ApplicationController
   end
 
   def about
-
+    @product_types = Wizard::ProductType.all
+    @leaders = nil
     #render "static_html/about"
-    render "default"
+    #render "default"
   end
 
 
