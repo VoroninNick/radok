@@ -10,7 +10,7 @@
 #= require codemirror/mode/markdown/markdown
 #= require codemirror/mode/slim/slim
 
-$(document).on "ready", ()->
+$(document).on "rails_admin.dom_ready rails_admin:dom_ready rails_admin_dom_ready pjax:end pjax.complete", (e)->
   $("textarea.my-codemirror:not(initialized)").each ()->
     $textarea = $(this)
     mode = $textarea.attr("mode") || "html"

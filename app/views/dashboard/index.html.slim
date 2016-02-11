@@ -1,66 +1,67 @@
 .page
   = render "page_banner"
   #dashboard-projects data-wizard-root=wizard_path
-    - if !(@drafts.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?)) || true
+    - if !(@drafts.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?))
       .no-projects
         .row
           .columns.large-12.header
             |You have no project
-    /- if @drafts.try(&:any?)
-      .drafts
-        .row
-          .columns.large-12.header
-            |Drafted projects
-          .items.columns.large-12
-            .row
-              - @drafts.each do |project|
-                .columns.medium-6.large-4.item data-test-id=project.id
-                  a.inner href=test_path(id: project.id)
-                    .project-status
-                      |Draft
-                    .my-row
-                      .my-column
-                        .content
-                          .type-of-test-logo class=("ux" if project.usability_test?)
-                            = embedded_svg_from_absolute_path(project.type_of_test_logo)
-                          .project-name
-                            = project.pi__project_name
-                          .steps-completed
-                            .progress
-                              - steps_hash = project.proceeded_steps_hash
-                              - steps_count = steps_hash.count
-                              - steps_hash.each do |key, proceeded|
-                                .step class="#{'proceeded' if proceeded}" style="width: #{100 / steps_count}%;" title=key
-                                  .inner
-                          .type-of-test-wrap
-                            .type-of-test-icon
-                              .svg-wrap
-                                = embedded_svg_from_assets(project.type_of_product_logo_path)
-                            .type-of-test
-                              = project.type_of_test
-                            /.testing-type ng-show="project.testing_type && project.testing_type.length"
-                              = project.testing_type
-                            .clearfix
-                          .testers-and-hours
-                            .testers
-                              .testers-icon
-                                = embedded_svg_from_assets("user")
-                              .total-testers-count
-                                - if (count = project.total_testers_count) > 0
-                                  = "#{count} testers"
-                                - else
-                                  |Not specified
-                            .hours
-                              .hours-icon
-                                = embedded_svg_from_assets("clock")
-                              .hours-count
-                                = project.ps__hours
-                                |&thinsp;&thinsp;hours each
-                    .actions
-                      .delete-draft-button ng-click="deleteDraft(project)"
-                        |Delete draft
-                      /rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
-                      = rf_button title: "Complete", subtitle: "Draft", svg: "finish_flag", class: "complete-draft-button"
+    - else
+      - if @drafts.try(&:any?)
+        .drafts
+          .row
+            .columns.large-12.header
+              |Drafted projects
+            .items.columns.large-12
+              .row
+                - @drafts.each do |project|
+                  .columns.medium-6.large-4.item data-test-id=project.id
+                    a.inner href=test_path(id: project.id)
+                      .project-status
+                        |Draft
+                      .my-row
+                        .my-column
+                          .content
+                            .type-of-test-logo class=("ux" if project.usability_test?)
+                              = embedded_svg_from_absolute_path(project.type_of_test_logo)
+                            .project-name
+                              = project.pi__project_name
+                            .steps-completed
+                              .progress
+                                - steps_hash = project.proceeded_steps_hash
+                                - steps_count = steps_hash.count
+                                - steps_hash.each do |key, proceeded|
+                                  .step class="#{'proceeded' if proceeded}" style="width: #{100 / steps_count}%;" title=key
+                                    .inner
+                            .type-of-test-wrap
+                              .type-of-test-icon
+                                .svg-wrap
+                                  = embedded_svg_from_assets(project.type_of_product_logo_path)
+                              .type-of-test
+                                = project.type_of_test
+                              /.testing-type ng-show="project.testing_type && project.testing_type.length"
+                                = project.testing_type
+                              .clearfix
+                            .testers-and-hours
+                              .testers
+                                .testers-icon
+                                  = embedded_svg_from_assets("user")
+                                .total-testers-count
+                                  - if (count = project.total_testers_count) > 0
+                                    = "#{count} testers"
+                                  - else
+                                    |Not specified
+                              .hours
+                                .hours-icon
+                                  = embedded_svg_from_assets("clock")
+                                .hours-count
+                                  = project.ps__hours
+                                  |&thinsp;&thinsp;hours each
+                      .actions
+                        .delete-draft-button ng-click="deleteDraft(project)"
+                          |Delete draft
+                        /rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
+                        = rf_button title: "Complete", subtitle: "Draft", svg: "finish_flag", class: "complete-draft-button"
 
 
 
@@ -69,87 +70,87 @@
 
 
 
-    /- if @in_progress_tests.try(&:any?)
-      .in-process-tests
-        .row
-          .columns.large-12.header
-            |In process
-          .items.columns.large-12
-            .row
-              - @in_progress_tests.each do |project|
-                .columns.medium-6.large-4.item
-                  a.inner href=dashboard_project_path(project)
-                    .project-status
-                      |Testing
-                    .my-row
-                      .my-column
-                        .content
-                          .type-of-test-logo ng-include="project.type_of_test_logo"
-                          .project-name
-                            = project.project_name
-                          = render "project_progress", percent: project.percent_completed_counter
-                          .remaining-time
-                            - if project.expected_tested_at
-                              = project.remaining_time_string
-                            - else
+      - if @in_progress_tests.try(&:any?)
+        .in-process-tests
+          .row
+            .columns.large-12.header
+              |In process
+            .items.columns.large-12
+              .row
+                - @in_progress_tests.each do |project|
+                  .columns.medium-6.large-4.item
+                    a.inner href=dashboard_project_path(project)
+                      .project-status
+                        |Testing
+                      .my-row
+                        .my-column
+                          .content
+                            .type-of-test-logo ng-include="project.type_of_test_logo"
+                            .project-name
+                              = project.project_name
+                            = render "project_progress", percent: project.percent_completed_counter
+                            .remaining-time
+                              - if project.expected_tested_at
+                                = project.remaining_time_string
+                              - else
 
 
 
-    /- if @finished_projects.try(&:any?)
-      .finished-tests
-        .row
-          .columns.large-12.header.dashboard-projects-header
-            |Finished projects
-          .items
-            - @finished_projects_groups.each do |project_group|
-              .columns.large-6
-                - project_group.each do |project|
-                  .item.collapsed collapsable=""
-                    .header expander=""
-                      .project-name
-                        = project.project_name
-                      .dropdown-arrow.collapsed
-                        = embedded_svg_from_assets("rf-icon-arrow-left")
+      - if @finished_projects.try(&:any?)
+        .finished-tests
+          .row
+            .columns.large-12.header.dashboard-projects-header
+              |Finished projects
+            .items
+              - @finished_projects_groups.each do |project_group|
+                .columns.large-6
+                  - project_group.each do |project|
+                    .item.collapsed collapsable=""
+                      .header expander=""
+                        .project-name
+                          = project.project_name
+                        .dropdown-arrow.collapsed
+                          = embedded_svg_from_assets("rf-icon-arrow-left")
 
-                    .project-status class=(project.successful? ? 'success' : 'failure' )
-                      - if project.successful?
-                        .success-svg-wrap
-                          = embedded_svg_from_assets("rf-icon-ok")
-                      - else
-                        /.fail-svg-wrap
-                          = embedded_svg_from_assets("close")
-                    .finished-project-short-info collapsable-content=""
-                      /.row
-                      .columns.large-12.property
-                        .property-label
-                          |Type of test
-                        .property-value
-                          = project.type_of_test
-                      .columns.large-6.property
-                        .property-label
-                          |Type of product
-                        .property-value
-                          = project.type_of_product
-                      .columns.large-6.property
-                        .property-label
-                          |Price
-                        .property-value
-                          |$&nbsp;
-                          = project.price
-                      .columns.large-12.property
-                        .property-label
-                          |Number of testers
-                        .property-value
-                          = project.total_testers_count
-                      .columns.large-12.property
-                        .property-label
-                          |Hours per tester
-                        .property-value
-                          = project.hours_per_tester
-                      - if project.report.try(:exists?)
+                      .project-status class=(project.successful? ? 'success' : 'failure' )
+                        - if project.successful?
+                          .success-svg-wrap
+                            = embedded_svg_from_assets("rf-icon-ok")
+                        - else
+                          /.fail-svg-wrap
+                            = embedded_svg_from_assets("close")
+                      .finished-project-short-info collapsable-content=""
+                        /.row
                         .columns.large-12.property
-                          .report-link
-                            a href=project.report.url
-                              = embedded_svg_from_assets("file-download")
-                              .file-name
-                                = project.report_file_bane
+                          .property-label
+                            |Type of test
+                          .property-value
+                            = project.type_of_test
+                        .columns.large-6.property
+                          .property-label
+                            |Type of product
+                          .property-value
+                            = project.type_of_product
+                        .columns.large-6.property
+                          .property-label
+                            |Price
+                          .property-value
+                            |$&nbsp;
+                            = project.price
+                        .columns.large-12.property
+                          .property-label
+                            |Number of testers
+                          .property-value
+                            = project.total_testers_count
+                        .columns.large-12.property
+                          .property-label
+                            |Hours per tester
+                          .property-value
+                            = project.hours_per_tester
+                        - if project.report.try(:exists?)
+                          .columns.large-12.property
+                            .report-link
+                              a href=project.report.url
+                                = embedded_svg_from_assets("file-download")
+                                .file-name
+                                  = project.report_file_bane
