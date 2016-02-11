@@ -179,7 +179,7 @@ window.step_types = {
       if !any_components
         return false
 
-      if project.methodology_type == 'exploratory'
+      if project.methodology_type == 'exploratory' || project.methodology_type == ''
         return (project.exploratory_instructions && project.exploratory_instructions.length > 0)
       else
         console.log "project.test_case_files: ", project.test_case_files

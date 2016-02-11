@@ -4,8 +4,16 @@ def pages_models
   Dir[Rails.root.join("app/models/pages/*")].map{|p| filename = File.basename(p, ".rb"); "Pages::" + filename.camelize }
 end
 
+def templates_models
+  Dir[Rails.root.join("app/models/templates/*")].map{|p| filename = File.basename(p, ".rb"); "Templates::" + filename.camelize }
+end
+
 def include_pages_models(config)
   include_models(config, *pages_models)
+end
+
+def include_templates_models(config)
+  include_models(config, *templates_models)
 end
 
 def include_models(config, *models)
@@ -25,6 +33,8 @@ def include_models(config, *models)
     end
   end
 end
+
+
 
 def content_field(name = :content)
   field name, :text do
@@ -172,6 +182,7 @@ RailsAdmin.config do |config|
   config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, Cms::FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
 
   include_pages_models(config)
+  include_templates_models(config)
   include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
 
   include_models(config, Wizard::PromoCode)

@@ -1,23 +1,24 @@
-table border="1"
-  tr
-    td
-      |Phone
-    td
-      = @resource.phone
+== slim(Templates::ScheduleCallAdminNotification.first.try(:content), self)
+  table border="1"
+    tr
+      td
+        |Phone
+      td
+        = @resource.phone
 
-  tr
-    td
-      |Name
-    td
-      = @resource.name
+    tr
+      td
+        |Name
+      td
+        = @resource.name
 
-  tr
-    td
-      |Description
-    td
-      = @resource.description
+    tr
+      td
+        |Description
+      td
+        = @resource.description
 
 
-p
-  a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
-    | In admin panel
+  p
+    a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
+      | In admin panel

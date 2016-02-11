@@ -1,24 +1,25 @@
-table border="1"
-  tr
-    td
-      |Full name
-    td
-      = @resource.full_name
-  tr
-    td
-      |Phone
-    td
-      = @resource.phone
-  tr
-    td
-      |Email
-    td
-      = @resource.email
-  tr
-    td
-      |Comment
-    td
-      = @resource.comment
-p
-  a href=test_path(id: @test.id)
-    | Test summary
+== slim(Templates::PayLaterRequestAdminNotification.first.try(:content), self)
+  table border="1"
+    tr
+      td
+        |Full name
+      td
+        = @resource.full_name
+    tr
+      td
+        |Phone
+      td
+        = @resource.phone
+    tr
+      td
+        |Email
+      td
+        = @resource.email
+    tr
+      td
+        |Comment
+      td
+        = @resource.comment
+  p
+    a href=test_path(id: @test.id)
+      | Test summary

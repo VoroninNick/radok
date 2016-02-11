@@ -1,28 +1,29 @@
-table border="1"
-  tr
-    td
-      |Name
-    td
-      = @resource.name
+== slim(Templates::FaqRequestAdminNotification.first.try(:content), self)
+  table border="1"
+    tr
+      td
+        |Name
+      td
+        = @resource.name
 
-  tr
-    td
-      |Email
-    td
-      = @resource.email
+    tr
+      td
+        |Email
+      td
+        = @resource.email
 
-  tr
-    td
-      |Subject
-    td
-      = @resource.subject
+    tr
+      td
+        |Subject
+      td
+        = @resource.subject
 
-  tr
-    td
-      |Description
-    td
-      = @resource.description
+    tr
+      td
+        |Description
+      td
+        = @resource.description
 
-p
-  a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
-    | In admin panel
+  p
+    a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
+      | In admin panel
