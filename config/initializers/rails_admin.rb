@@ -633,4 +633,12 @@ RailsAdmin.config do |config|
       content_field :wizard_help_slim
     end
   end
+
+  Templates::MailerTemplate.descendants.each do |m|
+    config.model m do
+      edit do
+        content_field
+      end
+    end
+  end
 end
