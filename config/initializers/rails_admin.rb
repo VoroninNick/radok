@@ -28,6 +28,13 @@ end
 
 def content_field(name = :content)
   field name, :text do
+    html_attributes do
+      {
+          class: "my-codemirror",
+          mode: "slim"
+      }
+    end
+
     def value
       bindings[:object].send(name)
     end

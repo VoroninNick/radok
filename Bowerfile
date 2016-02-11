@@ -51,3 +51,5 @@ asset "footable"
 asset "jquerymy"
 
 asset "jquery.scrollend"
+
+asset "codemirror"

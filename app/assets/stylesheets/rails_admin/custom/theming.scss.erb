@@ -1,6 +1,9 @@
+@import "../codemirror/lib/codemirror.css";
 
-<% %w(ambiance).each do |mode| %>
-//= require codemirror/themes/<%= mode %>
+<% %w(ambiance).each do |theme| %>
+@import "codemirror/theme/<%= theme %>";
 <% end %>
 
-//= require custom
+@import "codemirror/addon/display/fullscreen";
+
+@import "custom";
