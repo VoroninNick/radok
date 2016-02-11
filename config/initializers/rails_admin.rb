@@ -619,25 +619,7 @@ RailsAdmin.config do |config|
 
   config.model WizardText do
     edit do
-      field :wizard_help_slim, :code_mirror do
-        config do
-          {
-              lineNumbers: true,
-              mode: 'application/x-slim',
-              theme: 'ambiance',
-          }
-        end
-
-        assets do
-          {
-              mode: %w(  xml htmlembedded htmlmixed coffeescript javascript ruby  css markdown  slim).map{|s| "/assets/codemirror/modes/#{s}.js" },
-              selected: "/assets/codemirror/modes/slim.js",
-              theme: '/assets/codemirror/themes/ambiance.css',
-          }
-        end
-
-
-      end
+      content_field :wizard_help_slim
     end
   end
 end
