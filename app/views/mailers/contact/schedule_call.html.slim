@@ -19,6 +19,4 @@
         = @resource.description
 
 
-  p
-    a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
-      | In admin panel
+  = render "resource_link_in_admin_panel"
