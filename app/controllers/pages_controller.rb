@@ -33,6 +33,7 @@ class PagesController < ApplicationController
   def about
     @product_types = Wizard::ProductType.all
     @leaders = nil
+    @clients = Client.all.sort_by_sorting_position
     #render "static_html/about"
     #render "default"
   end
