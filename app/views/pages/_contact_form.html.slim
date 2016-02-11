@@ -5,10 +5,8 @@
         .header
           |Send us your feedback
         h1.subheader
-          |For any question or comment please contact us via the form and we'll get back to you quickly.
+          |For any question or comment, contact us via the form below and we’ll get back to you quickly.
       .columns.large-12
-
-        /form no-validate="" action="/faq-request" method="post" success-popup="user_pages__faq_request_success_popup"
         form#contact-feedback-form  action="/contact_feedback" method="post"  novalidate="" show-preloader="" resource="contact_feedback" show-success=""
           .form-content
             .inputs
@@ -27,7 +25,7 @@
 
             .actions
               .text-right
-                = rf_button(svg: "rf-icon-email", title: "Send message")
+                = rf_button(svg: "rf-icon-email", title: "Send a message")
 
           .preloader.hide
             = image_tag("preloader.gif")

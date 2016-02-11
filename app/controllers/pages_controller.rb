@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  include ApplicationHelper
   before_action :set_page_metadata
   before_action :set_page_banner, except: [:home, :robots_txt]
 
