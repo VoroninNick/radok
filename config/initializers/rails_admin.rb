@@ -634,6 +634,11 @@ RailsAdmin.config do |config|
     end
   end
 
+
+  config.model Templates::MailerTemplate do
+    visible false
+  end
+
   Templates::MailerTemplate.descendants.each do |m|
     config.model m do
       edit do
