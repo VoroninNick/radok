@@ -1,0 +1,23 @@
+{
+  "name": "angular-attach-if",
+  "version": "0.3.0",
+  "main": "attach-if.js",
+  "dependencies": {
+    "angular": "~1.0.5"
+  },
+  "ignore": [
+    "**/.*",
+    "*.iml",
+    "*.xml"
+  ],
+  "homepage": "https://github.com/Sparks-Creative-Limited/angular-attach-if",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.3.0",
+    "commit": "6db620dc4d07df7159e542bdc3a2d2e7d24cd383"
+  },
+  "_source": "git://github.com/Sparks-Creative-Limited/angular-attach-if.git",
+  "_target": "*",
+  "_originalSource": "angular-attach-if"
+}
