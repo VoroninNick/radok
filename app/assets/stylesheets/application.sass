@@ -72,8 +72,8 @@ body
 
 body
 	//height: auto
-	
-	
+
+
 #fixed-header
 	position: fixed
 	+transition_all(all 1s)
@@ -85,7 +85,7 @@ body
 	//&.scrolled
 		#fixed-header
 			@include transform(translateY(0))
-	
+
 
 	&.scrolled, &.visible
 		#fixed-header
@@ -98,5 +98,3 @@ input
 		// display: none; <- Crashes Chrome on hover
 		-webkit-appearance: none
 		margin: 0 // <-- Apparently some margin are still there even though it's hidden
-
-	

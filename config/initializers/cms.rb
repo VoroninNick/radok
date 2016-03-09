@@ -1,1 +1,3 @@
-Cms::Config.default_html_format = :slim
+Cms.config do
+   default_html_format :slim
+end

@@ -107,7 +107,7 @@ if local
   gem 'cms', path: "/media/data/pasha/gems/cms"
   gem "attachable", path: "/media/data/pasha/gems/attachable"
 else
-  gem 'cms', github: "pkorenev/cms"
+  gem 'cms', github: 'pkorenev/cms', ref: 'bd85727'
   gem "attachable", github: "VoroninNick/attachable"
 end
 
