@@ -37,19 +37,13 @@ module ApplicationHelper
   end
 
   def rf_button(**options)
-
     options[:html] ||= {  }
     options[:svg] ||= false
     options[:title] ||= false
     options[:subtitle] ||= false
     options[:svg_size] ||= :medium
     options[:id] ||= false
-
-
-
     options[:class] = button_class(options)
-
-
     options[:button_class] = options.delete(:class)
     options[:disabled] ||= false
     render "helpers/application/rf_button", options
@@ -146,7 +140,6 @@ module ApplicationHelper
 
     #input_tag_options[:name] ||= form_prefix
 
-
     options[:required_message] ||= "#{options[:label]} is required"
     required_message = options[:required_message]
     invalid_message = options[:invalid_message]
@@ -155,20 +148,14 @@ module ApplicationHelper
 
     model = options[:model]
 
-
     input_tag_content = nil
     input_tag_content = value if tag_name == :textarea
     input_tag_options[:value] = value if tag_name == :input
-
 
     empty = value.blank?
 
     string_input = type.to_s.in?(%w(string email url password tags))
     text_input = type.to_s.in?(%w(text))
-
-
-
-
 
     content_tag(:div, class: "rf-input #{'string' if string_input} #{'text' if text_input} #{'empty' if empty} #{'not-empty' if !empty} #{wrap_class}", model: (model if model.present?), type: type, "n-inputs-height": (options[:number_inputs_height]), required: ('required' if options[:required]), validation: (validation if validation.present?) ) do
       content_tag(:label, taken_message, class: "hide error taken") +

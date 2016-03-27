@@ -66,10 +66,6 @@ class WizardController < ApplicationController
 
     set_page_metadata("wizard")
 
-
-
-
-
     render "new"
   end
 
@@ -84,7 +80,6 @@ class WizardController < ApplicationController
   def new_and_allow
     @allow = true
     self.new
-
   end
 
   def create
@@ -102,8 +97,6 @@ class WizardController < ApplicationController
         end
        # return render inline: session[:tests].inspect
       end
-
-
       #render json: @test
       #render "show.json", status: 201
       render inline: @test.to_builder.target!, status: 201
@@ -111,13 +104,9 @@ class WizardController < ApplicationController
   end
 
   def update
-
     @test = Wizard::Test.find(params[:id])
 
     #return render inline: test_params.to_json
-
-
-
     @test.update(test_params)
     if @test.save
       #render json: test
@@ -127,7 +116,6 @@ class WizardController < ApplicationController
   end
 
   def payment
-
     @payment = PaymentRequest.create(payment_params)
     @test = @payment.test
     if @payment.save
@@ -205,8 +193,6 @@ class WizardController < ApplicationController
     render json: {}, status: 200
   end
 
-
-
   def new_test_available_steps
     steps = Wizard::Test.available_steps
     render json: steps
@@ -252,8 +238,6 @@ class WizardController < ApplicationController
     render json: data
   end
 
-
-
   def delete_dashboard_project
     id = params[:id].try(&:to_i)
     result = {}
@@ -291,9 +275,3 @@ class WizardController < ApplicationController
     p
   end
 end
-
-
-
-#
-# rails g model Test platform:belongs_to test_type:belongs_to product_type:belongs_to
-#

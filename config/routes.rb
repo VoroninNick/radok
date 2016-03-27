@@ -54,7 +54,9 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
   #get "#{wizard_path}", to: "wizard#new", as: "wizard"
-  DynamicRouter.load
+
+  DynamicRouter.load unless ARGV.grep(/(assets:(precompile|clean))|(db:migrate)/).any?
+  
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
 
@@ -82,4 +84,3 @@ Rails.application.routes.draw do
 
   match "*not_found_url", to: "errors#not_found", via: [:get, :post, :put, :patch, :update, :delete, :create]
 end
-

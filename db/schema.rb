@@ -256,6 +256,7 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.string   "billing_cvv_number"
     t.string   "full_name"
     t.boolean  "subscribed"
+    t.string   "phone"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
@@ -263,7 +264,6 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
-    t.string   "phone"
     t.string   "provider"
     t.string   "uid"
     t.datetime "saved_at"
@@ -295,9 +295,9 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.string   "name"
     t.integer  "testers_count"
     t.string   "ancestry"
+    t.integer  "position"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.integer  "position"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

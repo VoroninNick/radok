@@ -1,0 +1,55 @@
+{
+  "name": "angular-rest-orm",
+  "version": "0.4.5",
+  "main": "dist/angular-rest-orm.min.js",
+  "authors": [
+    "Marco Pantaleoni <marco.pantaleoni@gmail.com>"
+  ],
+  "description": "Angular ORM for HTTP REST APIs",
+  "keywords": [
+    "angular",
+    "ORM",
+    "REST",
+    "RESTful",
+    "HTTP",
+    "OOP",
+    "nesting",
+    "model",
+    "resource",
+    "service"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/panta/angular-rest-orm",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/panta/angular-rest-orm.git"
+  },
+  "ignore": [
+    "**/.*",
+    "bower.json",
+    "Gruntfile.js",
+    "coffeelint.json",
+    "env.sh",
+    "karma.conf.js",
+    "package.json",
+    "build",
+    "karma",
+    "src",
+    "test",
+    "vendor"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "^1.2",
+    "angular-mocks": "^1.2"
+  },
+  "_release": "0.4.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.4.5",
+    "commit": "1e13de8c3864f7157518aca31b4cf3b0e7ef11b4"
+  },
+  "_source": "git://github.com/panta/angular-rest-orm.git",
+  "_target": "*",
+  "_originalSource": "angular-rest-orm"
+}

@@ -18,6 +18,4 @@ module EmailsHelper
   def img_url(relative_url)
     "#{site_url}/assets/#{relative_url}"
   end
-
-
 end
