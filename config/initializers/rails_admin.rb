@@ -70,10 +70,8 @@ def forms_navigation_label
 end
 
 def page_fields(hide_content = false)
-  #configure_codemirror_html_field(:content)
   field :banner
   content_field  if !hide_content
-
 
   html_block_fields
   field :url
@@ -137,14 +135,14 @@ RailsAdmin.config do |config|
   ## == Cancan ==
   config.authorize_with :cancan
 
-  ## == PaperTrail ==
-  # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
-
-  ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
-
   page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TermsOfUse TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
 
-  form_config_models = [FormConfigs::ContactFeedback, FormConfigs::FaqRequest, FormConfigs::PaymentRequest, FormConfigs::ScheduleCall]
+  form_config_models = [
+    FormConfigs::ContactFeedback,
+    FormConfigs::FaqRequest,
+    FormConfigs::PaymentRequest,
+    FormConfigs::ScheduleCall
+  ]
 
   only_configurable_models = [*form_config_models, *page_model_names, WizardSettings]
   read_only_models = []
@@ -170,29 +168,41 @@ RailsAdmin.config do |config|
       except read_only_models
     end
 
-    ## With an audit adapter, you can add:
-    # history_index
-    # history_show
-
     nestable do
       only [Client]
-      #only [Industry, Team, Member, Benefit, UserFeedback, EmployeeFeedback, ProcessStep]
     end
   end
 
-  config.included_models = [Wizard::ProjectLanguage, Wizard::ReportLanguage, Wizard::ProductType, Wizard::TestType, Wizard::TestPlatform, Wizard::Test, Wizard::Platform, Wizard::Device, Wizard::Manufacturer, User, FaqArticle, ScheduleCallRequest, Cms::FormConfig, FormConfigs::FaqRequest, FormConfigs::ContactFeedback, FormConfigs::ScheduleCall, FormConfigs::PaymentRequest, FaqRequest, ContactFeedback]
+  config.included_models = [
+    Wizard::ProjectLanguage,
+    Wizard::ReportLanguage,
+    Wizard::ProductType,
+    Wizard::TestType,
+    Wizard::TestPlatform,
+    Wizard::Test,
+    Wizard::Platform,
+    Wizard::Device,
+    Wizard::Manufacturer,
+    User,
+    FaqArticle,
+    ScheduleCallRequest,
+    Cms::FormConfig,
+    FormConfigs::FaqRequest,
+    FormConfigs::ContactFeedback,
+    FormConfigs::ScheduleCall,
+    FormConfigs::PaymentRequest,
+    FaqRequest,
+    ContactFeedback
+  ]
 
   include_pages_models(config)
   include_templates_models(config)
-  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement, Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
-
+  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement,\
+                 Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
   include_models(config, Client)
-
   include_models(config, Wizard::PromoCode)
-
-  include_models config, WizardText
-
-  include_models config, WizardSettings
+  include_models(config, WizardText)
+  include_models(config, WizardSettings)
 
   config.model Cms::MetaTags do
     visible false
@@ -261,14 +271,6 @@ RailsAdmin.config do |config|
       forms_navigation_label
     end
   end
-
-
-
-
-
-  # config.model FormConfigs::FaqRequest do
-  #   settings_navigation_label
-  # end
 
   config.model Cms::FormConfig do
     visible false
@@ -407,9 +409,7 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      #fields :how_it_works, :what_for_you, :statistics, :plans, :devices, :feedbacks, :bottom_block
       html_block_fields
-
 
       field :seo_tags
       field :sitemap_record

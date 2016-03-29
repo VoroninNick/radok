@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: faq_articles
+#
+#  id           :integer          not null, primary key
+#  published    :boolean
+#  name         :string
+#  content      :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  url_fragment :string
+#
+
 class FaqArticle < ActiveRecord::Base
   attr_accessible *attribute_names
   has_sitemap_record

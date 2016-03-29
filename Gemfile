@@ -3,7 +3,7 @@ require_relative "bin/bundler_extensions"
 
 # Base
 gem 'rails',                  '~> 4.2.1'
-gem 'sqlite3',                '~> 1.3.10'
+gem 'pg'
 gem 'sdoc',                   '~> 0.4.0', group: :doc
 gem 'json_schema_builder',    '~> 0.0.6'
 gem 'thin',                   '~> 1.6.3'

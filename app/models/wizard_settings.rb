@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: wizard_settings
+#
+#  id                                :integer          not null, primary key
+#  hour_price                        :integer
+#  enable_credit_card_payment_method :boolean
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  enable_paypal_payment_method      :boolean
+#
+
 class WizardSettings < ActiveRecord::Base
   self.table_name = :wizard_settings
   attr_accessible *attribute_names

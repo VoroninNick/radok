@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211155717) do
+ActiveRecord::Schema.define(version: 20160329203610) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "assets", force: :cascade do |t|
     t.integer  "assetable_id"
@@ -54,8 +57,8 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.datetime "updated_at"
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type"
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
@@ -185,8 +188,8 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "simple_wizard_tests", force: :cascade do |t|
     t.string   "tot__type_of_test"
@@ -269,9 +272,9 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.datetime "saved_at"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "wizard_devices", force: :cascade do |t|
     t.integer  "manufacturer_id"
@@ -283,7 +286,7 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.datetime "updated_at",          null: false
   end
 
-  add_index "wizard_devices", ["manufacturer_id"], name: "index_wizard_devices_on_manufacturer_id"
+  add_index "wizard_devices", ["manufacturer_id"], name: "index_wizard_devices_on_manufacturer_id", using: :btree
 
   create_table "wizard_manufacturers", force: :cascade do |t|
     t.string   "name"
@@ -309,7 +312,7 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.integer "product_type_id"
   end
 
-  add_index "wizard_platforms_product_types", ["platform_id", "product_type_id"], name: "index_unique_platforms_product_types", unique: true
+  add_index "wizard_platforms_product_types", ["platform_id", "product_type_id"], name: "index_unique_platforms_product_types", unique: true, using: :btree
 
   create_table "wizard_product_types", force: :cascade do |t|
     t.string   "name"
@@ -334,7 +337,7 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.datetime "updated_at",          null: false
   end
 
-  add_index "wizard_promo_codes", ["password"], name: "index_wizard_promo_codes_on_password", unique: true
+  add_index "wizard_promo_codes", ["password"], name: "index_wizard_promo_codes_on_password", unique: true, using: :btree
 
   create_table "wizard_report_languages", force: :cascade do |t|
     t.string   "name"
@@ -359,23 +362,23 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.text     "comment"
   end
 
-  add_index "wizard_test_platforms", ["test_id", "platform_id"], name: "index_wizard_test_platform_unique_bindings", unique: true
+  add_index "wizard_test_platforms", ["test_id", "platform_id"], name: "index_wizard_test_platform_unique_bindings", unique: true, using: :btree
 
   create_table "wizard_test_project_languages", force: :cascade do |t|
     t.integer "test_id"
     t.integer "project_language_id"
   end
 
-  add_index "wizard_test_project_languages", ["project_language_id"], name: "index_wizard_test_project_languages_on_project_language_id"
-  add_index "wizard_test_project_languages", ["test_id"], name: "index_wizard_test_project_languages_on_test_id"
+  add_index "wizard_test_project_languages", ["project_language_id"], name: "index_wizard_test_project_languages_on_project_language_id", using: :btree
+  add_index "wizard_test_project_languages", ["test_id"], name: "index_wizard_test_project_languages_on_test_id", using: :btree
 
   create_table "wizard_test_report_languages", force: :cascade do |t|
     t.integer "test_id"
     t.integer "report_language_id"
   end
 
-  add_index "wizard_test_report_languages", ["report_language_id"], name: "index_wizard_test_report_languages_on_report_language_id"
-  add_index "wizard_test_report_languages", ["test_id"], name: "index_wizard_test_report_languages_on_test_id"
+  add_index "wizard_test_report_languages", ["report_language_id"], name: "index_wizard_test_report_languages_on_report_language_id", using: :btree
+  add_index "wizard_test_report_languages", ["test_id"], name: "index_wizard_test_report_languages_on_test_id", using: :btree
 
   create_table "wizard_test_types", force: :cascade do |t|
     t.string   "name"
@@ -423,8 +426,6 @@ ActiveRecord::Schema.define(version: 20160211155717) do
     t.text     "admin_comment"
     t.integer  "promo_code_id"
   end
-
-  add_index "wizard_tests", ["promo_code_id"], name: "index_wizard_tests_on_promo_code_id"
 
   create_table "wizard_texts", force: :cascade do |t|
     t.text     "json_data"
