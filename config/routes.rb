@@ -3,11 +3,12 @@ Rails.application.routes.draw do
 
   scope :templates, controller: :templates do
     root action: :index
-
   end
+
   #get "chess_timer", to: "application#chess_timer"
   get "robots.txt", to: "pages#robots_txt"
   get "w", to: "wizard#new_and_allow"
+
   scope "emails", controller: "emails" do
     root action: :index, as: :emails
     get "confirmation_instructions", as: :confirmation_instructions_email
@@ -22,9 +23,7 @@ Rails.application.routes.draw do
   end
 
   scope wizard_path do
-
     root to: "wizard#new", as: "wizard"
-
     post ":id/promo_code", to: "wizard#promo_code"
     delete ":id/promo_code", to: "wizard#cancel_promo_code", as: "cancel_promo_code"
     post ":id/payment", to: "wizard#payment", as: :test_payment
@@ -35,8 +34,6 @@ Rails.application.routes.draw do
     get "/:id", to: "wizard#edit_or_show", as: :test
     put "/:id", to: "wizard#update"
     post "", to: "wizard#create"#, as: "wizard"
-
-
   end
 
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
@@ -53,13 +50,11 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboard#index"
   get "dashboard/project/:id", to: "dashboard#project", as: :dashboard_project
-  #get "#{wizard_path}", to: "wizard#new", as: "wizard"
 
   DynamicRouter.load unless ARGV.grep(/(assets:(precompile|clean))|(db:migrate)/).any?
-  
+
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
-
 
   devise_for :users, controllers: { confirmations: "users/confirmations", sessions: "users/sessions", passwords: "users/passwords", omniauth_callbacks: "users/omniauth_callbacks" }
   devise_scope :user do
@@ -78,7 +73,6 @@ Rails.application.routes.draw do
   get "wizard/available_platforms_by_product_type/:product_type", to: "wizard#available_platforms_by_product_type"
 
   get "/svg_images", to: "home#svg_images"
-
 
   post "/save_project", to: "wizard#save_project"
 

@@ -8,7 +8,7 @@ class ImportWizardDevicesToDb < ActiveRecord::Migration
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(3,3,'Kindle fire','Android 2.3',320,480,'2015-10-06 08:16:01.254165','2015-10-06 08:16:01.254165');
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(4,2,'iPhone 5','iOS 9.0',600,1024,'2015-10-06 08:16:29.137514','2015-10-06 08:16:29.137514');
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(5,2,'iPhone 5s','iOS 9.0',600,1024,'2015-10-06 08:16:55.381041','2015-10-06 08:16:55.381041');
-      INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(6,2,'iPhone 5c','iOS 9.0',2560,1600,'2015-10-06 08:17:34.357582','2015-10-06 08:17:34.357582');
+      INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(6,2,'iPhone 5c','iOS 9.2',640,1136,'2015-10-06 08:17:34.357582','2016-01-22 09:45:34.152234');
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(7,2,'iPhone 4s','iOS 8.3',768,1024,'2015-10-06 08:18:10.498888','2015-10-06 08:18:10.498888');
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(8,2,'iPhone 4','iOS 7.1',640,960,'2015-10-23 08:05:27.027745','2015-10-23 08:05:27.027745');
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(9,2,'iPad 3','iOS 8.4',1536,2048,'2015-10-23 08:12:20.171955','2015-10-23 08:12:20.171955');
@@ -105,6 +105,9 @@ class ImportWizardDevicesToDb < ActiveRecord::Migration
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(100,22,'Xperia J','Android 4.0.3–4.0.4 ',480,854,'2015-10-23 12:06:39.042983','2015-10-23 12:06:39.042983');
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(101,22,'Xperia Z ','Android 5.0.0–5.0.2',1080,1920,'2015-10-23 12:07:44.671322','2015-10-23 12:07:44.671322');
       INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(102,23,'Live with Walkman','Android  2.3.3–2.3.7 ',320,480,'2015-10-23 12:08:28.373964','2015-10-23 12:08:28.373964');
+      INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(103,2,'iPhone 6','iOS 9.2',750,1334,'2016-01-22 09:40:49.302476','2016-01-22 09:40:49.302476');
+      INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(104,2,'iPhone 6S','iOS 9.2',750,1334,'2016-01-22 09:42:50.241229','2016-01-22 09:42:50.241229');
+      INSERT INTO wizard_devices (id, manufacturer_id, model, os, screen_pixel_width, screen_pixel_height, created_at, updated_at) VALUES(105,2,'iPhone 6S Plus','iOS 9.2',1080,1920,'2016-01-22 09:47:21.716479','2016-01-22 09:47:21.716479');
     SQL
   end
 
