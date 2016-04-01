@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  post "/html-to-slim", to: "templates#html_to_slim"
 
-  scope :templates, controller: :templates do
-    root action: :index
-
+  scope "templates", controller: "templates" do
+    post "/html-to-slim", to: "templates#html_to_slim"
+    root action: :index, as: :templates
   end
+
   #get "chess_timer", to: "application#chess_timer"
   get "robots.txt", to: "pages#robots_txt"
   get "w", to: "wizard#new_and_allow"
@@ -56,7 +56,7 @@ Rails.application.routes.draw do
   #get "#{wizard_path}", to: "wizard#new", as: "wizard"
 
   DynamicRouter.load unless ARGV.grep(/(assets:(precompile|clean))|(db:migrate)/).any?
-  
+
   resources :attachments, controller: :assets
   get "geo", to: "application#geo"
 
