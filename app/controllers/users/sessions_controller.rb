@@ -1,5 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
-# before_filter :configure_sign_in_params, only: [:create]
+  before_action :require_no_authentication, only: [:new, :create]
 
   # GET /resource/sign_in
   def new
@@ -9,17 +9,16 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    #return render inline: social_params.inspect
     user_params = params[:user]
     from_oauth = false
+
     if user_params.blank?
       user_params = {email: social_params['info']['email']}
       from_oauth = true
     end
+
     self.resource = User.find_for_database_authentication(user_params)
-
     @user ||= User.from_omniauth(request.env["omniauth.auth"])
-
 
     if resource
       unless from_oauth
@@ -32,11 +31,8 @@ class Users::SessionsController < Devise::SessionsController
         return render json: { user: { errors: { login: :unconfirmed } } }, status: 401
       end
 
-
-
-      #return render inline: session[:tests].inspect
-
       test_ids = session[:tests]
+
       if test_ids.try(&:any?)
         Wizard::Test.where(id: test_ids).where("user_id is null").update_all(user_id: (resource.id || 234))
       end
@@ -46,10 +42,8 @@ class Users::SessionsController < Devise::SessionsController
     else
       return render json: { user: {form_errors: ["invalid_password_or_login"] } }, status: 401
     end
-    #return render inline:
 
     set_flash_message(:notice, :signed_in) if is_flashing_format?
-
 
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
@@ -61,11 +55,6 @@ class Users::SessionsController < Devise::SessionsController
       return data if data.present?
     end
   end
-
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
 
   protected
 

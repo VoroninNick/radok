@@ -12,6 +12,6 @@ class ContactController < ApplicationController
   def schedule_call
     @schedule_call_request = ScheduleCallRequest.create!(params[:call])
     ContactFeedbackMailer.new_call(@schedule_call_request).deliver
-    render json: {}, status: 201
+    render json: { result: "successfully rendered", code: 200 }
   end
 end

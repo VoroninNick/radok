@@ -10,7 +10,7 @@
         form.form.schedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
           .form-content
             .inputs
-              = rf_input label: "Phone", required: true, name: "call[phone]"
+              = rf_input label: "Phone", required: true, name: "call[phone]", validation: "phone"
               = rf_input label: "Name", name: "call[name]"
               = rf_input label: "Description", name: "call[description]"
             .actions
