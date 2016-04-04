@@ -367,9 +367,7 @@ $.fn.validateInput = ->
     $rf_input.find(".error.required").addClass("hide")
   else
     $rf_input.find(".error.required").removeClass("hide")
-
-
-
+    $rf_input.find(".error.invalid").addClass("hide")
 
   validation_options_str = $rf_input.attr("validation") || ""
   validation_options = validation_options_str.split(" ")
@@ -377,6 +375,7 @@ $.fn.validateInput = ->
   if valid
     if validation_options.indexOf("email") >= 0
       valid = validateEmail(value)
+
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
@@ -683,7 +682,3 @@ $(".subscribe-block form").on "after_error", (e, xhr, state, options)->
     state.$form_content.append($error)
   else
     $error.text(msg)
-
-
-
-
