@@ -68,8 +68,6 @@
     #home-how-it-works.three-images-in-row-wrap
       = render "three_images_in_row"
 
-//      = html_block_with_fallback :how_it_works, true
-
     #home-what-for-you
       = html_block_with_fallback :what_for_you, true
         .row.center-items-vertically.row-reverse.image-and-text
@@ -83,7 +81,6 @@
               - @what_for_you[:items].each do |item|
                 li
                   = item
-
 
     #home-statistics.statistics
       = html_block_with_fallback :statistics, true
@@ -112,7 +109,6 @@
       = html_block_with_fallback :plans, true
         = render "plans"
 
-
     #home-devices
       = html_block_with_fallback :devices, true
         .page-content-row-wrap
@@ -133,8 +129,6 @@
     #home-feedbacks
       = html_block_with_fallback :feedbacks, true
         = render "feedbacks_carousel.html"
-
-
 
     #home-bottom-container
       = html_block_with_fallback :bottom_block, true
