@@ -381,6 +381,14 @@ $.fn.validateInput = ->
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
+    if validation_options.indexOf("phone") >= 0
+      valid = validatePhoneNumber(value)
+
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
   if !valid
     $rf_input.addClass("invalid").removeClass("valid")
     $field_label.addClass("hide")
@@ -410,6 +418,9 @@ validateEmail = (email) ->
   re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
   re.test email
 
+validatePhoneNumber = (number) ->
+  re = /^\+(?:[0-9] ?){6,14}[0-9]$/
+  re.test number
 
 
 $("body").on "change blur keyup", "form .rf-input", (event)->

@@ -10,7 +10,7 @@
             .form-content
               .inputs
                 .columns.large-12
-                  = rf_input label: "Phone", name: "pay_later[phone]", required: true, value: current_user.try(:phone)
+                  = rf_input label: "Phone", name: "pay_later[phone]", required: true, value: current_user.try(:phone), validation: "phone"
                   = rf_input label: "Name", name: "pay_later[full_name]", value: current_user.try(:name_or_username)
                   = rf_input label: "Email", name: "pay_later[email]", required: true, value: current_user.try(:email), validation: "email"
                   = rf_input label: "Description", name: "pay_later[comment]", type: "text"

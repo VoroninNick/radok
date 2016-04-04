@@ -143,6 +143,8 @@ module ApplicationHelper
 
     if options[:validation] && options[:validation].include?("email")
       options[:invalid_message] = "Please, enter a valid email"
+    elsif options[:validation] && options[:validation].include?("phone")
+      options[:invalid_message] = "Please, enter a phone number"
     end
 
     #input_tag_options[:name] ||= form_prefix
