@@ -1330,12 +1330,24 @@ $("body").on "change", "input.file-upload-input", ->
   data_start_temp_id = ($list.children().last().attr("data-temp-id")  || 0) + 1
   $input.simpleUpload("#{wizard_root_path}/#{project.id}/#{attachment_name}?data-temp-id-start=#{data_start_temp_id}", {
 
+    maxFileSize: 209,
+
     success: (data)->
       file_name = data.data_file_name
       $file = $list.children().filter(":not(.loaded)").filter("[data-file-name='#{file_name}']")
       $file.attr("data-id", data.id)
       $file.addClass("loaded")
       $file.find("span.preloader").hide()
+      $error.addClass("hide")
+      $error.fadeOut()
+
+    error: (error)->
+      $file = $list.children().filter(":not(.loaded)").last()
+      $error = $list.parent().find(".error")
+      $file.addClass("hide")
+      $error.css("display", "inline")
+      $error.fadeIn()
+      $error.html("Please, upload a file less than 200 MB")
 
   })
 
