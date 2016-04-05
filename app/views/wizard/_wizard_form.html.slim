@@ -2,11 +2,9 @@
 - content_for :javascript do
   script type="text/javascript" src="/assets/wizard_js.js"
 
-
 .wizard-controller ng-controller="Wizard"
 form for="project" url=wizard_path method="post" json="{}"
   fieldset.wizard-step step="1"
-
 
     #project-product-type
       .columns.large-12.with-distance
@@ -23,9 +21,7 @@ form for="project" url=wizard_path method="post" json="{}"
               img src=image
             label.label for=input_id
               = label
-
       .clearfix
-
 
     #project-test-type
       .columns.large-12.with-distance
@@ -46,15 +42,6 @@ form for="project" url=wizard_path method="post" json="{}"
     .button-wrap style="margin: 30px auto 0 auto; position: relative; width: 200px; max-width: 100%;"
       = rf_button(class: "rf-step-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
 
-
-
-
-
-
-
-
-
-
   .configuration-steps
     fieldset.wizard-step step="2" type="platforms" data-name="Platforms step"
       .wizard-step-line
@@ -64,7 +51,6 @@ form for="project" url=wizard_path method="post" json="{}"
           |On what platforms would you like your product to be tested?
         .blue-header
           |Platform / Testers per platform
-
         .input.platforms-input data-name="On what platforms would you like your product to be tested?" as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms" platforms-by-product-type=@platform_ids_by_product_type.to_json
           .clearfix
           - sorted_platform_bindings = @project.testers_by_platform.sort{|a,b| a[:platform_id] <=> a[:platform_id] }
@@ -221,7 +207,7 @@ form for="project" url=wizard_path method="post" json="{}"
             |This is unscripted testing. Our testers use your product like any normal user would.
 
         .nested-input-group
-          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" required="true" data-name="Exploratory instructions"
+          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" required=("true" if @project.exploratory?) data-name="Exploratory instructions"
             label.placeholder.hiding-placeholder for="project_exploratory_instructions"
               |Please provide testing instructions for the testers here...
             label.error.error-required for="project_exploratory_instructions"
@@ -264,8 +250,6 @@ form for="project" url=wizard_path method="post" json="{}"
               |Type components here, separate by &laquo;ENTER&raquo;
             input type="text" value=@project.main_components.join(",")
 
-
-
         /.input.radio-button label="Exploratory" help="This is unscripted testing. Our testers use your product like any normal user would." as="radio-button" model="project.methodology_type" value="exploratory" checked=(@project.exploratory?)
         /.input.radio-button label="Test-case driven" as="radio-button" model="project.methodology_type" value="test_case_driven" checked=@project.test_case_driven?
 
@@ -285,7 +269,7 @@ form for="project" url=wizard_path method="post" json="{}"
 
         .columns.large-7.small-padding-right-0 style="padding-left: 0; "
           .input.url model="project.project_url" as="url"
-            input placeholder="http://domain.com" value=@project.project_url
+            input placeholder="http://domain.com" value=@project.project_url validation="url"
         .columns.large-1 style="text-align: center;"
           span.or
             |or

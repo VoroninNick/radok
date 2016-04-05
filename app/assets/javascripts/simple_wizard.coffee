@@ -1477,16 +1477,28 @@ init_option_count_inputs = ()->
 log_project_access_test_url_and_files = false
 
 validate_project_access_test_url_and_files = ()->
-  valid = (project.project_url && project.project_url.length > 0 ) || $(".test_files-list").children().length > 0
-  if log_project_access_test_url_and_files
-    console.log "validate_project_access_test_url_and_files: ", valid
   $error = $("#test-url-or-files-required-error")
-
-
-  if valid
-    $error.fadeOut()
+  if (project.project_url && project.project_url.length > 0 )
+    valid = validateURL(project.project_url)
+    if valid
+      $error.fadeOut()
+    else
+      $error.fadeIn()
+      $error.html("Please, provide a valid URL")
   else
-    $error.fadeIn()
+    valid = $(".test_files-list").children().length > 0
+    if valid
+      $error.fadeOut()
+    else
+      # $error.val("Please, type URL or upload at least one file")
+      $error.fadeIn()
+      $error.html("Please, provide a valid URL or upload at least one file")
+
+
+
+validateURL = (url) ->
+  re = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
+  re.test url
 
 $("body").on "upload_files.test_files delete_files.test_files change.project.project_url", ()->
   validate_project_access_test_url_and_files()
@@ -1738,4 +1750,3 @@ $("form[for]").on "submit", (e)->
 $("form[for]").on "keyup", "input", (e)->
   if e.which == 13
     return false
-

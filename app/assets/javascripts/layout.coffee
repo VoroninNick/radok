@@ -425,7 +425,6 @@ validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
   re.test number
 
-
 $("body").on "change blur keyup", "form .rf-input", (event)->
   #console.log "form rf-input event"
   #console.log "event type: ", event.type
