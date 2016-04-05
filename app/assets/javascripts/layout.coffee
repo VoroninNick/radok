@@ -400,7 +400,10 @@ $.fn.validateInput = ->
   if !valid
     $form.addClass("invalid").removeClass("valid")
 
-
+  if ($rf_input.val().length == 0) && !required
+    $rf_input.removeClass("invalid").addClass("valid")
+    $rf_input.find(".error").addClass("hide")
+    $field_label.removeClass("hide")
 
 $.fn.validateForm = (options)->
 
