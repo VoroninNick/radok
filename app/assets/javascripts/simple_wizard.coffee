@@ -1309,8 +1309,10 @@ $("body").on "change", "input.file-upload-input", ->
   new_files_length = input.files.length
   new_files_saved_count = 0
   for file in input.files
-    $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{file.name}'><span class='file-name'>#{file.name}</span><span class='preloader'></span><span class='delete'></span></div>")
-    f = {name: file.name}
+    filename = file.name.replace(/ |:/gi, "_")
+    $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{filename}'><span class='file-name'>#{filename}</span><span class='preloader'></span><span class='delete'></span></div>")
+    f = {name: filename}
+    console.log (f)
     reader = new FileReader()
     reader.onload = ->
 #console.log "reader.load", arguments
@@ -1332,10 +1334,14 @@ $("body").on "change", "input.file-upload-input", ->
 
     success: (data)->
       file_name = data.data_file_name
+      console.log (file_name)
       $file = $list.children().filter(":not(.loaded)").filter("[data-file-name='#{file_name}']")
       $file.attr("data-id", data.id)
       $file.addClass("loaded")
+      console.log ($file)
+      console.log (data.id)
       $file.find("span.preloader").hide()
+      console.log ("preloader hide")
 
   })
 
@@ -1738,4 +1744,3 @@ $("form[for]").on "submit", (e)->
 $("form[for]").on "keyup", "input", (e)->
   if e.which == 13
     return false
-
