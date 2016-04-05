@@ -126,6 +126,9 @@ module ApplicationHelper
     input_tag_options[:class] = "#{input_tag_options[:class]}"
     input_type = :text
     input_type = :password if type.to_s == 'password'
+    input_type = :email if type.to_s == 'email'
+    input_type = :tel if type.to_s == 'tel'
+
     input_tag_options[:type] = "#{input_type}"
 
     wrap_class = ""
@@ -138,6 +141,12 @@ module ApplicationHelper
     end
     tag_name = :textarea if type.to_sym == :text
 
+    if options[:validation] && options[:validation].include?("email")
+      options[:invalid_message] = "Please, enter a valid email"
+    elsif options[:validation] && options[:validation].include?("phone")
+      options[:invalid_message] = "Please, enter a phone number"
+    end
+
     #input_tag_options[:name] ||= form_prefix
 
     options[:required_message] ||= "#{options[:label]} is required"
@@ -145,6 +154,7 @@ module ApplicationHelper
     invalid_message = options[:invalid_message]
     validation = options[:validation]
     taken_message = options[:taken_message]
+
 
     model = options[:model]
 
