@@ -367,7 +367,6 @@ window.validate_input = (value)->
   # Validation
   validation_options = {
     required: $input.hasAttribute("required")
-    min: $input.attr("min")
   }
 
   validation_result = {}
