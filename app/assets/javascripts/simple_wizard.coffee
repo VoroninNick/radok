@@ -1286,11 +1286,6 @@ show_or_hide_auth_test_driven_development_inputs = ()->
   else
     $another_inputs.removeClass("hide")
 
-
-
-
-
-
 $("body").on "change", "input.file-upload-input", ->
 
   input = this
@@ -1309,11 +1304,14 @@ $("body").on "change", "input.file-upload-input", ->
   new_files_length = input.files.length
   new_files_saved_count = 0
   for file in input.files
-    $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{file.name}'><span class='file-name'>#{file.name}</span><span class='preloader'></span><span class='delete'></span></div>")
-    f = {name: file.name}
+    filename = file.name.replace(/%|:|\||@|\$|\#| /gi, "_")
+    if filename.match(/\\/gi)
+      chopped_name = filename.split("\\")
+      filename = chopped_name[chopped_name.length - 1]
+    $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{filename}'><span class='file-name'>#{filename}</span><span class='preloader'></span><span class='delete'></span></div>")
+    f = {name: filename}
     reader = new FileReader()
     reader.onload = ->
-#console.log "reader.load", arguments
       src = reader.result
       f.content = src
       get_model_value(model).push(f)
@@ -1323,9 +1321,7 @@ $("body").on "change", "input.file-upload-input", ->
         $input.val(null)
       check_for_step_completeness.apply($step)
 
-
     reader.readAsDataURL(file);
-
 
   data_start_temp_id = ($list.children().last().attr("data-temp-id")  || 0) + 1
   $input.simpleUpload("#{wizard_root_path}/#{project.id}/#{attachment_name}?data-temp-id-start=#{data_start_temp_id}", {
@@ -1336,23 +1332,13 @@ $("body").on "change", "input.file-upload-input", ->
       $file.attr("data-id", data.id)
       $file.addClass("loaded")
       $file.find("span.preloader").hide()
-
   })
-
-
-
 
   $input.trigger("upload_files.#{attachment_name}")
   $input.trigger("change.#{model}")
-
-  #console.log "step", $step
-  #console.log "File Upload: ", project.test_case_files[0]
   check_for_step_completeness.apply($step)
 
-
-
 $("body").on "click", ".file-upload-files-list .delete", ->
-  #console.log "delete 1"
 
   $file = $(this).closest('.file')
   file_index = $file.index()
@@ -1373,10 +1359,6 @@ $("body").on "click", ".file-upload-files-list .delete", ->
 
   $step = $list.closest(".wizard-step")
   check_for_step_completeness.apply($step)
-
-  #console.log("delete 2")
-
-
 
 $("body").on "click", ".rf-test-case-files-upload-button", (e)->
   $input = $("input#test_case_files")
@@ -1405,7 +1387,6 @@ $("body").on "after_create", ()->
   history.pushState(state, title, url);
 
 $("body").on "click", ".rf-configure-button, .rf-step-configure-button", (e)->
-  #console.log "click: .rf-configure-button, .rf-step-configure-button ", e
   $(".rf-step-configure-button").attr("style", "")
   $(".rf-step-configure-button").fadeOut()
   init_configure_mode()
@@ -1432,16 +1413,8 @@ init_loaded_project = ()->
 
   if wizard_form.is_persisted.apply(wizard_form)
     init_configure_mode()
-
-    #console.log "loaded_project: ", project
-    #console.log "test1"
     change_step(project.current_step_id, null, false)
-    #console.log "test2"
     scrollToStep(project.current_step_id)
-
-    #console.log "test3"
-
-    #console.log "project", project
 
     $(".input[model][as]").each ()->
       $input = $(this)
@@ -1467,9 +1440,6 @@ $("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
   else
     $progress_step.removeClass("proceeded")
 
-  #console.log "e.type: ", e.type
-  #console.log "step_id: ", step_id
-
 init_option_count_inputs = ()->
   if Modernizr.touchevents
     $("body .option-count input").attr("type", "number")
@@ -1492,7 +1462,6 @@ $("body").on "upload_files.test_files delete_files.test_files change.project.pro
   validate_project_access_test_url_and_files()
 
 $("body").on "delete_files.test_files", ()->
-  console.log "delete 3"
 
 # initialize wizard
 
@@ -1513,25 +1482,17 @@ $(inputs_selector_for_presence).each ()->
 
 init_string_inputs()
 
-
-
 # step 3
 show_or_hide_exploratory_instructions_input()
 
 init_tags_input()
 
-
 # step 4
 show_or_hide_auth_credentials_inputs()
 
-
-
 $(".hour").filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
 
-
-
 $(".wizard-step").on "disappear", ()->
-  #console.log "disappear"
   $wizard_full_summary = $("#wizard-full-summary")
   active_summary = $wizard_full_summary.filter(":appeared").length > 0
 
@@ -1542,15 +1503,12 @@ $(".wizard-step").on "disappear", ()->
 
   #else
 
-
 #$(window).on "scroll", ()->
   #$wizard_full_summary = $("#wizard-full-summary")
   #active_summary = $wizard_full_summary.filter(":appeared").length > 0
 
   #if active_summary
   #  console.log "active_summary"
-
-
 
 $("body").on "change.project.hours_per_tester", ()->
   $hour_labels = $(".hour")
@@ -1738,4 +1696,3 @@ $("form[for]").on "submit", (e)->
 $("form[for]").on "keyup", "input", (e)->
   if e.which == 13
     return false
-
