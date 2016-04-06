@@ -1162,19 +1162,17 @@ $("body").on "change", "input.file-upload-input", ->
     success: (data)->
       file_name = data.data_file_name
       $file = $list.children().filter(":not(.loaded)").filter("[data-file-name='#{file_name}']")
+      $error = $list.parent().find(".upload-error")
       $file.attr("data-id", data.id)
       $file.addClass("loaded")
-      $file.find("span.preloader").hide()
       $error.addClass("hide")
-      $error.fadeOut()
+      $file.find("span.preloader").hide()
 
     error: (error)->
       $file = $list.children().filter(":not(.loaded)").last()
-      $error = $list.parent().find(".error")
+      $error = $list.parent().find(".upload-error")
       $file.addClass("hide")
-      $error.css("display", "inline")
-      $error.fadeIn()
-      $error.html("Please, upload a file less than 200 MB")
+      $error.removeClass("hide")
   })
 
   $input.trigger("upload_files.#{attachment_name}")

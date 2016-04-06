@@ -234,7 +234,7 @@ form for="project" url=wizard_path method="post" json="{}"
                     |#{asset.data_file_name}
 
                   span class='delete'
-            div#upload-test-case-files-error.error.hide for="test-case-files-input"
+            .upload-error.error.hide
               |Please, select a file less than 200 MB
 
         .product-main-components
@@ -284,6 +284,8 @@ form for="project" url=wizard_path method="post" json="{}"
                   |#{asset.data_file_name}
 
                 span class='delete'
+          .upload-error.error.hide
+            |Please, select a file less than 200 MB
 
         .columns.large-12
           label#test-url-or-files-required-error.error.error-required for="test-url-or-files-label"
