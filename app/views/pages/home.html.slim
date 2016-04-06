@@ -66,8 +66,9 @@
 
   #home-page-content
     #home-how-it-works.three-images-in-row-wrap
-      = html_block_with_fallback :how_it_works, true
-        = render "three_images_in_row"
+      = render "three_images_in_row"
+
+//      = html_block_with_fallback :how_it_works, true
 
     #home-what-for-you
       = html_block_with_fallback :what_for_you, true
