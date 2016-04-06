@@ -3,6 +3,7 @@ require_relative "bin/bundler_extensions"
 
 # Base
 gem 'rails',                  '~> 4.2.1'
+gem 'rake',                   '10.5.0'
 gem 'pg'
 gem 'json_schema_builder',    '~> 0.0.6'
 gem 'thin',                   '~> 1.6.3'

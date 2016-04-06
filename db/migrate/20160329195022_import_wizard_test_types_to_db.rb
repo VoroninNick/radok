@@ -7,6 +7,18 @@ class ImportWizardTestTypesToDb < ActiveRecord::Migration
       INSERT INTO wizard_test_types (id, name, image_file_name, image_content_type, image_file_size, image_updated_at, created_at, updated_at) VALUES(3,'Localization','rf-localization-test.svg','image/svg+xml',4922,'2015-10-08 12:09:25.942272','2015-10-08 12:09:25.975800','2015-10-08 12:09:25.975800');
       INSERT INTO wizard_test_types (id, name, image_file_name, image_content_type, image_file_size, image_updated_at, created_at, updated_at) VALUES(4,'Usability','rf-usability-test.svg','image/svg+xml',7639,'2015-10-08 12:09:41.293955','2015-10-08 12:09:41.348904','2015-10-08 12:09:41.348904');
     SQL
+
+    {
+      'Functional' => 'rf-functional-test.svg',
+      'Localization' => 'rf-localization-test.svg',
+      'Usability' => 'rf-usability-test.svg'
+    }.each do |name, image|
+      type = Wizard::TestType.find_by(name: name)
+      file = File.open(Rails.root.join('fixtures', 'images', image))
+      type.image = file
+      file.close
+      type.save!
+    end
   end
 
   def down

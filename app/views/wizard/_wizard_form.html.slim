@@ -15,7 +15,12 @@ form for="project" url=wizard_path method="post" json="{}"
 
       - @product_types.each_with_index do |product_type, index|
         - checked = @project.product_type.try{|t| t.id == product_type.id } || false
-        - value = product_type.name; label = product_type.name; image=product_type.image.url(:original); model = "project.product_type"; name = "project_product_type"; input_id = "project_product_type_#{index + 1}"
+        - value = product_type.name
+        - label = product_type.name
+        - image = product_type.image.url(:original)
+        - model = "project.product_type"
+        - name = "project_product_type"
+        - input_id = "project_product_type_#{index + 1}"
         .columns.large-3.small-6.medium-3.text-center
           .input.image-radio-button class="project_product_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
             input id=input_id value=value name=name type="radio" checked=("checked" if checked )
