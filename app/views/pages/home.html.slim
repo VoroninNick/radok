@@ -33,7 +33,6 @@
             .layer data-depth="0.6"
               img src=slide[:images][2]
 
-
           .description-block
             = html_block_with_fallback "banner_#{index + 1}_title_with_description", true
               - if index > 0
@@ -61,14 +60,9 @@
             li class=("active" if index == 0) ng-class="$parent.homeBannerCarouselIndex == $index ? 'active' : 'inactive'"
               |●
 
-
-
-
   #home-page-content
     #home-how-it-works.three-images-in-row-wrap
       = render "three_images_in_row"
-
-//      = html_block_with_fallback :how_it_works, true
 
     #home-what-for-you
       = html_block_with_fallback :what_for_you, true
@@ -83,7 +77,6 @@
               - @what_for_you[:items].each do |item|
                 li
                   = item
-
 
     #home-statistics.statistics
       = html_block_with_fallback :statistics, true
@@ -112,7 +105,6 @@
       = html_block_with_fallback :plans, true
         = render "plans"
 
-
     #home-devices
       = html_block_with_fallback :devices, true
         .page-content-row-wrap
@@ -134,8 +126,6 @@
       = html_block_with_fallback :feedbacks, true
         = render "feedbacks_carousel.html"
 
-
-
     #home-bottom-container
       = html_block_with_fallback :bottom_block, true
         .row
@@ -146,7 +136,6 @@
               - @who_we_are_best_for[:items].each do |item|
                 li
                   = item
-
           .columns.large-6.medium-9.medium-centered.large-uncentered.small-11.small-centered
             .title
               = @benefits[:title]
