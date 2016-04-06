@@ -273,12 +273,21 @@ $("body").on "change code-change keyup keypress", ".project-platforms-comment_in
 
 $("body").on "change code-change keyup keypress", "#project_contact_person_name, #project_contact_person_email, #project_contact_person_phone", (e)->
   $input = $(this)
-  selector = "##{$input.attr('id')}-error"
-  $max_error = $(selector)
+  error_select = "##{$input.attr('id')}-error"
+  $max_error = $(error_select + " .error-max")
+  $email_error = $(error_select + " .error-email")
   if $input.val().length == parseInt($input.attr("maxlength"))
+    $email_error.hide()
     $max_error.fadeIn()
+  else if $input.val().length > 0
+    $max_error.hide()
+    if validateEmail($input.val())
+      $email_error.fadeOut()
+    else
+      $email_error.fadeIn()
   else
-    $max_error.fadeOut()
+      $email_error.fadeOut()
+      $max_error.fadeOut()
 
 update_price = ()->
   test_platforms_bindings = []
