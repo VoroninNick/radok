@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
   get "mail", to: "yandex#mail_form"
-  post "schedule-call", to: "contact#schedule_call"
+  post "schedule-call", to: "contact#schedule_call", as: :schedule_call
 
   post "/subscribe", to: "user_pages#subscribe"
   post "update_subscription", to: "user_pages#update_subscription"
