@@ -70,7 +70,7 @@ form for="project" url=wizard_path method="post" json="{}"
                     .platform-option-label
                       = c.name
                     .input-wrap
-                      input pattern='[0-9]*' type='text' value="#{binding_current_testers_count}"
+                      input pattern='[0-9]*' type='number' min='0' max='100' value="#{binding_current_testers_count}"
                       label class='decrement' for='platform-1-subitem-1'
                       label class='increment' for='platform-1-subitem-1'
             /.option-count platform-subitem-id=

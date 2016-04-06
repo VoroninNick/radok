@@ -1421,9 +1421,10 @@ $("body .promo-code-field .cancel-promo-code").on "click", (e)->
   $promo_code_field.addClass("waiting")
   $input.attr("disabled", "disabled")
 
-$(".checkout-button, .rf-confirm-button").on "click", (e)->
+$(".checkout-button, .confirm-button-container").on "click", (e)->
   $button = $(this)
   $invalid_test_steps = get_test_invalid_steps()
+  console.log "invalid"
   if !is_valid_project($invalid_test_steps)
     $popup = $("#invalid_fields_popup")
     openPopup($popup)
