@@ -85,4 +85,3 @@ $("body").on "show_success", ".payment-form, .pay-later-form", ()->
       window.location = redirect_location
     ms
   )
-

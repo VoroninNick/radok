@@ -670,8 +670,6 @@ $("body").on "click", ".return_to_wizard", (e)->
 $("body").on "click", ".schedule-call-button", ->
   openPopup("wizard__schedule_call")
 
-
-
 $("body").on "click", "#header-mobile-menu-button-wrap", ()->
   $("body").toggleClass("mobile-menu-opened")
 
