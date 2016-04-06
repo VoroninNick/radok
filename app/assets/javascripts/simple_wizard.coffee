@@ -265,6 +265,21 @@ $("body").on "change code-change keyup keypress", ".wizard [as=platforms] .optio
     $input.val(value)
   update_price()
 
+$("body").on "change code-change keyup keypress", ".project-platforms-comment_input", (e)->
+  if $(".project-platforms-comment_input textarea").val().length == parseInt($(".project-platforms-comment_input textarea").attr("maxlength"))
+    $("#platforms_comment-error").fadeIn()
+  else
+    $("#platforms_comment-error").fadeOut()
+
+$("body").on "change code-change keyup keypress", "#project_contact_person_name, #project_contact_person_email, #project_contact_person_phone", (e)->
+  $input = $(this)
+  selector = "##{$input.attr('id')}-error"
+  $max_error = $(selector)
+  if $input.val().length == parseInt($input.attr("maxlength"))
+    $max_error.fadeIn()
+  else
+    $max_error.fadeOut()
+
 update_price = ()->
   test_platforms_bindings = []
   $platforms_field = $("[as=platforms]")
@@ -405,6 +420,22 @@ window.validate_inputs_on_init = ()->
   $(".input[model], input[model]").each ()->
     $input = $(this)
     validate_input.call($input)
+
+validateEmail = (email) ->
+  re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+  re.test email
+
+validatePhoneNumber = (number) ->
+  re = /^\+(?:[0-9] ?){6,14}[0-9]$/
+  re.test number
+
+
+
+
+
+
+
+
 
 $("body").on "change.project.total_price", ()->
   price = project.total_price
