@@ -1078,13 +1078,14 @@ is_valid_project = (steps)->
 
 #$("body").on "change.project.valid", ()->
 enable_checkout_button_if_project_valid = ()->
-  $checkout_button = $(".checkout-button, .rf-confirm-button")
-  disabled_when_test_has_errors = false
-  if disabled_when_test_has_errors
-    if is_valid_project()
-      $checkout_button.removeAttr("disabled")
-    else
-      $checkout_button.attr("disabled", "disabled")
+  $checkout_button = $(".checkout-button")
+  $confirm_button = $(".rf-confirm-button")
+  if is_valid_project()
+    $checkout_button.removeAttr("disabled")
+    $confirm_button.removeAttr("disabled")
+  else
+    $checkout_button.attr("disabled", "disabled")
+    $confirm_button.attr("disabled", "disabled")
 
 $("body").on "change.project.authentication_required", ()->
   show_or_hide_auth_credentials_inputs()

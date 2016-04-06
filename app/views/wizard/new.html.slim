@@ -74,7 +74,7 @@
                 span data-bind="total_price"
                   |0
 
-            .checkout-button disabled="disabled" ng-class="!wizard.ready_to_checkout ? 'disabled' : '' " open-popup="payment" requires-auth="true"
+            .checkout-button disabled="disabled" open-popup="payment" requires-auth="true"
               /= svg_placeholder "rf-rocket-up-right"
               ng-include src="'/assets/rf-rocket-up-right.svg'"
                 = embedded_svg_from_assets "rf-rocket-up-right"
