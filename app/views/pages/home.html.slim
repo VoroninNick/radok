@@ -33,7 +33,6 @@
             .layer data-depth="0.6"
               img src=slide[:images][2]
 
-
           .description-block
             = html_block_with_fallback "banner_#{index + 1}_title_with_description", true
               - if index > 0
@@ -60,9 +59,6 @@
           - @home_slides.each_with_index do |slide, index|
             li class=("active" if index == 0) ng-class="$parent.homeBannerCarouselIndex == $index ? 'active' : 'inactive'"
               |●
-
-
-
 
   #home-page-content
     #home-how-it-works.three-images-in-row-wrap
