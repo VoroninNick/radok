@@ -101,7 +101,7 @@ class Wizard::Test < ActiveRecord::Base
 
     platform_bindings_to_update.each do |b|
       p = self.test_platforms_bindings.where(platform_id: b[:platform_id]).first;
-      if p[:testers_count] != b[:testers_count]
+      if (p[:testers_count] != b[:testers_count]) && (b[:testers_count] <= 50)
         p.update_attributes!(testers_count: b[:testers_count])
       end
     end
