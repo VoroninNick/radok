@@ -1,32 +1,28 @@
-//= html_block_with_fallback :schedule_call
-
-.popup.schedule-call
-  .form-partial.schedule-call
-    .header
-      .title
-        |Schedule call
-    .content
-      .form
-        form.form.schedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
-          .form-content
-            .inputs
-              = rf_input label: "Phone", required: true, name: "call[phone]", validation: "phone"
-              = rf_input label: "Name", name: "call[name]"
-              = rf_input label: "Description", name: "call[description]"
-            .actions
-              .columns.large-5
-                - if !current_user
-                  .sign-up-invitation
-                    |No account?&nbsp;
-                    a href='/sign-up' target="_blank"
-                      |Sign up
-
-              .columns.large-7
-                = rf_button(title: "Call me")
-
-
-          .preloader.hide
-            = image_tag("preloader.gif")
-          .success-handler.hide
-            p.h4
-              |Our manager will contact you
+= html_block_with_fallback :schedule_call
+  .popup.schedule-call
+    .form-partial.schedule-call
+      .header
+        .title
+          |Schedule call
+      .content
+        .form
+          form.form.schedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
+            .form-content
+              .inputs
+                = rf_input label: "Phone", required: true, name: "call[phone]", validation: "phone"
+                = rf_input label: "Name", name: "call[name]"
+                = rf_input label: "Description", name: "call[description]"
+              .actions
+                .columns.large-5
+                  - if !current_user
+                    .sign-up-invitation
+                      |No account?&nbsp;
+                      a href='/sign-up' target="_blank"
+                        |Sign up
+                .columns.large-7
+                  = rf_button(title: "Call me")
+            .preloader.hide
+              = image_tag("preloader.gif")
+            .success-handler.hide
+              p.h4
+                |Our manager will contact you
