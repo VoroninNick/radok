@@ -72,7 +72,6 @@ module ApplicationHelper
       c += " rf-button-unraised"
     end
     full_width = options[:full_width].present?
-    #console.log "full_width: ", full_width
     if full_width
       c += " rf-button-full-width"
     else
@@ -88,23 +87,17 @@ module ApplicationHelper
       button_size = 'medium'
     end
     c += " rf-button-size-#{button_size}"
-
-
     c += " #{custom_class}"
-
     c
   end
 
   def header_user_class
     if respond_to?(:current_user) && current_user
       c = "logged-in"
-
     else
       c = "unlogged"
     end
-
     c += " no-avatar"
-
     return c
   end
 
@@ -128,11 +121,8 @@ module ApplicationHelper
     input_type = :password if type.to_s == 'password'
     input_type = :email if type.to_s == 'email'
     input_type = :tel if type.to_s == 'tel'
-
     input_tag_options[:type] = "#{input_type}"
-
     wrap_class = ""
-
     if options[:autocomplete] == false
       input_tag_options.delete :autocomplete
       input_tag_options[:class] += " autocompleteOff"
@@ -154,7 +144,6 @@ module ApplicationHelper
     invalid_message = options[:invalid_message]
     validation = options[:validation]
     taken_message = options[:taken_message]
-
 
     model = options[:model]
 

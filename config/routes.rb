@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  post "/html-to-slim", to: "templates#html_to_slim"
 
-  scope :templates, controller: :templates do
-    root action: :index
+  scope "templates", controller: "templates" do
+    post "/html-to-slim", to: "templates#html_to_slim"
+    root action: :index, as: :templates
   end
 
   #get "chess_timer", to: "application#chess_timer"

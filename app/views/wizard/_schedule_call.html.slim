@@ -15,10 +15,11 @@
               = rf_input label: "Description", name: "call[description]"
             .actions
               .columns.large-5
-                .sign-up-invitation
-                  |No account?&nbsp;
-                  a href='/sign-up' target="_blank"
-                    |Sign up
+                - if !current_user
+                  .sign-up-invitation
+                    |No account?&nbsp;
+                    a href='/sign-up' target="_blank"
+                      |Sign up
 
               .columns.large-7
                 = rf_button(title: "Call me")
