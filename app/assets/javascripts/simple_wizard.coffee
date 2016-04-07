@@ -1108,7 +1108,7 @@ $("body").on "change", "input.file-upload-input", ->
   data_start_temp_id = ($list.children().last().attr("data-temp-id")  || 0) + 1
 
   $input.simpleUpload("#{wizard_root_path}/#{project.id}/#{attachment_name}?data-temp-id-start=#{data_start_temp_id}", {
-    maxFileSize: 209,
+    maxFileSize: 209715200,
 
     success: (data)->
       file_name = data.data_file_name
@@ -1251,6 +1251,13 @@ validateURL = (url) ->
 
 $("body").on "upload_files.test_files delete_files.test_files change.project.project_url", ()->
   validate_project_access_test_url_and_files()
+
+$("body").on "upload_files.test_case_files delete_files.test_case_files", ()->
+  $error = $("#test-case-files-required-error")
+  if $(".test_case_files-list").children().length > 0
+    $error.fadeOut()
+  else
+    $error.fadeIn()
 
 $("body").on "delete_files.test_files", ()->
 

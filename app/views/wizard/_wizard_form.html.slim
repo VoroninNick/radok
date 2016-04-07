@@ -239,6 +239,11 @@ form for="project" url=wizard_path method="post" json="{}"
             .upload-error.error.hide
               |Please, select a file less than 200 MB
 
+            .columns.large-12
+              label#test-case-files-required-error.error.error-required for="test_case_files"
+                |Please, upload at least one file
+
+
         .product-main-components
           .label
             |What are the product's main components?
@@ -252,22 +257,12 @@ form for="project" url=wizard_path method="post" json="{}"
               |Type components here, separate by &laquo;ENTER&raquo;
             input type="text" value=@project.main_components.join(",")
 
-        /.input.radio-button label="Exploratory" help="This is unscripted testing. Our testers use your product like any normal user would." as="radio-button" model="project.methodology_type" value="exploratory" checked=(@project.exploratory?)
-        /.input.radio-button label="Test-case driven" as="radio-button" model="project.methodology_type" value="test_case_driven" checked=@project.test_case_driven?
-
-        /.input.text as="text" model="project.exploratory_description" value=@project.exploratory_description
-        /.input.files as="files" model="project.test_case_files" value=@project.test_case_files.to_json
-
-        /.input.tags model="project.tags"
-
     fieldset.wizard-step step="5" type="project_access" data-name="Project access step"
       .wizard-step-line
       .wizard-step-counter data-number="4"
       .wizard-step-content
         .label id="test-url-or-files-label"
           |Please provide the URL or file to be tested
-        /.input.url as="url" model="project.project_url"
-        /.input.files as="files" model="project.test_files"
 
         .columns.large-7.small-padding-right-0 style="padding-left: 0; "
           .input.url model="project.project_url" as="url"
@@ -358,16 +353,5 @@ form for="project" url=wizard_path method="post" json="{}"
               |Your comments and additional instructions can be here...
             textarea id="project_access_comment"
               = @project.project_access_comment
-
-
-
-
-        /.input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="No, it does not require a username or password" value="false" checked=(!@project.authentication_required?)
-        /.input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=(@project.authentication_required?)
-
-        /.input.string.project-auth-login model="project.auth_login"
-        /.input.string.project-auth-password model="project.auth_password"
-
-
 
   = render "project_full_summary", project: @project, hide: @created.blank?
