@@ -128,7 +128,7 @@ form for="project" url=wizard_path method="post" json="{}"
           label.error.error-required for="project_project_name"
             |Please enter project name
           input.set-error type="text" id="project_project_name" value=@project.project_name maxlength="100"
-          div#project_project_name-error
+          #project_project_name-error
             label.error.error-max
               |Available project name length is up to 100 charachters.
 
@@ -355,7 +355,10 @@ form for="project" url=wizard_path method="post" json="{}"
           .input.text.project-access-comment_input as="text" model="project.project_access_comment"
             label.placeholder.hiding-placeholder for="project_access_comment"
               |Your comments and additional instructions can be here...
-            textarea id="project_access_comment"
+            textarea.set-error id="project_access_comment" maxlength="500"
               = @project.project_access_comment
+            #project_access_comment-error
+              label.error.error-max
+                |Available comment length is up to 500 charachters.
 
   = render "project_full_summary", project: @project, hide: @created.blank?
