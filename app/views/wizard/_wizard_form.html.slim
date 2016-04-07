@@ -127,7 +127,10 @@ form for="project" url=wizard_path method="post" json="{}"
             |Project name
           label.error.error-required for="project_project_name"
             |Please enter project name
-          input type="text" id="project_project_name" value=@project.project_name
+          input type="text" id="project_project_name" value=@project.project_name maxlength="100"
+          div#project_project_name-error
+            label.error.error-max
+              |Available project name length is up to 100 charachters.
 
         label.label.with-input-distance for="project_project_version"
           |What is version number of the new release that you'd like us to test?

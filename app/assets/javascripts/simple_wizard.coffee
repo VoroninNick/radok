@@ -271,7 +271,7 @@ $("body").on "change code-change keyup keypress", ".project-platforms-comment_in
   else
     $("#platforms_comment-error").fadeOut()
 
-$("body").on "change code-change keyup keypress", "#project_contact_person_name, #project_contact_person_email, #project_contact_person_phone", (e)->
+$("body").on "change code-change keyup keypress", "#project_project_name, #project_contact_person_name, #project_contact_person_email, #project_contact_person_phone", (e)->
   $input = $(this)
   error_select = "##{$input.attr('id')}-error"
   $max_error = $(error_select + " .error-max")

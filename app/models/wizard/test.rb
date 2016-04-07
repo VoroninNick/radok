@@ -79,6 +79,7 @@ class Wizard::Test < ActiveRecord::Base
   validates :contact_person_name, length: { maximum: 100}, allow_blank: true
   validates :contact_person_phone, length: { maximum: 20 }, allow_blank: true
   validates :platforms_comment, length: { maximum: 500 }, allow_blank: true
+  validates :project_name, length: { maximum: 100 }, required: true
 
   def testers_by_platform=(platforms)
     return if platforms.nil?
