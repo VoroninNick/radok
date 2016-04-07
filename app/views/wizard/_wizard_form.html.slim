@@ -240,7 +240,7 @@ form for="project" url=wizard_path method="post" json="{}"
               |Please, select a file less than 200 MB
 
             .columns.large-12
-              label#test-case-files-required-error.error.error-required for="test_case_files"
+              label#test-case-files-required-error.error.error-required for="test_case_files" style="display: none"
                 |Please, upload at least one file
 
 
@@ -305,14 +305,18 @@ form for="project" url=wizard_path method="post" json="{}"
               |Yes, here they are:
 
           .nested-input-group
-            .input.string.project-auth-login.input-with-indent as="string" model="project.auth_login"
+            .input.string.project-auth-login.input-with-indent model="project.auth_login" as="string"
               label.placeholder.hiding-placeholder for="project_auth_login"
                 |Username
               input type="text" id="project_auth_login" value=@project.auth_login
-            .input.string.project-auth-password model="project.auth_password" as="string"
+              #project_auth_login_required_true.error
+                |Please, provide a username
+            .input.string.project-auth-password.input-with-indent model="project.auth_password" as="string"
               label.placeholder.hiding-placeholder for="project_auth_password"
                 |Password
               input type="text" id="project_auth_password" value=@project.auth_password
+              #project_auth_password_required_true.error
+                |Please, provide a password
 
         .clearfix
 

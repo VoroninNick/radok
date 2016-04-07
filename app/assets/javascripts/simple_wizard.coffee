@@ -1057,6 +1057,21 @@ show_or_hide_exploratory_instructions_input = ()->
     #$file_input.removeClass("hide")
     $test_case_inputs_wrap.removeClass("hide")
 
+$("body").on "change", "#project_auth_login", ()->
+  console.log $("#project_auth_login").val().length
+  if $("#project_auth_login").val().length > 0
+    $("#project_auth_login_required_true").fadeOut()
+  else
+    $("#project_auth_login_required_true").fadeIn()
+
+$("body").on "change", "#project_auth_password", ()->
+  console.log $("#project_auth_password").val().length
+  if $("#project_auth_password").val().length > 0
+    $("#project_auth_password_required_true").fadeOut()
+  else
+    $("#project_auth_password_required_true").fadeIn()
+
+
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
   $input = $(".project_exploratory_instructions_input")
