@@ -140,7 +140,12 @@ form for="project" url=wizard_path method="post" json="{}"
             |Project version
           label.error.error-required for="project_project_version"
             |Please enter project version
-          input type="text" id="project_project_version" value=@project.project_version
+          input type="text" id="project_project_version" value=@project.project_version maxlength="20"
+          div#project_project_version-error
+            label.error.error-max
+              |Available project version length is up to 20 charachters.
+
+
 
         label.label.with-input-distance
           |In what language(s) is the project?
