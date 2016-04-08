@@ -28,9 +28,5 @@ module RadokForce
 
     #config.assets.precompile += %w(codemirror.js codemirror/*)
     config.assets.precompile += %w(templates.css templates.js)
-
-    if Rails.env.development?
-      #RequireReloader.watch_local_gems!
-    end
   end
 end

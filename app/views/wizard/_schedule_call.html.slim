@@ -17,13 +17,10 @@
                   - if !current_user
                     .sign-up-invitation
                       |No account?&nbsp;
-                      a ng-click="openSignUpPopup()"
+                      a href='/sign-up' target="_blank"
                         |Sign up
-
                 .columns.large-7
                   = rf_button(title: "Call me")
-
-
             .preloader.hide
               = image_tag("preloader.gif")
             .success-handler.hide

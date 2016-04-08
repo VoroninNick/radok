@@ -1,6 +1,6 @@
 class ImportAdminUser < ActiveRecord::Migration
   def up
-    user = User.create(
+    user = User.new(
       email: 'radok@admin.com',
       username: 'radok',
       password: 'radok123',
@@ -9,6 +9,7 @@ class ImportAdminUser < ActiveRecord::Migration
     )
 
     user.confirm!
+    user.save!
   end
 
   def down

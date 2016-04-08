@@ -12,6 +12,8 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 
+/config/database.yml
+
 .DS_Store
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
@@ -42,3 +44,6 @@ config/secrets.yml
 /.idea
 
 /config/settings
+
+# Ignore application configuration
+/config/application.yml

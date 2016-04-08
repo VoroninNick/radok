@@ -12,6 +12,24 @@ class ImportBannersToDb < ActiveRecord::Migration
       INSERT INTO banners (id, page_id, title, description, background_image_file_name, background_image_content_type, background_image_file_size, background_image_updated_at, button_label, button_url, created_at, updated_at, title_html_tag) VALUES(8,10,'','','radok-web-banner-wizard.png','image/png',52378,'2015-10-06 10:42:44.090407','','','2015-10-06 10:42:44.133588','2015-10-14 17:08:02.934476','div');
       INSERT INTO banners (id, page_id, title, description, background_image_file_name, background_image_content_type, background_image_file_size, background_image_updated_at, button_label, button_url, created_at, updated_at, title_html_tag) VALUES(9,11,'','','radok-web-banner-FAQ.png','image/png',67093,'2015-10-06 10:58:53.681720','','','2015-10-06 10:58:53.722225','2015-10-14 17:08:03.068149','div');
     SQL
+
+    {
+      '1' => 'radok-web-banner-about-us.png',
+      '2' => 'radok-web-banner-dashboard.png',
+      '3' => 'contacts.jpg',
+      '4' => 'radok-web-banner-device-lab-2.png',
+      '5' => 'radok-web-banner-about-us.png',
+      '6' => 'radok-web-banner-pricing.png',
+      '7' => 'radok-web-banner-testing-services.png',
+      '8' => 'radok-web-banner-wizard.png',
+      '9' => 'radok-web-banner-FAQ.png'
+    }.each do |id, image|
+      banner = Banner.find(id)
+      file = File.open(Rails.root.join('fixtures', 'images', image))
+      banner.background_image = file
+      file.close
+      banner.save!
+    end
   end
 
   def down

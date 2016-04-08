@@ -1,0 +1,10 @@
+namespace :chmod_local do
+  desc "chmod aws pem key"
+  task :pem_key do
+    on roles(:app) do
+      run_locally do
+        execute "chmod 600 #{fetch(:pem_key)}"
+      end
+    end
+  end
+end

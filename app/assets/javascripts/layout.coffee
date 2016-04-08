@@ -70,7 +70,6 @@ $("body").on "click", "[open-popup]", (event)->
   $this = $(this)
   if $this.attr("disabled") == 'disabled'
     return
-
   open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
   condition = true
   if open_popup_from_popup_only
@@ -110,12 +109,10 @@ default_form_success_handler = (data, state, options)->
     $form.closest(".ngdialog").addClass("hide")
   if reload_on_success
     window.location.reload()
-
   show_on_success = $form.attr("show-on-success") != undefined
   if show_on_success
     $form_content.removeClass(options.hide_class)
     $form.find(".form-message").removeClass("hide")
-
   $form.trigger("after_success", arguments)
 
 default_form_error_handler = (xhr, state, options)->
@@ -166,7 +163,6 @@ default_form_error_handler = (xhr, state, options)->
     $form.removeClass(hide_class)
   $preloader.addClass("hide")
   $("[hide-during-send='']").removeClass("hide")
-
   $form.trigger("after_error", arguments)
 
 $("body").on "submit", "form:not([no-processing])", (event)->
@@ -247,7 +243,6 @@ $("body").on "show_success", "form.forgot-password-form", (event, data)->
   $email_placeholder.text(user.email)
 
 #$("body").on "focus keypress", "input[type=password]", (event)->
-#  console.log "event: ", event
 
 $("body").on "capson", ->
   $(".caps-lock-warning").removeClass("hide")
@@ -329,6 +324,15 @@ $.fn.validateInput = ->
   if valid
     if validation_options.indexOf("email") >= 0
       valid = validateEmail(value)
+
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
+    if validation_options.indexOf("phone") >= 0
+      valid = validatePhoneNumber(value)
+
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else

@@ -438,14 +438,6 @@ validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
   re.test number
 
-
-
-
-
-
-
-
-
 $("body").on "change.project.total_price", ()->
   price = project.total_price
   $(".full-summary-total-cost .total-price").text(price)
@@ -792,9 +784,6 @@ set_presence_class = ()->
   else
     val = $input.find("textarea").val()
 
-  #if $input.hasClass("tags") && log_tags
-    #console.log "tags: ", is_present(val)
-
   if is_present(val)
     $input.addClass("not-empty").removeClass("empty")
   else
@@ -898,7 +887,6 @@ $("body").on "change.project.current_step_id", ()->
     $(".rf-go-to-summary-button").fadeIn()
   else
     $(".rf-go-to-summary-button").hide()
-
     $(".rf-next-step-button").fadeIn()
 
   if !!project.current_step_id
@@ -1069,7 +1057,6 @@ $("body").on "change code-change keyup keypress", "#project_auth_password", ()->
   else
     $("#project_auth_password_required_true").fadeIn()
 
-
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
   $input = $(".project_exploratory_instructions_input")
@@ -1103,8 +1090,12 @@ $("body").on "change", "input.file-upload-input", ->
   new_files_saved_count = 0
 
   for file in input.files
-    $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{file.name}'><span class='file-name'>#{file.name}</span><span class='preloader'></span><span class='delete'></span></div>")
-    f = {name: file.name}
+    filename = file.name.replace(/%|:|\||@|\$|\#| /gi, "_")
+    if filename.match(/\\/gi)
+      chopped_name = filename.split("\\")
+      filename = chopped_name[chopped_name.length - 1]
+    $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{filename}'><span class='file-name'>#{filename}</span><span class='preloader'></span><span class='delete'></span></div>")
+    f = {name: filename}
     reader = new FileReader()
     reader.onload = ->
       src = reader.result
@@ -1142,7 +1133,6 @@ $("body").on "change", "input.file-upload-input", ->
 
   $input.trigger("upload_files.#{attachment_name}")
   $input.trigger("change.#{model}")
-
   check_for_step_completeness.apply($step)
 
 $("body").on "click", ".file-upload-files-list .delete", ->
@@ -1291,6 +1281,8 @@ $(inputs_selector_for_presence).each ()->
   set_presence_class.call(this)
 
 # Step 3
+init_string_inputs()
+
 show_or_hide_exploratory_instructions_input()
 init_tags_input()
 
@@ -1397,7 +1389,6 @@ $("body .promo-code-field .cancel-promo-code").on "click", (e)->
 $(".checkout-button, .confirm-button-container").on "click", (e)->
   $button = $(this)
   $invalid_test_steps = get_test_invalid_steps()
-  console.log "invalid"
   if !is_valid_project($invalid_test_steps)
     $popup = $("#invalid_fields_popup")
     openPopup($popup)

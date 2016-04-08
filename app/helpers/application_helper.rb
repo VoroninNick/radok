@@ -8,7 +8,6 @@ module ApplicationHelper
     end
     res = doc.to_html
     res = res.html_safe if html_safe
-
     res
   end
 
@@ -72,7 +71,6 @@ module ApplicationHelper
       c += " rf-button-unraised"
     end
     full_width = options[:full_width].present?
-    #console.log "full_width: ", full_width
     if full_width
       c += " rf-button-full-width"
     else
@@ -88,23 +86,17 @@ module ApplicationHelper
       button_size = 'medium'
     end
     c += " rf-button-size-#{button_size}"
-
-
     c += " #{custom_class}"
-
     c
   end
 
   def header_user_class
     if respond_to?(:current_user) && current_user
       c = "logged-in"
-
     else
       c = "unlogged"
     end
-
     c += " no-avatar"
-
     return c
   end
 
@@ -130,9 +122,7 @@ module ApplicationHelper
     input_type = :tel if type.to_s == 'tel'
 
     input_tag_options[:type] = "#{input_type}"
-
     wrap_class = ""
-
     if options[:autocomplete] == false
       input_tag_options.delete :autocomplete
       input_tag_options[:class] += " autocompleteOff"
@@ -140,6 +130,7 @@ module ApplicationHelper
       wrap_class += "autocomplete-off"
     end
     tag_name = :textarea if type.to_sym == :text
+    #input_tag_options[:name] ||= form_prefix
 
     if options[:validation] && options[:validation].include?("email")
       options[:invalid_message] ||= "Please, enter a valid email"
@@ -147,14 +138,11 @@ module ApplicationHelper
       options[:invalid_message] ||= "Please, enter a valid phone number"
     end
 
-    #input_tag_options[:name] ||= form_prefix
-
     options[:required_message] ||= "#{options[:label]} is required"
     required_message = options[:required_message]
     invalid_message = options[:invalid_message]
     validation = options[:validation]
     taken_message = options[:taken_message]
-
 
     model = options[:model]
 

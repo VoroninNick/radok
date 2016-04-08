@@ -34,8 +34,7 @@
                 |For testers
       #footer-subscribe-and-copyright-and-developed-by.columns.large-6.medium-6
         .subscribe-block
-          /- if !current_user.try(:subscribed?)
-          form action="/subscribe" method="post" show-preloader="" show-success=""
+          form.form#subscribe_form action="/subscribe" method="post" novalidate="" show-preloader="" show-success=""
             .form-content
               label.header for="footer-subscribe-input"
                 |Subscribe for our latest news and updates:

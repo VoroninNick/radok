@@ -1,66 +1,65 @@
-//== slim(Pages.how_it_works.try(:content), self)
+== slim(Pages.how_it_works.try(:content), self)		
+  #how_it_works-content.page-content-rows
+    .page-content-row-wrap.how_it_works-row-wrap
+      .row
+        .columns.large-3.medium-3.image-column
+          .svg-wrap
+            = embedded_svg_from_assets("rf-icon-main-1.svg")
 
-#how_it_works-content.page-content-rows
-  .page-content-row-wrap.how_it_works-row-wrap
-    .row
-      .columns.large-3.medium-3.image-column
-        .svg-wrap
-          = embedded_svg_from_assets("rf-icon-main-1.svg")
-
-      .columns.large-8.medium-9.text-column
-        .header.small-text-center
-          | Tell us what you need
-        .time.small-text-center
-          | [2-5 minutes]
-        .description
-          p
-            | Tell us more about your project, testing requirements and preferences.
-          ul
-            li
-              | See the total price instantly!
-            li
-              | Shot down the platforms and devices you need to test on;
-            li
-              | Describe your project shortly;
-            li
-              | Tune your requirements in real-time;
-            li
-              | No sign-up needed.
-  .page-content-row-wrap.how_it_works-row-wrap
-    .row
-      .columns.large-3.medium-3.image-column
-        .svg-wrap
-          = embedded_svg_from_assets("rf-icon-main-2.svg")
-      .columns.large-8.medium-9.text-column
-        h1.header.small-text-center
-          | Get a crowd of professional software testers
-        .time.small-text-center
-          | [5-10 minutes]
-        .description
-          p
-            | After you submit your requirements, we will get in touch with you instantly to discuss timelines and other requirements.
-          p
-            | Based on your request, an experienced, professional, and skilled team of testers will be assigned to your project.
-  .page-content-row-wrap.how_it_works-row-wrap
-    .row
-      .columns.large-3.medium-3.image-column
-        .svg-wrap
-          = embedded_svg_from_assets("rf-icon-main-3.svg")
-      .columns.large-8.medium-9.text-column
-        .header.small-text-center
-          | Get results fast
-        .time.small-text-center
-          | [2-5 days]
-        .description
-          p
-            | We’re best in what we do, that’s why you’ll get your results in 48 hours. If you are a lucky owner or manager of a complex product, we’ll take a little more time to make you happy.
-            | Our testers will provide you with clear and comprehensive reports in a convenient form, using the same bug-tracking system you do.
-  #how_it_works__time_to_test.page-content-row-wrap.how_it_works-row-wrap
-    .row.center-items-vertically.small-text-center
-      .columns.large-6
-        h2.header
-          | Time to crowd test!
-        .subheader
-          | Don't let bugs in your website or mobile app ruin your reputation
-      .columns.large-6
-        = rf_button(title: "Start now!", align_content: "left", full_width: false, subtitle: "own package", svg: "rf-rocket-up-right.svg", href: wizard_path)
+        .columns.large-8.medium-9.text-column
+          .header.small-text-center
+            | Tell us what you need
+          .time.small-text-center
+            | [2-5 minutes]
+          .description
+            p
+              | Tell us more about your project, testing requirements and preferences.
+            ul
+              li
+                | See the total price instantly!
+              li
+                | Shot down the platforms and devices you need to test on;
+              li
+                | Describe your project shortly;
+              li
+                | Tune your requirements in real-time;
+              li
+                | No sign-up needed.
+    .page-content-row-wrap.how_it_works-row-wrap
+      .row
+        .columns.large-3.medium-3.image-column
+          .svg-wrap
+            = embedded_svg_from_assets("rf-icon-main-2.svg")
+        .columns.large-8.medium-9.text-column
+          h1.header.small-text-center
+            | Get a crowd of professional software testers
+          .time.small-text-center
+            | [5-10 minutes]
+          .description
+            p
+              | After you submit your requirements, we will get in touch with you instantly to discuss timelines and other requirements.
+            p
+              | Based on your request, an experienced, professional, and skilled team of testers will be assigned to your project.
+    .page-content-row-wrap.how_it_works-row-wrap
+      .row
+        .columns.large-3.medium-3.image-column
+          .svg-wrap
+            = embedded_svg_from_assets("rf-icon-main-3.svg")
+        .columns.large-8.medium-9.text-column
+          .header.small-text-center
+            | Get results fast
+          .time.small-text-center
+            | [2-5 days]
+          .description
+            p
+              | We’re best in what we do, that’s why you’ll get your results in 48 hours. If you are a lucky owner or manager of a complex product, we’ll take a little more time to make you happy.
+              | Our testers will provide you with clear and comprehensive reports in a convenient form, using the same bug-tracking system you do.
+    #how_it_works__time_to_test.page-content-row-wrap.how_it_works-row-wrap
+      .row.center-items-vertically.small-text-center
+        .columns.large-6
+          h2.header
+            | Time to crowd test!
+          .subheader
+            | Don't let bugs in your website or mobile app ruin your reputation
+        .columns.large-6
+          = rf_button(title: "Start now!", align_content: "left", full_width: false, subtitle: "own package", svg: "rf-rocket-up-right.svg", href: wizard_path)

@@ -1,39 +1,36 @@
-= html_block_with_fallback :pay_later
-  .popup.schedule-call
-    .form-partial.schedule-call
-      .header
-        .title
-          |Pay later
-      .content
-        .form
-          form.form.schedule-call-form.pay-later-form novalidate="" action="/pay-later" method="post" show-preloader="" resource="pay_later" show-success="" type="pay_later"
-            .form-content
-              .inputs
-                .columns.large-12
-                  = rf_input label: "Phone", name: "pay_later[phone]", required: true, value: current_user.try(:phone), validation: "phone"
-                  = rf_input label: "Name", name: "pay_later[full_name]", value: current_user.try(:name_or_username)
-                  = rf_input label: "Email", name: "pay_later[email]", required: true, value: current_user.try(:email), validation: "email"
-                  = rf_input label: "Description", name: "pay_later[comment]", type: "text"
-                .clearfix
-              .actions
-                - if !current_user
-                  .columns.small-6.medium-5
-                    .sign-up-invitation
-                      |No account?&nbsp;
-                      a
-                        |Sign up
-
-                .columns.right.small-6.medium-7
-                  = rf_button(title: "Call me")
-
-
-            .preloader.hide
-              = image_tag("preloader.gif")
-            .success-handler.hide
-              p.h4
-                |Our manager will contact you
-              p
-                |You will be redirected to project page for&thinsp;
-                span.seconds-countdown
-                  |5
-                |&thinsp;seconds!
+.popup.schedule-call
+  .form-partial.schedule-call
+    .header
+      .title
+        |Pay later
+    .content
+      .form
+        form.form.schedule-call-form.pay-later-form novalidate="" action="/pay-later" method="post" show-preloader="" resource="pay_later" show-success="" type="pay_later"
+          .form-content
+            .inputs
+              .columns.large-12
+                = rf_input label: "Phone", name: "pay_later[phone]", required: true, value: current_user.try(:phone), validation: "phone"
+                = rf_input label: "Name", name: "pay_later[full_name]", value: current_user.try(:name_or_username)
+                = rf_input label: "Email", name: "pay_later[email]", required: true, value: current_user.try(:email), validation: "email"
+                = rf_input label: "Description", name: "pay_later[comment]", type: "text"
+              .clearfix
+            .actions
+              - if !current_user
+                .columns.small-6.medium-5
+                  .sign-up-invitation
+                    |No account?&nbsp;
+                    a href="/sign-up" target="_blank"
+                      |Sign up
+              .columns.right.small-6.medium-7
+                = rf_button(title: "Call me")
+          .preloader.hide
+            = image_tag("preloader.gif")
+          .success-handler.hide
+            p.h4
+              |Our manager will contact you
+            p
+              |You will be redirected to project page for&thinsp;
+              span.seconds-countdown
+                |5
+              |&thinsp;seconds!
+>>>>>>> 086b7c73b87f462c415f1d65ac5167006929419a

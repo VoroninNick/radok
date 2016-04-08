@@ -1,4 +1,3 @@
-/= simple_form_for @project, url: wizard_path, method: :post do |f|
 - content_for :javascript do
   script type="text/javascript" src="/assets/wizard_js.js"
 
@@ -13,7 +12,12 @@ form for="project" url=wizard_path method="post" json="{}"
 
       - @product_types.each_with_index do |product_type, index|
         - checked = @project.product_type.try{|t| t.id == product_type.id } || false
-        - value = product_type.name; label = product_type.name; image=product_type.image.url(:original); model = "project.product_type"; name = "project_product_type"; input_id = "project_product_type_#{index + 1}"
+        - value = product_type.name
+        - label = product_type.name
+        - image = product_type.image.url(:original)
+        - model = "project.product_type"
+        - name = "project_product_type"
+        - input_id = "project_product_type_#{index + 1}"
         .columns.large-3.small-6.medium-3.text-center
           .input.image-radio-button class="project_product_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
             input id=input_id value=value name=name type="radio" checked=("checked" if checked )
@@ -73,7 +77,6 @@ form for="project" url=wizard_path method="post" json="{}"
                       input pattern='[0-9]*' type='number' max='50' value="#{binding_current_testers_count}"
                       label class='decrement' for='platform-1-subitem-1'
                       label class='increment' for='platform-1-subitem-1'
-            /.option-count platform-subitem-id=
 
         .hours-per-tester
           .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=("Time (hours per tester)")
@@ -81,7 +84,6 @@ form for="project" url=wizard_path method="post" json="{}"
           p
             | How much effort would you like each tester to spend testing your product?
           .available-hours
-            /! ngRepeat: hour in wizard.hours
 
             - 5.times do |h|
               - hour = h + 1
@@ -108,15 +110,12 @@ form for="project" url=wizard_path method="post" json="{}"
           label.error.error-max
             |Sorry, but Your comment is too long. Available length is up to 500 charachters.
 
-    /.wizard-step
       .input.image-radio-buttons.required model=""
 
     fieldset.wizard-step step="3" type="project_info" data-name="Project info step"
       .wizard-step-line
       .wizard-step-counter data-number="2"
       .wizard-step-content
-        /= f.input :project_name, label: "What is the name of this wonderful project?"
-        /= f.input :project_version, label: "What is version number of the new release that you'd like us to test?"
 
         label.label for="project_project_name"
           |What is the name of this project?
@@ -243,7 +242,6 @@ form for="project" url=wizard_path method="post" json="{}"
               label#test-case-files-required-error.error.error-required for="test_case_files" style="#{ 'display: none' if (@project.test_case_files.length > 0) }"
                 |Please, upload at least one file
 
-
         .product-main-components
           .label
             |What are the product's main components?
@@ -317,7 +315,6 @@ form for="project" url=wizard_path method="post" json="{}"
               input type="text" id="project_auth_password" value=@project.auth_password
               #project_auth_password_required_true.error
                 |Please, provide a password
-
         .clearfix
 
         label.label.with-input-distance
