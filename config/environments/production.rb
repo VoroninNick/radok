@@ -1,5 +1,4 @@
 Rails.application.configure do
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -78,20 +77,14 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  p '*'*80
-  p Figaro.env.s3_bucket_name
-  p Figaro.env.aws_access_key_id
-  p Figaro.env.aws_secret_access_key
-  p '*'*80
-
   config.paperclip_defaults = {
     storage: :s3,
     url: ':s3_domain_url',
     path: '/:class/:attachment/:id_partition/:style/:filename',
     s3_credentials: {
-      bucket: Figaro.env.s3_bucket_name,
-      access_key_id: Figaro.env.aws_access_key_id,
-      secret_access_key: Figaro.env.aws_secret_access_key
+      bucket: ENV['s3_bucket_name'],
+      access_key_id: ENV['aws_access_key_id'],
+      secret_access_key: ENV['aws_secret_access_key']
     }
   }
 end

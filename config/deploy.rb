@@ -33,6 +33,7 @@ set :linked_dirs, %w{
 set(:config_files, %w(
   nginx.conf
   database.example.yml
+  application.example.yml
   unicorn.rb
   unicorn_init.sh
 ))
