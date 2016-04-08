@@ -19,6 +19,6 @@ class Ckeditor::Asset < ActiveRecord::Base
   include Ckeditor::Orm::ActiveRecord::AssetBase
   include Ckeditor::Backend::Paperclip
 
-  validates :data_file_size, numerilicaty: {less_than_or_equal_to: 2.megabytes}
+  validates :data_file_size, numericality: {less_than_or_equal_to: 2.megabytes}
 
 end

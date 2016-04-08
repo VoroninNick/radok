@@ -212,7 +212,7 @@ form for="project" url=wizard_path method="post" json="{}"
               |Please provide testing instructions for the testers here...
             textarea.set-error id="project_exploratory_instructions" maxlength="2000"
               = @project.exploratory_description
-            div#project_exploratory_instructions-error
+            #project_exploratory_instructions-error
               label.error.error-max
                 |Sorry, but Your description is too long. Available length is up to 2000 charachters.
 
@@ -223,24 +223,25 @@ form for="project" url=wizard_path method="post" json="{}"
             |Test-case driven
           .help
             |You provide a specific list of steps that testers must execute.
+
         .nested-input-group
-          /.input.files.test-case-files-input model="project.test_case_files"
-          div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
-            input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
-            = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
-            .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
-              - @project.test_case_files.each do |asset|
-                .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
-                  span class='file-name'
-                    |#{asset.data_file_name}
+          .input.files.test-case-files-input model="project.test_files" required="#{@project.test_case_driven?}"
+            div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
+              input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
+              = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
+              .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
+                - @project.test_case_files.each do |asset|
+                  .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
+                    span class='file-name'
+                      |#{asset.data_file_name}
 
-                  span class='delete'
-            .upload-error.error.hide
-              |Please, select a file less than 200 MB
+                    span class='delete'
+              .upload-error.error.hide
+                |Please, select a file less than 200 MB
 
-            .columns.large-12
-              label#test-case-files-required-error.error.error-required for="test_case_files" style="#{ 'display: none' if (@project.test_case_files.length > 0) }"
-                |Please, upload at least one file
+              .columns.large-12
+                label#test-case-files-required-error.error.error-required for="test_case_files" style="#{ 'display: none' if (@project.test_case_files.length > 0) }"
+                  |Please, upload at least one file
 
         .product-main-components
           .label
@@ -345,6 +346,8 @@ form for="project" url=wizard_path method="post" json="{}"
           div#project_contact_person_phone-error
             label.error.error-max
               |Available phone number length is up to 20 charachters.
+            label.error.error-phone
+              |Please, provide a valid phone number.
 
         .columns.large-12.small-padding-0 style="padding-left: 0;"
           label.label.your-comment-label.with-input-distance

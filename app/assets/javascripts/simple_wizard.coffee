@@ -276,8 +276,10 @@ $("body").on "change code-change keyup keypress", ".set-error", (e)->
   error_select = "##{$input.attr('id')}-error"
   $max_error = $(error_select + " .error-max")
   $email_error = $(error_select + " .error-email")
+  $phone_error = $(error_select + " .error-phone")
   if $input.val().length == parseInt($input.attr("maxlength"))
     $email_error.hide()
+    $phone_error.hide()
     $max_error.fadeIn()
   else if $input.val().length > 0
     $max_error.hide()
@@ -285,8 +287,13 @@ $("body").on "change code-change keyup keypress", ".set-error", (e)->
       $email_error.fadeOut()
     else
       $email_error.fadeIn()
+    if validatePhoneNumber($input.val())
+      $phone_error.fadeOut()
+    else
+      $phone_error.fadeIn()
   else
       $email_error.fadeOut()
+      $phone_error.fadeOut()
       $max_error.fadeOut()
 
 update_price = ()->
@@ -966,6 +973,14 @@ init_tags_input = ()->
       else
         $input.addClass("not-empty").removeClass("empty")
   })
+
+$("body").on "change.project.methodology_type", ()->
+  if project.methodology_type == "exploratory" || ""
+    # $(".project_exploratory_instructions_input").attr("required", "true")
+    # $(".project_test_case_files_input").attr("required", "false")
+  else
+    # $(".project_exploratory_instructions_input").attr("required", "false")
+    # $(".project_test_case_files_input").attr("required", "true")
 
 $("body").on "click", ".input.image-radio-button", ()->
   $(this).trigger("focusin")

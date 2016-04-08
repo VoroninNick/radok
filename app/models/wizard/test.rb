@@ -79,6 +79,8 @@ class Wizard::Test < ActiveRecord::Base
   validates :contact_person_name, length: { maximum: 100}, allow_blank: true
   validates :contact_person_phone, length: { maximum: 20 }, allow_blank: true
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
+  validates :hours_per_tester, numericality: {in: 1..5} #, presence: true
+  # validates :project_languages, presence: true
   validates :platforms_comment, length: { maximum: 500 }, allow_blank: true
   validates :project_access_comment, length: { maximum: 500 }, allow_blank: true
   validates :project_info_comment, length: { maximum: 500 }, allow_blank: true
