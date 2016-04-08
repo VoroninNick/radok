@@ -19,8 +19,6 @@ $header_user_icon_logged.addClass("hide") if !logged_in
 $("#body").on "click", ".user-icon.logged", ->
   $("#header-user .dropdown").toggleClass("hide")
 
-
-
 $("body").on "click", ".logout-link", (event)->
   event.preventDefault()
   url = $(this).attr("href")
@@ -32,7 +30,6 @@ $("body").on "click", ".logout-link", (event)->
   )
 
 $("body").on "clickout", ".logout-link", ->
-
 
 $(".menu").on "click", ".has-dropdown", ->
   $this = $(this)
@@ -61,10 +58,8 @@ $("[disable-click-on-active]").on "click", ".active", (event)->
 #  openPopup("user_pages__static_sign_in")
 
 $.fn.closeDialog = ()->
-
   $ng_dialog = $(this).closest(".ngdialog")
   $ng_dialog.addClass("hide")
-
   if $(".ngdialog").length
     $("body").removeClass("opened-popup")
 
@@ -76,36 +71,27 @@ $("body").on "click", "[open-popup]", (event)->
   $this = $(this)
   if $this.attr("disabled") == 'disabled'
     return
-
   open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
   condition = true
   if open_popup_from_popup_only
     condition = $this.closest(".ngdialog").length > 0
-
   if condition
     event.preventDefault()
-
-
-
     $current_popup = $(this).closest(".ngdialog")
     $current_popup.addClass("hide")
     popup_name = $this.attr("open-popup")
-
     if $this.attr("requires-auth") && $("html").attr("data-logged-in") != "true"
       openPopup("user_pages__static_sign_in")
     else
       openPopup(popup_name)
-
 
 $.fn.valid = ->
   return true
 
 default_form_success_handler = (data, state, options)->
   $form = state.$form
-
   $preloader = state.$preloader
   $form_content = state.$form_content
-
   show_success = $form.attr("show-success") != undefined
   close_on_success = $form.attr("close-on-success")
   reload_on_success = $form.attr("reload-on-success")
@@ -116,25 +102,18 @@ default_form_success_handler = (data, state, options)->
   if show_success_popup && show_success_popup.length
     $success_popup = $("#" + show_success_popup)
     $success_popup.removeClass("hide")
-
-
   if show_success
     $success = $form.parent().find(".success-handler")
     $success.removeClass("hide")
     $form.trigger("show_success", data)
-
-
   if close_on_success && !reload_on_success
     $form.closest(".ngdialog").addClass("hide")
-
   if reload_on_success
     window.location.reload()
-
   show_on_success = $form.attr("show-on-success") != undefined
   if show_on_success
     $form_content.removeClass(options.hide_class)
     $form.find(".form-message").removeClass("hide")
-
   $form.trigger("after_success", arguments)
 
 default_form_error_handler = (xhr, state, options)->
@@ -163,35 +142,22 @@ default_form_error_handler = (xhr, state, options)->
   $form_errors.find(".form-error").addClass("hide")
   if !isEmpty(form_errors)
     $form_errors.removeClass("hide")
-    #console.log "error: form_errors: ", form_errors
     for error_key in form_errors
-#console.log "error: form_errors: for: ", error_key
       $form_errors.find(".#{error_key}").removeClass("hide")
   else
     $form_errors.addClass("hide")
-
-
-
-  #console.log "errors", errors_by_field
 
   $form.find(".inputs .error").addClass("hide")
 
   if !isEmpty(errors_by_field)
     for field_name, errors of errors_by_field
-      #console.log "error field_name", field_name
-      #console.log "error errors", errors
       $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
-      #console.log "form_resource_name: ", form_resource_name
-      #console.log "field_name: ", field_name
       $field.addClass("invalid")
       error_key = errors
       error_key = errors[0] if Array.isArray(errors)
-      #console.log "error_key", error_key
       window.$FIELD = $field
       $error = $field.find(".error.#{error_key}")
       $error.removeClass("hide")
-
-
 
   if $form_content.length > 0
     $form_content.removeClass(hide_class)
@@ -199,8 +165,6 @@ default_form_error_handler = (xhr, state, options)->
     $form.removeClass(hide_class)
   $preloader.addClass("hide")
   $("[hide-during-send='']").removeClass("hide")
-  #console.log "args: ", arguments
-
   $form.trigger("after_error", arguments)
 
 $("body").on "submit", "form:not([no-processing])", (event)->
@@ -223,7 +187,6 @@ $("body").on "submit", "form:not([no-processing])", (event)->
   console.log "valid_form", valid_form
   if valid_form
     $form_errors = $form.find(".form-errors")
-
     if form_type.serialize
       form_data = form_type.serialize.call($form)
     else
@@ -243,14 +206,11 @@ $("body").on "submit", "form:not([no-processing])", (event)->
       if $form_content.length > 0
         if hide
           $form_content.addClass(hide_class)
-
       else
         $form.addClass(hide_class)
       $preloader = $form.parent().find(".preloader")
       $preloader.removeClass("hide")
       $("[hide-during-send='']").addClass("hide")
-
-
     success_handler = form_type.success_handler || default_form_success_handler
     error_handler = form_type.error_handler || default_form_error_handler
 
@@ -275,7 +235,6 @@ $("body").on "submit", "form:not([no-processing])", (event)->
         state.$form_content = $form_content
         options.hide_class = hide_class
         error_handler.call(this, xhr, state, options)
-
     )
 
 $("body").on "show_success", "form.forgot-password-form", (event, data)->
@@ -284,15 +243,12 @@ $("body").on "show_success", "form.forgot-password-form", (event, data)->
   user = data.user
   $email_placeholder.text(user.email)
 
-
 #$("body").on "focus keypress", "input[type=password]", (event)->
-#  console.log "event: ", event
 
 $("body").on "capson", ->
   $(".caps-lock-warning").removeClass("hide")
 $("body").on "capsoff", ->
   $(".caps-lock-warning").addClass("hide")
-
 
 $("body").on "focusin focusout", ".rf-input input, .rf-input textarea", (event)->
   $input = $(this)
@@ -304,18 +260,14 @@ $("body").on "focusin focusout", ".rf-input input, .rf-input textarea", (event)-
   else
     $rf_input.removeClass("focus-in")
 
-
-
 $("body").on "change", ".rf-input input", (event)->
   $input = $(this)
   $rf_input = $input.closest(".rf-input")
   empty = $input.val().length == 0
-
   if empty
     $rf_input.addClass("empty").removeClass("not-empty")
   else
     $rf_input.addClass("not-empty").removeClass("empty")
-
 
 $("body").on "click", ".resend_me_instructions", (event)->
   event.preventDefault()
@@ -346,10 +298,8 @@ $.fn.validateInput = ->
   form_try_send = $form.hasClass("try-send")
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
-  #$input = $rf_input.find("input, textarea")
-
   value = $rf_input.val()
-
+  #$input = $rf_input.find("input, textarea")
 
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
@@ -357,7 +307,6 @@ $.fn.validateInput = ->
     $rf_input.addClass('empty').removeClass("not-empty")
   valid = true
   $field_label = $rf_input.find(".field-label")
-
 
   if required
     valid = value && value.length
@@ -399,8 +348,6 @@ $.fn.validateInput = ->
 
   if !valid
     $form.addClass("invalid").removeClass("valid")
-
-
 
 $.fn.validateForm = (options)->
 
