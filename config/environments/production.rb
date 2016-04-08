@@ -1,5 +1,4 @@
 Rails.application.configure do
-  Figaro.load
 
   # Settings specified here will take precedence over those in config/application.rb.
 
