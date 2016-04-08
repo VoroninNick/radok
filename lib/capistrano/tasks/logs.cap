@@ -1,0 +1,50 @@
+namespace :logs do
+  desc "tail rails logs"
+  task :tail_rails do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/#{fetch(:rails_env)}.log"
+    end
+  end
+
+  desc "sidekiq tail"
+  task :tail_sidekiq do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/sidekiq.log"
+    end
+  end
+
+  desc "queue logs"
+  task :tail_queue do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/queue_#{fetch(:rails_env)}.log"
+    end
+  end
+
+  desc "tail unicorn logs"
+  task :tail_unicorn do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/unicorn.log"
+    end
+  end
+
+  desc "tail rails logs"
+  task :tail_delayed_job do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/delayed_job.log"
+    end
+  end
+
+  desc "tail nginx error logs"
+  task :nginx_error do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/nginx_error.log"
+    end
+  end
+
+  desc "tail nginx access logs"
+  task :nginx_access do
+    on roles(:app) do
+      execute "tail -f #{shared_path}/log/nginx_access.log"
+    end
+  end
+end

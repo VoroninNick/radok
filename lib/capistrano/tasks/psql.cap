@@ -1,0 +1,11 @@
+namespace :psql do
+  %w(start stop restart).each do |task_name|
+    desc "#{task } Nginx"
+    task task_name do
+      on roles(:app), in: :sequence, wait: 5 do
+        sudo "service postgresql #{task_name}"
+        sudo "/etc/init.d/postgresql #{task_name}"
+      end
+    end
+  end
+end
