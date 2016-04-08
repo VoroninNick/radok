@@ -44,3 +44,6 @@ config/secrets.yml
 /.idea
 
 /config/settings
+
+# Ignore application configuration
+/config/application.yml
