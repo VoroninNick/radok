@@ -79,18 +79,18 @@ form for="project" url=wizard_path method="post" json="{}"
                       label class='increment' for='platform-1-subitem-1'
 
         .hours-per-tester
-          .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=("Time (hours per tester)")
-            | Time (hours per tester)
-          p
-            | How much effort would you like each tester to spend testing your product?
-          .available-hours
-
-            - 5.times do |h|
-              - hour = h + 1
-              - html_input_id = "hour-#{hour}"
-              - selected = hour == @project.hours_per_tester
-              label.hour data-hours=hour for=html_input_id class="#{'selected' if selected}"
-                input id=html_input_id name="hours_per_tester" type="radio" value=hour model="project.hours_per_tester" data-type="integer"
+           .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=("Time (hours per tester)")
+             | Time (hours per tester)
+           p
+             | How much effort would you like each tester to spend testing your product?
+           .available-hours
+             /! ngRepeat: hour in wizard.hours
+             - 5.times do |h|
+               - hour = h + 1
+               - html_input_id = "hour-#{hour}"
+               - selected = hour == @project.hours_per_tester
+               label.hour data-hours=hour for=html_input_id class="#{'selected' if selected}"
+                 input id=html_input_id name="hours_per_tester" type="radio" value=hour model="project.hours_per_tester" data-type="integer"
         .clearfix
         div style="display: block;"
           label#platforms-empty-error.error.error-required
