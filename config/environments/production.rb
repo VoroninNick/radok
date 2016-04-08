@@ -77,6 +77,12 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  p '*'*80
+  p Figaro.env.s3_bucket_name
+  p Figaro.env.aws_access_key_id
+  p Figaro.env.aws_secret_access_key
+  p '*'*80
+
   config.paperclip_defaults = {
     storage: :s3,
     url: ':s3_domain_url',
