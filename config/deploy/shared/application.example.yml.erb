@@ -1,4 +1,41 @@
+overal: &overal
+  mailer.service: <mailer.service:>
+  mailer.host: <mailer.host:>
+
+  mailer.sandmail.location:  <mailer.sandmail.location:>
+  mailer.sandmail.arguments: <mailer.sandmail.arguments:>
+
+  mailer.yandex.address: <mailer.yandex.address:>
+  mailer.yandex.domain: <mailer.yandex.domain:>
+  mailer.yandex.port: <mailer.yandex.port:>
+  mailer.yandex.email: <mailer.yandex.email:>
+  mailer.yandex.password: <mailer.yandex.password:>
+  mailer.yandex.authentication: <mailer.yandex.authentication:>
+
+  mailer.gmail.address: <mailer.gmail.address:>
+  mailer.gmail.port: <mailer.gmail.port:>
+  mailer.gmail.domain: <mailer.gmail.domain:>
+  mailer.gmail.email: <mailer.gmail.email:>
+  mailer.gmail.password: <mailer.gmail.password:>
+  mailer.gmail.authentication: <mailer.gmail.authentication:>
+
+  omniauth.facebook.app_id: <omniauth.facebook.app_id:>
+  omniauth.facebook.app_secret: <omniauth.facebook.app_secret:>
+
+  omniauth.google_oauth2.client_id: <omniauth.google_oauth2.client_id:>
+  omniauth.google_oauth2.client_secret: <omniauth.google_oauth2.client_secret:>
+
+  omniauth.linkedin.client_id: <omniauth.linkedin.client_id:>
+  omniauth.linkedin.client_secret: <omniauth.linkedin.client_secret:>
+
+  omniauth.twitter.consumer_key: <omniauth.twitter.consumer_key:>
+  omniauth.twitter.consumer_secret: <omniauth.twitter.consumer_secret:>
+
+  omniauth.github.client_id: <omniauth.github.client_id>
+  omniauth.github.client_secret: <omniauth.github.client_secret>
+
 production:
+  <<: *overal
   s3_bucket_name: <s3_bucket_name>
   aws_access_key_id: <aws_access_key_id>
   aws_secret_access_key: <aws_secret_access_key>
