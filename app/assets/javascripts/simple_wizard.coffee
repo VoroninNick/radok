@@ -1057,15 +1057,13 @@ show_or_hide_exploratory_instructions_input = ()->
     #$file_input.removeClass("hide")
     $test_case_inputs_wrap.removeClass("hide")
 
-$("body").on "change", "#project_auth_login", ()->
-  console.log $("#project_auth_login").val().length
+$("body").on "change code-change keyup keypress", "#project_auth_login", ()->
   if $("#project_auth_login").val().length > 0
     $("#project_auth_login_required_true").fadeOut()
   else
     $("#project_auth_login_required_true").fadeIn()
 
-$("body").on "change", "#project_auth_password", ()->
-  console.log $("#project_auth_password").val().length
+$("body").on "change code-change keyup keypress", "#project_auth_password", ()->
   if $("#project_auth_password").val().length > 0
     $("#project_auth_password_required_true").fadeOut()
   else
@@ -1139,6 +1137,7 @@ $("body").on "change", "input.file-upload-input", ->
       $error = $list.parent().find(".upload-error")
       $file.addClass("hide")
       $error.removeClass("hide")
+      $("#test-case-files-required-error").hide()
   })
 
   $input.trigger("upload_files.#{attachment_name}")

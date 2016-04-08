@@ -206,7 +206,7 @@ form for="project" url=wizard_path method="post" json="{}"
             |This is unscripted testing. Our testers use your product like any normal user would.
 
         .nested-input-group
-          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" required=("true" if @project.exploratory?) data-name="Exploratory instructions"
+          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" required="#{@project.exploratory?}" data-name="Exploratory instructions"
             label.placeholder.hiding-placeholder for="project_exploratory_instructions"
               |Please provide testing instructions for the testers here...
             label.error.error-required for="project_exploratory_instructions"
@@ -240,7 +240,7 @@ form for="project" url=wizard_path method="post" json="{}"
               |Please, select a file less than 200 MB
 
             .columns.large-12
-              label#test-case-files-required-error.error.error-required for="test_case_files" style="display: none"
+              label#test-case-files-required-error.error.error-required for="test_case_files" style="#{ 'display: none' if (@project.test_case_files.length > 0) }"
                 |Please, upload at least one file
 
 
