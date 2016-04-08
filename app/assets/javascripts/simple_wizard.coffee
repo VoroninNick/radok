@@ -1165,6 +1165,7 @@ $("body").on "click", ".file-upload-files-list .delete", ->
   $list.trigger("delete_files.#{attachment_name}")
   $step = $list.closest(".wizard-step")
   check_for_step_completeness.apply($step)
+  validate_project_access_test_url_and_files()
 
 $("body").on "click", ".rf-test-case-files-upload-button", (e)->
   $input = $("input#test_case_files")
