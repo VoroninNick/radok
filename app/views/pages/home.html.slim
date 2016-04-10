@@ -21,8 +21,7 @@
           display: none
 
   #home-banner.banner
-
-    ul#home-slider-carousel  rn-carousel="" rn-carousel-pause-on-hover="" rn-carousel-index="homeBannerCarouselIndex" rn-carousel-auto-slide="3"
+    ul#home-slider-carousel rn-carousel="" rn-carousel-pause-on-hover="" rn-carousel-index="homeBannerCarouselIndex" rn-carousel-auto-slide="2"
       - @home_slides.each_with_index do |slide, index|
         li.home-parallax-banner on-finish-render="" parallax-banner=""
           .scene data-calibrate-x="false" data-calibrate-y="true" data-invert-x="false" data-invert-y="true" data-limit-y="8" id="scene#{index+1}"
@@ -34,18 +33,16 @@
               img src=slide[:images][2]
 
           .description-block
-            = html_block_with_fallback "banner_#{index + 1}_title_with_description", true
-              - if index > 0
-                .title
-                  = slide[:title]
-              - else
-                h1.title
-                  = slide[:title]
-              .description
-                = slide[:description]
+            - if index > 0
+              .title
+                = slide[:title]
+            - else
+              h1.title
+                = slide[:title]
+            .description
+              = slide[:description]
             .button-container.banner-button-wrap
               = rf_button(title: slide[:button][:title], align_content: "left", full_width: true, subtitle: slide[:button][:subtitle], svg: slide[:button][:svg], href: slide[:button][:href])
-              /rf-button align-content="left" full-width="" title="{{slide.button.title}}" subtitle="{{slide.button.subtitle}}" svg="{{slide.button.svg}}" class="start-now-button" sref="{{slide.button.sref}}"
               - if !current_user
                 .sub-button-text
                   span
@@ -53,95 +50,103 @@
                   a.link ng-click="openSignInDialog()" href="/users/sign_in" open-popup="user_pages__static_sign_in"
                     |Sign in
 
-    /- if @home_slides.length > 1
-      #home-slider-bullets
-        ul
-          - @home_slides.each_with_index do |slide, index|
-            li class=("active" if index == 0) ng-class="$parent.homeBannerCarouselIndex == $index ? 'active' : 'inactive'"
-              |●
-
   #home-page-content
     #home-how-it-works.three-images-in-row-wrap
       = render "three_images_in_row"
 
     #home-what-for-you
-      = html_block_with_fallback :what_for_you, true
-        .row.center-items-vertically.row-reverse.image-and-text
-          .columns.large-4.right.medium-4
-            .svg-wrap
-              = embedded_svg_from_assets("rf-icon-main-wheel.svg")
-          .columns.large-8.medium-8
-            .title
-              = @what_for_you[:title]
-            ul.blue-markers
-              - @what_for_you[:items].each do |item|
-                li
-                  = item
+      .row.center-items-vertically.row-reverse.image-and-text
+        .columns.large-4.right.medium-4
+          .svg-wrap
+            = image_tag "rf-icon-main-wheel.svg"
+        .columns.large-8.medium-8
+          .title
+            | What’s in it for you?
+          ul.blue-markers
+            li
+              | Fast - get results in 48 hours or less!
+            li
+              | Comprehensive - have your product tested on every platform you require!
+            li
+              | Professional - With us, your application is reviewed only by certified professionals with years of industry experience.
+            li
+              | Your time is used wisely - not wasted on freelancers, who are only able to test only on a couple of platforms at a time.
 
     #home-statistics.statistics
-      = html_block_with_fallback :statistics, true
-        .row
-          h2.columns.large-12.section-header
-            = @statistics[:title]
-          .columns.large-5.projects
-            .counter animate-number="" value=@statistics[:tested_projects_count]
-              |0
+      .row
+        h2.columns.large-12.section-header
+          | Our software testing statistics
+        .columns.large-5.projects
+          .counter animate-number="" value="300" 
+            | 0
+          .text
+            | Projects&nbsp;
+            br>/
+            | tested
+        .columns.large-1.by
+          | by
+        .columns.large-6.testers
+          .counter animate-number="" value="1850" 
+            | 0
+          .text
+            | Professional&nbsp;
+            br>/
+            | testers
 
-            .text
-              |Projects&nbsp;
-              br
-              |tested
-          .columns.large-1.by
-            |by
-          .columns.large-6.testers
-            .counter animate-number="" value=@statistics[:testers_count]
-              |0
-            .text
-              |Professional&nbsp;
-              br
-              |testers
 
     #home-plans.plans-section
-      = html_block_with_fallback :plans, true
-        = render "plans"
+      = render "plans"
 
     #home-devices
-      = html_block_with_fallback :devices, true
-        .page-content-row-wrap
-          .row.center-items-vertically.row-reverse
-            .columns.large-4.medium-4.small-12.image-wrap-outer
-              .image-wrap.small-text-center
-                = image_tag "rf-devices-picture-1.svg"
-            .columns.large-8.medium-8.small-12.text-column
-              .header.small-text-center
-                | Devices
-              .description
-                p
-                  | We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
-                p
-                  a href=devices_path
-                    |Learn more
+      .page-content-row-wrap
+        .row.center-items-vertically.row-reverse
+          .columns.large-4.medium-4.small-12.image-wrap-outer
+            .image-wrap.small-text-center
+              = image_tag src="rf-devices-picture-1.svg"
+          .columns.large-8.medium-8.small-12.text-column
+            .header.small-text-center
+              | Devices
+            .description
+              p
+                | We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
+              p
+                a href="/devices"  Learn more
+
 
     #home-feedbacks
-      = html_block_with_fallback :feedbacks, true
-        = render "feedbacks_carousel.html"
+      = render "feedbacks_carousel.html"
 
     #home-bottom-container
-      = html_block_with_fallback :bottom_block, true
-        .row
-          .columns.large-6.medium-9.medium-centered.large-uncentered.small-11.small-centered
-            .title
-              = @who_we_are_best_for[:title]
-            ul.with-blue-markers.outside-markers
-              - @who_we_are_best_for[:items].each do |item|
-                li
-                  = item
-          .columns.large-6.medium-9.medium-centered.large-uncentered.small-11.small-centered
-            .title
-              = @benefits[:title]
-            ul.with-blue-markers.outside-markers
-              - @benefits[:items].each do |item|
-                li
-                  = item
-          .columns.large-12.button-container
-            = rf_button(full_width: true, title: "Start now!", subtitle: ("no registration required" unless current_user), svg: "rf-rocket-up-right.svg", class: "start-now-button", href: wizard_path)
+      .row
+        .columns.large-6.medium-9.medium-centered.large-uncentered.small-11.small-centered
+          .title
+            | Who we work best with:
+          ul.with-blue-markers.outside-markers
+            li
+              | startups that need to test their products before a release;
+            li
+              | product companies that don’t have in-house QA engineers;
+            li
+              | product owners or individual freelancers.
+        .columns.large-6.medium-9.medium-centered.large-uncentered.small-11.small-centered
+          .title
+            | Benefits:
+          ul.with-blue-markers.outside-markers
+            li
+              | we deliver results in 48 hours!
+            li
+              | 1500+ professional certified QA engineers;
+            li
+              | we test on all platforms (we have access to every hardware device manufactured in the last 5 years);
+            li
+              | we are available to support our customers 24/7.
+        .columns.large-12.button-container
+          button.rf-button.rf-button-without-subtitle.rf-button-with-svg.start-now-button.rf-button-raised.rf-button-full-width.rf-button-svg-size-medium.rf-button-align-content-center.rf-button-size-medium.start-now-button angular-ripple="" href="/ordering-crowdsourced-testing" 
+            .rf-button-content-wrap
+              .rf-button-content
+                .svg-wrap.svg-size-medium
+                  = embedded_svg_from_assets 'rf-rocket-up-right.svg'
+                .button-text-wrap
+                  .inner
+                    .button-title
+                      | Start now!
