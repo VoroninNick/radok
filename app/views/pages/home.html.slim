@@ -111,7 +111,7 @@
           .row.center-items-vertically.row-reverse
             .columns.large-4.medium-4.small-12.image-wrap-outer
               .image-wrap.small-text-center
-                img src="/assets/rf-devices-picture-1.svg"
+                = image_tag "rf-devices-picture-1.svg"
             .columns.large-8.medium-8.small-12.text-column
               .header.small-text-center
                 | Devices
@@ -144,5 +144,4 @@
                 li
                   = item
           .columns.large-12.button-container
-            /rf-button full-width="" subtitle="no registration required" svg="/assets/rf-rocket-up-right.svg" class="start-now-button"  sref="wizard"
             = rf_button(full_width: true, title: "Start now!", subtitle: ("no registration required" unless current_user), svg: "rf-rocket-up-right.svg", class: "start-now-button", href: wizard_path)

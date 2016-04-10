@@ -4,7 +4,7 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
     meta charset="utf-8"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
 
-    link rel="icon" href="/assets/favicon.ico" type="image/x-icon"
+    link rel="icon" href="#{asset_path('favicon.ico')}" type="image/x-icon"
 
     = seo_tags
 
@@ -42,4 +42,3 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
         $.getJSON("/svg_images", function(data){DATA = data})
     - if content_for?(:javascript)
       = content_for :javascript
-

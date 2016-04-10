@@ -16,17 +16,13 @@ class PagesController < ApplicationController
   end
 
   def pricing
-    #render "static_html/pricing"
     render "default"
   end
 
   def how_it_works
-    #render "static_html/how_it_works"
-    #render "default"
   end
 
   def testing_services
-    #render "static_html/testing_services"
     render "default"
   end
 
@@ -34,25 +30,61 @@ class PagesController < ApplicationController
     @product_types = Wizard::ProductType.all
     @leaders = nil
     @clients = Client.all.sort_by_sorting_position
-    #render "static_html/about"
-    #render "default"
   end
 
 
 
   def home
-    #return render inline: session.keys.inspect
     @home_slides = [
-        {images: ["/assets/radok-web-banner-layer-1.png", "/assets/radok-web-banner-layer-2.png", "/assets/radok-web-banner-layer-3.png"], title: "We test mobile, web apps and games.", description: "Professional crowd testing team are ready to start testing your software product immediately", button: { title: "Start now", subtitle: ("no registration required" unless current_user), svg: "rf-rocket-up-right.svg", class: "start-now-button", sref: "wizard", href: wizard_path  } },
-        {images: ["/assets/banners/2/radok-web-banner2-layer-1.png", "/assets/banners/2/radok-web-banner2-layer-2b.png", "/assets/banners/2/radok-web-banner2-layer-3b.png"], title: "We have a bunch of different devices to test on", description: "Professional crowd testing team are ready to start testing your software product immediately", button: { title: "Check out", svg: "rf-rocket-up-right.svg", class: "start-now-button", sref: "wizard", href: devices_path  } }
-    #{title: "We are experienced testers", description: "1500+ certified testers ready to start testing your product immediately.", button: { title: "Read more", subtitle: "about us", svg: "/assets/rf-rocket-up-right.svg", class: "start-now-button", sref: "about"  } }
-    #{title: "Google like us", description: "We working on cool projects for customers from whole world", button: { title: "Find out", subtitle: "about our testing services", svg: "/assets/rf-rocket-up-right.svg", class: "start-now-button", sref: "testing_services"  } }
+      {images: [
+        ActionController::Base.helpers.asset_path("radok-web-banner-layer-1.png"),
+        ActionController::Base.helpers.asset_path("radok-web-banner-layer-2.png"),
+        ActionController::Base.helpers.asset_path("radok-web-banner-layer-3.png")],
+        title: "We test mobile, web apps and games.",
+        description: "Professional crowd testing team are ready to start testing your software product immediately",
+        button: {
+          title: "Start now",
+          subtitle: ("no registration required" unless current_user),
+          svg: "rf-rocket-up-right.svg",
+          class: "start-now-button",
+          sref: "wizard", href: wizard_path
+        }
+      },
+      {images: [
+        ActionController::Base.helpers.asset_path("banners/2/radok-web-banner2-layer-1.png"),
+        ActionController::Base.helpers.asset_path("banners/2/radok-web-banner2-layer-2b.png"),
+        ActionController::Base.helpers.asset_path("banners/2/radok-web-banner2-layer-3b.png")],
+        title: "We have a bunch of different devices to test on",
+        description: "Professional crowd testing team are ready to start testing your software product immediately",
+        button: {
+          title: "Check out",
+          svg: "rf-rocket-up-right.svg",
+          class: "start-now-button",
+          sref: "wizard",
+          href: devices_path
+        }
+      }
     ]
 
     @three_images_in_row_model = [
-        {img: "rf-icon-main-1.svg", title: "Tell us what you need to test", time: "Takes less than 10 minutes!", description: "Choose the type of testing you need, amount of hours to be spent, number of people involved and platforms you want your product be tested on. No sign-up or credit card required."},
-        {img:"rf-icon-main-2.svg", title: "Submit your request", time: "2-3 minutes", description: "Submit your request and our engineers will do the rest! So sit back and relax our team of 1500+ testing professionals are ready to start immediately."},
-        {img: "rf-icon-main-3.svg", title: "Get rapid results", time: "48 hours", description: "In no more than 48 hours, you will receive a detailed bug report with your carefully documented test cases. If you need results faster, please contact us and we will try to accomdate your request."}
+      {
+        img: "rf-icon-main-1.svg",
+        title: "Tell us what you need to test",
+        time: "Takes less than 10 minutes!",
+        description: "Choose the type of testing you need, amount of hours to be spent, number of people involved and platforms you want your product be tested on. No sign-up or credit card required."
+      },
+      {
+        img:"rf-icon-main-2.svg",
+        title: "Submit your request",
+        time: "2-3 minutes",
+        description: "Submit your request and our engineers will do the rest! So sit back and relax our team of 1500+ testing professionals are ready to start immediately."
+      },
+      {
+        img: "rf-icon-main-3.svg",
+        title: "Get rapid results",
+        time: "48 hours",
+        description: "In no more than 48 hours, you will receive a detailed bug report with your carefully documented test cases. If you need results faster, please contact us and we will try to accomdate your request."
+      }
     ]
 
     @what_for_you = {

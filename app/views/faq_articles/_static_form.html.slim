@@ -6,22 +6,17 @@
       .subheader
         |Send us your question and we'll answer you as soon as possible
     .columns.large-12
-      /form no-validate="" action="/faq-request" method="post" success-popup="user_pages__faq_request_success_popup"
       form  action="/faq-request" method="post"  novalidate="" show-preloader="" resource="faq_request" show-success=""
         .form-content
           .inputs
             .row
               .columns.large-6
                 = rf_input(label: "Your name", name: "faq_request[name]", required: true)
-                = rf_input(label: "Email", type: "email", name: "faq_request[email]", required: true)
+                = rf_input(label: "Email",  name: "faq_request[email]", required: true, type: "email")
                 = rf_input(label: "Subject", name: "faq_request[subject]", required: true)
 
               .columns.large-6
-
                 = rf_input(type: "text", number_inputs_height: 3, name: "faq_request[description]", required: true, label: "Message")
-
-
-
 
           .actions
             .row.text-right

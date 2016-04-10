@@ -12,7 +12,6 @@
 
   .columns.large-11.large-centered
     .carousel-wrapper
-      /ul.feedbacks-carousel rn-carousel="" rn-carousel-pause-on-hover="" rn-carousel-index="feedbacks_carousel_index" rn-carousel-auto-slide="30"
 
       .owl-carousel
         - @feedbacks.each do |feedback|
@@ -29,7 +28,7 @@
                 = feedback[:name]
               .position
                 = feedback[:position]
-      /div rn-carousel-indicators="" ng-show="feedbacks.length > 1" slides="feedbacks" rn-carousel-index="feedbacks_carousel_index"
+
       - if @feedbacks.length > 1
         .rn-carousel-control
           .rn-carousel-control-prev.rn-carousel-control-item
@@ -37,8 +36,6 @@
           .rn-carousel-control-next.rn-carousel-control-item ng-show="feedbacks.length > 1"
             = embedded_svg_from_assets "rf-icon-arrow-right.svg"
 
-      /.rn-carousel-indicator.custom-indicator
         - @feedbacks.each do |span|
           span
             |●
-
