@@ -28,5 +28,13 @@ module RadokForce
 
     #config.assets.precompile += %w(codemirror.js codemirror/*)
     config.assets.precompile += %w(templates.css templates.js)
+
+    # Use Bower packages in assets pipeline
+    config.assets.paths << \
+      Rails.root.join('vendor', 'assets', 'bower_components')
+    config.assets.paths << \
+      Rails.root.join('vendor', 'assets', 'bower_components', 'footable', 'css', 'fonts')
+
+    config.assets.precompile << /.*.(?:eot|svg|ttf|woff|woff2)$/
   end
 end

@@ -2,11 +2,9 @@
 - content_for :javascript do
   script type="text/javascript" src="/assets/wizard_js.js"
 
-
 .wizard-controller ng-controller="Wizard"
 form for="project" url=wizard_path method="post" json="{}"
   fieldset.wizard-step step="1"
-
 
     #project-product-type
       .columns.large-12.with-distance
@@ -30,7 +28,6 @@ form for="project" url=wizard_path method="post" json="{}"
               = label
 
       .clearfix
-
 
     #project-test-type
       .columns.large-12.with-distance
@@ -83,8 +80,6 @@ form for="project" url=wizard_path method="post" json="{}"
                       input pattern='[0-9]*' type='text' value="#{binding_current_testers_count}"
                       label class='decrement' for='platform-1-subitem-1'
                       label class='increment' for='platform-1-subitem-1'
-            /.option-count platform-subitem-id=
-
 
 
         .hours-per-tester
