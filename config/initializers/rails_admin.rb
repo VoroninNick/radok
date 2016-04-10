@@ -1,7 +1,16 @@
 require_relative "require_libs"
 
 def pages_models
-  Dir[Rails.root.join("app/models/pages/*")].map{|p| filename = File.basename(p, ".rb"); "Pages::" + filename.camelize }
+  Dir[Rails.root.join("app/models/pages/*")].map do |p|
+    filename = File.basename(p, ".rb")
+
+    # Exclude pages
+    # TODO: remove html based CMS
+    next if filename == 'home'
+    next if filename == 'about'
+
+    "Pages::" + filename.camelize
+  end.compact
 end
 
 def templates_models
@@ -135,7 +144,7 @@ RailsAdmin.config do |config|
   ## == Cancan ==
   config.authorize_with :cancan
 
-  page_model_names = %w(About Contact Dashboard Devices FaqIndex Home HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TermsOfUse TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TermsOfUse TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [
     FormConfigs::ContactFeedback,
@@ -311,15 +320,6 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model Pages::About do
-    pages_navigation_label
-    weight -200
-
-    edit do
-      page_fields
-    end
-  end
-
   config.model Pages::Contact do
     pages_navigation_label
 
@@ -401,18 +401,6 @@ RailsAdmin.config do |config|
       field :seo_tags
       field :sitemap_record
 
-    end
-  end
-
-
-  config.model Pages::Home do
-    pages_navigation_label
-
-    edit do
-      html_block_fields
-
-      field :seo_tags
-      field :sitemap_record
     end
   end
 

@@ -77,4 +77,6 @@ Rails.application.routes.draw do
   post "/save_project", to: "wizard#save_project"
 
   match "*not_found_url", to: "errors#not_found", via: [:get, :post, :put, :patch, :update, :delete, :create]
+
+  root to: 'pages#home'
 end
