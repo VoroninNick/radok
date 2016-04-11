@@ -137,31 +137,38 @@ window.step_types = {
   'platforms' : {
     completed : false
     checkIsCompleted : ()->
-      maximum_testers_reached = false
-      $.each project.test_platforms_bindings, () ->
-        if this.testers_count > 50
-          maximum_testers_reached = true
-      completed = (project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)) && !maximum_testers_reached
+      if project.test_platforms_bindings
+        maximum_testers_reached = false
+        $.each project.test_platforms_bindings, () ->
+          if this.testers_count > 50
+            maximum_testers_reached = true
+      completed = (project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)) && !maximum_testers_reached && project.platforms_comment.length < 500
   }
   'project_info' : {
     checkIsCompleted : ()->
-      (project.project_name && project.project_name.length > 0) && (project.project_version && project.project_version.length > 0) && (project.project_languages && project.project_languages.length > 0 ) \
-      && (project.report_languages && project.report_languages.length > 0)
+      (project.project_name && project.project_name.length > 0) && project.project_name.length < 100 && (project.project_version && project.project_version.length > 0) && project.project_version.length < 20 && (project.project_languages && project.project_languages.length > 0 ) \
+      && (project.report_languages && project.report_languages.length > 0) && (project.project_info_comment.length < 500)
   }
   'project_components' : {
     checkIsCompleted : ()->
       any_components = project.main_components && project.main_components.length > 0
       if !any_components
         return false
-      if project.methodology_type == 'exploratory' || project.methodology_type == ''
-        return (project.exploratory_instructions && project.exploratory_instructions.length > 0)
+      else if project.methodology_type == 'exploratory' || project.methodology_type == ''
+        return (project.exploratory_instructions && project.exploratory_instructions.length > 0 && project.exploratory_instructions.length < 2000)
       else
         return (project.test_case_files && project.test_case_files.length > 0)
   }
   'project_access' : {
     checkIsCompleted : ()->
-      required = project.authentication_required && project.auth_login && project.auth_password
-      return ((!!project.project_url && project.project_url.length > 0) || (!!project.test_files && project.test_files.length > 0)) && required
+      url_valid = (!!project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
+      file_upload_valid = !!project.test_files && project.test_files.length > 0
+      required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
+      contact_name_valid = project.contact_person_name.length == 0 || project.contact_person_name.length < 100
+      contact_email_valid = validateEmail(project.contact_person_email) && (project.contact_person_email.length < 40) || (project.contact_person_email.length == 0)
+      contact_phone_valid = validatePhoneNumber(project.contact_person_phone) && (project.contact_person_phone.length < 20) || (project.contact_person_phone.length == 0)
+      contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
+      return ( url_valid || file_upload_valid ) && required && contact_person_valid
   }
 }
 
@@ -286,20 +293,31 @@ $("body").on "change code-change keyup keypress", ".set-error", (e)->
     $email_error.hide()
     $phone_error.hide()
     $max_error.fadeIn()
+    $input.removeClass("valid")
+    $input.addClass("invalid")
   else if $input.val().length > 0
+    $input.removeClass("invalid")
+    $input.addClass("valid")
     $max_error.hide()
     if validateEmail($input.val())
       $email_error.fadeOut()
+      email_valid = true
     else
       $email_error.fadeIn()
     if validatePhoneNumber($input.val())
       $phone_error.fadeOut()
+      phone_valid = true
     else
       $phone_error.fadeIn()
+    if phone_valid && email_valid
+      $input.removeClass("invalid")
+      $input.addClass("valid")
   else
-      $email_error.fadeOut()
-      $phone_error.fadeOut()
-      $max_error.fadeOut()
+    $email_error.fadeOut()
+    $phone_error.fadeOut()
+    $max_error.fadeOut()
+    $input.removeClass("invalid")
+    $input.addClass("valid")
 
 update_price = ()->
   test_platforms_bindings = []
@@ -1424,12 +1442,12 @@ $(".checkout-button, .confirm-button-container").on "click", (e)->
       step_number = $step.find(".wizard-step-counter").attr("data-number")
       step_id = $step.attr("step")
       invalid_fields_html = ""
-      $fields = $step.find(".input.invalid, :not(.input) .error:visible")
-      $fields.filter(".input").addClass("touched")
-
+      $fields = $step.find(".input.invalid, :not(.input) .error:visible, .set-error.invalid")
+      $fields.addClass("touched")
       $fields.each ()->
         $this = $(this)
         $field = $this
+        console.log $field
         if $this.filter(".error").length
           if $this.closest(".input").length > 0
             return
@@ -1439,6 +1457,9 @@ $(".checkout-button, .confirm-button-container").on "click", (e)->
         else if $this.filter(".error").length
           field_name = $field.attr("data-field-name") || $field.attr('data-group-name') || $field.text()
           field_html_id = $field.attr("for") || $field.attr("data-input-id")
+        else if $this.filter(".set-error").length
+          field_name = $field.attr("data-field-name")
+          field_html_id = $field.attr("id")
         if field_html_id
           field_link = "##{field_html_id}"
         else

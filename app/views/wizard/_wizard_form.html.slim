@@ -104,10 +104,10 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.text.project-platforms-comment_input as="text" model="project.platforms_comment" data-name="Your comment"
           label.placeholder.hiding-placeholder for="project_platforms_comment"
             |Your comments and additional instructions can be here...
-          textarea.set-error id="project_platforms_comment"  maxlength="500"
+          textarea.set-error id="project_platforms_comment"  maxlength="500"  data-field-name="Project platforms comment"
             = @project.platforms_comment
         div#project_platforms_comment-error
-          label.error.error-max
+          label.error-max
             |Sorry, but Your comment is too long. Available length is up to 500 charachters.
 
       .input.image-radio-buttons.required model=""
@@ -126,9 +126,10 @@ form for="project" url=wizard_path method="post" json="{}"
             |Project name
           label.error.error-required for="project_project_name"
             |Please enter project name
-          input.set-error type="text" id="project_project_name" value=@project.project_name maxlength="100"
-          #project_project_name-error
-            label.error.error-max
+          input.set-error type="text" id="project_project_name" value=@project.project_name maxlength="100" data-field-name="Project name"
+
+          div#project_project_name-error for="project_project_name"
+            label.error-max
               |Available project name length is up to 100 charachters.
 
         label.label.with-input-distance for="project_project_version"
@@ -139,15 +140,15 @@ form for="project" url=wizard_path method="post" json="{}"
             |Project version
           label.error.error-required for="project_project_version"
             |Please enter project version
-          input.set-error type="text" id="project_project_version" value=@project.project_version maxlength="20"
+          input.set-error type="text" id="project_project_version" value=@project.project_version maxlength="20" data-field-name="Project version"
           div#project_project_version-error
-            label.error.error-max
+            label.error-max
               |Available project version length is up to 20 charachters.
 
         label.label.with-input-distance
           |In what language(s) is the project?
           span.star
-        .input.collection-checkboxes as="collection-checkboxes" model="project.project_languages" min="1" required="true"
+        .input.collection-checkboxes as="collection-checkboxes" id="project_project_languages" model="project.project_languages" min="1" required="true" data-name="Project languages"
           .options
             - @project_languages.each_with_index do |language, index|
               - input_id = "project_project_languages_#{index + 1}"
@@ -183,10 +184,10 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.text.project-info-comment_input as="text" model="project.project_info_comment"
           label.placeholder.hiding-placeholder for="project_info_comment"
             |Your comments and additional instructions can be here...
-          textarea.set-error id="project_info_comment" maxlength="500"
+          textarea.set-error id="project_info_comment" maxlength="500" data-field-name="Project information comment"
             = @project.project_info_comment
           div#project_info_comment-error
-            label.error.error-max
+            label.error-max
               |Sorry, but Your comment is too long. Available length is up to 500 charachters.
 
     fieldset.wizard-step.project-components-step step="4" type="project_components" data-name="Project components step"
@@ -213,7 +214,7 @@ form for="project" url=wizard_path method="post" json="{}"
             textarea.set-error id="project_exploratory_instructions" maxlength="2000"
               = @project.exploratory_description
             #project_exploratory_instructions-error
-              label.error.error-max
+              label.error-max
                 |Sorry, but Your description is too long. Available length is up to 2000 charachters.
 
         .input.radio-button model="project.methodology_type" as="radio-button" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }" value="test-case-driven"
@@ -225,7 +226,7 @@ form for="project" url=wizard_path method="post" json="{}"
             |You provide a specific list of steps that testers must execute.
 
         .nested-input-group
-          .input.files.test-case-files-input model="project.test_files" required="#{@project.test_case_driven?}"
+          .input.files.test-case-files-input model="project.test_files" required="#{@project.test_case_driven?}" data-name="Test-case driven test files"
             div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
               input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
               = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
@@ -326,7 +327,7 @@ form for="project" url=wizard_path method="post" json="{}"
             |Name
           input.set-error type="text" id="project_contact_person_name" value=@project.contact_person_name maxlength="100"
           div#project_contact_person_name-error
-            label.error.error-max
+            label.error-max
               |Available person name length is up to 100 charachters.
 
         .input.string.project-contact-person-email.input-with-indent model="project.contact_person_email" as="string"
@@ -334,9 +335,9 @@ form for="project" url=wizard_path method="post" json="{}"
             |Email
           input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email maxlength="40"
           div#project_contact_person_email-error
-            label.error.error-max
+            label.error-max
               |Available email length is up to 40 charachters.
-            label.error.error-email
+            label.error-email
               |Please, provide a valid email.
 
         .input.string.project-contact-person-phone.input-with-indent model="project.contact_person_phone" as="string"
@@ -344,9 +345,9 @@ form for="project" url=wizard_path method="post" json="{}"
             |Phone
           input.set-error type="text" id="project_contact_person_phone" value=@project.contact_person_phone maxlength="20" validation="email"
           div#project_contact_person_phone-error
-            label.error.error-max
+            label.error-max
               |Available phone number length is up to 20 charachters.
-            label.error.error-phone
+            label.error-phone
               |Please, provide a valid phone number.
 
         .columns.large-12.small-padding-0 style="padding-left: 0;"
@@ -358,7 +359,7 @@ form for="project" url=wizard_path method="post" json="{}"
             textarea.set-error id="project_access_comment" maxlength="500"
               = @project.project_access_comment
             #project_access_comment-error
-              label.error.error-max
+              label.error-max
                 |Available comment length is up to 500 charachters.
 
   = render "project_full_summary", project: @project, hide: @created.blank?
