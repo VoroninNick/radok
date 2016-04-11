@@ -104,7 +104,7 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.text.project-platforms-comment_input as="text" model="project.platforms_comment" data-name="Your comment"
           label.placeholder.hiding-placeholder for="project_platforms_comment"
             |Your comments and additional instructions can be here...
-          textarea.set-error id="project_platforms_comment"  maxlength="500"  data-field-name="Project platforms comment"
+          textarea.set-error id="project_platforms_comment"  maxlength="500" data-field-name="Project platforms comment"
             = @project.platforms_comment
         div#project_platforms_comment-error
           label.error-max
@@ -130,6 +130,8 @@ form for="project" url=wizard_path method="post" json="{}"
 
           div#project_project_name-error for="project_project_name"
             label.error-max
+          #project_project_name-error
+            label.error.error-max
               |Available project name length is up to 100 charachters.
 
         label.label.with-input-distance for="project_project_version"
@@ -206,12 +208,12 @@ form for="project" url=wizard_path method="post" json="{}"
             |This is unscripted testing. Our testers use your product like any normal user would.
 
         .nested-input-group
-          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" required="#{@project.exploratory?}" data-name="Exploratory instructions"
+          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" data-name="Exploratory instructions"
             label.placeholder.hiding-placeholder for="project_exploratory_instructions"
               |Please provide testing instructions for the testers here...
             label.error.error-required for="project_exploratory_instructions"
               |Please provide testing instructions for the testers here...
-            textarea.set-error id="project_exploratory_instructions" maxlength="2000"
+            textarea.set-error id="project_exploratory_instructions" maxlength="2000" data-field-name="Exploratory instructions"
               = @project.exploratory_description
             #project_exploratory_instructions-error
               label.error-max
@@ -224,6 +226,25 @@ form for="project" url=wizard_path method="post" json="{}"
             |Test-case driven
           .help
             |You provide a specific list of steps that testers must execute.
+
+        .nested-input-group
+          .input.files.test_case_files_input model="project.test_case_files" data-name="Test driven upload"
+            div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
+              input#test_case_files.file-upload-input.set-error list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false" data-field-name="Test-case driven upload"
+              = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
+              .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
+                - @project.test_case_files.each do |asset|
+                  .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
+                    span class='file-name'
+                      |#{asset.data_file_name}
+
+                    span class='delete'
+              .upload-error.error.hide
+                |Please, select a file less than 200 MB
+
+              .columns.large-12
+                label#test-case-files-required-error.error.error-required for="test_case_files_input"
+                  |Please, upload at least one file
 
         .nested-input-group
           .input.files.test-case-files-input model="project.test_files" required="#{@project.test_case_driven?}" data-name="Test-case driven test files"
@@ -325,7 +346,7 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.string.project-contact-person-name.input-with-indent model="project.contact_person_name" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_name"
             |Name
-          input.set-error type="text" id="project_contact_person_name" value=@project.contact_person_name maxlength="100"
+          input.set-error type="text" id="project_contact_person_name" value=@project.contact_person_name maxlength="100" data-field-name="Contact person name"
           div#project_contact_person_name-error
             label.error-max
               |Available person name length is up to 100 charachters.
@@ -333,7 +354,7 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.string.project-contact-person-email.input-with-indent model="project.contact_person_email" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_email"
             |Email
-          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email maxlength="40"
+          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email maxlength="40" data-field-name="Contact person email"
           div#project_contact_person_email-error
             label.error-max
               |Available email length is up to 40 charachters.
@@ -343,7 +364,7 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.string.project-contact-person-phone.input-with-indent model="project.contact_person_phone" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_email"
             |Phone
-          input.set-error type="text" id="project_contact_person_phone" value=@project.contact_person_phone maxlength="20" validation="email"
+          input.set-error type="text" id="project_contact_person_phone" value=@project.contact_person_phone maxlength="20" validation="email" data-field-name="Contact person email"
           div#project_contact_person_phone-error
             label.error-max
               |Available phone number length is up to 20 charachters.
@@ -356,7 +377,7 @@ form for="project" url=wizard_path method="post" json="{}"
           .input.text.project-access-comment_input as="text" model="project.project_access_comment"
             label.placeholder.hiding-placeholder for="project_access_comment"
               |Your comments and additional instructions can be here...
-            textarea.set-error id="project_access_comment" maxlength="500"
+            textarea.set-error id="project_access_comment" maxlength="500" data-field-name="Project access comment"
               = @project.project_access_comment
             #project_access_comment-error
               label.error-max

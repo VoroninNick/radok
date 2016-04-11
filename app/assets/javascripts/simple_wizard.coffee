@@ -284,7 +284,14 @@ $("body").on "change code-change keyup keypress", ".wizard [as=platforms] .optio
 #     $("#platforms_comment-error").fadeOut()
 
 $("body").on "change code-change keyup keypress", ".set-error", (e)->
-  $input = $(this)
+  set_error(this)
+
+$(document).on "ready", (e) ->
+  $(".set-error").each ->
+    set_error(this)
+
+set_error = (that)->
+  $input = $(that)
   error_select = "##{$input.attr('id')}-error"
   $max_error = $(error_select + " .error-max")
   $email_error = $(error_select + " .error-email")
@@ -1071,6 +1078,7 @@ $("body").on "change.project.authentication_required", ()->
 
 $("body").on "change.project.methodology_type", ()->
   show_or_hide_exploratory_instructions_input()
+  validate_methodology_type()
 
 show_or_hide_exploratory_instructions_input = ()->
   testing_type = $(".input[model*='project.methodology_type'] input:checked").val()
@@ -1083,8 +1091,22 @@ show_or_hide_exploratory_instructions_input = ()->
     $test_case_inputs_wrap.addClass("hide")
   else
     $input.addClass("hide")
-    #$file_input.removeClass("hide")
     $test_case_inputs_wrap.removeClass("hide")
+
+validate_methodology_type = ()->
+  $exploratory_input = $(".project_exploratory_instructions_input")
+  $test_case_files_input = $(".test_case_files_input")
+  if project.methodology_type == 'exploratory'
+    $exploratory_input.attr("required", "true")
+    $exploratory_input.addClass("invalid-required invalid")
+    $test_case_files_input.removeAttr("required")
+    $test_case_files_input.removeClass("invalid-required invalid")
+  else
+    $test_case_files_input.attr("required", "true")
+    $test_case_files_input.addClass("invalid-required invalid")
+    $exploratory_input.removeAttr("required")
+    $exploratory_input.removeClass("invalid-required invalid")
+
 
 $("body").on "change code-change keyup keypress", "#project_auth_login", ()->
   if $("#project_auth_login").val().length > 0
@@ -1288,6 +1310,7 @@ validate_project_access_test_url_and_files = ()->
     if valid
       $error.fadeOut()
     else
+      $(".test_case_files_input .upload-error").hide()
       $error.fadeIn()
       $error.html("Please, provide a valid URL or upload at least one file")
 
@@ -1444,6 +1467,8 @@ $(".checkout-button, .confirm-button-container").on "click", (e)->
       invalid_fields_html = ""
       $fields = $step.find(".input.invalid, :not(.input) .error:visible, .set-error.invalid")
       $fields.addClass("touched")
+      $fields.filter(".input").addClass("touched")
+
       $fields.each ()->
         $this = $(this)
         $field = $this
@@ -1458,8 +1483,8 @@ $(".checkout-button, .confirm-button-container").on "click", (e)->
           field_name = $field.attr("data-field-name") || $field.attr('data-group-name') || $field.text()
           field_html_id = $field.attr("for") || $field.attr("data-input-id")
         else if $this.filter(".set-error").length
-          field_name = $field.attr("data-field-name")
-          field_html_id = $field.attr("id")
+          field_name = $field.attr("data-field-name") || $field.text()
+          field_html_id = $field.attr("data-input-id") || $field.attr("for")
         if field_html_id
           field_link = "##{field_html_id}"
         else
