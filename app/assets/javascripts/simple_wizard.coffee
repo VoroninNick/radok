@@ -468,10 +468,13 @@ $("body").on "change.project.test_platforms_bindings", (e)->
   $options = $platforms_field.find(".option-count")
   $options.addClass("empty")
   if project.test_platforms_bindings && project.test_platforms_bindings.length
+    reached_maximum = false
     for b in project.test_platforms_bindings
       $options.filter("[platform-subitem-id=#{b.subitem_id}]").removeClass("empty")
       $input = $options.filter("[platform-subitem-id=#{b.subitem_id}]").find("input")
       if b.testers_count && (b.testers_count > $input.attr("max"))
+        reached_maximum = true
+      if reached_maximum
         $("#platforms-max-error").fadeIn()
       else
         $("#platforms-max-error").fadeOut()
