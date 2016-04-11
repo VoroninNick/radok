@@ -310,11 +310,13 @@ set_error = (that)->
       $email_error.fadeOut()
       email_valid = true
     else
+      $input.addClass("invalid")
       $email_error.fadeIn()
     if validatePhoneNumber($input.val())
       $phone_error.fadeOut()
       phone_valid = true
     else
+      $input.addClass("invalid")
       $phone_error.fadeIn()
     if phone_valid && email_valid
       $input.removeClass("invalid")
