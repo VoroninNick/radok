@@ -254,7 +254,7 @@ module ApplicationHelper
     if Rails.env.development?
       doc = Nokogiri::HTML::DocumentFragment.parse File.read(Rails.root.join('public').to_s + file_url.gsub(/\?.*/, ''))
     else
-      doc = Nokogiri::HTML::DocumentFragment.parse open(file_url).read
+      doc = Nokogiri::HTML::DocumentFragment.parse open(file_url).read.force_encoding("UTF-8")
     end
     svg = doc.at_css 'svg'
     svg['class'] = options[:class] if options[:class].present?

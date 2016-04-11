@@ -1,58 +1,59 @@
-#about__who-we-are.page-content-row-wrap.about-row-wrap
-  .row.center-items-vertically.row-reverse
-    .columns.large-3.medium-3.small-12.image-wrap-outer
-      .image-wrap.small-text-center
-        = image_tag "rf-logo-rocket.svg"
-    .columns.large-8.medium-9.small-12.text-column
-      .header.small-text-center
-        | Who we are
-      .description
-        p
-          | We are a team of more than 1500 certified testing professionals, each with many years of experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. We strive to achieve no less than perfection for our clients.
-#about__what-we-test-row-wrap.page-content-row-wrap.about-row-wrap
-  .row
-    .columns.large-12
-      h2.header
-        | What we test
-      .subheader
-        | We carefully test your application service web page or game with the help of thousands of professionally trained testers.
-    .columns.large-12.products
-      .row
-        - @product_types.each do |product_type|
-          .columns.large-3.small-6.item
-            .image-wrap
-              = embedded_svg_from_url(product_type.image.url)
-
-            .title.ng-binding
-              = product_type.name
-
-- if @leaders.try(:any?)
-  #about__leaders-row-wrap.page-content-row-wrap.about-row-wrap
-    .row
-      .columns.large-6
-        .header
-          | Our top 10 QA Testers
-        .subheader
-      .columns.large-12.leaders
-        .row
-
-
-- if @clients.try(:any?)
-  #about__clients.page-content-row-wrap.about-row-wrap
+- cache('app/views/pages/about.html.slim') do
+  #about__who-we-are.page-content-row-wrap.about-row-wrap
+    .row.center-items-vertically.row-reverse
+      .columns.large-3.medium-3.small-12.image-wrap-outer
+        .image-wrap.small-text-center
+          = image_tag "rf-logo-rocket.svg"
+      .columns.large-8.medium-9.small-12.text-column
+        .header.small-text-center
+          | Who we are
+        .description
+          p
+            | We are a team of more than 1500 certified testing professionals, each with many years of experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. We strive to achieve no less than perfection for our clients.
+  #about__what-we-test-row-wrap.page-content-row-wrap.about-row-wrap
     .row
       .columns.large-12
-        .header
-          | We work with
+        h2.header
+          | What we test
         .subheader
-          | The best brands in the world
-      .columns.large-12.clients
+          | We carefully test your application service web page or game with the help of thousands of professionally trained testers.
+      .columns.large-12.products
         .row
-          - @clients.each do |client|
-            .columns.large-2.small-4.item
-              a.ng-scope href=client.client_url title=client.name
-                = embedded_svg_from_url(client.logo.url)
-          .columns.large-2.small-4.item.invitation
-            a href="#"
-              = embedded_svg_from_assets("question.svg")
+          - @product_types.each do |product_type|
+            .columns.large-3.small-6.item
+              .image-wrap
+                = image_tag product_type.image.url
 
-              label You could be next!
+              .title.ng-binding
+                = product_type.name
+
+  - if @leaders.try(:any?)
+    #about__leaders-row-wrap.page-content-row-wrap.about-row-wrap
+      .row
+        .columns.large-6
+          .header
+            | Our top 10 QA Testers
+          .subheader
+        .columns.large-12.leaders
+          .row
+
+
+  - if @clients.try(:any?)
+    #about__clients.page-content-row-wrap.about-row-wrap
+      .row
+        .columns.large-12
+          .header
+            | We work with
+          .subheader
+            | The best brands in the world
+        .columns.large-12.clients
+          .row
+            - @clients.each do |client|
+              .columns.large-2.small-4.item
+                a.ng-scope href=client.client_url title=client.name
+                  = image_tag client.logo.url
+            .columns.large-2.small-4.item.invitation
+              a href="#"
+                = embedded_svg_from_assets("question.svg")
+
+                label You could be next!
