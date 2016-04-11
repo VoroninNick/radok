@@ -137,7 +137,11 @@ window.step_types = {
   'platforms' : {
     completed : false
     checkIsCompleted : ()->
-      completed = project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)
+      maximum_testers_reached = false
+      $.each project.test_platforms_bindings, () ->
+        if this.testers_count > 50
+          maximum_testers_reached = true
+      completed = (project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)) && !maximum_testers_reached
   }
   'project_info' : {
     checkIsCompleted : ()->
@@ -156,7 +160,8 @@ window.step_types = {
   }
   'project_access' : {
     checkIsCompleted : ()->
-      return (!!project.project_url && project.project_url.length > 0) || (!!project.test_files && project.test_files.length > 0)
+      required = project.authentication_required && project.auth_login && project.auth_password
+      return ((!!project.project_url && project.project_url.length > 0) || (!!project.test_files && project.test_files.length > 0)) && required
   }
 }
 

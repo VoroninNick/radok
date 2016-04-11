@@ -181,7 +181,6 @@ $("body").on "submit", "form:not([no-processing])", (event)->
   else
     $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
-  console.log "valid_form", valid_form
 
   if valid_form
     $form_errors = $form.find(".form-errors")

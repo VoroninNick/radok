@@ -26,6 +26,7 @@ gem 'activerecord-session_store', '~> 0.1.2'
 gem 'require_reloader',       '~> 0.2.0'
 gem 'rack-page_caching',      '~> 0.0.3'
 gem 'mailchimp-api',          '~> 2.0.6', require: 'mailchimp'
+gem 'rubocop',                '~> 0.39.0', require: false
 
 # Assets HTML and Helpers
 gem 'sass-rails',             '~> 5.0'
