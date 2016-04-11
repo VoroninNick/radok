@@ -6,31 +6,10 @@ namespace :logs do
     end
   end
 
-  desc "sidekiq tail"
-  task :tail_sidekiq do
-    on roles(:app) do
-      execute "tail -f #{shared_path}/log/sidekiq.log"
-    end
-  end
-
-  desc "queue logs"
-  task :tail_queue do
-    on roles(:app) do
-      execute "tail -f #{shared_path}/log/queue_#{fetch(:rails_env)}.log"
-    end
-  end
-
   desc "tail unicorn logs"
   task :tail_unicorn do
     on roles(:app) do
       execute "tail -f #{shared_path}/log/unicorn.log"
-    end
-  end
-
-  desc "tail rails logs"
-  task :tail_delayed_job do
-    on roles(:app) do
-      execute "tail -f #{shared_path}/log/delayed_job.log"
     end
   end
 

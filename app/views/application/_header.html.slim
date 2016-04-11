@@ -4,9 +4,8 @@
       #header-row
         #header-logo
           a href=home_path ng-class="navClass('home')"
-            img src="/assets/new_logo.svg"
+            = image_tag "new_logo.png"
         #header-menu
-          /top-nav menu="menu_items" item-class="header-menu-item" off-click="closeMobileMenu()" off-click-filter="'#header-mobile-menu-button-wrap'"
           = top_nav(menu: menu_items, item_class: "header-menu-item")
 
           #header-user  class=header_user_class
@@ -31,7 +30,7 @@
 
             - if current_user
               .dropdown.hide
-                rf-button size="small" title="My dashboard" svg="/assets/rf-icon-configure.svg" class="my-dashboard-button-link" ng-click="goToDashboard()"
+                rf-button size="small" title="My dashboard" svg="#{asset_path('rf-icon-configure.svg')}" class="my-dashboard-button-link" ng-click="goToDashboard()"
                 = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link", href: "/dashboard")
                 = rf_button(size: :small, title: "Start new test", svg: "rf-rocket-up-right.svg", class: "my-dashboard-button-link wizard-button", href: wizard_path)
                 .links

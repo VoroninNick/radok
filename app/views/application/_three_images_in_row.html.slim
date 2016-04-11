@@ -5,7 +5,6 @@
 
   - @three_images_in_row_model.each do |item|
     .item
-      /= svg_placeholder(item[:svg])
       .svg-wrap
         = embedded_svg_from_assets(item[:img])
       .header

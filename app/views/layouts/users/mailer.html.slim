@@ -15,7 +15,7 @@ table.body
                         tr
                           td.six.sub-columns
                             a href=site_url
-                              img#logo-img[src="http://10g-force.com/assets/new_logo.png"]
+                              = image_tag 'new_logo.png', id: 'logo-img'
                           td.six.sub-columns.last[style="text-align:right; vertical-align:middle;"]
                             span.template-label
                               | BASIC
@@ -49,19 +49,19 @@ table.body
                           .social-icons
                             .social-icon
                               a title='Google +' href='https://plus.google.com/109753715460055186428'
-                                img src=img_url("rf-social-google-plus.png")
+                                = image_tag "rf-social-google-plus.png"
                             .social-icon
                               a title="Facebook" href="https://www.facebook.com/10G-Force-410439735822955/?ref=bookmarks"
-                                img src=img_url("rf-social-facebook.png")
+                                = image_tag "rf-social-facebook.png"
                             .social-icon
                               a title="LinkedIn" href="https://www.linkedin.com/grp/home?gid=8415315"
-                                img src=img_url("rf-social-linked-in.png")
+                                = image_tag "rf-social-linked-in.png"
                             .social-icon
                               a title="Twitter" href="https://twitter.com/10g_force"
-                                img src=img_url("rf-social-twitter.png")
+                                = image_tag "rf-social-twitter.png"
                             .social-icon
                               a title="Skype" href="skype:force.10g?call"
-                                img src=img_url("rf-social-skype.png")
+                                = image_tag "rf-social-skype.png"
 
                         td.expander
                   td.wrapper.last

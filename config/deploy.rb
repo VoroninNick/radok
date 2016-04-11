@@ -13,7 +13,7 @@ set :pty, false
 set :keep_releases, 5
 
 # files we want symlinking to specific entries in shared
-set :linked_files, %w{config/database.yml config/application.yml}
+set :linked_files, %w{config/database.yml config/application.yml config/secrets.yml}
 
 # dirs we want symlinking to shared
 set :linked_dirs, %w{
@@ -33,6 +33,7 @@ set :linked_dirs, %w{
 set(:config_files, %w(
   nginx.conf
   database.example.yml
+  secrets.example.yml
   application.example.yml
   unicorn.rb
   unicorn_init.sh

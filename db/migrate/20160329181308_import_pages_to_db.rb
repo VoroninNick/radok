@@ -28,7 +28,7 @@ class ImportPagesToDb < ActiveRecord::Migration
                 - @product_types.each do |product_type|
                   .columns.large-3.small-6.item
                     .image-wrap
-                      = embedded_svg_from_absolute_path(product_type.image.path)
+                      = embedded_svg_from_absolute_path(product_type.image)
 
                     .title.ng-binding
                       = product_type.name
@@ -57,7 +57,7 @@ class ImportPagesToDb < ActiveRecord::Migration
                   - @clients.each do |client|
                     .columns.large-2.small-4.item
                       a.ng-scope href=client.client_url title=client.name
-                        = embedded_svg_from_absolute_path(client.logo.path)
+                        = embedded_svg_from_absolute_path(client.logo)
                   .columns.large-2.small-4.item.invitation
                     a href="#"
                       = embedded_svg_from_assets("question.svg")

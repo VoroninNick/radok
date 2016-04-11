@@ -60,15 +60,7 @@
                       .actions
                         .delete-draft-button ng-click="deleteDraft(project)"
                           |Delete draft
-                        /rf-button.complete-draft-button title="Complete" subtitle="Draft" svg="/assets/finish_flag.svg" ng-click="openDraft(project)"
                         = rf_button title: "Complete", subtitle: "Draft", svg: "finish_flag", class: "complete-draft-button"
-
-
-
-
-
-
-
 
       - if @in_progress_tests.try(&:any?)
         .in-process-tests

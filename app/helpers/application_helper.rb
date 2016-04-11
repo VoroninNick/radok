@@ -1,3 +1,5 @@
+require "open-uri"
+
 module ApplicationHelper
   def self.self_embedded_svg_from_absolute_path(filename, options = {}, html_safe = true)
     file = File.read(filename.to_s)
@@ -245,4 +247,16 @@ module ApplicationHelper
     WizardSettings.hour_price
   end
 
+  # On production we are using s3, so we need to adopt way to insert svg from urls
+  def embedded_svg_from_url(file_url, options = {})
+    return nil if file_url.blank?
+    if Rails.env.development?
+      doc = Nokogiri::HTML::DocumentFragment.parse File.read(Rails.root.join('public').to_s + file_url.gsub(/\?.*/, ''))
+    else
+      doc = Nokogiri::HTML::DocumentFragment.parse open(file_url).read.force_encoding("UTF-8")
+    end
+    svg = doc.at_css 'svg'
+    svg['class'] = options[:class] if options[:class].present?
+    doc.to_html.html_safe
+  end
 end

@@ -62,5 +62,5 @@
               .columns.medium-6.fields-group-column
                 rf-input type="text" n-inputs-height="3" ng-model="contact_request.description" label="Type your question's subject here..."
                 /rf-textarea name="description" ng-model="contact_request.description" required="" label="Type your question's subject here..."
-                rf-button class="contact-form-button" svg="/assets/rf-icon-email.svg" title="Send message" ng-disabled="contact.$invalid"  ng-click="submitRequest(); $event.preventDefault()"
+                rf-button class="contact-form-button" svg="#{asset_path('rf-icon-email.svg')}" title="Send message" ng-disabled="contact.$invalid"  ng-click="submitRequest(); $event.preventDefault()"
     = render "contact_form"

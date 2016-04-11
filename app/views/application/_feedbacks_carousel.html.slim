@@ -1,44 +1,33 @@
 .row
-  - if controller_name == "home"
-    .columns.large-12.section-header ng-show="ctrl == 'home'"
-      |Testimonials
-  - if controller_name == 'pricing'
-    .columns.large-12.section-header.with-subheader
-      .header
-        |They say
-      .subheader
-        |Clients&#8217; feedback
   .clearfix
-
   .columns.large-11.large-centered
     .carousel-wrapper
-      /ul.feedbacks-carousel rn-carousel="" rn-carousel-pause-on-hover="" rn-carousel-index="feedbacks_carousel_index" rn-carousel-auto-slide="30"
-
       .owl-carousel
-        - @feedbacks.each do |feedback|
-          .item.feedback
-            .feedback-inner
-              - if feedback[:image] && feedback[:image][:src].present?
-                .logo-wrap
-                  ng-include src="feedback.image.src" style="max-width: {{feedback.image.maxWidth || 'inherit'}}; max-height:{{feedback.image.maxHeight || 'inherit'}};"
-
-              .quote
-                .text
-                  = feedback[:text]
-              .name
-                = feedback[:name]
-              .position
-                = feedback[:position]
-      /div rn-carousel-indicators="" ng-show="feedbacks.length > 1" slides="feedbacks" rn-carousel-index="feedbacks_carousel_index"
-      - if @feedbacks.length > 1
-        .rn-carousel-control
-          .rn-carousel-control-prev.rn-carousel-control-item
-            = embedded_svg_from_assets "rf-icon-arrow-left.svg"
-          .rn-carousel-control-next.rn-carousel-control-item ng-show="feedbacks.length > 1"
-            = embedded_svg_from_assets "rf-icon-arrow-right.svg"
-
-      /.rn-carousel-indicator.custom-indicator
-        - @feedbacks.each do |span|
-          span
-            |●
-
+        .item.feedback
+          .feedback-inner
+            .quote
+              .text
+                | I am greatly pleased with the experience with 10G-Force. I have contacted them to get a functional and usability testing before a release of our piece of software. The reports guys created were very professional and did exceed my expectations, and also they caught a number of bugs we missed internally. Our release was so much smoother thanks to 10G-Force.
+            .name
+              | Victor Shevchenko
+            .position
+              | Company CEO
+        .item.feedback
+          .feedback-inner
+            .quote
+              .text
+                | We have involved 10G-Force in testing our mobile app for localization. All of us in our company were impressed with in-depth knowledge of the testing team and their system approach. Besides, we got results in less than 2 days! Without any hesitation, we are going to use 10G-Force services again in the future.
+            .name
+            .position
+        .item.feedback
+          .feedback-inner
+            .quote
+              .text
+                | I have engaged with 10G-Force after a few failed attempts to work with cheap freelancers. I was disappointed no one could test my app on all the devices I needed, both desktop and mobile, so didn’t even expect they could do this in such a short period. Not only my app was tested on all the platforms and devices I asked, but also I got a report with the recommendations for bug fixing to make my app truly responsive. I’m planning to use 10G-Force in all further iterations and product pivots as it is worry-free for me.
+            .name
+            .position
+      .rn-carousel-control
+        .rn-carousel-control-prev.rn-carousel-control-item
+          = embedded_svg_from_assets 'arrow-left.svg'
+        .rn-carousel-control-next.rn-carousel-control-item ng-show=("feedbacks.length &gt; 1") 
+          = embedded_svg_from_assets 'arrow-right.svg'

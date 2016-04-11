@@ -14,8 +14,4 @@ module EmailsHelper
   def site_url
     "http://10g-force.com"
   end
-
-  def img_url(relative_url)
-    "#{site_url}/assets/#{relative_url}"
-  end
 end

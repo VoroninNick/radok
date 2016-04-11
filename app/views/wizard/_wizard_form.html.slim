@@ -1,5 +1,5 @@
 - content_for :javascript do
-  script type="text/javascript" src="/assets/wizard_js.js"
+  = javascript_include_tag 'wizard_js'
 
 .wizard-controller ng-controller="Wizard"
 form for="project" url=wizard_path method="post" json="{}"
