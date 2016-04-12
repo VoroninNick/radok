@@ -71,19 +71,30 @@ $("body").on "click", "[open-popup]", (event)->
   $this = $(this)
   if $this.attr("disabled") == 'disabled'
     return
-  open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
-  condition = true
-  if open_popup_from_popup_only
-    condition = $this.closest(".ngdialog").length > 0
-  if condition
-    event.preventDefault()
-    $current_popup = $(this).closest(".ngdialog")
-    $current_popup.addClass("hide")
-    popup_name = $this.attr("open-popup")
-    if $this.attr("requires-auth") && $("html").attr("data-logged-in") != "true"
-      openPopup("user_pages__static_sign_in")
-    else
-      openPopup(popup_name)
+  $.ajax(
+    url: "user_logged"
+    type: "GET"
+    dataType: "json"
+    success: (data)->
+      console.log("here")
+      console.log(data.logged)
+      if !data.logged
+        open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
+        condition = true
+        if open_popup_from_popup_only
+          condition = $this.closest(".ngdialog").length > 0
+        if condition
+          event.preventDefault()
+          $current_popup = $(this).closest(".ngdialog")
+          $current_popup.addClass("hide")
+          popup_name = $this.attr("open-popup")
+          if $this.attr("requires-auth") && $("html").attr("data-logged-in") != "true"
+            openPopup("user_pages__static_sign_in")
+          else
+            openPopup(popup_name)
+      else
+        location.reload()
+  )
 
 $.fn.valid = ->
   return true
