@@ -1800,15 +1800,14 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(16,'',18,'Pages::SitemapXml','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(17,'<div class="row">
       <div class="columns large-12">
-      <div id="article">
-              <div class="article-name">
-                Terms of use
-              </div>
-              <div class="article-content">
-                <p>10G-Force is an online platform that gives you the opportunity to hire a first-class team of quality assurance professionals in the blink of an eye. Outsource your testing tasks and improve the quality of your apps. 10G-Force helps you to comprehensively test your app on multiple devices in real-world conditions with a minimum effort on your part!</p>
-
-              </div>
-            </div>
+        <div id="article">
+          <div class="article-name">
+            <p> Terms of use </p>
+          </div>
+          <div class="article-content">
+            <p>10G-Force is an online platform that gives you the opportunity to hire a first-class team of quality assurance professionals in the blink of an eye. Outsource your testing tasks and improve the quality of your apps. 10G-Force helps you to comprehensively test your app on multiple devices in real-world conditions with a minimum effort on your part!</p>
+          </div>
+        </div>
       </div>
       </div>',19,'Pages::TermsOfUse','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(18,'.page-content-row-wrap
