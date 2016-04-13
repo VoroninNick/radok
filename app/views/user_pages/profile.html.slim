@@ -80,7 +80,9 @@
                       |You have successfully changed password
                   .inputs
                     .columns.large-5.large-centered
-                      = rf_input id: "user_password", name: "user[password]", label: "New password", type: "password", required: true, autocomplete: false
+                      / = rf_input id: "user_old_password", name: "user[old_password]", label: "Old password", type: "password", required: true, autocomplete: false
+                      = rf_input id: "user_password", name: "user[password]", label: "New password", type: "password", required_message: "Please type password", required: true, autocomplete: false
+                      = rf_input id: "user_confirm_password", name: "user[confirm_password]", label: "Re-enter password (required)", type: "password",required_message: "These passwords don't match", validation: "confirm_password", required: true, autocomplete: false
                     .clearfix
 
 
