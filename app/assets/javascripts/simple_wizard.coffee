@@ -165,8 +165,8 @@ window.step_types = {
       file_upload_valid = !!project.test_files && project.test_files.length > 0
       required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
       contact_name_valid = project.contact_person_name.length == 0 || project.contact_person_name.length < 100
-      contact_email_valid = validateEmail(project.contact_person_email) && (project.contact_person_email.length < 40) || (project.contact_person_email.length == 0)
-      contact_phone_valid = validatePhoneNumber(project.contact_person_phone) && (project.contact_person_phone.length < 20) || (project.contact_person_phone.length == 0)
+      contact_email_valid = validateEmail(project.contact_person_email) || (project.contact_person_email.length == 0)
+      contact_phone_valid = validatePhoneNumber(project.contact_person_phone) || (project.contact_person_phone.length == 0)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
       return ( url_valid || file_upload_valid ) && required && contact_person_valid
   }
@@ -277,12 +277,6 @@ $("body").on "change code-change keyup keypress", ".wizard [as=platforms] .optio
     $input.val(value)
   update_price()
 
-# $("body").on "change code-change keyup keypress", ".project-platforms-comment_input", (e)->
-#   if $(".project-platforms-comment_input textarea").val().length == parseInt($(".project-platforms-comment_input textarea").attr("maxlength"))
-#     $("#platforms_comment-error").fadeIn()
-#   else
-#     $("#platforms_comment-error").fadeOut()
-
 $("body").on "change code-change keyup keypress", ".set-error", (e)->
   set_error(this)
 
@@ -300,11 +294,9 @@ set_error = (that)->
     $email_error.hide()
     $phone_error.hide()
     $max_error.fadeIn()
-    $input.removeClass("valid")
-    $input.addClass("invalid")
+    $input.removeClass("valid").addClass("invalid")
   else if $input.val().length > 0
-    $input.removeClass("invalid")
-    $input.addClass("valid")
+    $input.removeClass("invalid").addClass("valid")
     $max_error.hide()
     if validateEmail($input.val())
       $email_error.fadeOut()
@@ -319,14 +311,12 @@ set_error = (that)->
       $input.addClass("invalid")
       $phone_error.fadeIn()
     if phone_valid && email_valid
-      $input.removeClass("invalid")
-      $input.addClass("valid")
+      $input.removeClass("invalid").addClass("valid")
   else
     $email_error.fadeOut()
     $phone_error.fadeOut()
     $max_error.fadeOut()
-    $input.removeClass("invalid")
-    $input.addClass("valid")
+    $input.removeClass("invalid").addClass("valid")
 
 update_price = ()->
   test_platforms_bindings = []
@@ -470,12 +460,12 @@ window.validate_inputs_on_init = ()->
     validate_input.call($input)
 
 validateEmail = (email) ->
-  re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
-  re.test email
+  re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2,6})?)$/i
+  return re.test(email) && email.length <= 255
 
 validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
-  re.test number
+  return re.test(number) && number.length <= 20
 
 $("body").on "change.project.total_price", ()->
   price = project.total_price

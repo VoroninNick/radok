@@ -19,5 +19,4 @@ $change_password_form.on "after_success", ()->
   $input = $change_password_form.find(".rf-input")
   $input.addClass("valid").removeClass("invalid")
   $input.val("")
-  $change_password_form.find(".form-content").removeClass("invisible")
-  $change_password_form.find(".form-message").removeClass("hide")
+  $change_password_form.find(".form-content").removeClass("invisible").removeClass("hide")

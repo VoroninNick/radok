@@ -354,20 +354,16 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.string.project-contact-person-email.input-with-indent model="project.contact_person_email" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_email"
             |Email
-          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email maxlength="40" data-field-name="Contact person email"
+          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email data-field-name="Contact person email"
           div#project_contact_person_email-error
-            label.error-max
-              |Available email length is up to 40 charachters.
             label.error-email
               |Please, provide a valid email.
 
         .input.string.project-contact-person-phone.input-with-indent model="project.contact_person_phone" as="string"
-          label.placeholder.hiding-placeholder for="project_contact_person_email"
+          label.placeholder.hiding-placeholder for="project_contact_person_phone"
             |Phone
-          input.set-error type="text" id="project_contact_person_phone" value=@project.contact_person_phone maxlength="20" validation="email" data-field-name="Contact person phone"
+          input.set-error type="text" id="project_contact_person_phone" value=@project.contact_person_phone validation="phone" data-field-name="Contact person phone"
           div#project_contact_person_phone-error
-            label.error-max
-              |Available phone number length is up to 20 charachters.
             label.error-phone
               |Please, provide a valid phone number.
 

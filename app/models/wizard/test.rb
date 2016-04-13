@@ -75,17 +75,13 @@ class Wizard::Test < ActiveRecord::Base
   scope :processing_projects, -> { where("completed_at is not null") }
   scope :tested_projects, -> { where("completed_at is not null and tested_at is not null") }
 
-  validates :contact_person_email, length: { maximum: 40}, allow_blank: true
-  validates :contact_person_name, length: { maximum: 100}, allow_blank: true
-  validates :contact_person_phone, length: { maximum: 20 }, allow_blank: true
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
-  validates :hours_per_tester, numericality: {in: 1..5} #, presence: true
-  # validates :project_languages, presence: true
+  validates :hours_per_tester, numericality: {in: 1..5}
   validates :platforms_comment, length: { maximum: 500 }, allow_blank: true
   validates :project_access_comment, length: { maximum: 500 }, allow_blank: true
   validates :project_info_comment, length: { maximum: 500 }, allow_blank: true
-  validates :project_name, length: { maximum: 100 } #, presence: true
-  validates :project_version, length: { maximum: 20 } #, presence: true
+  validates :project_name, length: { maximum: 100 }
+  validates :project_version, length: { maximum: 20 }
 
   def testers_by_platform=(platforms)
     return if platforms.nil?
