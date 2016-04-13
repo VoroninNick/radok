@@ -9,8 +9,12 @@
           form.form.schedule-call-form novalidate="" action="/schedule-call" method="post" show-preloader="" resource="call" show-success=""
             .form-content
               .inputs
-                = rf_input label: "Phone", required: true, name: "call[phone]", validation: "phone"
-                = rf_input label: "Name", name: "call[name]"
+                - if current_user
+                  = rf_input label: "Phone", required: true, name: "call[phone]", validation: "phone", value: current_user.phone
+                  = rf_input label: "Name", name: "call[name]", value: current_user.username
+                - else
+                  = rf_input label: "Phone", required: true, name: "call[phone]", validation: "phone"
+                  = rf_input label: "Name", name: "call[name]"
                 = rf_input label: "Description", name: "call[description]"
               .actions
                 .columns.large-5
