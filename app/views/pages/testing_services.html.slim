@@ -1,0 +1,162 @@
+- cache('app/views/pages/testing_services.html.slim') do
+
+  .page
+    .page-banner-wrap
+      .page-banner style="background-image: url(#{asset_path('banners/radok-web-banner-testing-services.png')})"
+        .row
+          .inner
+            .description-block
+              div class="title" The level of testing you need
+
+    #testing_services-page-content-rows.page-content-rows
+      #testing_services__what-we-do.page-content-row-wrap
+        .row
+          .columns.large-5.medium-5.small-12
+            .header
+              | What we do
+            .subheader
+              | More than 1500 certified testers are ready to start testing your piece of software.
+          .columns.large-7.medium-7.small-12
+            .description
+              p
+                | Are you a startup founder who wants to ensure the long-expected product release doesn''t turn out to be disappointment to your customers?
+              p
+                | Are you seeking to have your app tested really, really fast?
+              p
+                | Are you a manager who wants to get efficient and effective testing services without hiring additional staff for your company?
+              p
+                | \&laquo;10G Force&raquo; comes to the rescue every time you need to make certain your product’s performance is rock solid and it operates smoothly, on every required platform and device.
+      #testing_services__test-types.page-content-row-wrap
+        .three-images-in-row-wrap
+          .row
+            .header.text-center Our services
+            h1.columns.large-12.section-header
+              | Choose crowd testing services you need
+            .item
+              .svg-wrap
+                = image_tag 'rf-icon-main-1.svg'
+              .header
+                | Functional testing
+              .time
+                | [ apps | web | games ]
+              .description
+                | Functional testing is performed in order to verify that a program functions correctly according to its specifications.
+
+            .item
+              .svg-wrap
+                = image_tag 'rf-icon-main-2.svg'
+              .header
+                | Localization testing
+              .time
+                | [ apps | web | games ]
+              .description
+                | A process to check the customization for a market, culture, or locale. It involves verifying translations of all native language strings to the target language, and tests GUI customizing, so that it is appropriate for the target market.
+
+            .item
+              .svg-wrap
+                = image_tag 'rf-icon-main-3.svg'
+              .header
+                | Usability testing
+              .time
+                | [ apps | web | games ]
+              .description
+                | A method of evaluating the user-friendliness of a system (or its components) and obtaining insights on how users perceive and use it.
+
+      #testing_services__what-we-test.page-content-row-wrap
+        .row
+          .columns.large-6.large-centered.medium-10.medium-centered.small-12.section-header.with-subheader
+            .header
+              | What we test
+            .subheader
+              | Your application, service, web-page or game will be carefully tested by thousands of professionally trained testers.
+        .two-horizontal-items-per-row
+          .columns.large-6.medium-6.item
+            .row
+              .columns.large-4.large-uncentered.medium-8.medium-centered.small-4.image-wrap-outer
+                .image-wrap
+                  = image_tag 'rf-mobile-apps.svg'
+              .columns.large-8.large-uncentered.medium-12.medium-centered.small-8.text-outer
+                .header
+                  | Mobile apps
+                .description
+                  | Test your app or website for a mobile-friendly design.
+
+          .columns.large-6.medium-6.item
+            .row
+              .columns.large-4.large-uncentered.medium-8.medium-centered.small-4.image-wrap-outer
+                .image-wrap
+                  = image_tag 'rf-responsive.svg'
+              .columns.large-8.large-uncentered.medium-12.medium-centered.small-8.text-outer
+                .header
+                  | Responsive websites
+                .description
+                  | Make sure your users get optimal viewing experience on every device.
+
+          .columns.large-6.medium-6.item
+            .row
+              .columns.large-4.large-uncentered.medium-8.medium-centered.small-4.image-wrap-outer
+                .image-wrap
+                  = image_tag 'rf-software.svg'
+              .columns.large-8.large-uncentered.medium-12.medium-centered.small-8.text-outer
+                .header
+                  | Software
+                .description
+                  | Discover how your software performs to be certain it''s bug-free.
+
+          .columns.large-6.medium-6.item
+            .row
+              .columns.large-4.large-uncentered.medium-8.medium-centered.small-4.image-wrap-outer
+                .image-wrap
+                  = image_tag 'rf-games.svg'
+              .columns.large-8.large-uncentered.medium-12.medium-centered.small-8.text-outer
+                .header
+                  | Games
+                .description
+                  | Ensure your players have an enjoyable gaming experience.
+          /! end ngRepeat: item in two_horizontal_items_per_row_model
+      #testing_services__reasons.page-content-row-wrap
+        .row
+          .columns.large-6.medium-6.small-10.small-centered.medium-uncentered.large-uncentered
+            .header
+              .row
+                h2#testing_services__reasons__h2.row
+                .columns.large-3.medium-4.small-2.count
+                  | 3
+                .columns.large-8.medium-7.text
+                  | Reasons to use our software testing services
+          .columns.large-6.medium-6
+            .item.ng-scope data-number="1"
+              .title
+                | Immediate
+              .description
+                | 1500+ certified on-demand testers
+            .item.ng-scope data-number="2"
+              .title
+                | Professional software testers
+              .description
+                | deliver results within 48 hours
+            .item.ng-scope data-number="3"
+              .title
+                | Real-world testing
+              .description
+                | each and every device available to test
+      #testing-services__what-next.page-content-row-wrap
+        .row
+          .columns.large-7.text
+            .header
+              | What next
+            .description
+            .links
+              a href="/crowdsourced-testing-process" ui-sref="how_it_works"  How it works
+              a href="/crowdsouced-testing-cost" ui-sref="pricing"  What it costs?
+          .columns.large-5.button-column
+            .button-outer
+              button.rf-button.rf-button-with-subtitle.rf-button-with-svg.rf-button-raised.rf-button-auto-width.rf-button-svg-size-medium.rf-button-align-content-center.rf-button-size-medium.start-now-button href="/ordering-crowdsourced-testing"
+                .rf-button-content-wrap
+                  .rf-button-content
+                    .svg-wrap.svg-size-medium
+                      = image_tag 'rf-rocket-up-right.svg'
+                    .button-text-wrap
+                      .inner
+                        .button-title.ng-binding.ng-scope ng-bind="title()" ng-if="title()"  Start now!
+                        .button-subtitle.ng-binding.ng-scope ng-bind="subtitle()" ng-if="subtitle()"  no registration required
