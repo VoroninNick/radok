@@ -2966,31 +2966,31 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
         a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
           | In admin panel',NULL,'Templates::FaqRequestAdminNotification','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(32,'table border="1"
-        tr
-          td
-            |Name
-          td
-            = @resource.name
+      tr
+        td
+          |Name
+        td
+          = @resource.name
 
-        tr
-          td
-            |Email
-          td
-            = @resource.email
+      tr
+        td
+          |Email
+        td
+          = @resource.email
 
-        tr
-          td
-            |Subject
-          td
-            = @resource.subject
+      tr
+        td
+          |Subject
+        td
+          = @resource.subject
 
-        tr
-          td
-            |Description
-          td
-            = @resource.description
+      tr
+        td
+          |Description
+        td
+          = @resource.description
 
-      = render "resource_link_in_admin_panel"',20,'Templates::FaqRequestAdminNotification','content',NULL);
+      = render "application/resource_link_in_admin_panel"',20,'Templates::FaqRequestAdminNotification','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(33,'table border="1"
         tr
           td
