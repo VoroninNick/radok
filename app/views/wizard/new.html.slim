@@ -47,12 +47,13 @@
 
             .platforms.hide ng-show="wizard.total_testers_count"
               .row.header
-                .columns.large-6
+                .columns.large-8
                   |Platforms:
-                .columns.large-3.icon.human
+                .columns.large-2.icon.human
                   = embedded_svg_from_assets("user", class: "user")
-                .columns.large-3.icon.hours
+                .columns.large-2.icon.hours
                   = embedded_svg_from_assets("clock", class: "clock")
+              .rows
 
           .save-button ng-click="saveProject()"
             /= svg_placeholder "download"
