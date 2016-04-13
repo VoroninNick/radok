@@ -320,14 +320,6 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model Pages::Contact do
-    pages_navigation_label
-
-    edit do
-      page_fields(true)
-    end
-  end
-
   config.model Pages::Pricing do
     pages_navigation_label
 
