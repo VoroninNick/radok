@@ -26,7 +26,6 @@ gem 'activerecord-session_store', '~> 0.1.2'
 gem 'require_reloader',       '~> 0.2.0'
 gem 'rack-page_caching',      '~> 0.0.3'
 gem 'mailchimp-api',          '~> 2.0.6', require: 'mailchimp'
-gem 'rubocop',                '~> 0.39.0', require: false
 
 # Assets HTML and Helpers
 gem 'sass-rails',             '~> 5.0'
@@ -67,6 +66,7 @@ end
 
 group :development, :development_prod do
   gem "better_errors",      '1.1.0'
+  gem 'rubocop',                '~> 0.39.0', require: false
   gem "binding_of_caller",  '0.7.2'
   gem 'railroady'
   # Visual representation of my model classes
