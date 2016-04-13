@@ -169,7 +169,6 @@ default_form_error_handler = (xhr, state, options)->
 
 $("body").on "submit", "form:not([no-processing])", (event)->
   event.preventDefault()
-
   $form = $(this)
   $form.find(".rf-input").addClass("touched")
   type = $form.attr("type")
@@ -183,6 +182,7 @@ $("body").on "submit", "form:not([no-processing])", (event)->
     form_type.validateForm.call($form)
   else
     $form.validateForm()
+
   valid_form = $form.find(".rf-input.invalid").length == 0
   console.log "valid_form", valid_form
   if valid_form
@@ -330,6 +330,14 @@ $.fn.validateInput = ->
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
+    if validation_options.indexOf("confirm_password") >= 0
+      valid = validateConfirmPassword($rf_input)
+
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
     if validation_options.indexOf("phone") >= 0
       valid = validatePhoneNumber(value)
 
@@ -350,9 +358,6 @@ $.fn.validateInput = ->
     $form.addClass("invalid").removeClass("valid")
 
 $.fn.validateForm = (options)->
-
-
-
   $form = $(this)
 
   $form.find(".rf-input").each ->
@@ -360,6 +365,9 @@ $.fn.validateForm = (options)->
 
     $rf_input.validateInput()
   $form
+
+validateConfirmPassword = (el) ->
+  el.val() == el.prev().val()
 
 validateEmail = (email) ->
   re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
