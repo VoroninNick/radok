@@ -11,8 +11,12 @@
           .inputs
             div.row
               .columns.large-6
-                = rf_input(label: "Your name", name: "contact_feedback[name]", required: true)
-                = rf_input(label: "Email", type: "email", name: "contact_feedback[email]", required: true)
+                - if current_user
+                  = rf_input(label: "Your name", value: current_user.username, name: "contact_feedback[name]", required: true)
+                  = rf_input(label: "Email", value: current_user.email, type: "email", name: "contact_feedback[email]", required: true, validation: "email")
+                - else
+                  = rf_input(label: "Your name", name: "contact_feedback[name]", required: true)
+                  = rf_input(label: "Email", type: "email", name: "contact_feedback[email]", required: true, validation: "email")
                 = rf_input(label: "Subject", name: "contact_feedback[subject]", required: true)
               .columns.large-6
                 = rf_input(type: "text", number_inputs_height: 3, name: "contact_feedback[description]", label: "Message", required: true)
