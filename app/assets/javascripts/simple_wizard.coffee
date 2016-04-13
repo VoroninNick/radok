@@ -436,9 +436,6 @@ window.input_value = ()->
   else
     value = $input.val()
 
-  if log_input_value
-    console.error "input_type: ", input_type
-
   if input_data_type == "integer"
     value = parseInt(value)
 
@@ -451,7 +448,9 @@ window.validate_input = (value)->
   input_type_class = input_types[input_type]
   if value == undefined
     value = input_value.call($input)
-
+  if typeof(value) == "string"
+    value = value.trim()
+    console.log value
   # validation
   validation_options = {
     required: $input.hasAttribute("required")
@@ -647,34 +646,23 @@ window.check_for_step_completeness = ()->
 log_project_main_components = false
 
 $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
-
-  #console.log "e : #{e.type}", e
   $input = $(this)
 
   $html_input = $input.filter("input")
   if !$html_input.length
     $html_input = $input.find("input")
+
   ignore = (e.type == 'keyup' && $html_input.length && (e.which == 13))
-
-  if e.type == 'change' && $html_input.attr("model") == 'project.test_files'
-    console.log "add file event"
-
   if ignore
     return false
 
   model = $input.attr("model")
-
   value = input_value.call($input)
-  #console.log "inspect: model: #{model}: ", value
-
-
 
   validate_input.call($input, value)
   ignore_model = $html_input.attr('type') == 'file'
   if !ignore_model
     assign_model_key(model, value)
-
-  #console.log "input change"
 
   project.saved = false
 
@@ -694,16 +682,14 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   stringified_value = value
   if Array.isArray(value)
     stringified_value = value.join(", ")
+  stringified_value = stringified_value.trim()
 
   $("[data-bind='#{model}']").text(stringified_value)
 
   disabled_push = $input.attr("push") == 'false'
 
-
   if !disabled_push && wizard_form.is_persisted.apply(wizard_form)
     save_timeout_id = $wizard_controller.data("save_timeout_id")
-    #if log_project_main_components
-    #  console.log "inspect: project_main_components: ", project.main_components
     if save_timeout_id
       clearTimeout(save_timeout_id)
     save_timeout_id = setTimeout(
@@ -714,14 +700,6 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
 
     $wizard_controller.data("save_timeout_id", save_timeout_id)
   enable_checkout_button_if_project_valid()
-#  valid_project = $(".configuration-steps .wizard-step:not(.hide):not(.completed)").length == 0
-#  $checkout_button = $(".checkout-button, .rf-confirm-button")
-#  if valid_project
-#    $checkout_button.removeAttr("disabled")
-#  else
-#    $checkout_button.attr("disabled", "disabled")
-
-
 
 $("body").on "change.project.total_testers_count", ()->
   model = "project.total_testers_count"
