@@ -8,7 +8,6 @@ setTimeout ()->
     $rf_input.find("input").attr("type", "password")
   50
 
-#window.wizard_root_path = "/ordering-crowdsourced-testing"
 window.wizard_root_path = $("form[for]").attr("url") || $("#dashboard-projects").attr("data-wizard-root")
 $header_user = $("#header-user")
 window.logged_in = $("html").data().loggedIn == true
@@ -53,9 +52,6 @@ window.openPopup = (popup_name)->
 $("[disable-click-on-active]").on "click", ".active", (event)->
   $this = $(this)
   event.preventDefault()
-
-#$("#header-menu").on "click", "[id=header-user].unlogged", ->
-#  openPopup("user_pages__static_sign_in")
 
 $.fn.closeDialog = ()->
   $ng_dialog = $(this).closest(".ngdialog")
@@ -184,13 +180,14 @@ $("body").on "submit", "form:not([no-processing])", (event)->
   else
     $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
-  console.log "valid_form", valid_form
   if valid_form
     $form_errors = $form.find(".form-errors")
     if form_type.serialize
       form_data = form_type.serialize.call($form)
     else
       form_data = $form.serializeArray()
+      $(form_data).each ->
+        this.value = this.value.trim()
 
     if form_type.url
       url = form_type.url.apply($form)
@@ -242,8 +239,6 @@ $("body").on "show_success", "form.forgot-password-form", (event, data)->
   $email_placeholder = $form.find(".success-handler .email-placeholder")
   user = data.user
   $email_placeholder.text(user.email)
-
-#$("body").on "focus keypress", "input[type=password]", (event)->
 
 $("body").on "capson", ->
   $(".caps-lock-warning").removeClass("hide")
@@ -298,8 +293,7 @@ $.fn.validateInput = ->
   form_try_send = $form.hasClass("try-send")
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
-  value = $rf_input.val()
-  #$input = $rf_input.find("input, textarea")
+  value = $rf_input.val().trim()
 
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
@@ -310,7 +304,6 @@ $.fn.validateInput = ->
 
   if required
     valid = value && value.length
-  #valid = valid && $rf_input.find(".error.remote").length > 0
 
   if valid
     $rf_input.find(".error.required").addClass("hide")
@@ -350,14 +343,9 @@ $.fn.validateInput = ->
     $form.addClass("invalid").removeClass("valid")
 
 $.fn.validateForm = (options)->
-
-
-
   $form = $(this)
-
   $form.find(".rf-input").each ->
     $rf_input = $(this)
-
     $rf_input.validateInput()
   $form
 
@@ -369,24 +357,11 @@ validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
   re.test number
 
-
 $("body").on "change blur keyup", "form .rf-input", (event)->
-  #console.log "form rf-input event"
-  #console.log "event type: ", event.type
-  #console.log "before val()"
-  #console.log "value: ", $(this).val()
-  #console.log "after val()"
   $rf_input = $(this)
-  #$rf_input = $input.closest(".rf-input")
   if event.type == 'change'
     $rf_input.find(".error.taken").addClass("hide")
-
-
   $rf_input.validateInput()
-
-
-
-
 
 $("body").on "click", ".tab-labels > :not(.active)", ->
   $tab_label = $(this)
@@ -404,7 +379,6 @@ $("body").on "click", ".tab-labels > :not(.active)", ->
   $tab_content.addClass("active")
   #setContainerSize()
 
-
 setContainerSize = ()->
   $profile_tab_contents_wrap = $(".profile-tab-contents-row-wrap")
   $profile_tab_contents_wrap.css("min-height", '')
@@ -414,12 +388,10 @@ setContainerSize = ()->
   #$profile_tabs_wrap_height = $(".profile-tab-labels-row-wrap").height()
   main_height = $("main").height()
 
-
   difference = wrap_height - (header_height + main_height)
   if difference > 0
     min_height = $profile_tab_contents_wrap.height() + difference
     $profile_tab_contents_wrap.css("min-height", min_height)
-
 
 $("body").on "click", ".delete-account", ->
   delete_confirmed = confirm("Do you really want delete your account? This action cannot be reverted")
@@ -444,18 +416,12 @@ $("body").on "change", "#subscribe_form__subscribe", ->
     dataType: "json"
     data: data
     success: ->
-
   )
-
-$("body").on "submit", "", ()->
-
 
 $("body").on "change", "#input-file-uploader", ->
   $photo_image_wrap = $(".photo-image-wrap")
   $no_image = $photo_image_wrap.find(".no-image")
   $no_image.addClass("hide")
-
-
   input = this
   file = input.files[0]
   imageType = /image.*/
@@ -464,7 +430,6 @@ $("body").on "change", "#input-file-uploader", ->
   if file.type.match(imageType)
     reader = new FileReader()
     reader.onload = ->
-
       src = reader.result
       $img = $image_label.find("img")
       $header_user = $("#header-user")
@@ -491,19 +456,13 @@ $("body").on "change", "#input-file-uploader", ->
           "X-File-Size": file.size
           "X-File-Type": file.type
         success: (data)->
-          #alert("success")
           $header_img.attr('src', data.user.avatar.header_image.url)
           $img.attr('src', data.user.avatar.profile_image.url)
-        error: ->
-          #alert("error")
       )
-
 
     reader.readAsDataURL(file);
   else
     $image_label.text("File type is not supported")
-
-#$("body").on "change", "#personal-data"
 
 $('body').on 'input propertychange', "#personal-data input", (evt) ->
   $input = $(this)
@@ -521,7 +480,6 @@ $('body').on 'input propertychange', "#personal-data input", (evt) ->
 
     ), 2000)
 
-
 $("body").on "change blur keyup", "div.rf-input input, div.rf-input textarea", (e)->
   $(this).closest("div.rf-input").trigger(e.type, arguments)
 
@@ -536,10 +494,8 @@ $("body").on "click", ".rf-input[type=tags] span.tag a", ()->
   $tag.remove()
   $rf_input.trigger("change")
 
-
 if old_model_binding
   $("body").on "keyup change", "[model]", (e)->
-    #console.log "e", e.type
     $rf_input = $(this)
     model = $rf_input.attr("model")
     model_keys = model.split(".")
@@ -551,7 +507,6 @@ if old_model_binding
       target[key] ?= {}
       target = target[key]
     target[last_key] = $(this).val()
-    #console.log "target", target
 
 $.read_models = ()->
   $("[model]").each ->
@@ -574,7 +529,6 @@ $(document).on "ready", ->
       numeric: window.footable.options.parsers.numeric,
       display_size: (cell)->
         return $(cell).text()
-
     },
     sorters: {
       alpha: window.footable.options.sorters.alpha, # default alpha & numeric sorters
@@ -607,12 +561,9 @@ $(document).on "ready", ->
   })
   #$.read_models()
 
-
-
 $("body").on "click", ".return_to_wizard", (e)->
   e.preventDefault()
   $(this).closeDialog()
-
 
 $("body").on "click", ".schedule-call-button", ->
   openPopup("wizard__schedule_call")
@@ -630,7 +581,6 @@ $(".subscribe-block form").on "after_error", (e, xhr, state, options)->
   subscribed = response.subscribed
   if subscribed
     msg = "This email already subscribed"
-
 
   $error = state.$form_content.find(".error")
   if !$error.length
