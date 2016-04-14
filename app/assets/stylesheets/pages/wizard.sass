@@ -31,7 +31,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 %banner
 	height: $wizard-banner-height
 	background-color: $wizard-banner-background-color
-	//background-image: asset-url("wizard_banner_image.png")
 	background-repeat: no-repeat
 	.title
 		+font-36
@@ -52,7 +51,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 	width: #{grid-calc(12, 12)}
 	max-width: rem-calc(600)
 
-
 = go-next-button($background-image: true)
 	background-color: $fire-orange-color
 	color: white
@@ -72,7 +70,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 %go-next-button
 	+go-next-button
 
-
 = platform-name
 	display: inline-block
 	line-height: 40px
@@ -88,14 +85,9 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 		height: 40px
 		line-height: 40px
 
-
-#wizard-banner
-
 #wizard-content
 	+grid-row
 	position: relative
-	//padding-top: rem-calc(24)
-	//margin-top: rem-calc(24)
 #wizard-steps
 	width: 100%
 	padding-right: $wizard-summary-width
@@ -110,13 +102,11 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 
 	.header
 		@extend %right-window-header
-
 	.content
 		+font-14-semibold
 		background: $white-color
 		padding: rem-calc(8) rem-calc(16) rem-calc(48) rem-calc(16)
 		position: relative
-
 	.go-button
 		margin: 0
 		svg
@@ -139,12 +129,9 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 	width: $wizard-summary-width
 	height: 100px
 	background: inherit
-
 	&.fixed-top
 		top: #{$header-height + $go-next-button-margin-top}
 		position: fixed
-
-
 
 #wizard-summary
 	margin-top: $wizard-step-vertical-indent
@@ -162,7 +149,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 		.total-steps
 			right: 0
 	.progress-area
-		//background: $light-gray-text-color
 		height: rem-calc(5)
 		.progress-line
 			height: inherit
@@ -186,7 +172,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 					height: 100%
 					content: ""
 					background: $light-gray-text-color
-
 				&.proceeded
 					&:before
 						background-color: $yellow-orange-color
@@ -206,7 +191,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 				fill: $light-gray-text-color
 				height: 18px
 				width: 18px
-
 		.columns
 			padding: 0
 			&:first-child
@@ -219,8 +203,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 	.go-button
 		.button-label
 			+font-21-semibold
-
-
 
 = wizard-total-cost-label
 	+font-14
@@ -250,9 +232,9 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 	font-size: 1.2rem
 	display: inline
 	vertical-align: super
+
 #wizard-summary-fixed
 	position: relative
-
 	width: $wizard-summary-width
 	height: auto
 	background: inherit
@@ -270,8 +252,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 		padding: rem-calc(8) rem-calc(16)
 		position: relative
 
-
-
 	.footer
 		padding-top: 1px
 		.price-wrap
@@ -280,13 +260,10 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 				+wizard-total-cost-price-wrap-inner
 			.currency
 				+wizard-total-cost-currency
-
 		.total-cost-label
 			+wizard-total-cost-label
-
 		.total-price
 			+wizard-total-cost-total-price
-
 
 .popup
 	&.payment
@@ -314,8 +291,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 			&:not(.active)
 				.wizard-step-content
 					opacity: 0.3
-
-
 				.wizard-step-content-overlay
 					display: block
 					position: absolute
@@ -324,18 +299,10 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 					width: 100%
 					left: 0
 					z-index: 1
-
-			&:not(.ready-to-proceed)
-			//.step-nav-buttons
-				*
-					display: none
-			&.future
-
 			&.active
 				.wizard-step-line
 					&:before
 						bottom: 0
-
 
 		.wizard-step-counter, .wizard-full-summary-icon
 			.wizard-step.active &
@@ -346,10 +313,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 			&:not(:hover):before
 				background-image: asset-url("rf-icon-ok.svg")
 				background-repeat: no-repeat
-				//width: 16px
-				//height: 16px
-				//top: 12px
-				//left: 12px
 				background-size: 16px 16px
 				background-position: 12px 12px
 				content: ""
@@ -370,8 +333,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 				.wizard-step-line
 					&:before
 						bottom: 0
-
-
 				.wizard-step-counter, .wizard-full-summary-icon
 					border-color: $sky-blue-color
 					&:before
@@ -380,10 +341,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 				&:not(:hover):before
 					background-image: asset-url("rf-icon-ok.svg")
 					background-repeat: no-repeat
-					//width: 16px
-					//height: 16px
-					//top: 12px
-					//left: 12px
 					background-size: 16px 16px
 					background-position: 12px 12px
 					content: ""
@@ -391,20 +348,13 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 				&:before
 					background-color: rgba($fire-orange-color, 0.6)
 
-
 form[for=project]
 	padding: #{$wizard-step-vertical-indent * 2} 0 0 0
 
 .wizard-step
 	position: relative
-	//padding: $wizard-step-vertical-indent 0
-	//margin: $wizard-step-vertical-indent 0
 	border: none
-	//padding: 0
 	padding: 0 0 #{$wizard-step-vertical-indent * 2} 0
-	//&.completed:not(.review)
-		.wizard-step-content
-			opacity: 0.3
 
 	&.proceeded:not(.active)
 		.wizard-step-edit-tooltip
@@ -418,23 +368,15 @@ form[for=project]
 				left: 55%
 				+transform(translate(-50%, -50%))
 				z-index: 2
-
-
 				svg
 					width: 80px
 					height: 80px
-
 					g
 						fill: #666
 
 	&[uneditable]
 		.wizard-step-edit-tooltip
 			display: none !important
-	//&:not(.proceeded)
-		.wizard-step-edit-tooltip
-			display: none
-
-
 
 	.wizard-step-line
 		position: absolute
@@ -454,53 +396,12 @@ form[for=project]
 			bottom: 100%
 			top: 0
 			+transition_all(0.5s all)
-		//&:after
-			content: ""
-			display: block
-			position: absolute
-			height: 48px
-			width: 48px
-			border: 2px solid green
-			border-radius: 50%
-			top: -48px
-			left: -25px
-			z-index: 2
-
-	//.wizard-step-line-overlay
-		top: 24px
-		position: absolute
-		bottom: -48px
-		width: 48px
-		overflow: hidden
-		z-index: 2
-		.round
-
-	//&:not(.active)
-		.wizard-step-line-overlay
-			height: 0
-
-
-
-
 
 	form
 		+grid-row
 		position: relative
-
-
-	//&.future:not(.ready-to-go-to-this-step)
-
-		/*
-			color: $light-gray-text-color !important
-			border-color: $light-gray-text-color !important
-
-		/*:before, *:after
-			background: $light-gray-text-color !important
 		.wizard-step-content
 			-webkit-filter: grayscale(1)
-
-
-
 
 .wizard-step-counter, .wizard-full-summary-icon, .invalid-steps-list .step-number
 	background: #FFF
@@ -523,14 +424,12 @@ form[for=project]
 		left: 3px
 		width: 40px
 		height: 40px
-		//background-color: $dark-gray-color
 		background-color: $light-gray-text-color
 		border-radius: 50%
 		line-height: 40px
 		color: white
 		+font-18-semibold
 		text-align: center
-
 
 .wizard-full-summary-icon
 	svg
@@ -558,10 +457,7 @@ form[for=project]
 	line-height: $text-header-height
 	margin: 0 0 rem-calc(24) 0
 
-
 .option-image
-
-
 	text-align: center
 	label
 		cursor: pointer
@@ -591,7 +487,6 @@ form[for=project]
 		svg
 			opacity: 1
 
-
 .option-image-input
 	&:checked
 		& + label
@@ -609,14 +504,11 @@ form[for=project]
 
 .go-back
 	display: none
-	//+font-14-light
-	//color: $light-gray-color
 	font-size: 0.8rem
 	font-weight: 100
 
 .step-nav-buttons
 	text-align: center
-	// if keep place
 	height: rem-calc(94)
 .go-next-button
 	+go-next-button
@@ -636,7 +528,6 @@ form[for=project]
 		display: inline-block
 		+font-28-bold
 		text-transform: uppercase
-
 	img
 		position: relative
 		top: rem-calc(10)
@@ -657,15 +548,10 @@ form[for=project]
 .option-image
 	@extend .columns
 
-
-//#step-type-of-tests
-	.option-image
-		+grid-column(4)
 .platform
 	+grid-column(6)
 	margin-top: $platform-indent
 	margin-bottom: $platform-indent
-
 	.human-svg-wrap
 		float: right
 		position: relative
@@ -682,19 +568,14 @@ form[for=project]
 		svg
 			width: 40px
 			height: 40px
-
 	> .name
 		+platform-name
-
-
 
 .platform-content
 	position: relative
 
-
 .platform-price
 	color: $yellow-orange-color
-
 	float: right
 	display: inline-block
 	width: 90px
@@ -714,8 +595,6 @@ form[for=project]
 		height: inherit
 		display: inline-block
 		float: left
-
-
 
 .comment-label
 	float: left
@@ -745,8 +624,6 @@ form[for=project]
 			color: $light-gray-text-color
 			vertical-align: bottom
 			margin: 0 rem-calc(2)
-
-
 			&:before
 				display: block
 				position: relative
@@ -758,13 +635,10 @@ form[for=project]
 				content: "hours"
 				font-weight: 300
 				font-size: 0.75rem
-
 			&.selected
 				border-color: $fire-orange-color
 				&:before, &:after
 					color: $fire-orange-color
-
-
 			&:nth-child(1)
 				width: 50px
 				height: 50px
@@ -792,7 +666,6 @@ form[for=project]
 				font-size: 1.4rem
 				padding-top: 14px
 
-
 .option-count
 	+grid-row
 	padding: 3px 0
@@ -808,30 +681,19 @@ form[for=project]
 			width: 50px
 			text-align: center
 			border: 1px solid $white-color
-
 		&:hover
 			border-color: $sky-blue-color
 			outline: none
-
 		&:hover, input:focus ~
 			.decrement, .increment
-				//color: $sky-blue-color
-				//display: block
 				opacity: 1
-
-
-
 		.decrement, .increment
 			position: absolute
 			display: block
 			top: 0
 			opacity: 0
 			color: $light-gray-text-color
-
-
-
 			&:before
-				//content: "\2014"
 				display: block
 				font-weight: 600
 				line-height: 30px
@@ -839,12 +701,10 @@ form[for=project]
 			left: 0
 			&:before
 				content: "-"
-
 		.increment
 			right: 0
 			&:before
 				content: "+"
-
 		.decrement, .increment
 			&:hover
 				color: $sky-blue-color
@@ -853,20 +713,14 @@ form[for=project]
 		> label, .platform-option-label, .input-wrap input
 			color: $light-gray-text-color
 
-
-
 input, textarea
 	+input-base
-
 	+placeholder
 		color: $light-gray-text-color
 		font-style: italic
 	&:focus
 		outline: none
 		border-color: $gray-text-color
-
-
-
 
 //.radio-button-wrap
 	position: relative
@@ -884,7 +738,6 @@ input[type=checkbox]
 				top: 2px
 				left: 2px
 
-
 input[type=radio]
 	&:not(.option-image-input)
 		& + label
@@ -898,8 +751,6 @@ input[type=radio]
 					top: 3px
 					left: 3px
 
-
-
 input
 	&:not([type=radio]), &:not([type=checkbox]), &:not([type=submit])
 		width: #{grid-calc(6, 12)}
@@ -910,8 +761,6 @@ textarea
 	&:focus
 		outline: none
 		border-color: $gray-text-color
-
-
 
 .input-related-content
 	.actions
@@ -930,10 +779,6 @@ button
 	&:focus
 		outline: none
 
-
-
-
-
 .inputs
 	&.horizontal
 		+flexbox
@@ -941,10 +786,8 @@ button
 		> .input , > .checklist-item
 			+flex-grow(1)
 
-
 = question
 	padding: 32px 0 20px 0
-
 	.required-symbol
 		color: $yellow-orange-color
 		margin-left: 3px
@@ -956,10 +799,8 @@ button
 .question-text
 	+question-text
 
-
 .question
 	+question
-
 
 checkbox-list
 	display: block
@@ -967,20 +808,19 @@ checkbox-list
 	.error-messages
 		color: red
 		+font-14-light-italic
-
-
-
 	.text
 		+font-21-semibold
 		line-height: 50px
 		&.centered
 			text-align: center
+
 .wizard-step-content-content question
 	&:first-child
 		.question
 			padding-top: 0
 			.text
 				line-height: $text-header-height
+
 .input
 	.description
 		color: $light-gray-text-color
@@ -991,15 +831,12 @@ checkbox-list
 		color: $light-gray-text-color
 		+font-14-light
 
-
 .selectize-control.multi .selectize-input > div
 	background: $white-color
 
 body
 	div.tagsinput
 		+input-base
-		//+textarea-width
-		// extracted from mixin
 		width: #{grid-calc(12, 12)} !important
 		max-width: rem-calc(600)
 
@@ -1018,21 +855,13 @@ body
 #wizard-controller
 	min-height: calc(100vh - #{$header-height})
 
-
-
 #wizard-summary
 	.go-next-button
 		+button-with-subtitle
-
-
-
 		.rocket-svg
 			+button-svg-wrap
 			svg
 				+button-svg
-
-
-
 		&.disabled
 			cursor: default
 			opacity: 1
@@ -1047,13 +876,11 @@ body
 
 		.next-step
 			+button-title
-			//color: $gray-text-color
 		.next-step-name
 			font-size: 14px
 			font-weight: 300
 			top: -8px
 			position: relative
-			//color: $gray-text-color
 
 	.or-go-back-wrap
 		display: block
@@ -1065,19 +892,13 @@ body
 	.go-back-button
 		width: 200px
 		float: none
-		//+font-14-light
-
 		display: inline
 		text-align: center
 		height: 40px
 		line-height: 40px
-		//color: $light-gray-color
 		color: $sky-blue-color
 		cursor: pointer
 		-webkit-user-select: none
-
-
-
 
 .wizard-step-edit-tooltip
 	display: none
@@ -1090,10 +911,8 @@ body
 .intro-step.proceeded
 	.question > .text
 		opacity: 0.3
-
 	.option-image input:not(:checked) ~ *
 		opacity: 0.3
-
 
 .highlighted-text
 	color: $yellow-orange-color
@@ -1125,12 +944,10 @@ body
 
 .save-button
 	+save-button
-
 	&:hover
 		+save-button-hover
 	svg
 		+save-button-svg
-
 
 .project-saved
 	+save-button
@@ -1150,7 +967,6 @@ body
 		top: 16px
 		left: 16px
 		position: relative
-
 	&.disabled, &[disabled]
 		background: $white-color
 		color: $inactive-button-text-color
@@ -1167,12 +983,9 @@ body
 .wizard-step-footnotes
 	+grid-row
 	color: $light-gray-text-color
-	//font-style: italic
 	+font-12-light-italic
-
 	.footnote
 		+grid-column(12)
-
 
 .intro-step
 	question
@@ -1191,7 +1004,6 @@ body
 		.button-text-wrap
 			.button-title
 				+font-21
-				//line-height: 70px
 
 	&.rf-next-step-button, &.rf-go-to-summary-button, &.rf-confirm-button
 		.svg-wrap
@@ -1214,7 +1026,6 @@ body
 	.question
 		width: 95%
 		display: block
-
 		.text
 			+question-text
 			&.centered
@@ -1228,7 +1039,6 @@ body
 		.columns
 			&:last-child
 				float: left
-
 
 #wizard-controller
 	#wizard-summary
@@ -1249,7 +1059,6 @@ body
 		.platform
 			clear: left
 
-
 +keyframes(current-task-blink)
 	0%, 100%
 		color: $sky-blue-color
@@ -1258,8 +1067,6 @@ body
 
 #wizard-summary
 	.current-task
-		//+animation(current-task-blink 1s infinite)
-
 
 .checkbox-list
 	.options
@@ -1302,8 +1109,6 @@ input.file-upload-input
 		padding: 0
 		width: 16px
 		height: 16px
-
-
 		position: relative
 		left: auto
 		top: auto
@@ -1329,50 +1134,33 @@ comment-with-price
 	label.comment-label, textarea
 		display: none !important
 
-
 .wizard
 	.input
 		> label
 
-
 		&.hide-star
 			abbr
 				display: none
-
-
 		&.image_radio_buttons
 			input
 				display: none
-
 			.options
 				span
 					display: inline-block
 					text-align: center
-
 					label
 						display: block
-
-
 			&.option-large-3
 				.options
 					span
 						width: percentage(1/4)
-
 			&.option-large-4
 				.options
 					span
 						width: percentage(1/3)
-
-
-
-
 	.available-hours
 		input
 			display: none
-
-
-
-
 
 #wizard-controller
 	.label
@@ -1381,7 +1169,6 @@ comment-with-price
 		height: 50px
 	.input
 		position: relative
-
 		&.radio-button
 			.custom-radio-button
 				+custom-radio-button
@@ -1389,7 +1176,6 @@ comment-with-price
 				+radio-button-label
 			input
 				display: none
-
 			&.checked, input:checked ~ label.custom-radio-button
 				+custom-radio-button-checked
 
@@ -1404,31 +1190,23 @@ comment-with-price
 					+radio-button-label
 				input
 					display: none
-
 				&.checked, input:checked ~ label.custom-radio-button
 					+custom-radio-button-checked
-
 
 		&.text, &.without-label
 			.placeholder
 				top: 40px
-
 			&.focus
 				.placeholder
 					top: 0
-
 
 		&.project-auth-login, &.project-auth-password
 			.placeholder
 				top: 30px
 
-
 			&.focus
 				.placeholder
 					top: 0px
-
-
-
 
 		label.custom-checkbox
 			+custom-checkbox-button
@@ -1437,20 +1215,13 @@ comment-with-price
 			margin-right: 10px
 
 		.option
-
-
 			&.checked, input:checked ~
 				label.custom-checkbox
 					+custom-checkbox-button-checked
 
-
-
-
-
 		input
 			&[type=checkbox]
 				display: none
-
 
 		.placeholder
 			+wizard-input-placeholder
@@ -1461,8 +1232,6 @@ comment-with-price
 		&.focus, &.not-empty
 			.placeholder
 				+filled-wizard-input-placeholder
-
-
 
 .input
 	&.collection-checkboxes, &.collection-radio-buttons
@@ -1477,15 +1246,10 @@ comment-with-price
 					width: 50%
 					margin-right: 0
 
-
-
-
 .option-count
-
 
 .platform-option-label
 	float: left
-
 
 #wizard-summary
 	.platforms
@@ -1499,15 +1263,19 @@ comment-with-price
 					top: 3px
 					position: relative
 
-
-
 .wizard
 	#wizard-full-summary
 		padding-right: 30px
-
 		textarea.instructions
 			max-width: none
 
+
+@media #{$small-only}, #{$medium-only}
+	#project-test-type
+		img
+			width: 82px
+		.ux img
+			width: 115px
 
 #wizard-controller
 	&:not(.configure-mode)
@@ -1529,20 +1297,15 @@ comment-with-price
 		.stroke-my-color
 			stroke: white
 
-
 .wizard-step
 	&.active
 		.wizard-step-line
 			&:before
 				bottom: 0
-
 		.wizard-step-counter
 			border-color: $sky-blue-color
-
 			&:before
 				background-color: $fire-orange-color
-
-
 
 .star
 	&:before
@@ -1550,23 +1313,13 @@ comment-with-price
 		color: #FFA500
 		margin-left: 3px
 
-
-
-// =============================================================================================
-// =============================================================================================
-// =============================================================================================
 // Wizard new style
-// =============================================================================================
-// =============================================================================================
-// =============================================================================================
-
 
 .with-distance
 	padding-bottom: 20px
 
 .with-input-distance
 	margin-top: 40px
-
 
 .image-radio-button
 	label.label
@@ -1576,7 +1329,6 @@ comment-with-price
 	&:hover, &.checked
 		label.label
 			color: $yellow-orange-color !important
-
 
 .hours-per-tester
 	p
@@ -1629,17 +1381,14 @@ comment-with-price
 
 .file-upload-files-list
 	margin-top: 12px !important
-
 	.file
 		margin: 7px 0 !important
-
 
 .input.radio-button
 	.custom-radio-button + label
 		vertical-align: top
 
 .input.text.project_exploratory_instructions_input
-	//margin-top: 10px !important
 
 .input, .nested-input-group
 	& + .input.radio-button
@@ -1648,7 +1397,6 @@ comment-with-price
 .input.radio-button
 	& + &
 		margin-top: rem-calc(10) !important
-
 
 // validation for wizard
 
@@ -1667,12 +1415,8 @@ comment-with-price
 	.test
 		text-align: center
 		opacity: 0.6
-		//display: inline-block
-		//float: none
-
 		a
 			display: block
-
 		span
 			padding-top: 10px
 			display: block
@@ -1681,33 +1425,26 @@ comment-with-price
 			height: 50px
 			line-height: 25px
 			font-weight: 500
-
 		&:hover
 			opacity: 1
-
-
 
 .input
 	.error
 		display: none
 
-
 .input.tags
-
 
 .input.touched.invalid, .wizard-step.changed-from-this .input.invalid
 	input
 		border-color: $fire-orange-color
 	.error
 		display: block
-
 	&.tags
 		input
 			border-color: transparent
 		&.invalid
 			.tagsinput
 				border-color: $fire-orange-color
-
 		&.focus
 			.error, .placeholder
 				display: none !important
@@ -1718,27 +1455,17 @@ comment-with-price
 			line-height: 30px
 			padding: 0 12px
 
-
-
-
-
 	.placeholder
 		&.hiding-placeholder
 			display: none !important
 
-
-
-
-
-
 // Super full summary
+
 .super-full-summary
 	.platform
 		width: 100% !important
-
 		.platform-name
 			width: 100% !important
-
 		.platform-subitem
 			.name, .count
 				display: inline-block
@@ -1749,8 +1476,6 @@ comment-with-price
 				float: right
 				color: $yellow-orange-color
 				font-weight: 500
-
-
 
 +small
 	#wizard-help, #wizard-summary
@@ -1768,7 +1493,6 @@ comment-with-price
 		.label
 			height: auto !important
 			line-height: 18px !important
-
 		&.project_product_type
 			margin-bottom: 3rem
 
@@ -1795,13 +1519,11 @@ comment-with-price
 			.hour
 				zoom: 0.8
 
-
 +iphone5-down
 	.hours-per-tester
 		.available-hours
 			.hour
 				zoom: 0.68
-
 		&:after
 			font-size: 0.85rem
 
@@ -1818,65 +1540,47 @@ comment-with-price
 		&:before
 			background-color: $fire-orange-color
 
-
 #platforms-empty-error
 	display: block
 	margin-bottom: 3rem
 
 .platforms-input
-
 	&:not(.touched)
 		& ~ #platforms-empty-error
 			display: none !important
 
-
 .full-summary-pay-buttons
 	padding: 3rem 0
-
-
-
 
 // payment-popup
 .choose-payment-method-title
 	text-align: center
 	margin: 1rem 0
 
-
-
-
-
 .payment-type
 	&.first
 		margin-left: 18.75%
 
-
 +small
 	.wizard-step-content
 		padding-right: 15px
-
-
 	input
 		&:not([type=radio]), &:not([type=checkbox]), &:not([type=submit])
 			width: 100%
 			max-width: none
-
 	.small-padding-0
 		padding: 0
 	.small-padding-right-0
 		padding-right: 0
-
 	.small-margin-bottom-24
 		margin-bottom: 24px
-
 	#promo_code
 		width: calc(100% - 80px)
-
 
 .price-and-buttons
 	float: left
 	clear: left
 	margin-top: 70px
-
 
 .payment-method-coming-soon
 	+question-text
@@ -1884,18 +1588,15 @@ comment-with-price
 	margin-top: 30px
 	margin-bottom: 50px
 
-
 input#promo_code
 	width: 130px
 
 .cancel-promo-code
 	+delete_button
-
 	.promo-code-field &
 		display: none
 	.promo-code-field.success &
 		display: inline-block
-
 
 .super-full-summary
 	.platforms
@@ -1904,6 +1605,5 @@ input#promo_code
 			&:nth-child(2n+3)
 				clear: left
 	.property
-		//margin-top: 20px
 		padding-left: 15px !important
 		padding-right: 15px !important
