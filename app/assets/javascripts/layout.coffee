@@ -332,14 +332,18 @@ $.fn.validateInput = ->
 
     if validation_options.indexOf("confirm_password") >= 0
       valid = validateConfirmPassword($rf_input)
-      # label = $rf_input.find(".error.invalid")
-      # if !label
-      #   label = $rf_input.parent().find(".error.invalid")
+
+      $identical_error = $rf_input.find(".error.identical")
+      if $identical_error.length
+        $identical_error.removeClass("hide")
+      else
+        $error = "<label for='user_confirm_password' class='error remote identical'>These passwords don't match</label>"
+        $rf_input.prepend($error)
 
       if valid
-        $rf_input.find(".error.invalid").addClass("hide")
+        $rf_input.parent().find(".error.remote.identical").addClass("hide")
       else
-        $rf_input.find(".error.invalid").removeClass("hide")
+        $rf_input.parent().find(".error.remote.identical").removeClass("hide")
 
     if validation_options.indexOf("phone") >= 0
       valid = validatePhoneNumber(value)

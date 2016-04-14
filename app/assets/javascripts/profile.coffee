@@ -1,7 +1,7 @@
 $(document).on "ready", ()->
 $change_password_form = $("#change-password-form")
 $change_password_form.on "after_error", ()->
-  console.log ("geronimo");
+  # console.log ("geronimo");
 
   $input = $change_password_form.find(".rf-input")
   $identical_error = $input.find(".error.identical")
