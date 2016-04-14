@@ -1,15 +1,7 @@
 window.project ?= {}
-
 window.$wizard_controller = $("#wizard-controller")
-
 window.price_per_hour = parseInt($wizard_controller.attr("data-hour-price"))
-
 log_input_value = false
-
-#$(window).on "unload", (e)->
-#  e.preventDefault()
-#  return false
-
 window.assets ?= {}
 window.assets.test_case_files ?= []
 
@@ -125,12 +117,6 @@ window.input_types = {
 
     set_dom_value : (value)->
   }
-#  files : {
-#    dom_value : (input)->
-#      $input = $(input)
-#      model = $input.attr("model")
-#      assign_model_key()
-#  }
 }
 
 window.step_types = {
@@ -139,15 +125,20 @@ window.step_types = {
     checkIsCompleted : ()->
       if project.test_platforms_bindings
         maximum_testers_reached = false
+        valid_comment = (project.platforms_comment && project.platforms_comment.length < 500) || !project.platforms_comment
         $.each project.test_platforms_bindings, () ->
           if this.testers_count > 50
             maximum_testers_reached = true
-      completed = (project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)) && !maximum_testers_reached && project.platforms_comment.length < 500
+      completed = (project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)) && !maximum_testers_reached && valid_comment
   }
   'project_info' : {
     checkIsCompleted : ()->
-      (project.project_name && project.project_name.length > 0) && project.project_name.length < 100 && (project.project_version && project.project_version.length > 0) && project.project_version.length < 20 && (project.project_languages && project.project_languages.length > 0 ) \
-      && (project.report_languages && project.report_languages.length > 0) && (project.project_info_comment.length < 500)
+      valid_name = (project.project_name && project.project_name.length > 0) && project.project_name.length < 100
+      valid_version = (project.project_version && project.project_version.length > 0) && project.project_version.length < 20
+      valid_project_languages = project.project_languages && project.project_languages.length > 0
+      valid_report_languages = project.report_languages && project.report_languages.length > 0
+      valid_comment = (project.project_info_comment && project.project_info_comment.length < 500) || !project.project_info_comment
+      valid_name && valid_version && valid_project_languages && valid_report_languages && valid_comment
   }
   'project_components' : {
     checkIsCompleted : ()->
@@ -393,7 +384,6 @@ update_price = ()->
   $platforms_field.trigger("change.project.test_platforms_bindings")
   $platforms_field.trigger("change.project.total_price")
   $platforms_field.trigger("change.project.selected_platforms")
-  #$platforms_field.trigger("change.#{model}")
 
 window.input_value = ()->
   $input = $(this)
@@ -407,8 +397,7 @@ window.input_value = ()->
 
   if input_data_type == "integer"
     value = parseInt(value)
-
-  return value
+  value
 
 window.validate_input = (value)->
   $input = $(this)
@@ -496,15 +485,6 @@ $("body").on "change.project.test_platforms_bindings", (e)->
       else
         $("#platforms-max-error").fadeOut()
 
-      #b.attr("platform-subitem-id")
-#  platforms.filter(
-#    (p)->
-#      p.children.filter(
-#        (subitem)->
-#          return subitem.id > 10
-#      ).length > 0
-#  )
-
   # Short summary
 
   $short_summary = $("#wizard-summary")
@@ -517,10 +497,10 @@ $("body").on "change.project.test_platforms_bindings", (e)->
     for p in project.selected_platforms
       row = \
         ("<div class='row'>
-            <div class='columns large-6'>#{p.name}</div>
-            <div class='columns large-3'>#{p.testers_count}</div>
-            <div class='columns large-3'>#{p.hours_count}</div>
-           </div>")
+          <div class='columns large-6'>#{p.name}</div>
+          <div class='columns large-3'>#{p.testers_count}</div>
+          <div class='columns large-3'>#{p.hours_count}</div>
+         </div>")
       rows += row
   else
     $short_summary_platforms_block.addClass("hide")
@@ -547,28 +527,14 @@ $("body").on "change.project.test_platforms_bindings", (e)->
         subitem_html = "<div class='platform-subitem'>#{subitem.name}</div>"
         subitems_html += subitem_html
       platform_html = "
-            <div class='columns large-4 platform'>
-              <div class='platform-svg'></div>
-              <div class='platform-name'>#{p.name}</div>
-              <div class='platform-subitems'>#{subitems_html}</div>
-            </div>
-          "
+        <div class='columns large-4 platform'>
+          <div class='platform-svg'></div>
+          <div class='platform-name'>#{p.name}</div>
+          <div class='platform-subitems'>#{subitems_html}</div>
+        </div>"
       platforms_html += platform_html
 
   $full_summary.find(".platforms").html(platforms_html)
-
-#$("body").on "change", "input[model]", ()->
-#  $input = $(this)
-#  model = $(this).attr("model")
-#  value = null
-#  type = $(this).attr("type")
-#  if type.in(w("text url tel")) || type.in(w("radio"))
-#    value = $input.val()
-#  else
-#
-#  assign_model_key(model, value)
-#  notifyProjectHasUnsavedChanges()
-#  $input.trigger("change.#{model}")
 
 window.check_for_step_completeness = ()->
   $step = $(this)
@@ -636,19 +602,11 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
     )
     $wizard_controller.data("save_timeout_id", save_timeout_id)
   enable_checkout_button_if_project_valid()
-#  valid_project = $(".configuration-steps .wizard-step:not(.hide):not(.completed)").length == 0
-#  $checkout_button = $(".checkout-button, .rf-confirm-button")
-#  if valid_project
-#    $checkout_button.removeAttr("disabled")
-#  else
-#    $checkout_button.attr("disabled", "disabled")
 
 $("body").on "change.project.total_testers_count", ()->
   model = "project.total_testers_count"
   value = project.total_testers_count
   $("[data-bind='#{model}']").text(value)
-
-#$("body").on "change", ".wizard .input.radio-button", ()->
 
 scrollToFirstStep = ()->
   change_step(2, null, false)
@@ -663,11 +621,8 @@ scrollToStep = (step_id)->
 
   if available_step
     $visible_steps.filter(".wizard-step[step=#{project.current_step_id}]")
-
     top = $visible_steps.filter("[step=#{step_id}]").offset().top - $("#header").height() - 50
-
     $("html, body").animate({scrollTop: top})
-
     return true
 
 show_mini_summary = ()->
@@ -679,11 +634,9 @@ window.showStepsProgress = ()->
   steps_count = $visible_steps.length
   step_percentage_width = "#{100 / steps_count}%"
   $visible_steps.each ()->
-
     $step = $(this)
     completed = !!$step.data("completed")
     step_id = $step.attr("step")
-
     $progress_step = $("steps-progress .step[step=#{step_id}]")
     if completed
       $progress_step.addClass("proceeded")
@@ -725,9 +678,6 @@ $("body").on "click", ".go-back-button", ()->
 
 $("body").on "click", ".rf-next-step-button", ()->
   step = next_step()
-#  if !step
-#    $button = $(this)
-#    $button.fadeOut()
 
 $("body").on "change", ".project_test_type", ()->
   if is_configure_mode()
@@ -999,14 +949,6 @@ init_tags_input = ()->
         $input.addClass("not-empty").removeClass("empty")
   })
 
-$("body").on "change.project.methodology_type", ()->
-  if project.methodology_type == "exploratory" || ""
-    # $(".project_exploratory_instructions_input").attr("required", "true")
-    # $(".project_test_case_files_input").attr("required", "false")
-  else
-    # $(".project_exploratory_instructions_input").attr("required", "false")
-    # $(".project_test_case_files_input").attr("required", "true")
-
 $("body").on "click", ".input.image-radio-button", ()->
   $(this).trigger("focusin")
 
@@ -1039,9 +981,6 @@ $("body").on "change.project.product_type", ()->
     $platforms_step = $(".wizard-step[type=platforms]")
     step_types['platforms'].checkIsCompleted.apply($platforms_step)
     showStepsProgress()
-    #wizard_form.update_model_value({valid: valid_project})
-    #origginal_valid = !!project.valid
-    #if origginal_valid
 
 window.get_test_invalid_steps = ()->
   $(".configuration-steps .wizard-step:not(.hide):not(.completed)")
@@ -1054,7 +993,6 @@ is_valid_project = (steps)->
     valid_project = steps.length == 0
   return valid_project
 
-#$("body").on "change.project.valid", ()->
 enable_checkout_button_if_project_valid = ()->
   $checkout_button = $(".checkout-button")
   $confirm_button = $(".rf-confirm-button")
@@ -1098,7 +1036,6 @@ validate_methodology_type = ()->
     $test_case_files_input.addClass("invalid-required invalid")
     $exploratory_input.removeAttr("required")
     $exploratory_input.removeClass("invalid-required invalid")
-
 
 $("body").on "change code-change keyup keypress", "#project_auth_login", ()->
   if $("#project_auth_login").val().length > 0
@@ -1222,9 +1159,6 @@ $("body").on "click", ".rf-wizard-test-files-upload-button", (e)->
   $input = $("input#test_files")
   $input.click()
 
-#$("body").on "disappear", ".wizard-step", ()->
-#  $(this)
-
 $("body").on "after_push", ()->
   notifyProjectSaved()
 
@@ -1326,7 +1260,6 @@ $("body").on "delete_files.test_files", ()->
 
 window.project ?= {}
 window.platforms = JSON.parse($("[as=platforms]").attr("options"))
-#update_price()
 init_loaded_project()
 init_option_count_inputs()
 init_string_inputs()
@@ -1338,7 +1271,6 @@ $(inputs_selector_for_presence).each ()->
 
 # Step 3
 init_string_inputs()
-
 show_or_hide_exploratory_instructions_input()
 init_tags_input()
 
@@ -1354,10 +1286,6 @@ $(".wizard-step").on "disappear", ()->
     project.current_step_id = null
     project.prev_step_id = project.available_step_ids[project.available_step_ids.length]
     project.next_step_id = false
-
-#$(window).on "scroll", ()->
-  #$wizard_full_summary = $("#wizard-full-summary")
-  #active_summary = $wizard_full_summary.filter(":appeared").length > 0
 
 $("body").on "change.project.hours_per_tester", ()->
   $hour_labels = $(".hour")
@@ -1398,8 +1326,6 @@ $("body .promo-code-field button").on "click", (e)->
       update_price()
 
     error: ()->
-      #$label.hide()
-      #$invalid_code_error.show()
       $promo_code_field.removeClass("waiting")
       $promo_code_field.addClass("invalid")
       $input.removeAttr("disabled")
@@ -1464,7 +1390,6 @@ $(".checkout-button, .confirm-button-container").on "click", (e)->
       $fields.each ()->
         $this = $(this)
         $field = $this
-        console.log $field
         if $this.filter(".error").length
           if $this.closest(".input").length > 0
             return
