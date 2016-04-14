@@ -1280,10 +1280,9 @@ comment-with-price
 @media #{$xsmall-only}
 	#project-test-type
 		img
-			width: 65px
+			width: 62.5px
 		.ux img
 			width: 115px
-
 
 #wizard-controller
 	&:not(.configure-mode)
@@ -1334,6 +1333,8 @@ comment-with-price
 		color: $dark-gray-color !important
 		font-size: $font-size-18 !important
 		padding-top: 10px
+		@media #{$small-only}
+			font-size: $font-size-15 !important
 	&:hover, &.checked
 		label.label
 			color: $yellow-orange-color !important
