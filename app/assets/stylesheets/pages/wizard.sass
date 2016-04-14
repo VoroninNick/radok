@@ -1270,12 +1270,20 @@ comment-with-price
 			max-width: none
 
 
-@media #{$small-only}, #{$medium-only}
+@media #{$small-only}
 	#project-test-type
 		img
 			width: 82px
 		.ux img
 			width: 115px
+
+@media #{$xsmall-only}
+	#project-test-type
+		img
+			width: 65px
+		.ux img
+			width: 115px
+
 
 #wizard-controller
 	&:not(.configure-mode)
