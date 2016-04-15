@@ -1,11 +1,10 @@
 $(document).on "ready", ()->
 $change_password_form = $("#change-password-form")
 $change_password_form.on "after_error", ()->
-  # console.log ("geronimo");
 
   $input = $change_password_form.find(".rf-input")
   $identical_error = $input.find(".error.identical")
-  if $identical_error.length
+  if $identical_error.length > 1
     $identical_error.removeClass("hide")
 
   else
