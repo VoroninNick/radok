@@ -53,9 +53,6 @@ $("[disable-click-on-active]").on "click", ".active", (event)->
   $this = $(this)
   event.preventDefault()
 
-#$("#header-menu").on "click", "[id=header-user].unlogged", ->
-#  openPopup("user_pages__static_sign_in")
-
 $.fn.closeDialog = ()->
   $ng_dialog = $(this).closest(".ngdialog")
   $ng_dialog.addClass("hide")
@@ -241,8 +238,6 @@ $("body").on "show_success", "form.forgot-password-form", (event, data)->
   user = data.user
   $email_placeholder.text(user.email)
 
-#$("body").on "focus keypress", "input[type=password]", (event)->
-
 $("body").on "capson", ->
   $(".caps-lock-warning").removeClass("hide")
 
@@ -298,7 +293,6 @@ $.fn.validateInput = ->
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
   value = $rf_input.val()
-  #$input = $rf_input.find("input, textarea")
 
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
@@ -309,7 +303,6 @@ $.fn.validateInput = ->
 
   if required
     valid = value && value.length
-  #valid = valid && $rf_input.find(".error.remote").length > 0
 
   if valid
     $rf_input.find(".error.required").addClass("hide")
@@ -337,8 +330,8 @@ $.fn.validateInput = ->
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
-    if validation_options.indexOf("phone") >= 0
-      valid = validatePhoneNumber(value)
+    if validation_options.indexOf("name") >= 0
+      valid = validateName(value)
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
@@ -372,9 +365,12 @@ validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
   re.test number
 
+validateName = (name) ->
+  re = /^[a-zA-Z\s]*$/
+  re.test name
+
 $("body").on "change blur keyup", "form .rf-input", (event)->
   $rf_input = $(this)
-  #$rf_input = $input.closest(".rf-input")
   if event.type == 'change'
     $rf_input.find(".error.taken").addClass("hide")
   $rf_input.validateInput()
