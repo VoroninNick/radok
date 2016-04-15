@@ -14,7 +14,6 @@
               p
                 | We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
 
-
     #devices-statistics.statistics
       = html_block_with_fallback :devices_in_numbers, true
         - if @statistics.try(&:any?)

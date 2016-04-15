@@ -464,7 +464,7 @@ validateEmail = (email) ->
   return re.test(email) && email.length <= 255
 
 validatePhoneNumber = (number) ->
-  re = /^\+(?:[0-9] ?){6,14}[0-9]$/
+  re = /^\+(?:[0-9] ?){8,14}[0-9]$/
   return re.test(number) && number.length <= 20
 
 $("body").on "change.project.total_price", ()->
