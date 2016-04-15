@@ -12,7 +12,7 @@
             .row
               .columns.large-6
                 = rf_input(label: "Your name", name: "faq_request[name]", required: true)
-                = rf_input(label: "Email",  name: "faq_request[email]", required: true, type: "email")
+                = rf_input(label: "Email", validation: "email", name: "faq_request[email]", required: true)
                 = rf_input(label: "Subject", name: "faq_request[subject]", required: true)
 
               .columns.large-6

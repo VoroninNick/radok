@@ -38,7 +38,7 @@
             .form-content
               label.header for="footer-subscribe-input"
                 |Subscribe for our latest news and updates:
-              input#footer-subscribe-input name="email" type="text" placeholder="youremail@mail.com"
+              input#footer-subscribe-input name="email" type="text" placeholder="youremail@mail.com" validation="email"
               = rf_button(svg: "rf-icon-email", id: "subscribe-button", html: {type: "submit"})
             .preloader.hide
               = image_tag("preloader.gif")
