@@ -2,20 +2,15 @@ $wizard-banner-background-color: $light-black-color
 $wizard-banner-height: rem-calc(230)
 $wizard-summary-width: rem-calc(200)
 $wizard-step-counter-diameter: rem-calc(48)
-
 $wizard-step-vertical-indent: rem-calc(24)
-
 $go-next-button-height: rem-calc(70)
 $go-next-button-width: rem-calc(280)
 $go-next-button-margin-top: rem-calc(48)
-
-$platform-indent: 1rem
-
 $input-width: rem-calc(90)
 $input-height: rem-calc(30)
-
 $text-header-height: rem-calc(50)
 $wizard-step-line-width: rem-calc(1)
+$platform-indent: 1rem
 $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 
 %right-window-header
@@ -26,7 +21,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 	text-align: center
 	text-transform: uppercase
 	background-color: $sky-blue-color
-
 
 %banner
 	height: $wizard-banner-height
@@ -99,7 +93,6 @@ $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 	position: absolute
 	right: 0
 	top: 0
-
 	.header
 		@extend %right-window-header
 	.content
@@ -721,10 +714,6 @@ input, textarea
 	&:focus
 		outline: none
 		border-color: $gray-text-color
-
-//.radio-button-wrap
-	position: relative
-	display: inline-block
 
 input[type=checkbox]
 	& + label
@@ -1397,7 +1386,9 @@ comment-with-price
 	.custom-radio-button + label
 		vertical-align: top
 
-.input.text.project_exploratory_instructions_input
+@media #{xsmall-only}
+	#project_exploratory_instructions_input
+		height: 90px !important
 
 .input, .nested-input-group
 	& + .input.radio-button
