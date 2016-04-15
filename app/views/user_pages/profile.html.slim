@@ -17,7 +17,7 @@
                   = embedded_svg_from_assets "rf-icon-user"
                 .text-label
                   |Personal data
-            li class="#{'active' if @password_change_tab_active}"
+            li id="#{'chng-pass_disable' if !!current_user.provider}" class="#{'active' if @password_change_tab_active}"
               a
                 .icon-wrap
                   = embedded_svg_from_assets "rf-icon-password"

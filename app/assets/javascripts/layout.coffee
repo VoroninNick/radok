@@ -381,14 +381,9 @@ $("body").on "change blur keyup", "form .rf-input", (event)->
   if event.type == 'change'
     $rf_input.find(".error.taken").addClass("hide")
 
-
   $rf_input.validateInput()
 
-
-
-
-
-$("body").on "click", ".tab-labels > :not(.active)", ->
+$("body").on "click", ".tab-labels > :not(#chng-pass_disable, .active)", ->
   $tab_label = $(this)
   $tab_labels = $tab_label.closest(".tab-labels")
   tab_index = $tab_label.index()
