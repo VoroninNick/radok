@@ -8,6 +8,8 @@ def pages_models
     # TODO: remove html based CMS
     next if filename == 'home'
     next if filename == 'about'
+    next if filename == 'testing_services'
+    next if filename == 'terms_of_use'
 
     "Pages::" + filename.camelize
   end.compact
@@ -144,7 +146,7 @@ RailsAdmin.config do |config|
   ## == Cancan ==
   config.authorize_with :cancan
 
-  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo TestingServices Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [
     FormConfigs::ContactFeedback,
@@ -370,14 +372,6 @@ RailsAdmin.config do |config|
     edit do
       field :seo_tags
       field :sitemap_record
-    end
-  end
-
-  config.model Pages::TestingServices do
-    pages_navigation_label
-
-    edit do
-      page_fields
     end
   end
 
