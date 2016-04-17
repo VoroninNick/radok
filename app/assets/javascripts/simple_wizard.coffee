@@ -496,19 +496,8 @@ $("body").on "change.project.test_platforms_bindings", (e)->
       else
         $("#platforms-max-error").fadeOut()
 
-      #b.attr("platform-subitem-id")
-#  platforms.filter(
-#    (p)->
-#      p.children.filter(
-#        (subitem)->
-#          return subitem.id > 10
-#      ).length > 0
-#  )
-
-  # Short summary
-
   $short_summary = $("#wizard-summary")
-  $short_summary_platforms_block = $(".platforms")
+  $short_summary_platforms_block = $("#wizard-summary .platforms")
   $platform_rows_block = $short_summary_platforms_block.find(".rows")
   rows = ("")
 
@@ -517,18 +506,16 @@ $("body").on "change.project.test_platforms_bindings", (e)->
     for p in project.selected_platforms
       row = \
         ("<div class='row'>
-            <div class='columns large-6'>#{p.name}</div>
-            <div class='columns large-3'>#{p.testers_count}</div>
-            <div class='columns large-3'>#{p.hours_count}</div>
-           </div>")
+          <div class='columns large-8'>#{p.name}</div>
+          <div class='columns large-2'>#{p.testers_count}</div>
+          <div class='columns large-2'>#{p.hours_count}</div>
+        </div>")
       rows += row
   else
     $short_summary_platforms_block.addClass("hide")
-
   $platform_rows_block.html(rows)
 
   # Full summary
-
   $full_summary = $("#wizard-full-summary-content")
   platforms_html = ""
   if project.selected_platforms && project.selected_platforms.length
