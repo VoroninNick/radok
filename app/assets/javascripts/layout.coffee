@@ -297,7 +297,7 @@ $.fn.validateInput = ->
   form_try_send = $form.hasClass("try-send")
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
-  value = $rf_input.val()
+  value = $rf_input.val().trim()
   #$input = $rf_input.find("input, textarea")
 
   if value && value.length
