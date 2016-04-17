@@ -69,28 +69,29 @@
 		position: relative
 		width: 100%
 		.quote
-			//overflow-y: hidden
-			//max-height: 105px
 			color: $yellow-orange-color
 			text-align: center
-			padding-left: 50px
-			padding-top: 20px
+			padding: 20px 50px 20px 50px
 			left: -50px
 			position: relative
 			&:before
-				//content: open-quote
 				content: "\201C"
 				color: #6D3D31
 				font-size: 120px
-
 				position: absolute
 				display: block
 				left: 0
-				//line-height: 45px
+				line-height: 60px
+			&:after
+				content: "\201D"
+				color: #6D3D31
+				font-size: 120px
+				position: absolute
+				display: block
+				right: 0
 				line-height: 60px
 			.text
 				max-height: 105px
-				//overflow-y: hidden
 				line-height: 21px
 				overflow: hidden
 

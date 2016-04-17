@@ -77,7 +77,6 @@ handle_scroll = (e)->
 
 
 $("body").on "mouseover", "#header.scrolled div#header-row, #header.scrolled div#header-row *", ()->
-  console.log "mouseover"
   window.top_nav_locked = true
 
 $("body").on "mouseout", "div#header.scrolled", (e)->
@@ -151,4 +150,3 @@ if custom_scroll_speed
           easing: "easeOutExpo"
   #easing: "easeOutBack"
         })
-

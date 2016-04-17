@@ -75,7 +75,7 @@
                 span data-bind="total_price"
                   |0
 
-            .checkout-button disabled="disabled" ng-class="!wizard.ready_to_checkout ? 'disabled' : '' " open-popup="payment" requires-auth="true"
+            .checkout-button disabled="disabled" open-popup="payment" requires-auth="true"
               /= svg_placeholder "rf-rocket-up-right"
               ng-include src="'/assets/rf-rocket-up-right.svg'"
                 = embedded_svg_from_assets "rf-rocket-up-right"
@@ -100,7 +100,8 @@
 
             = rf_button class: "rf-next-step-button", align_content: "left", full_width: true, svg: "rf-icon-rocket", title: "Next step", disabled: false
             = rf_button class: "rf-go-to-summary-button", align_content: "left", full_width: true, svg: "finish_flag", title: "Summary", disabled: false
-            = rf_button class: "rf-confirm-button", align_content: "left", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" }
+            .confirm-button-container
+              = rf_button class: "rf-confirm-button", align_content: "left", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" }
 
             /next-step-button step-number="2" step-name="test name" model-active-step="wizard.active_step" model-next-step="wizard.next_step" ng-click="next_step()"
             .or-go-back-wrap.hide

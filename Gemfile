@@ -66,6 +66,7 @@ end
 
 group :development, :development_prod do
   gem "better_errors",      '1.1.0'
+  gem 'rubocop',                '~> 0.39.0', require: false
   gem "binding_of_caller",  '0.7.2'
   gem 'railroady'
   # Visual representation of my model classes
