@@ -5,27 +5,22 @@
       #wizard-steps
         = render "wizard_form"
 
-
       - if !@project.persisted?
-        == slim(WizardText.first.try(&:wizard_help_slim), self)
-          #wizard-help
-            #wizard-help-fixed
-              .header
-                |Welcome!
-              .content
-                #wizard-help-welcome
-                  |Please choose&nbsp;
-                  span.highlighted-text
-                    |Type of test
-                  |&nbsp;and&nbsp;
-                  span.highlighted-text
-                    |Platform
-                  |&nbsp;to proceed with the test wizard
-
-
-              .footer
-                = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
-
+        #wizard-help
+          #wizard-help-fixed
+            .header
+              |Welcome!
+            .content
+              #wizard-help-welcome
+                |Please choose&nbsp;
+                span.highlighted-text
+                  |Type of test
+                |&nbsp;and&nbsp;
+                span.highlighted-text
+                  |Platform
+                |&nbsp;to proceed with the test wizard
+            .footer
+              = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
 
       #wizard-summary
         #wizard-summary-fixed.fixed-top
@@ -41,9 +36,8 @@
               |&thinsp;for&thinsp;
               span.highlighted-text data-bind="project.product_type"
                 = @project.product_type_name
-
-            /p.current-task
-                    |Please select platforms to be tested
+            p.current-task
+              |Please select platforms to be tested
 
             .platforms.hide ng-show="wizard.total_testers_count"
               .row.header

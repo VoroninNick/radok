@@ -490,6 +490,7 @@ $("body").on "change.project.test_platforms_bindings", (e)->
   rows = ("")
 
   if project.selected_platforms && project.selected_platforms.length > 0
+    $short_summary.find(".current-task").addClass("hide")
     $short_summary_platforms_block.removeClass("hide")
     for p in project.selected_platforms
       row = \
@@ -500,6 +501,7 @@ $("body").on "change.project.test_platforms_bindings", (e)->
            </div>")
       rows += row
   else
+    $short_summary.find(".current-task").removeClass("hide")
     $short_summary_platforms_block.addClass("hide")
   $platform_rows_block.html(rows)
 

@@ -212,7 +212,6 @@ RailsAdmin.config do |config|
                  Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
   include_models(config, Client)
   include_models(config, Wizard::PromoCode)
-  include_models(config, WizardText)
   include_models(config, WizardSettings)
 
   config.model Cms::MetaTags do
@@ -595,13 +594,6 @@ RailsAdmin.config do |config|
       end
     end
   end
-
-  config.model WizardText do
-    edit do
-      content_field :wizard_help_slim
-    end
-  end
-
 
   config.model Templates::MailerTemplate do
     visible false
