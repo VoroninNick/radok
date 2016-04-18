@@ -481,7 +481,7 @@ $("body").on "change.project.test_platforms_bindings", (e)->
 
   # Short summary
       $input = $options.filter("[platform-subitem-id=#{b.subitem_id}]").find("input")
-      if b.testers_count && (b.testers_count > $input.attr("max"))
+      if b.testers_count && (b.testers_count > 50)
         reached_maximum = true
       if reached_maximum
         $("#platforms-max-error").fadeIn()
@@ -757,6 +757,8 @@ $("body").on "click", ".option-count .decrement, .option-count .increment", ->
     new_value = value - step
   if new_value < 0
     new_value = 0
+  if new_value > 50
+    new_value = 50
 
   if value != new_value
     $input.trigger_val(new_value)

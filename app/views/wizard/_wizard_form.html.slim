@@ -74,7 +74,7 @@ form for="project" url=wizard_path method="post" json="{}"
                     .platform-option-label
                       = c.name
                     .input-wrap
-                      input pattern='[0-9]*' type='number' max='50' value="#{binding_current_testers_count}"
+                      input pattern='[1-9]$|^[1-4]\d$|^5[0]' maxlength='2' value="#{binding_current_testers_count}"
                       label class='decrement' for='platform-1-subitem-1'
                       label class='increment' for='platform-1-subitem-1'
 
