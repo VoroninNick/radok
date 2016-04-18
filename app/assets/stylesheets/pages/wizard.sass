@@ -1517,15 +1517,6 @@ comment-with-price
 		.rf-configure-button, &.rf-step-configure-button
 			display: none
 
-	#project-test-type
-		.image-radio-button
-			.image-label
-				&:not(.ux)
-					img
-						width: 82px
-
-
-
 .rf-go-to-summary-button, #wizard-summary .rf-confirm-button
 	display: none
 
@@ -1662,9 +1653,11 @@ comment-with-price
 // validation for wizard
 
 #wizard-content
-	.error
+	.error, .error-max, .error-email, .error-phone
 		color: $fire-orange-color
 		font-size: $font-size-14
+	.error-max, .error-email, .error-phone
+		display: none
 
 // anonymous tests wrap in popup
 

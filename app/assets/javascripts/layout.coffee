@@ -42,7 +42,6 @@ window.openPopup = (popup_name)->
     $popup = popup_name
   else
     $popup = null
-
   if $popup && $popup.length
     $("body").addClass("opened-popup")
     $popup.removeClass("hide")
@@ -150,7 +149,6 @@ default_form_error_handler = (xhr, state, options)->
     $form_errors.addClass("hide")
 
   $form.find(".inputs .error").addClass("hide")
-
   if !isEmpty(errors_by_field)
     for field_name, errors of errors_by_field
       $field = $form.find("[name='#{form_resource_name}[#{field_name}]']").closest(".rf-input")
@@ -171,7 +169,6 @@ default_form_error_handler = (xhr, state, options)->
 
 $("body").on "submit", "form:not([no-processing])", (event)->
   event.preventDefault()
-
   $form = $(this)
   $form.find(".rf-input").addClass("touched")
   type = $form.attr("type")
@@ -186,6 +183,7 @@ $("body").on "submit", "form:not([no-processing])", (event)->
   else
     $form.validateForm()
   valid_form = $form.find(".rf-input.invalid").length == 0
+
   if valid_form
     $form_errors = $form.find(".form-errors")
     if form_type.serialize
@@ -197,6 +195,7 @@ $("body").on "submit", "form:not([no-processing])", (event)->
       url = form_type.url.apply($form)
     else
       url = $form.attr("action")
+
     method = $form.attr("ajax-method") || $form.attr("method") || 'GET'
     $form_content = $form.find(".form-content")
     show_preloader = $form.attr("show-preloader") != undefined
@@ -246,6 +245,7 @@ $("body").on "show_success", "form.forgot-password-form", (event, data)->
 
 $("body").on "capson", ->
   $(".caps-lock-warning").removeClass("hide")
+
 $("body").on "capsoff", ->
   $(".caps-lock-warning").addClass("hide")
 
@@ -297,7 +297,7 @@ $.fn.validateInput = ->
   form_try_send = $form.hasClass("try-send")
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
-  value = $rf_input.val()
+  value = $rf_input.val().trim()
   #$input = $rf_input.find("input, textarea")
 
   if value && value.length
@@ -336,20 +336,28 @@ $.fn.validateInput = ->
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
+    if validation_options.indexOf("phone") >= 0
+      valid = validatePhoneNumber(value)
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
   if !valid
+    $form.addClass("invalid").removeClass("valid")
     $rf_input.addClass("invalid").removeClass("valid")
     $field_label.addClass("hide")
-
   else
     $rf_input.removeClass("invalid").addClass("valid")
     $field_label.removeClass("hide")
 
-  if !valid
-    $form.addClass("invalid").removeClass("valid")
+  if ($rf_input.val().length == 0) && !required
+    $rf_input.removeClass("invalid").addClass("valid")
+    $rf_input.find(".error").addClass("hide")
+    $field_label.removeClass("hide")
 
 $.fn.validateForm = (options)->
   $form = $(this)
-
   $form.find(".rf-input").each ->
     $rf_input = $(this)
     $rf_input.validateInput()
@@ -391,8 +399,6 @@ setContainerSize = ()->
   $profile_tab_contents_wrap.css("min-height", '')
   wrap_height = $("#wrap").height()
   header_height = $("#header").height()
-  #profile_header_outer_height = $("#profile-header").outerHeight()
-  #$profile_tabs_wrap_height = $(".profile-tab-labels-row-wrap").height()
   main_height = $("main").height()
   difference = wrap_height - (header_height + main_height)
   if difference > 0
@@ -428,7 +434,6 @@ $("body").on "change", "#input-file-uploader", ->
   $photo_image_wrap = $(".photo-image-wrap")
   $no_image = $photo_image_wrap.find(".no-image")
   $no_image.addClass("hide")
-
   input = this
   file = input.files[0]
   imageType = /image.*/
@@ -436,6 +441,7 @@ $("body").on "change", "#input-file-uploader", ->
   $image_label.removeClass("hide")
   if file.type.match(imageType)
     reader = new FileReader()
+
     reader.onload = ->
       src = reader.result
       $img = $image_label.find("img")
@@ -452,6 +458,7 @@ $("body").on "change", "#input-file-uploader", ->
         $image_label.append($img)
       $img.attr("src", src)
       data = {user: {avatar: src}  }
+
       $.ajax(
         url: "/profile"
         type: "post"
@@ -539,10 +546,8 @@ $(document).on "ready", ->
       display_size: (a, b)->
         arr1 = $.trim(a).split("x").map( (a)-> parseInt(a) )
         arr2 = $.trim(b).split("x").map( (a)-> parseInt(a) )
-
         w1 = arr1[0]
         h1 = arr1[1]
-
         w2 = arr2[0]
         h2 = arr2[1]
 
@@ -552,7 +557,6 @@ $(document).on "ready", ->
           return h1 - h2
         else
           return -1
-
         return 1
         # here you are passed two values from the column and you must return a comparison of the two.
         if (a == b)

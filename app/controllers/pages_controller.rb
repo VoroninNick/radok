@@ -23,7 +23,6 @@ class PagesController < ApplicationController
   end
 
   def testing_services
-    render "default"
   end
 
   def about
