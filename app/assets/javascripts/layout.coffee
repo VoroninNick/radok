@@ -85,6 +85,7 @@ $.fn.valid = ->
   return true
 
 default_form_success_handler = (data, state, options)->
+  console.log "form success"
   $form = state.$form
   $preloader = state.$preloader
   $form_content = state.$form_content
@@ -113,6 +114,7 @@ default_form_success_handler = (data, state, options)->
   $form.trigger("after_success", arguments)
 
 default_form_error_handler = (xhr, state, options)->
+  console.log "form error handler"
   form_resource_name = state.form_resource_name
   $form_errors = state.$form_errors
   $form = state.$form
@@ -292,7 +294,7 @@ $.fn.validateInput = ->
   form_try_send = $form.hasClass("try-send")
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
-  value = $rf_input.val()
+  value = $rf_input.val().trim()
 
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
@@ -397,8 +399,6 @@ setContainerSize = ()->
   wrap_height = $("#wrap").height()
   header_height = $("#header").height()
   main_height = $("main").height()
-  #profile_header_outer_height = $("#profile-header").outerHeight()
-  #$profile_tabs_wrap_height = $(".profile-tab-labels-row-wrap").height()
   difference = wrap_height - (header_height + main_height)
   if difference > 0
     min_height = $profile_tab_contents_wrap.height() + difference
@@ -428,8 +428,6 @@ $("body").on "change", "#subscribe_form__subscribe", ->
     data: data
     success: ->
   )
-
-$("body").on "submit", "", ()->
 
 $("body").on "change", "#input-file-uploader", ->
   $photo_image_wrap = $(".photo-image-wrap")
@@ -475,23 +473,19 @@ $("body").on "change", "#input-file-uploader", ->
           $img.attr('src', data.user.avatar.profile_image.url)
         error: ->
       )
+
     reader.readAsDataURL(file);
   else
     $image_label.text("File type is not supported")
 
-#$("body").on "change", "#personal-data"
-
 $('body').on 'input propertychange', "#personal-data input", (evt) ->
   $input = $(this)
-
   # If it's the propertychange event, make sure it's the value that changed.
   if window.event and event.type == 'propertychange' and event.propertyName != 'value'
     return
-
   # Clear any previously set timer before setting a fresh one
   window.clearTimeout $(this).data('timeout')
   $(this).data 'timeout', setTimeout((->
-    # Do your thing here
       $form = $input.closest("form")
       $form.submit()
     ), 2000)
@@ -583,6 +577,17 @@ $("body").on "click", ".schedule-call-button", ->
 $("body").on "click", "#header-mobile-menu-button-wrap", ()->
   $("body").toggleClass("mobile-menu-opened")
 
+$("body").on "click change change-code keyup keypress", "#footer-subscribe-input", ()->
+  $email = $(this).val()
+  $subscribe_button = $("#subscribe-button")
+  $error = $("#subscribe_form .error-subscribe")
+  if validateEmail($email)
+    $subscribe_button.removeAttr("disabled")
+    $error.addClass("hide")
+  else
+    $subscribe_button.attr("disabled", "true")
+    $error.removeClass("hide")
+
 $(".subscribe-block form").on "after_error", (e, xhr, state, options)->
   response = xhr.responseJSON
   c = response.code
@@ -590,6 +595,8 @@ $(".subscribe-block form").on "after_error", (e, xhr, state, options)->
   if c && c.length > 0
     if c.indexOf("List_RoleEmailMember: ") == 0
       msg = c.substr("List_RoleEmailMember: ".length)
+    else
+      msg = c
   subscribed = response.subscribed
   if subscribed
     msg = "This email already subscribed"

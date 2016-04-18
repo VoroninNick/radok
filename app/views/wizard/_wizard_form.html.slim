@@ -246,25 +246,6 @@ form for="project" url=wizard_path method="post" json="{}"
                 label#test-case-files-required-error.error.error-required for="test_case_files_input"
                   |Please, upload at least one file
 
-        .nested-input-group
-          .input.files.test-case-files-input model="project.test_files" required="#{@project.test_case_driven?}" data-name="Test-case driven test files"
-            div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
-              input#test_case_files.file-upload-input list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false"
-              = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
-              .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
-                - @project.test_case_files.each do |asset|
-                  .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
-                    span class='file-name'
-                      |#{asset.data_file_name}
-
-                    span class='delete'
-              .upload-error.error.hide
-                |Please, select a file less than 200 MB
-
-              .columns.large-12
-                label#test-case-files-required-error.error.error-required for="test_case_files" style="#{ 'display: none' if (@project.test_case_files.length > 0) }"
-                  |Please, upload at least one file
-
         .product-main-components
           .label
             |What are the product's main components?

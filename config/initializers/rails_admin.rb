@@ -9,6 +9,7 @@ def pages_models
     next if filename == 'home'
     next if filename == 'about'
     next if filename == 'testing_services'
+    next if filename == 'terms_of_use'
 
     "Pages::" + filename.camelize
   end.compact
@@ -145,7 +146,7 @@ RailsAdmin.config do |config|
   ## == Cancan ==
   config.authorize_with :cancan
 
-  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TermsOfUse TestInfo Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [
     FormConfigs::ContactFeedback,
@@ -321,14 +322,6 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model Pages::Contact do
-    pages_navigation_label
-
-    edit do
-      page_fields(true)
-    end
-  end
-
   config.model Pages::Pricing do
     pages_navigation_label
 
@@ -413,15 +406,6 @@ RailsAdmin.config do |config|
 
     edit do
       page_fields(true)
-    end
-  end
-
-  config.model Pages::TermsOfUse do
-    pages_navigation_label
-
-    edit do
-      page_fields
-
     end
   end
 
