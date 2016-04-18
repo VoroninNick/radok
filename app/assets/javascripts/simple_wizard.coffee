@@ -151,12 +151,12 @@ window.step_types = {
     checkIsCompleted : ()->
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
-      required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
+      auth_required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
-      return ( url_valid || file_upload_valid ) && required && contact_person_valid
+      return ( url_valid || file_upload_valid ) && auth_required && contact_person_valid
   }
 }
 
