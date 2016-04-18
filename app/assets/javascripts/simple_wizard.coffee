@@ -152,7 +152,7 @@ window.step_types = {
       url_valid = (!!project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = !!project.test_files && project.test_files.length > 0
       required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
-      contact_name_valid = project.contact_person_name.length == 0 || project.contact_person_name.length < 100
+      contact_name_valid = !project.contact_person_name || project.contact_person_name.length == 0 || project.contact_person_name.length < 100
       contact_email_valid = validateEmail(project.contact_person_email) || (project.contact_person_email.length == 0)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone) || (project.contact_person_phone.length == 0)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
@@ -278,28 +278,35 @@ set_error = (that)->
   $max_error = $(error_select + " .error-max")
   $email_error = $(error_select + " .error-email")
   $phone_error = $(error_select + " .error-phone")
-  if $input.val().length == parseInt($input.attr("maxlength"))
-    $email_error.hide()
-    $phone_error.hide()
-    $max_error.fadeIn()
-    $input.removeClass("valid").addClass("invalid")
-  else if $input.val().length > 0
-    $input.removeClass("invalid").addClass("valid")
+  # maxlength
+  if $input.attr("maxlength")
+    if $input.val().length == parseInt($input.attr("maxlength"))
+      $max_error.fadeIn()
+      $input.removeClass("valid").addClass("invalid")
+    else
+      $max_error.fadeOut()
+      $input.removeClass("invalid").addClass("valid")
+
+  # email
+  else if $input.attr("validation") == "email"
     $max_error.hide()
     if validateEmail($input.val())
       $email_error.fadeOut()
-      email_valid = true
+      $input.removeClass("invalid").addClass("valid")
     else
-      $input.addClass("invalid")
       $email_error.fadeIn()
+      $input.addClass("invalid").removeClass("valid")
+
+  # phone number
+  else if $input.attr("validation") == "phone"
     if validatePhoneNumber($input.val())
       $phone_error.fadeOut()
-      phone_valid = true
-    else
-      $input.addClass("invalid")
-      $phone_error.fadeIn()
-    if phone_valid && email_valid
       $input.removeClass("invalid").addClass("valid")
+    else
+      $phone_error.fadeIn()
+      $input.addClass("invalid").removeClass("valid")
+
+  # valid
   else
     $email_error.fadeOut()
     $phone_error.fadeOut()
@@ -956,11 +963,18 @@ $("body").on "click", ".input.tags label", ()->
 
 $("body").on "change.project.product_type", ()->
   $project_test_type = $("#project-test-type")
+
   if project.product_type
     $project_test_type.fadeIn()
   if small() && !project.test_type
     top = $project_test_type.offset().top
     $("body").animate({scrollTop: top})
+
+  if wizard_form.is_persisted.apply(wizard_form)
+    update_price()
+    $platforms_step = $(".wizard-step[type=platforms]")
+    step_types['platforms'].checkIsCompleted.apply($platforms_step)
+    showStepsProgress()
 
 $("body").on "change.project.test_type", ()->
   if project.test_type
@@ -974,13 +988,6 @@ $("body").on "change.project.test_type", ()->
   else
     $exploratory_instructions_block.fadeOut()
 
-$("body").on "change.project.product_type", ()->
-  if wizard_form.is_persisted.apply(wizard_form)
-    update_price()
-    $platforms_step = $(".wizard-step[type=platforms]")
-    step_types['platforms'].checkIsCompleted.apply($platforms_step)
-    showStepsProgress()
-
 window.get_test_invalid_steps = ()->
   $(".configuration-steps .wizard-step:not(.hide):not(.completed)")
 
@@ -990,16 +997,6 @@ is_valid_project = (steps)->
     if !steps
       steps = get_test_invalid_steps()
     valid_project = steps.length == 0
-  valid_project
-
-enable_checkout_button_if_project_valid = ()->
-  $checkout_button = $(".checkout-button, .rf-confirm-button")
-  disabled_when_test_has_errors = false
-  if disabled_when_test_has_errors
-    if is_valid_project()
-      $checkout_button.removeAttr("disabled")
-    else
-      $checkout_button.attr("disabled", "disabled")
   valid_project
 
 enable_checkout_button_if_project_valid = ()->
@@ -1036,15 +1033,21 @@ validate_methodology_type = ()->
   $exploratory_input = $(".project_exploratory_instructions_input")
   $test_case_files_input = $(".test_case_files_input")
   if project.methodology_type == 'exploratory'
-    $exploratory_input.attr("required", "true")
-    $exploratory_input.addClass("invalid-required invalid")
     $test_case_files_input.removeAttr("required")
     $test_case_files_input.removeClass("invalid-required invalid")
+    $exploratory_input.attr("required", "true")
+    if $exploratory_input.hasClass("empty")
+      $exploratory_input.addClass("invalid-required invalid")
+    else
+      $exploratory_input.removeClass("invalid-required invalid").addClass("valid")
   else
-    $test_case_files_input.attr("required", "true")
-    $test_case_files_input.addClass("invalid-required invalid")
     $exploratory_input.removeAttr("required")
     $exploratory_input.removeClass("invalid-required invalid")
+    $test_case_files_input.attr("required", "true")
+    if $(".test_case_files-list").children().length > 0
+      $test_case_files_input.removeClass("invalid-required invalid")
+    else
+      $test_case_files_input.addClass("invalid-required invalid")
 
 $("body").on "change code-change keyup keypress", "#project_auth_login", ()->
   if $("#project_auth_login").val().length > 0
@@ -1371,7 +1374,6 @@ $("body .promo-code-field .cancel-promo-code").on "click", (e)->
   $promo_code_field.addClass("waiting")
   $input.attr("disabled", "disabled")
 
-# $(".checkout-button, .rf-confirm-button").on "click", (e)->
 $(".checkout-button, .confirm-button-container").on "click", (e)->
   $button = $(this)
   $invalid_test_steps = get_test_invalid_steps()
@@ -1413,9 +1415,9 @@ $(".checkout-button, .confirm-button-container").on "click", (e)->
         if field_link
           href_str = "href='#{field_link}'"
         invalid_fields_html += "<div><a class='invalid-field-link' #{href_str}>#{field_name}</a></div>"
-# End of $fields.each ()->
+      # End of $fields.each ()->
       invalid_steps_list_items_html += "<div step-id='#{step_id}' class='step'><div class='step-number' data-number='#{step_number}'></div><div class='step-name'>#{step_name}</div><div class='invalid-fields-list'>#{invalid_fields_html}</div></div>"
-#End of $invalid_test_steps.each ()->
+    #End of $invalid_test_steps.each ()->
     $invalid_steps_list.html(invalid_steps_list_items_html)
     return false
 

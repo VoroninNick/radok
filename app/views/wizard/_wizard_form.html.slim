@@ -335,7 +335,7 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.string.project-contact-person-email.input-with-indent model="project.contact_person_email" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_email"
             |Email
-          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email data-field-name="Contact person email"
+          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email data-field-name="Contact person email" validation="email"
           div#project_contact_person_email-error
             label.error-email
               |Please, provide a valid email.
