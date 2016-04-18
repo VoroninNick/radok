@@ -8,7 +8,6 @@ setTimeout ()->
     $rf_input.find("input").attr("type", "password")
   50
 
-#window.wizard_root_path = "/ordering-crowdsourced-testing"
 window.wizard_root_path = $("form[for]").attr("url") || $("#dashboard-projects").attr("data-wizard-root")
 $header_user = $("#header-user")
 window.logged_in = $("html").data().loggedIn == true
@@ -28,8 +27,6 @@ $("body").on "click", ".logout-link", (event)->
     success: ->
       window.location.reload()
   )
-
-$("body").on "clickout", ".logout-link", ->
 
 $(".menu").on "click", ".has-dropdown", ->
   $this = $(this)
@@ -52,9 +49,6 @@ window.openPopup = (popup_name)->
 $("[disable-click-on-active]").on "click", ".active", (event)->
   $this = $(this)
   event.preventDefault()
-
-#$("#header-menu").on "click", "[id=header-user].unlogged", ->
-#  openPopup("user_pages__static_sign_in")
 
 $.fn.closeDialog = ()->
   $ng_dialog = $(this).closest(".ngdialog")
@@ -88,7 +82,6 @@ $.fn.valid = ->
   return true
 
 default_form_success_handler = (data, state, options)->
-  console.log "form success"
   $form = state.$form
   $preloader = state.$preloader
   $form_content = state.$form_content
@@ -117,7 +110,6 @@ default_form_success_handler = (data, state, options)->
   $form.trigger("after_success", arguments)
 
 default_form_error_handler = (xhr, state, options)->
-  console.log "form error handler"
   form_resource_name = state.form_resource_name
   $form_errors = state.$form_errors
   $form = state.$form
@@ -190,6 +182,8 @@ $("body").on "submit", "form:not([no-processing])", (event)->
       form_data = form_type.serialize.call($form)
     else
       form_data = $form.serializeArray()
+      $(form_data).each ->
+        this.value = this.value.trim()
 
     if form_type.url
       url = form_type.url.apply($form)
@@ -298,7 +292,6 @@ $.fn.validateInput = ->
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
   value = $rf_input.val().trim()
-  #$input = $rf_input.find("input, textarea")
 
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
@@ -336,13 +329,6 @@ $.fn.validateInput = ->
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
-    if validation_options.indexOf("phone") >= 0
-      valid = validatePhoneNumber(value)
-      if valid
-        $rf_input.find(".error.invalid").addClass("hide")
-      else
-        $rf_input.find(".error.invalid").removeClass("hide")
-
   if !valid
     $form.addClass("invalid").removeClass("valid")
     $rf_input.addClass("invalid").removeClass("valid")
@@ -373,7 +359,6 @@ validatePhoneNumber = (number) ->
 
 $("body").on "change blur keyup", "form .rf-input", (event)->
   $rf_input = $(this)
-  #$rf_input = $input.closest(".rf-input")
   if event.type == 'change'
     $rf_input.find(".error.taken").addClass("hide")
   $rf_input.validateInput()
@@ -392,7 +377,6 @@ $("body").on "click", ".tab-labels > :not(.active)", ->
   $tab_content = $tab_contents.children().eq(tab_index)
   $tab_label.addClass("active")
   $tab_content.addClass("active")
-  #setContainerSize()
 
 setContainerSize = ()->
   $profile_tab_contents_wrap = $(".profile-tab-contents-row-wrap")
@@ -400,6 +384,7 @@ setContainerSize = ()->
   wrap_height = $("#wrap").height()
   header_height = $("#header").height()
   main_height = $("main").height()
+
   difference = wrap_height - (header_height + main_height)
   if difference > 0
     min_height = $profile_tab_contents_wrap.height() + difference
@@ -472,7 +457,6 @@ $("body").on "change", "#input-file-uploader", ->
         success: (data)->
           $header_img.attr('src', data.user.avatar.header_image.url)
           $img.attr('src', data.user.avatar.profile_image.url)
-        error: ->
       )
 
     reader.readAsDataURL(file);
@@ -566,7 +550,6 @@ $(document).on "ready", ->
         return 1;
     }
   })
-  #$.read_models()
 
 $("body").on "click", ".return_to_wizard", (e)->
   e.preventDefault()
