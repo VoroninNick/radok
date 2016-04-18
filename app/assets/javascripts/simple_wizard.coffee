@@ -149,12 +149,12 @@ window.step_types = {
   }
   'project_access' : {
     checkIsCompleted : ()->
-      url_valid = (!!project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
-      file_upload_valid = !!project.test_files && project.test_files.length > 0
+      url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
+      file_upload_valid = project.test_files && project.test_files.length > 0
       required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
-      contact_name_valid = !project.contact_person_name || validateName(project.contact_person_name)
-      contact_email_valid = validateEmail(project.contact_person_email) || (project.contact_person_email.length == 0)
-      contact_phone_valid = validatePhoneNumber(project.contact_person_phone) || (project.contact_person_phone.length == 0)
+      contact_name_valid = validateName(project.contact_person_name)
+      contact_email_valid = validateEmail(project.contact_person_email)
+      contact_phone_valid = validatePhoneNumber(project.contact_person_phone)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
       return ( url_valid || file_upload_valid ) && required && contact_person_valid
   }
@@ -316,9 +316,6 @@ set_error = (that)->
 
   # valid
   else
-    $email_error.fadeOut()
-    $phone_error.fadeOut()
-    $max_error.fadeOut()
     $input.removeClass("invalid").addClass("valid")
 
 update_price = ()->
@@ -1049,13 +1046,15 @@ validate_methodology_type = ()->
     else
       $test_case_files_input.addClass("invalid-required invalid")
 
-$("body").on "change code-change keyup keypress", "#project_auth_login", ()->
+$("body").on "change code-change keyup keypress", "#project_auth_login, #project_auth_password", ()->
+  validate_auth_credentials()
+
+validate_auth_credentials =() ->
   if $("#project_auth_login").val().length > 0
     $("#project_auth_login_required_true").fadeOut()
   else
     $("#project_auth_login_required_true").fadeIn()
 
-$("body").on "change code-change keyup keypress", "#project_auth_password", ()->
   if $("#project_auth_password").val().length > 0
     $("#project_auth_password_required_true").fadeOut()
   else
@@ -1068,6 +1067,7 @@ show_or_hide_auth_credentials_inputs = ()->
 
   if requires_auth
     $credentials_inputs.removeClass("hide")
+    validate_auth_credentials()
   else
     $credentials_inputs.addClass("hide")
 

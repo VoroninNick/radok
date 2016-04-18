@@ -310,7 +310,7 @@ form for="project" url=wizard_path method="post" json="{}"
             .input.string.project-auth-login.input-with-indent model="project.auth_login" as="string"
               label.placeholder.hiding-placeholder for="project_auth_login"
                 |Username
-              input.set-error type="text" id="project_auth_login" value=@project.auth_login
+              input type="text" id="project_auth_login" value=@project.auth_login
               #project_auth_login_required_true.error
                 |Please, provide a username
             .input.string.project-auth-password.input-with-indent model="project.auth_password" as="string"
