@@ -1386,9 +1386,9 @@ comment-with-price
 	.custom-radio-button + label
 		vertical-align: top
 
-@media #{xsmall-only}
-	#project_exploratory_instructions_input
-		height: 90px !important
+#project_exploratory_instructions
+	@media #{$small-only}
+		min-height: 90px !important
 
 .input, .nested-input-group
 	& + .input.radio-button
