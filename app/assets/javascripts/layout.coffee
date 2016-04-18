@@ -309,7 +309,7 @@ $.fn.validateInput = ->
     $rf_input.find(".error.required").removeClass("hide")
     $rf_input.find(".error.invalid").addClass("hide")
 
-  max_length = $rf_input.find("input").attr("maxlength") || ""
+  max_length = $rf_input.find("input").attr("maxlength") || $rf_input.find("textarea").attr("maxlength") || ""
   validation_options_str = $rf_input.attr("validation") || ""
   validation_options = validation_options_str.split(" ")
 
