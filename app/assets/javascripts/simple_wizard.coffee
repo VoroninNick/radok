@@ -152,7 +152,7 @@ window.step_types = {
       url_valid = (!!project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = !!project.test_files && project.test_files.length > 0
       required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
-      contact_name_valid = !project.contact_person_name || project.contact_person_name.length == 0 || project.contact_person_name.length < 100
+      contact_name_valid = !project.contact_person_name || validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email) || (project.contact_person_email.length == 0)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone) || (project.contact_person_phone.length == 0)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
@@ -275,11 +275,9 @@ $(document).on "ready", (e) ->
 set_error = (that)->
   $input = $(that)
   error_select = "##{$input.attr('id')}-error"
-  $max_error = $(error_select + " .error-max")
-  $email_error = $(error_select + " .error-email")
-  $phone_error = $(error_select + " .error-phone")
   # maxlength
   if $input.attr("maxlength")
+    $max_error = $(error_select + " .error-max")
     if $input.val().length == parseInt($input.attr("maxlength"))
       $max_error.fadeIn()
       $input.removeClass("valid").addClass("invalid")
@@ -289,7 +287,7 @@ set_error = (that)->
 
   # email
   else if $input.attr("validation") == "email"
-    $max_error.hide()
+    $email_error = $(error_select + " .error-email")
     if validateEmail($input.val())
       $email_error.fadeOut()
       $input.removeClass("invalid").addClass("valid")
@@ -299,11 +297,21 @@ set_error = (that)->
 
   # phone number
   else if $input.attr("validation") == "phone"
+    $phone_error = $(error_select + " .error-phone")
     if validatePhoneNumber($input.val())
       $phone_error.fadeOut()
       $input.removeClass("invalid").addClass("valid")
     else
       $phone_error.fadeIn()
+      $input.addClass("invalid").removeClass("valid")
+  # name
+  else if $input.attr("validation") == "name"
+    $name_error = $(error_select + " .error-name")
+    if validateName($input.val())
+      $name_error.fadeOut()
+      $input.removeClass("invalid").addClass("valid")
+    else
+      $name_error.fadeIn()
       $input.addClass("invalid").removeClass("valid")
 
   # valid
@@ -452,14 +460,6 @@ window.validate_inputs_on_init = ()->
   $(".input[model], input[model]").each ()->
     $input = $(this)
     validate_input.call($input)
-
-validateEmail = (email) ->
-  re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2,6})?)$/i
-  return re.test(email) && email.length <= 255
-
-validatePhoneNumber = (number) ->
-  re = /^\+(?:[0-9] ?){6,14}[0-9]$/
-  return re.test(number) && number.length <= 20
 
 $("body").on "change.project.total_price", ()->
   price = project.total_price
@@ -1256,6 +1256,18 @@ validate_project_access_test_url_and_files = ()->
 validateURL = (url) ->
   re = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
   re.test url
+
+validateEmail = (email) ->
+  re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2,6})?)$/i
+  return (re.test(email) && email.length <= 255) || email.length == 0 || !email
+
+validatePhoneNumber = (number) ->
+  re = /^\+(?:[0-9] ?){6,14}[0-9]$/
+  return (re.test(number) && number.length <= 20) || number.length == 0 || !number
+
+validateName = (name) ->
+  re = /^[a-zA-Z\s]*$/
+  return (name && re.test(name) && name.length <= 100) || (name.length == 0) || !name
 
 $("body").on "upload_files.test_files delete_files.test_files change.project.project_url", ()->
   validate_project_access_test_url_and_files()
