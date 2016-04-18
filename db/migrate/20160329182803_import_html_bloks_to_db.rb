@@ -1108,28 +1108,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                         </div>
                       </div>
                     </div>',7,'Page','plans',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(5,'<div class="page-content-row-wrap">
-                      <div class="row center-items-vertically row-reverse">
-                        <div class="columns large-4 medium-4 small-12 image-wrap-outer">
-                          <div class="image-wrap small-text-center">
-                            <img src="/assets/rf-devices-picture-1.svg">
-                          </div>
-                        </div>
-                        <div class="columns large-8 medium-8 small-12 text-column">
-                          <div class="header small-text-center">
-                            Devices
-                          </div>
-                          <div class="description">
-                            <p>
-                              We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
-                            </p>
-                            <p>
-                              <a href="/devices">Learn more</a>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>',7,'Page','devices',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(6,'<div class="row">
                       <div class="clearfix"></div>
                       <div class="columns large-11 large-centered">
@@ -1771,25 +1749,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                         </div>
                       </div>
                     </div>',9,'Page','devices_in_numbers',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(14,'<div class="page-content-row-wrap">
-                    <div class="row center-items-vertically row-reverse">
-                      <div class="columns large-4 medium-4 small-12 image-wrap-outer">
-                        <div class="image-wrap small-text-center">
-                          <img src="/assets/rf-devices-picture-1.svg">
-                        </div>
-                      </div>
-                      <div class="columns large-8 medium-8 small-12 text-column">
-                        <div class="header small-text-center">
-                          Devices
-                        </div>
-                        <div class="description">
-                          <p>
-                            We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>',9,'Page','intro',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(15,'User-agent: *
       #Disallow: /ordering-crowdsourced-testing
       Disallow: /dashboard
@@ -1822,33 +1781,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
             .description
               p
                 |  To make a product be used by the masses one must be sure it operates perfectly. 10-g force increases the value of any product providing fast and effective testing for a broad range of different devices. We perform functional, localization or usability testing for mobile apps, websites, software and games. Our team works with a variety of platforms and operating systems, including iOS, Android, Blackberry, and Windows. ',9,'Pages::Devices','intro',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(19,'.row
-        .columns.large-12.section-header
-          |  Devices in numbers
-        .columns.large-3.projects
-          .counter[animate-number="" value="109"]
-            |  0
-          .text
-            |  Devices
-        .columns.large-3.testers
-          .counter[animate-number="" value="21"]
-            |  0
-          .text
-            |  Manufacturers
-        .columns.large-3.testers
-          .counter[animate-number="" value="48"]
-            |  0
-          .text
-            |  Operating
-            br
-            | systems
-        .columns.large-3.testers
-          .counter[animate-number="" value="25"]
-            |  0
-          .text
-            |  Screen
-            br
-            | sizes ',9,'Pages::Devices','devices_in_numbers',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(20,'.row
         .columns.large-12
           .header
