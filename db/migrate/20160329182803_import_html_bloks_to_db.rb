@@ -957,7 +957,7 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                                   $
                                 </div>
                                 <div class="price">
-                                  39
+                                  29
                                 </div>
                                 <div class="price-per">
                                   /per platform<br />/per hour
@@ -2485,7 +2485,7 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                   .currency
                     |  $
                   .price
-                    |  39
+                    |  29
                   .price-per
                     |  /per platform
                     br
