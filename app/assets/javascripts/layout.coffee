@@ -309,13 +309,13 @@ $.fn.validateInput = ->
     $rf_input.find(".error.required").removeClass("hide")
     $rf_input.find(".error.invalid").addClass("hide")
 
+  max_length = $rf_input.find("input").attr("maxlength") || $rf_input.find("textarea").attr("maxlength") || ""
   validation_options_str = $rf_input.attr("validation") || ""
   validation_options = validation_options_str.split(" ")
 
   if valid
     if validation_options.indexOf("email") >= 0
       valid = validateEmail(value)
-
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
@@ -323,7 +323,6 @@ $.fn.validateInput = ->
 
     if validation_options.indexOf("phone") >= 0
       valid = validatePhoneNumber(value)
-
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
@@ -331,6 +330,13 @@ $.fn.validateInput = ->
 
     if validation_options.indexOf("name") >= 0
       valid = validateName(value)
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
+    if max_length
+      valid = (value.length < max_length)
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
