@@ -73,8 +73,6 @@ class User < ActiveRecord::Base
 
   # User info
 
-
-
   #attr_accessor :login
 
   validates :email, presence: true
@@ -88,6 +86,7 @@ class User < ActiveRecord::Base
         user.password = Devise.friendly_token[0,20]
         user.first_name = auth[:info][:first_name]   # assuming the user model has a name
         user.last_name = auth[:info][:last_name]
+        user.provider = auth[:provider]
 
         user.avatar = auth.info.image.gsub(/\Ahttp:/, "https:") # assuming the user model has an image
       end
