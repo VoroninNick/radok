@@ -5,10 +5,10 @@
     - if @project.completed?
       - if @project.successful?
         .status-completed.status-successfull
-          = embedded_svg_from_assets("rf-icon-ok")
+          = image_tag("rf-icon-ok.svg")
       - else
         .status-completed.status-fail
-          = embedded_svg_from_assets("close")
+          = image_tag("close.svg")
     - else
       .status-fail
     .download-report

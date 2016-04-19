@@ -2529,44 +2529,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
               p
                 a[href="/devices"]
                   | Learn more',7,'Pages::Home','devices',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(29,'.row
-        .clearfix
-        .columns.large-11.large-centered
-          .carousel-wrapper
-            .owl-carousel
-              .item.feedback
-                .feedback-inner
-                  .quote
-                    .text
-                      |  I am greatly pleased with the experience with 10G-Force. I have contacted them to get a functional and usability testing before a release of our piece of software. The reports guys created were very professional and did exceed my expectations, and also they caught a number of bugs we missed internally. Our release was so much smoother thanks to 10G-Force.
-                  .name
-                    |  John H.
-                  .position
-
-              .item.feedback
-                .feedback-inner
-                  .quote
-                    .text
-                      |  We have involved 10G-Force in testing our mobile app for localization. All of us in our company were impressed with in-depth knowledge of the testing team and their system approach. Besides that, we got results in less than 2 days! Without any hesitation, we are going to use 10G-Force services again in the future.
-                  .name
-
-                  .position
-
-              .item.feedback
-                .feedback-inner
-                  .quote
-                    .text
-                      |  I engaged with 10G-Force after a few failed attempts to work with cheap freelancers. I was disappointed no one could test my app on all the devices I needed, both desktop and mobile,so didn’t even expect they could do this in such a short period. Not only my app was tested on all the platforms and devices I asked,but also I got a report with the recommendations for bug fixing to make my app truly responsive.
-                  .name
-
-                  .position
-
-            .rn-carousel-control
-              .rn-carousel-control-prev.rn-carousel-control-item
-                = embedded_svg_from_assets "rf-icon-arrow-left.svg"
-              .rn-carousel-control-next.rn-carousel-control-item[ng-show="feedbacks.length &gt; 1"]
-                = embedded_svg_from_assets "rf-icon-arrow-right.svg"
-      ',7,'Pages::Home','feedbacks',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(30,'.row
         .columns.large-6.medium-9.medium-centered.large-uncentered.small-11.small-centered
           .title

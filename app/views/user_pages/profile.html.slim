@@ -46,11 +46,11 @@
                           |Your photo
 
                       div
-                        label.image-label for="input-file-uploader" class="#{'hide' unless @user.avatar.exists?}"
-                          img src=(@user.avatar.url(:profile_image) if @user.avatar.exists?(:profile_image))
+                        label.image-label for="input-file-uploader" class="#{'hide' unless @user.avatar.exists?(:profile_image)}"
+                          = image_tag(@user.avatar.url(:profile_image))
 
                         label.no-image for="input-file-uploader" class="#{'hide' if @user.avatar.exists?(:profile_image)}"
-                          img src="/assets/no_avatar.svg"
+                          = image_tag("no_avatar.svg")
                       div
                         label.change-photo-label for="input-file-uploader"
                           |Change photo
