@@ -2890,30 +2890,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
 
       = render "resource_link_in_admin_panel"',23,'Templates::ScheduleCallAdminNotification','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(39,'',NULL,'Templates::ConfirmationInstructions','content',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(40,'table.twelve.columns
-        tr
-          td
-            h1
-              |Welcome #{@resource.name_or_username}
-            p.lead
-              |You can confirm your account email through the link below:
-            p.lead
-              = link_to ''Confirm my account'', confirmation_url(@resource, confirmation_token: @token)',24,'Templates::ConfirmationInstructions','content',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(41,'',NULL,'Templates::ResetPasswordInstructions','content',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(42,'p
-        = "Hello #{@resource.email}!"
-
-      p
-        |Someone has requested a link to change your password. You can do this through the link below.
-
-      p
-        = link_to ''Change my password'', edit_password_url(@resource, reset_password_token: @token)
-
-      p
-        |If you didn''t request this, please ignore this email.
-      p
-        |Your password won''t change until you access the link above and create a new one.
-      ',25,'Templates::ResetPasswordInstructions','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(43,'',NULL,'Templates::WelcomeEmail','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(44,'table.twelve.columns
         tr
