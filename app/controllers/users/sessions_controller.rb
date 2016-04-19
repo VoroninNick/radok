@@ -17,11 +17,11 @@ class Users::SessionsController < Devise::SessionsController
       from_oauth = true
     end
 
-    self.resource = User.find_for_database_authentication(user_params)
+    self.resource = user_signed_in? ? current_user : User.find_for_database_authentication(user_params)
     @user ||= User.from_omniauth(request.env["omniauth.auth"])
 
     if resource
-      unless from_oauth
+      unless from_oauth || user_signed_in?
         unless  resource.valid_password?(params[:user][:password])
           return render json: { user: {form_errors: ["invalid_password_or_login"] } }, status: 401
         end
