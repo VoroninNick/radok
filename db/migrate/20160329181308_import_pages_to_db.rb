@@ -2689,7 +2689,6 @@ class ImportPagesToDb < ActiveRecord::Migration
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(16,'Pages::NotFound',NULL,NULL,NULL,'2016-01-20 16:01:18.077398','2016-01-20 16:01:18.077398');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(17,'Pages::Profile',NULL,NULL,NULL,'2016-01-20 16:01:18.102597','2016-01-20 16:01:18.102597');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(18,'Pages::SitemapXml',NULL,NULL,NULL,'2016-01-20 17:26:04.699512','2016-01-20 17:26:04.699512');
-      INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(20,'Templates::FaqRequestAdminNotification',NULL,NULL,NULL,'2016-02-11 14:57:28.317539','2016-02-11 14:57:28.317539');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(21,'Templates::PayLaterRequestAdminNotification',NULL,NULL,NULL,'2016-02-11 15:23:35.794168','2016-02-11 15:23:35.794168');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(22,'Templates::PaymentRequestAdminNotification',NULL,NULL,NULL,'2016-02-11 15:24:31.711084','2016-02-11 15:24:31.711084');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(23,'Templates::ScheduleCallAdminNotification',NULL,NULL,NULL,'2016-02-11 15:25:03.259243','2016-02-11 15:25:03.259243');

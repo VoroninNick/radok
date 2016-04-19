@@ -2575,60 +2575,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                   .inner
                     .button-title
                       |  Start now! ',7,'Pages::Home','bottom_block',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(31,'table border="1"
-        tr
-          td
-            |Name
-          td
-            = @resource.name
-
-        tr
-          td
-            |Email
-          td
-            = @resource.email
-
-        tr
-          td
-            |Subject
-          td
-            = @resource.subject
-
-        tr
-          td
-            |Description
-          td
-            = @resource.description
-
-      p
-        a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
-          | In admin panel',NULL,'Templates::FaqRequestAdminNotification','content',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(32,'table border="1"
-      tr
-        td
-          |Name
-        td
-          = @resource.name
-
-      tr
-        td
-          |Email
-        td
-          = @resource.email
-
-      tr
-        td
-          |Subject
-        td
-          = @resource.subject
-
-      tr
-        td
-          |Description
-        td
-          = @resource.description
-
-      = render "application/resource_link_in_admin_panel"',20,'Templates::FaqRequestAdminNotification','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(33,'table border="1"
         tr
           td
