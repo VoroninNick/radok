@@ -22,7 +22,7 @@ header#header  ng-controller="NavigationController" ng-class="headerClass()"
                 .inner
                   - if !current_user.avatar.exists?(:header_image)
                     .svg-wrap
-                      = embedded_svg_from_assets("no_avatar.svg")
+                      = image_tag("no_avatar.svg")
                   - else
                     .image-wrap
                       = image_tag(current_user.avatar.url(:header_image))
