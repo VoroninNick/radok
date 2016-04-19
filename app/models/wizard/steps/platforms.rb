@@ -4,8 +4,6 @@ module Wizard
       attr_accessor :platforms
       attr_accessor :hours_per_tester
 
-
-
       def self.available_platforms
         {
             browsers: {
@@ -114,14 +112,11 @@ module Wizard
         }
 
         return platforms_per_product_type[product_type.to_sym]
-
-
       end
 
       def self.available_options
         {
           platforms: self.available_platforms,
-
           hours_per_tester: [1, 2, 3, 4, 5]
         }
       end

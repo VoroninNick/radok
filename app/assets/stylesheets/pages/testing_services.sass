@@ -10,7 +10,6 @@
 			width: 450px
 			margin: 0 auto 30px auto
 			max-width: 100%
-
 		.description
 			width: 580px
 			max-width: 100%
@@ -26,8 +25,6 @@
 		.header
 			color: $sky-blue-color
 
-
-
 #testing_services__what-we-test
 	.section-header
 		margin-bottom: 28px
@@ -35,12 +32,8 @@
 		.subheader
 			line-height: 1.5
 
-
-
-
 .two-horizontal-items-per-row
 	+grid-row()
-
 	.item
 		margin-top: 36px
 		margin-bottom: 36px
@@ -48,13 +41,10 @@
 			color: $sky-blue-color
 			+font-21-semibold
 		.image-wrap
-			svg
+			svg, img
 				height: 126px
 				width: 126px
-
 	+two-horizontal-per-row-mobile
-
-
 
 #testing_services__reasons
 	.header
@@ -72,7 +62,6 @@
 		padding-left: 78px
 		margin: 10px 0
 		position: relative
-
 		&:before
 			content: attr(data-number)
 			position: absolute
@@ -85,7 +74,6 @@
 			display: block
 			line-height: 48px
 			text-align: center
-
 			left: 0
 		.title
 			color: $sky-blue-color
@@ -95,6 +83,9 @@
 			width: auto
 		.text
 			margin-left: 36px
+	@media #{$xsmall-only}
+		.text
+			margin-left: 0
 
 #testing-services__what-next
 	padding-top: 35px
@@ -116,12 +107,8 @@
 			color: $sky-blue-color
 			display: inline-block
 			margin: 15px 56px 30px 0
-
-
 			&:last-child
 				margin-right: 0
-
-
 	@media #{$medium-down}
 		.button-column
 			text-align: center
@@ -134,17 +121,13 @@
 			text-align: center
 			a
 				+font-21-light
-
 		.button-outer
 			margin: 0 auto
 	@media #{$screen} and (max-width: 480px)
 		.links
 			a
-				//margin-right: 40px
-
 	+iphone5-down
 		padding-bottom: 30px
-
 		.button-column
 			padding-top: 14px
 		.links
@@ -152,14 +135,8 @@
 				margin-right: 0
 				margin-bottom: 0
 				display: block
-
 				&:first-child
 					margin-top: 22px
-
-
-
-
-
 
 #testing_services__reasons__h2
 	margin: 0

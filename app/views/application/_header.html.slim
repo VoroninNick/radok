@@ -10,7 +10,7 @@
 
           #header-user  class=header_user_class
             - if !current_user
-              a.user-icon.unlogged href=new_user_session_path open-popup=("user_pages__static_sign_in" unless controller_name.to_s == "user_pages" || controller_name.to_s.scan(/\Ausers/).any? || controller_name.to_s.scan(/\Adevise/).any?)
+              a.user-icon.unlogged open-popup=("user_pages__static_sign_in" unless controller_name.to_s == "user_pages" || controller_name.to_s.scan(/\Ausers/).any? || controller_name.to_s.scan(/\Adevise/).any?)
                 div angular-ripple=""
                   .inner
                     .svg-wrap

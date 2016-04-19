@@ -957,7 +957,7 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                                   $
                                 </div>
                                 <div class="price">
-                                  39
+                                  29
                                 </div>
                                 <div class="price-per">
                                   /per platform<br />/per hour
@@ -1108,28 +1108,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                         </div>
                       </div>
                     </div>',7,'Page','plans',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(5,'<div class="page-content-row-wrap">
-                      <div class="row center-items-vertically row-reverse">
-                        <div class="columns large-4 medium-4 small-12 image-wrap-outer">
-                          <div class="image-wrap small-text-center">
-                            <img src="/assets/rf-devices-picture-1.svg">
-                          </div>
-                        </div>
-                        <div class="columns large-8 medium-8 small-12 text-column">
-                          <div class="header small-text-center">
-                            Devices
-                          </div>
-                          <div class="description">
-                            <p>
-                              We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
-                            </p>
-                            <p>
-                              <a href="/devices">Learn more</a>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>',7,'Page','devices',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(6,'<div class="row">
                       <div class="clearfix"></div>
                       <div class="columns large-11 large-centered">
@@ -1491,249 +1469,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
       <div class="description">
                           Professional crowd testing team is ready to start testing your software product immediately
                         </div>',7,'Page','banner_2_title_with_description',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(11,'<div class="row">
-              <div class="columns large-12">
-                <div class="header">
-                  We are here
-                </div>
-              </div>
-              <div class="columns large-5 medium-6 small-text-center" id="contact-data">
-                <div class="property">
-                  <div class="property-header">
-                    Address
-                  </div>
-                  <div class="text">
-                    7 St. Marks Rd. Toronto,<br />Ontario, M6S 2H5
-                  </div>
-                </div>
-                <div class="property">
-                  <div class="property-header">
-                    Call us
-                  </div>
-                  <div class="text">
-                    <a href="tel:+18885354852">+1-888-535-4852</a>
-                  </div>
-                </div>
-                <div class="property">
-                  <div class="property-header">
-                    Stay in touch with our social channels:
-                  </div>
-                  <div class="social-icons">
-                    <ul>
-                      <li>
-                        <a rel="nofollow" href="https://plus.google.com/109753715460055186428">
-                          <div class="svg-wrap">
-                            <?xml version="1.0" encoding="utf-8"?>
-                            <!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="34px" height="34px" viewbox="0 0 34 34" enable-background="new 0 0 34 34" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
-                            <g>
-                            	<circle fill="#E02F2F" cx="17" cy="17" r="16"></circle>
-                            	<g>
-                            		<path fill="#FFFFFF" d="M20,6.998c0,0-4.593,0-6.164,0c-2.82,0-5.476,1.979-5.476,4.453c0,2.528,1.922,4.494,4.791,4.494
-                            			c0.2,0,0.395-0.045,0.584-0.059c-0.188,0.354-0.317,0.736-0.317,1.153c0,0.703,0.377,1.265,0.854,1.729
-                            			c-0.357,0-0.709,0.005-1.09,0.005C9.688,18.775,7,20.998,7,23.305C7,25.577,9.947,27,13.44,27c3.983,0,6.184-2.262,6.184-4.534
-                            			c0-1.821-0.538-2.913-2.199-4.091c-0.569-0.4-1.656-1.38-1.656-1.956c0-0.674,0.192-1.006,1.208-1.8
-                            			c1.039-0.813,1.776-1.781,1.776-3.111c0-1.58-0.681-3.51-2.003-3.51H19L20,6.998z M17.931,22.072
-                            			c0.048,0.212,0.077,0.429,0.077,0.648c0,1.836-1.186,3.271-4.58,3.271c-2.415,0-4.158-1.528-4.158-3.364
-                            			c0-1.799,2.163-3.298,4.579-3.271c0.563,0.006,1.088,0.097,1.564,0.249C16.724,20.52,17.664,21.034,17.931,22.072z M14.063,15.223
-                            			c-1.621-0.047-3.162-1.813-3.44-3.939c-0.279-2.13,0.808-3.759,2.428-3.711c1.62,0.05,3.162,1.758,3.44,3.886
-                            			C16.771,13.586,15.684,15.271,14.063,15.223z"></path>
-                            		<polygon fill="#FFFFFF" points="25,14.991 25,11.991 23,11.991 23,14.991 20,14.991 20,16.991 23,16.991 23,19.991 25,19.991
-                            			25,16.991 28,16.991 28,14.991 		"></polygon>
-                            	</g>
-                            </g>
-                            </svg>
-
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a rel="nofollow" href="https://www.facebook.com/10G-Force-410439735822955/?ref=bookmarks">
-                          <div class="svg-wrap">
-                            <?xml version="1.0" encoding="utf-8"?>
-                            <!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="34px" height="34px" viewbox="0 0 34 34" enable-background="new 0 0 34 34" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
-                            <g>
-                            	<circle fill="#3B5998" cx="17" cy="17" r="16"></circle>
-                            	<path id="f_1_" fill="#FFFFFF" d="M23,33V21h4l1-5h-5v-2c0-2,1.002-3,3-3h2V6c-1,0-2.24,0-4,0c-3.675,0-6,2.881-6,7v3h-4v5h4v12H23
-                            		z"></path>
-                            </g>
-                            </svg>
-
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a rel="nofollow" href="https://www.linkedin.com/grp/home?gid=8415315">
-                          <div class="svg-wrap">
-                            <?xml version="1.0" encoding="utf-8"?>
-                            <!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="34px" height="34px" viewbox="0 0 34 34" enable-background="new 0 0 34 34" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
-                            <g>
-                            	<circle fill="#007BB5" cx="17" cy="17" r="16"></circle>
-                            	<g>
-                            		<rect x="8" y="12" fill="#FFFFFF" width="4" height="14"></rect>
-                            		<path fill="#FFFFFF" d="M21.499,12c-2.791,0-3.271,1.018-3.499,2v-2h-4v14h4v-8c0-1.297,0.703-2,2-2c1.267,0,2,0.688,2,2v8h4v-7
-                            			C26,15,25.479,12,21.499,12z"></path>
-                            		<circle fill="#FFFFFF" cx="10" cy="9" r="2"></circle>
-                            	</g>
-                            </g>
-                            </svg>
-
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a rel="nofollow" href="https://twitter.com/10g_force">
-                          <div class="svg-wrap">
-                            <?xml version="1.0" encoding="utf-8"?>
-                            <!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="34px" height="34px" viewbox="0 0 34 34" enable-background="new 0 0 34 34" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
-                            <g>
-                            	<circle fill="#55ACEE" cx="17" cy="17" r="16"></circle>
-                            	<path fill="#FFFFFF" d="M27.013,10.896c-0.737,0.322-1.527,0.537-2.358,0.636c0.85-0.498,1.5-1.289,1.807-2.232
-                            		c-0.793,0.462-1.672,0.798-2.608,0.979c-0.748-0.784-1.815-1.275-2.996-1.275c-2.269,0-4.104,1.807-4.104,4.039
-                            		c0,0.315,0.036,0.625,0.104,0.923c-3.412-0.172-6.436-1.78-8.461-4.222c-0.354,0.597-0.559,1.29-0.559,2.031
-                            		c0,1.399,0.728,2.636,1.828,3.363c-0.672-0.023-1.307-0.205-1.858-0.508c-0.001,0.018-0.001,0.033-0.001,0.051
-                            		c0,1.958,1.415,3.592,3.293,3.963c-0.343,0.091-0.706,0.142-1.082,0.142c-0.264,0-0.52-0.024-0.771-0.071
-                            		c0.521,1.604,2.038,2.771,3.834,2.807c-1.402,1.082-3.174,1.729-5.1,1.729c-0.33,0-0.658-0.019-0.979-0.058
-                            		c1.815,1.146,3.976,1.813,6.295,1.813c7.552,0,11.682-6.155,11.682-11.495c0-0.173-0.006-0.351-0.014-0.521
-                            		C25.766,12.417,26.462,11.706,27.013,10.896z"></path>
-                            </g>
-                            </svg>
-
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a rel="nofollow" href="skype:force.10g?call" title="Call to 10g Force">
-                          <div class="svg-wrap">
-                            <?xml version="1.0" encoding="utf-8"?>
-                            <!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="34px" height="34px" viewbox="0 0 34 34" enable-background="new 0 0 34 34" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
-                            <g>
-                            	<path fill="#00AAF1" d="M32.097,20.397c0.232-1.041,0.356-2.121,0.356-3.229c0-8.312-6.837-15.049-15.272-15.049
-                            		c-0.893,0-1.764,0.075-2.613,0.22C13.204,1.491,11.588,1,9.856,1C4.964,1,1,4.907,1,9.727c0,1.611,0.446,3.12,1.217,4.415
-                            		c-0.202,0.978-0.308,1.99-0.308,3.027c0,8.311,6.836,15.047,15.272,15.047c0.954,0,1.889-0.086,2.793-0.252
-                            		C21.223,32.623,22.649,33,24.164,33c4.891,0,8.855-3.907,8.855-8.728C33.02,22.879,32.688,21.564,32.097,20.397z"></path>
-                            	<path fill="#FFFFFF" d="M12.952,7.7L12.952,7.7c-1.146,0.469-2.039,1.154-2.649,2.035c-0.616,0.887-0.928,1.916-0.928,3.057
-                            		c0,1.197,0.297,2.217,0.883,3.027c0.578,0.8,1.367,1.438,2.345,1.899c0.957,0.449,2.159,0.848,3.579,1.184
-                            		c1.042,0.242,1.884,0.473,2.503,0.688c0.597,0.205,1.087,0.504,1.458,0.889c0.354,0.367,0.526,0.836,0.526,1.434
-                            		c0,0.754-0.33,1.37-1.011,1.883c-0.695,0.525-1.619,0.793-2.75,0.793c-0.819,0-1.486-0.133-1.982-0.391
-                            		c-0.493-0.258-0.877-0.588-1.145-0.979c-0.277-0.409-0.542-0.926-0.784-1.54c-0.217-0.563-0.485-0.998-0.801-1.292
-                            		c-0.328-0.308-0.734-0.464-1.204-0.464c-0.569,0-1.049,0.195-1.424,0.587c-0.376,0.392-0.568,0.872-0.568,1.426
-                            		c0,0.885,0.294,1.804,0.874,2.728c0.573,0.918,1.331,1.66,2.247,2.207c1.284,0.754,2.928,1.136,4.888,1.136
-                            		c1.632,0,3.067-0.279,4.268-0.829c1.209-0.557,2.142-1.34,2.771-2.33c0.635-0.992,0.955-2.126,0.955-3.371
-                            		c0-1.04-0.186-1.934-0.555-2.66c-0.367-0.722-0.887-1.327-1.538-1.798c-0.642-0.462-1.428-0.859-2.338-1.18
-                            		c-0.896-0.319-1.91-0.612-3.018-0.875c-0.873-0.225-1.51-0.396-1.889-0.512c-0.369-0.113-0.74-0.272-1.098-0.471
-                            		c-0.347-0.191-0.621-0.424-0.814-0.685c-0.184-0.248-0.272-0.535-0.272-0.88c0-0.563,0.276-1.033,0.847-1.448
-                            		c0.591-0.43,1.388-0.646,2.366-0.646c1.054,0,1.819,0.195,2.278,0.581c0.475,0.397,0.886,0.962,1.226,1.677
-                            		c0.294,0.562,0.561,0.95,0.815,1.2c0.275,0.27,0.669,0.405,1.178,0.405c0.555,0,1.024-0.218,1.397-0.646s0.563-0.918,0.563-1.459
-                            		c0-0.561-0.145-1.141-0.428-1.723c-0.279-0.574-0.728-1.132-1.328-1.65c-0.597-0.515-1.354-0.935-2.254-1.243
-                            		c-0.896-0.309-1.968-0.464-3.186-0.464C15.431,7.001,14.084,7.236,12.952,7.7z"></path>
-                            </g>
-                            </svg>
-
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="columns large-7 medium-6" id="contact-map">
-                <map center="45.500706, -73.574401" disable-default-u-i="true" zoom="11"><marker draggable="true" position="45.500706, -73.574401" title="Hello Marker" visible="true"></marker></map>
-              </div>
-            </div>',4,'Page','contact_info_and_map',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(12,'<div class="row faq-form-row">
-          <div class="columns small-12 small-centered medium-12 medium-uncentered large-12 header-column">
-            <div class="header">
-              Send us your feedback
-            </div>
-            <h1 class="subheader">
-              For any question or comment, contact us via the form below and we’ll get back to you quickly..
-            </h1>
-          </div>
-          <div class="columns large-12">
-            <div class="row">
-              <form action="/contact_feedback" method="post" novalidate="" resource="contact_feedback" show-preloader="" show-success="">
-                <div class="form-content">
-                  <div class="inputs">
-                    <div class="row">
-                      <div class="columns large-6">
-                        <div class="rf-input string  empty " type="string" required="required"><label class="hide error taken"></label><label class="hide error required">Your name is required</label><label class="hide error invalid"></label><label class="hide error unconfirmed"><span>Please confirm your email</span><a class="resend_me_instructions" href="#">resend instructions</a></label><label class="field-label">Your name</label><div class="input-border-wrap"></div><input label="Your name" name="contact_feedback[name]" required="required" class="" type="text" required_message="Your name is required"></input></div><div class="rf-input string  empty " type="email" required="required"><label class="hide error taken"></label><label class="hide error required">Email is required</label><label class="hide error invalid"></label><label class="hide error unconfirmed"><span>Please confirm your email</span><a class="resend_me_instructions" href="#">resend instructions</a></label><label class="field-label">Email</label><div class="input-border-wrap"></div><input label="Email" name="contact_feedback[email]" required="required" class="" type="text" required_message="Email is required"></input></div><div class="rf-input string  empty " type="string" required="required"><label class="hide error taken"></label><label class="hide error required">Subject is required</label><label class="hide error invalid"></label><label class="hide error unconfirmed"><span>Please confirm your email</span><a class="resend_me_instructions" href="#">resend instructions</a></label><label class="field-label">Subject</label><div class="input-border-wrap"></div><input label="Subject" name="contact_feedback[subject]" required="required" class="" type="text" required_message="Subject is required"></input></div>
-                      </div>
-                      <div class="columns large-6"><div class="rf-input  text empty " type="text" n-inputs-height="3" required="required"><label class="hide error taken"></label><label class="hide error required">Message is required</label><label class="hide error invalid"></label><label class="hide error unconfirmed"><span>Please confirm your email</span><a class="resend_me_instructions" href="#">resend instructions</a></label><label class="field-label">Message</label><div class="input-border-wrap"></div><textarea number_inputs_height="3" name="contact_feedback[description]" label="Message" required="required" class="" type="text" required_message="Message is required">
-      </textarea></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="actions">
-                    <div class="row text-right">
-                      <div class="columns large-12">
-                        <button angular-ripple="" class="rf-button  rf-button-without-subtitle rf-button-with-svg rf-button-raised rf-button-auto-width rf-button-svg-size-medium rf-button-align-content-center rf-button-size-medium ">
-                          <div class="rf-button-content-wrap">
-                            <div class="rf-button-content">
-                              <div class="svg-wrap svg-size-medium">
-                                <?xml version="1.0" encoding="utf-8"?>
-                                <!-- Generator: Adobe Illustrator 16.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28px" height="22px" viewbox="0 0 28 22" enable-background="new 0 0 28 22" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
-                                <g>
-                                	<g>
-                                		<path fill="#F1F2F2" d="M27,22H1c-0.552,0-1-0.447-1-1V5c0-0.552,0.448-1,1-1s1,0.448,1,1v15h24V2H1C0.448,2,0,1.552,0,1
-                                			s0.448-1,1-1h26c0.553,0,1,0.448,1,1v20C28,21.553,27.553,22,27,22z"></path>
-                                	</g>
-                                	<g>
-                                		<path fill="#F1F2F2" d="M14,14c-0.256,0-0.512-0.098-0.707-0.293l-8-8c-0.391-0.391-0.391-1.023,0-1.414s1.023-0.391,1.414,0
-                                			L14,11.586l7.293-7.293c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414l-8,8C14.512,13.902,14.256,14,14,14z"></path>
-                                	</g>
-                                	<g>
-                                		<path fill="#F1F2F2" d="M22.001,18c-0.256,0-0.512-0.098-0.707-0.293l-3.002-3.002c-0.391-0.391-0.391-1.023,0-1.414
-                                			s1.023-0.391,1.414,0l3.002,3.002c0.391,0.391,0.391,1.023,0,1.414C22.513,17.902,22.257,18,22.001,18z"></path>
-                                	</g>
-                                	<g>
-                                		<path fill="#F1F2F2" d="M6.001,18c-0.256,0-0.512-0.098-0.707-0.293c-0.391-0.391-0.391-1.023,0-1.414l2.999-2.999
-                                			c0.391-0.391,1.023-0.391,1.414,0c0.391,0.392,0.391,1.023,0,1.414l-2.999,2.999C6.513,17.902,6.257,18,6.001,18z"></path>
-                                	</g>
-                                </g>
-                                </svg>
-
-                              </div>
-                              <div class="button-text-wrap">
-                                <div class="inner">
-                                  <div class="button-title">
-                                    Send message
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="preloader hide">
-                  <img src="/assets/preloader-47e80096d03c5f3523f33a9066be8b283a8de197df86303909fe2081e9a2ab98.gif" alt="Preloader 47e80096d03c5f3523f33a9066be8b283a8de197df86303909fe2081e9a2ab98" />
-                </div>
-                <div class="success-handler hide">
-                  <p class="h4 text-center">
-                    Your message have been successfully sent!
-                  </p>
-                  <p>
-                    Our manager will contact you as soon as possible.
-                  </p>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>',4,'Page','feedback_form',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(13,'<div class="row">
                       <div class="columns large-12 section-header">
                         Devices in numbers
@@ -1771,25 +1506,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                         </div>
                       </div>
                     </div>',9,'Page','devices_in_numbers',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(14,'<div class="page-content-row-wrap">
-                    <div class="row center-items-vertically row-reverse">
-                      <div class="columns large-4 medium-4 small-12 image-wrap-outer">
-                        <div class="image-wrap small-text-center">
-                          <img src="/assets/rf-devices-picture-1.svg">
-                        </div>
-                      </div>
-                      <div class="columns large-8 medium-8 small-12 text-column">
-                        <div class="header small-text-center">
-                          Devices
-                        </div>
-                        <div class="description">
-                          <p>
-                            We are a team of more than 1500 certified testing professionals, each with 3+ years of working experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. And perfections is our second name.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>',9,'Page','intro',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(15,'User-agent: *
       #Disallow: /ordering-crowdsourced-testing
       Disallow: /dashboard
@@ -1798,19 +1514,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
       Disallow: /terms-of-use
       ',15,'Pages::RobotsTxt','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(16,'',18,'Pages::SitemapXml','content',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(17,'<div class="row">
-      <div class="columns large-12">
-      <div id="article">
-              <div class="article-name">
-                Terms of use
-              </div>
-              <div class="article-content">
-                <p>10G-Force is an online platform that gives you the opportunity to hire a first-class team of quality assurance professionals in the blink of an eye. Outsource your testing tasks and improve the quality of your apps. 10G-Force helps you to comprehensively test your app on multiple devices in real-world conditions with a minimum effort on your part!</p>
-
-              </div>
-            </div>
-      </div>
-      </div>',19,'Pages::TermsOfUse','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(18,'.page-content-row-wrap
         .row.center-items-vertically.row-reverse
           .columns.large-4.medium-4.small-12.image-wrap-outer
@@ -1822,33 +1525,6 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
             .description
               p
                 |  To make a product be used by the masses one must be sure it operates perfectly. 10-g force increases the value of any product providing fast and effective testing for a broad range of different devices. We perform functional, localization or usability testing for mobile apps, websites, software and games. Our team works with a variety of platforms and operating systems, including iOS, Android, Blackberry, and Windows. ',9,'Pages::Devices','intro',NULL);
-      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(19,'.row
-        .columns.large-12.section-header
-          |  Devices in numbers
-        .columns.large-3.projects
-          .counter[animate-number="" value="109"]
-            |  0
-          .text
-            |  Devices
-        .columns.large-3.testers
-          .counter[animate-number="" value="21"]
-            |  0
-          .text
-            |  Manufacturers
-        .columns.large-3.testers
-          .counter[animate-number="" value="48"]
-            |  0
-          .text
-            |  Operating
-            br
-            | systems
-        .columns.large-3.testers
-          .counter[animate-number="" value="25"]
-            |  0
-          .text
-            |  Screen
-            br
-            | sizes ',9,'Pages::Devices','devices_in_numbers',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(20,'.row
         .columns.large-12
           .header
@@ -2741,7 +2417,7 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
                   .currency
                     |  $
                   .price
-                    |  39
+                    |  29
                   .price-per
                     |  /per platform
                     br
@@ -2966,31 +2642,31 @@ class ImportHtmlBloksToDb < ActiveRecord::Migration
         a href="http://radok.voroninstudio.eu/admin/#{@resource.class.name.underscore}/#{@resource.id}"
           | In admin panel',NULL,'Templates::FaqRequestAdminNotification','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(32,'table border="1"
-        tr
-          td
-            |Name
-          td
-            = @resource.name
+      tr
+        td
+          |Name
+        td
+          = @resource.name
 
-        tr
-          td
-            |Email
-          td
-            = @resource.email
+      tr
+        td
+          |Email
+        td
+          = @resource.email
 
-        tr
-          td
-            |Subject
-          td
-            = @resource.subject
+      tr
+        td
+          |Subject
+        td
+          = @resource.subject
 
-        tr
-          td
-            |Description
-          td
-            = @resource.description
+      tr
+        td
+          |Description
+        td
+          = @resource.description
 
-      = render "resource_link_in_admin_panel"',20,'Templates::FaqRequestAdminNotification','content',NULL);
+      = render "application/resource_link_in_admin_panel"',20,'Templates::FaqRequestAdminNotification','content',NULL);
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(33,'table border="1"
         tr
           td

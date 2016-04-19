@@ -40,52 +40,48 @@
 #
 
 class Wizard::Test < ActiveRecord::Base
-  attr_accessor :steps
-
-  attr_accessible *attribute_names
-
-  has_attachments :test_case_files
-
-  has_attachments :test_files
-
-  has_many :test_platforms_bindings, class_name: Wizard::TestPlatform#, foreign_key: [:test_id, :platform_id]
-  has_many :platforms, class_name: Wizard::Platform, through: :test_platforms_bindings
-
-  belongs_to :user, class_name: User
-
-  belongs_to :product_type, class_name: Wizard::ProductType
-  belongs_to :test_type, class_name: Wizard::TestType
-
 
   has_attachment :report
+  has_attachments :test_case_files
+  has_attachments :test_files
 
+  has_many :platforms, class_name: Wizard::Platform, through: :test_platforms_bindings
+  has_many :payment_requests
+  has_many :test_platforms_bindings, class_name: Wizard::TestPlatform#, foreign_key: [:test_id, :platform_id]
 
+  belongs_to :product_type, class_name: Wizard::ProductType
+  belongs_to :promo_code, class_name: Wizard::PromoCode
+  belongs_to :test_type, class_name: Wizard::TestType
+  belongs_to :user, class_name: User
 
   has_and_belongs_to_many :project_languages, class_name: Wizard::ProjectLanguage, join_table: :wizard_test_project_languages
   has_and_belongs_to_many :report_languages, class_name: Wizard::ReportLanguage, join_table: :wizard_test_report_languages
 
-  has_many :payment_requests
+  attr_accessor :steps
 
-  belongs_to :promo_code, class_name: Wizard::PromoCode
-
-  attr_accessible :project_languages, :project_language_ids
-  attr_accessible :report_languages, :report_language_ids
-
-  attr_accessible :product_type, :product_type_id, :test_type
-  attr_accessible :payment_requests, :payment_request_ids
+  attr_accessible *attribute_names
   attr_accessible :main_components
+  attr_accessible :payment_requests, :payment_request_ids
+  attr_accessible :product_type, :product_type_id, :test_type
+  attr_accessible :project_languages, :project_language_ids
   attr_accessible :promo_code
-
-
+  attr_accessible :report_languages, :report_language_ids
+  attr_accessible :test_platforms_bindings, :test_platforms_bindings_attributes
+  attr_accessible :testers_by_platform
 
   accepts_nested_attributes_for :test_platforms_bindings
-  attr_accessible :test_platforms_bindings, :test_platforms_bindings_attributes
-
-  attr_accessible :testers_by_platform
 
   scope :drafts, -> { where("completed_at is null") }
   scope :processing_projects, -> { where("completed_at is not null") }
   scope :tested_projects, -> { where("completed_at is not null and tested_at is not null") }
+
+  validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
+  validates :hours_per_tester, numericality: {in: 1..5}
+  validates :platforms_comment, length: { maximum: 500 }, allow_blank: true
+  validates :project_access_comment, length: { maximum: 500 }, allow_blank: true
+  validates :project_info_comment, length: { maximum: 500 }, allow_blank: true
+  validates :project_name, length: { maximum: 100 }
+  validates :project_version, length: { maximum: 20 }
 
   def testers_by_platform=(platforms)
     return if platforms.nil?
@@ -96,8 +92,6 @@ class Wizard::Test < ActiveRecord::Base
 
     request_platform_ids = request_platform_bindings.map{|p| p[:platform_id] }
     platform_ids_to_remove = current_platform_binding_ids.select{|current_platform_id| !request_platform_ids.include?(current_platform_id)  }
-
-
     new_platform_bindings = request_platform_bindings.select{|b| !current_platform_binding_ids.include?(b[:platform_id])  }
 
     # platform_bindings_to_update = request_platform_bindings.select{|b| current_platform_binding_ids.include?(b[:platform_id]) }.map do |existing_binding|
@@ -115,18 +109,10 @@ class Wizard::Test < ActiveRecord::Base
 
     platform_bindings_to_update.each do |b|
       p = self.test_platforms_bindings.where(platform_id: b[:platform_id]).first;
-      if p[:testers_count] != b[:testers_count]
+      if (p[:testers_count] != b[:testers_count]) && (b[:testers_count] <= 50)
         p.update_attributes!(testers_count: b[:testers_count])
       end
     end
-
-    puts "params_platforms: #{platforms}"
-    puts "new_platform_bindings: #{new_platform_bindings}"
-    puts "current_platform_bindings: #{current_platform_bindings.inspect}"
-    puts "request_platform_bindings: #{request_platform_bindings.inspect}"
-    puts "request_platform_ids: #{request_platform_ids.inspect}"
-    puts "remove_ids: #{ platform_ids_to_remove.inspect }"
-
 
     #Wizard::TestPlatform.where(platform_id: platform_ids_to_remove, test_id: self.id).delete_all
     #
@@ -145,16 +131,11 @@ class Wizard::Test < ActiveRecord::Base
     #     #test_platform_binding.testers_count = count
     #     test_platform_binding.update(testers_count: 5)
     #   end
-    #
-    #
-    #
-    #
     # end
     # platform_ids = platforms.map{|k, p| p['id'].to_i }
     # platforms_to_remove = Wizard::TestPlatform.where(test_id: self.id).where.not(platform_id: platform_ids)
     # platforms_to_remove.delete_all
   end
-
 
   def platform_roots
     root_ids = platforms.map(&:root_id).uniq
@@ -172,7 +153,6 @@ class Wizard::Test < ActiveRecord::Base
     #root_ids.map{|root_id| root = Wizard::Platform.find(root_id); root.platforms }
     #root_ids.map{|group_id| g = {}; g[:id] = group_id; g[:platform_ids] = binding_ids.select{|p| p[:root_id] == group_id }.map{|p| p[:id] }; g  }
   end
-
 
   def test_type_name
     test_type.try(&:name)
@@ -194,12 +174,7 @@ class Wizard::Test < ActiveRecord::Base
     self.test_platforms_bindings.where(platform_id: platform_id).first.try(&:testers_count)
   end
 
-  #def initialize
-   # Wizard::Step.available_steps
-  #end
-
   def available_platforms
-
   end
 
   def self.available_steps
@@ -208,7 +183,6 @@ class Wizard::Test < ActiveRecord::Base
     step_classes.each do |step_class|
       data[step_class.name.underscore.split('/').last.to_sym] = step_class.available_options
     end
-
     data
   end
 
@@ -457,8 +431,6 @@ class Wizard::Test < ActiveRecord::Base
     price
   end
 
-  # step_id
-
   def percentage_discount
     self.promo_code.try{|c| c.percentage_discount.to_i } || 0
   end
@@ -473,7 +445,7 @@ class Wizard::Test < ActiveRecord::Base
 
   def to_builder
     properties = %w(active_step_number auth_login auth_password authentication_required comment completed_at created_at current_step_id expected_tested_at exploratory_description hours_per_tester
-id methodology_type percent_completed proceeded_steps_count product_type_id project_name project_url project_version state successful test_type_id test_type_name product_type_name tested_at updated_at user_id)
+      id methodology_type percent_completed proceeded_steps_count product_type_id project_name project_url project_version state successful test_type_id test_type_name product_type_name tested_at updated_at user_id)
 
     Jbuilder.new do |t|
       # def prop(prop_name)
@@ -562,4 +534,3 @@ id methodology_type percent_completed proceeded_steps_count product_type_id proj
   end
 
 end
-
