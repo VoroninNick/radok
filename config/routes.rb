@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     post "", to: "wizard#create"#, as: "wizard"
   end
 
+  get "/crowdsourced-company-about", to: "pages#about"
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call", as: :schedule_call

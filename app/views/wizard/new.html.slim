@@ -50,9 +50,9 @@
                 .columns.large-8
                   |Platforms:
                 .columns.large-2.icon.human
-                  = embedded_svg_from_assets("user", class: "user")
+                  = image_tag("user.svg")
                 .columns.large-2.icon.hours
-                  = embedded_svg_from_assets("clock", class: "clock")
+                  = image_tag("clock.svg")
               .rows
 
           .save-button ng-click="saveProject()"
@@ -78,7 +78,7 @@
             .checkout-button disabled="disabled" open-popup="payment" requires-auth="true"
               /= svg_placeholder "rf-rocket-up-right"
               ng-include src="'/assets/rf-rocket-up-right.svg'"
-                = embedded_svg_from_assets "rf-rocket-up-right"
+                = image_tag "rf-rocket-up-right"
 
 
             /steps-progress steps="wizard.configuration_steps"
