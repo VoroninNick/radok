@@ -367,7 +367,7 @@ validateEmail = (email) ->
   re.test email
 
 validatePhoneNumber = (number) ->
-  re = /^\+(?:[0-9] ?){6,14}[0-9]$/
+  re = /^\+(?:[0-9] ?){8,14}[0-9]$/
   re.test number
 
 validateName = (name) ->
