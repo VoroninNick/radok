@@ -6,7 +6,7 @@
   - @three_images_in_row_model.each do |item|
     .item
       .svg-wrap
-        = embedded_svg_from_assets(item[:img])
+        = image_tag("#{item[:img]}")
       .header
         = item[:title]
       .time

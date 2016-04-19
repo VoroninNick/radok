@@ -1,455 +1,455 @@
 .progress-block
-	text-align: center
-	position: relative
-	.progress-wrap
-		display: inline-block
-		.progress-counter
+  text-align: center
+  position: relative
+  .progress-wrap
+    display: inline-block
+    .progress-counter
 
-			color: $fire-orange-color
-			position: absolute
-			top: 50%
-			left: 50%
-			transform: translate(-50%, -50%)
-			+font-60-semibold
-			.percent
-				+font-18
-			.completed-word
-				+font-14-light
-				display: block
-				top: -23px
-				position: relative
-				text-align: center
-				color: $light-gray-text-color
+      color: $fire-orange-color
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      +font-60-semibold
+      .percent
+        +font-18
+      .completed-word
+        +font-14-light
+        display: block
+        top: -23px
+        position: relative
+        text-align: center
+        color: $light-gray-text-color
 
 .drafts, .in-process-tests, .finished-tests, .no-projects
-	margin-bottom: 60px
-	.header
-		color: $home-text-header-color
-		+font-16-light
+  margin-bottom: 60px
+  .header
+    color: $home-text-header-color
+    +font-16-light
 
-		height: 75px
-		line-height: 90px
+    height: 75px
+    line-height: 90px
 .drafts, .in-process-tests, .no-projects
-	.header
-		text-align: center
+  .header
+    text-align: center
 .dashboard-projects-header
-	text-align: center
+  text-align: center
 
 .no-projects
-	margin-top: 128px
-	margin-bottom: 128px
-	position: relative
-	.header
-		font-size: 1.9rem
-		font-weight: 500
+  margin-top: 128px
+  margin-bottom: 128px
+  position: relative
+  .header
+    font-size: 1.9rem
+    font-weight: 500
 
 
 [collapsable]
-	[collapsable-content]
-		display: none
-		height: auto
-		+transition_all(max-height 0.4s)
-		overflow: hidden
-	&.expanded
-		[collapsable-content]
+  [collapsable-content]
+    display: none
+    height: auto
+    +transition_all(max-height 0.4s)
+    overflow: hidden
+  &.expanded
+    [collapsable-content]
 
 #dashboard-projects
-	.item
-		margin-bottom: 15px
-		margin-top: 15px
-		&.columns
-			&:last-child
-				float: left
-		> .inner
-			position: relative
-			display: block
-			background: $white-color
-			> .my-row
-				+grid-row
-				> .my-column
-					+grid-column(12)
-		.content
-			color: $home-text-header-color
-			+font-14-semibold
-			.type-of-test-wrap
-				line-height: 24px
-				text-align: center
-			.testers, .hours
-				line-height: 18px
-			.type-of-test-icon, .hours-icon
-				margin-right: 10px
-			.testers-icon
-				margin-right: 10px
-				position: relative
-				top: -4px
-			.type-of-test-icon, .testers-icon, .hours-icon
-				svg
-					fill: $home-text-header-color
-			.type-of-test-icon
-				img
-					width: 24px
-					height: 24px
-			.hours-icon
-				svg
-					width: 18px
-					height: 18px
-			.testers-icon
-				svg
-					width: 26px
-					height: 26px
-			.type-of-test-icon
-				svg
-					width: 26px
-					height: 24px
-			.type-of-test-icon, .type-of-test, .testing-type, .testers-icon, .total-testers-count, .hours-icon, .hours-count
-				display: inline-block
-				vertical-align: top
-			.testers, .hours
-				width: 50%
-				display: inline-block
-				float: left
-			.type-of-test-logo
-				text-align: center
-				margin: 10px 0 0 0
-				svg
-					width: 100px
-					height: 100px
-					display: inline-block
-				&:not(.ux)
-					svg
-						width: 85px
-			.project-name
-				text-align: center
-				width: 100%
-			.testers-and-hours
-				padding-top: 1rem
+  .item
+    margin-bottom: 15px
+    margin-top: 15px
+    &.columns
+      &:last-child
+        float: left
+    > .inner
+      position: relative
+      display: block
+      background: $white-color
+      > .my-row
+        +grid-row
+        > .my-column
+          +grid-column(12)
+    .content
+      color: $home-text-header-color
+      +font-14-semibold
+      .type-of-test-wrap
+        line-height: 24px
+        text-align: center
+      .testers, .hours
+        line-height: 18px
+      .type-of-test-icon, .hours-icon
+        margin-right: 10px
+      .testers-icon
+        margin-right: 10px
+        position: relative
+        top: -4px
+      .type-of-test-icon, .testers-icon, .hours-icon
+        svg
+          fill: $home-text-header-color
+      .type-of-test-icon
+        img
+          width: 24px
+          height: 24px
+      .hours-icon
+        img
+          width: 18px
+          height: 18px
+      .testers-icon
+        svg
+          width: 26px
+          height: 26px
+      .type-of-test-icon
+        svg
+          width: 26px
+          height: 24px
+      .type-of-test-icon, .type-of-test, .testing-type, .testers-icon, .total-testers-count, .hours-icon, .hours-count
+        display: inline-block
+        vertical-align: top
+      .testers, .hours
+        width: 50%
+        display: inline-block
+        float: left
+      .type-of-test-logo
+        text-align: center
+        margin: 10px 0 0 0
+        svg
+          width: 100px
+          height: 100px
+          display: inline-block
+        &:not(.ux)
+          svg
+            width: 85px
+      .project-name
+        text-align: center
+        width: 100%
+      .testers-and-hours
+        padding-top: 1rem
 
-		.actions
-			margin-top: 50px
-			height: 50px
-			> *:first-child
-				width: calc(100% - 165px)
-				display: inline-block
-				text-align: center
-				color: $sky-blue-color
-				height: 50px
-				line-height: 50px
-				cursor: pointer
+    .actions
+      margin-top: 50px
+      height: 50px
+      > *:first-child
+        width: calc(100% - 165px)
+        display: inline-block
+        text-align: center
+        color: $sky-blue-color
+        height: 50px
+        line-height: 50px
+        cursor: pointer
 
-	.project-name
-		color: $sky-blue-color
-		+font-18-semibold
-		text-transform: uppercase
-	.drafts
-		.item
-			.content
-				.type-of-test-wrap
-					text-align: left
-	.drafts, .in-process-tests
-		.project-status
-			position: absolute
-			right: -4px
-			top: 20px
-			display: block
-			background: $sky-blue-color
-			color: #FFF
-			width: 70px
-			height: 30px
-			line-height: 30px
-			text-align: center
-	.in-process-tests
-		.project-name
-			margin-top: 50px
-			margin-bottom: 25px
-		.remaining-time
-			text-align: right
-			color: $light-gray-text-color
-			margin-top: 30px
-		.item
-			.content
-				padding-bottom: 24px
-	.finished-tests
-		.item
-			margin-top: 1px
-			margin-bottom: 1px
-			padding-left: 0
-			padding-right: 50px
-			position: relative
-			.header
-				height: 50px
-				background: $white-color
-				position: relative
-				padding: 0 40px 0 15px
-				cursor: pointer
-				+transition_all(all 0.4s)
-				&:hover, &.expanded
-					background: $sky-blue-color
-					.project-name
-						color: white
-					.dropdown-arrow
-						svg
-							path
-								fill: white
+  .project-name
+    color: $sky-blue-color
+    +font-18-semibold
+    text-transform: uppercase
+  .drafts
+    .item
+      .content
+        .type-of-test-wrap
+          text-align: left
+  .drafts, .in-process-tests
+    .project-status
+      position: absolute
+      right: -4px
+      top: 20px
+      display: block
+      background: $sky-blue-color
+      color: #FFF
+      width: 70px
+      height: 30px
+      line-height: 30px
+      text-align: center
+  .in-process-tests
+    .project-name
+      margin-top: 50px
+      margin-bottom: 25px
+    .remaining-time
+      text-align: right
+      color: $light-gray-text-color
+      margin-top: 30px
+    .item
+      .content
+        padding-bottom: 24px
+  .finished-tests
+    .item
+      margin-top: 1px
+      margin-bottom: 1px
+      padding-left: 0
+      padding-right: 50px
+      position: relative
+      .header
+        height: 50px
+        background: $white-color
+        position: relative
+        padding: 0 40px 0 15px
+        cursor: pointer
+        +transition_all(all 0.4s)
+        &:hover, &.expanded
+          background: $sky-blue-color
+          .project-name
+            color: white
+          .dropdown-arrow
+            svg
+              path
+                fill: white
 
-		.project-status
-			position: absolute
-			width: 50px
-			height: 50px
-			right: 0
-			top: 0
+    .project-status
+      position: absolute
+      width: 50px
+      height: 50px
+      right: 0
+      top: 0
 
-			.success-svg-wrap
-				width: 50px
-				height: 50px
-				svg
-					width: 26px
-					height: 26px
-					position: absolute
-					top: 12px
-					left: 12px
-					polygon
-						fill: $sky-blue-color
-			&.failure
-				&:after
-					content: '\00D7'
-					top: 17px
-					left: 17px
-					height: 50px
-					width: 50px
-					font-size: 60px
-					line-height: 50px
-					color: $fire-orange-color
-					text-align: center
-					display: block
-			.fail-svg-wrap
-				width: 100%
-				height: 100%
-				position: relative
-				svg
-					+transform(translate(-50%, -50%))
-					position: absolute
-					top: 50%
-					left: 50%
-					g
-						fill: red
+      .success-svg-wrap
+        width: 50px
+        height: 50px
+        svg
+          width: 26px
+          height: 26px
+          position: absolute
+          top: 12px
+          left: 12px
+          polygon
+            fill: $sky-blue-color
+      &.failure
+        &:after
+          content: '\00D7'
+          top: 17px
+          left: 17px
+          height: 50px
+          width: 50px
+          font-size: 60px
+          line-height: 50px
+          color: $fire-orange-color
+          text-align: center
+          display: block
+      .fail-svg-wrap
+        width: 100%
+        height: 100%
+        position: relative
+        svg
+          +transform(translate(-50%, -50%))
+          position: absolute
+          top: 50%
+          left: 50%
+          g
+            fill: red
 
-		.project-name
-			height: 50px
-			line-height: 50px
-			vertical-align: top
-			overflow: hidden
-		.dropdown-arrow
-			display: inline-block
-			height: inherit
-			position: absolute
-			right: 15px
-			top: 0
+    .project-name
+      height: 50px
+      line-height: 50px
+      vertical-align: top
+      overflow: hidden
+    .dropdown-arrow
+      display: inline-block
+      height: inherit
+      position: absolute
+      right: 15px
+      top: 0
 
-			&.collapsed
-				svg
-					position: relative
-					top: -15px
-					height: 12px
-					+transform(rotate(270deg))
+      &.collapsed
+        svg
+          position: relative
+          top: -15px
+          height: 12px
+          +transform(rotate(270deg))
 
 .project-progress-value
-	[animate-progress-number]
-		top: 0
-		position: relative
-		left: 4px
-	.percent
-		position: relative
-		top: -27px
-		left: 4px
+  [animate-progress-number]
+    top: 0
+    position: relative
+    left: 4px
+  .percent
+    position: relative
+    top: -27px
+    left: 4px
 
 .rf-button
-	&.rf-button-raised
-		&.complete-draft-button
-			vertical-align: top
-			width: 160px
-			height: 50px
-			position: relative
-			padding-left: 46px
-			.svg-wrap
-				margin-left: 0
-				margin-right: 0
-				svg
-					position: absolute
-					width: 24px
-					height: 24px
-					left: 14px
-					top: 13px
-					path.my-color
-						fill: white
-					line.my-color
-						stroke: white
-					.stroke-my-color
-						stroke: white
-						stroke-width: 3px
+  &.rf-button-raised
+    &.complete-draft-button
+      vertical-align: top
+      width: 160px
+      height: 50px
+      position: relative
+      padding-left: 46px
+      .svg-wrap
+        margin-left: 0
+        margin-right: 0
+        svg
+          position: absolute
+          width: 24px
+          height: 24px
+          left: 14px
+          top: 13px
+          path.my-color
+            fill: white
+          line.my-color
+            stroke: white
+          .stroke-my-color
+            stroke: white
+            stroke-width: 3px
 
-			.button-text-wrap
-				.inner
-					top: 0
-			.button-title
-				+font-18-semibold
-				text-align: left
-				padding-top: 4px
-			.button-subtitle
-				+font-14-light
-				text-transform: none
-				text-align: left
-				position: relative
+      .button-text-wrap
+        .inner
+          top: 0
+      .button-title
+        +font-18-semibold
+        text-align: left
+        padding-top: 4px
+      .button-subtitle
+        +font-14-light
+        text-transform: none
+        text-align: left
+        position: relative
 
 .delete-draft-button
-	+font-14-light
+  +font-14-light
 
 .finished-project-short-info
-	background: $white-color
+  background: $white-color
 
 // Project Info
 
 .project-name-row
-	margin-top: 40px
-	margin-bottom: 56px
+  margin-top: 40px
+  margin-bottom: 56px
 
 .project-name
-	display: inline-block
+  display: inline-block
 
 .status-completed
-	display: inline-block
-	width: 28px
-	height: 28px
-	border: 2px solid
-	border-radius: 50%
-	vertical-align: top
+  display: inline-block
+  width: 28px
+  height: 28px
+  border: 2px solid
+  border-radius: 50%
+  vertical-align: top
 
-	&.status-successful
-		padding-top: 3px
-		padding-left: 3px
-		border-color: $sky-blue-color
-		svg
-			polygon
-				fill: $sky-blue-color
-	&.status-fail
-		padding-top: 2px
-		padding-left: 5px
-		border-color: red
-		svg
-			g
-				fill: red
+  &.status-successful
+    padding-top: 3px
+    padding-left: 3px
+    border-color: $sky-blue-color
+    svg
+      polygon
+        fill: $sky-blue-color
+  &.status-fail
+    padding-top: 2px
+    padding-left: 5px
+    border-color: red
+    svg
+      g
+        fill: red
 
 .download-report
-	svg
-		margin-right: 10px
-		vertical-align: middle
-		g
-			fill: $gray-text-color
-			+transition_all(all 0.4s)
-	&:hover
-		svg
-			g
-				fill: $sky-blue-color
+  svg
+    margin-right: 10px
+    vertical-align: middle
+    g
+      fill: $gray-text-color
+      +transition_all(all 0.4s)
+  &:hover
+    svg
+      g
+        fill: $sky-blue-color
 
 .project-short-info
-	margin-bottom: 56px
-	padding-top: 50px
-	height: 300px
-	background: $white-color
-	.managed-by
-		.inner
-			display: inline-block
-			max-width: 150px
-	.managed-by-avatar
-		margin-bottom: 10px
-		padding-top: 10px
-		img
-			width: 80px
-			height: 80px
-			border-radius: 50%
+  margin-bottom: 56px
+  padding-top: 50px
+  height: 300px
+  background: $white-color
+  .managed-by
+    .inner
+      display: inline-block
+      max-width: 150px
+  .managed-by-avatar
+    margin-bottom: 10px
+    padding-top: 10px
+    img
+      width: 80px
+      height: 80px
+      border-radius: 50%
 
 .managed-by-name
-	+font-18-semibold
-	color: $yellow-orange-color
-	text-transform: uppercase
+  +font-18-semibold
+  color: $yellow-orange-color
+  text-transform: uppercase
 
 .project-short-info-column
-	text-align: center
-	border-right: 1px solid $sky-blue-color
-	padding-bottom: 25px
-	height: 220px
-	&:last-child
-		border-right: none
+  text-align: center
+  border-right: 1px solid $sky-blue-color
+  padding-bottom: 25px
+  height: 220px
+  &:last-child
+    border-right: none
 
 .managed-by-header, .total-cost-header, .project-progress-header
-	+font-21-semibold
-	margin-bottom: 25px
+  +font-21-semibold
+  margin-bottom: 25px
 
 .total-cost-value
-	color: $fire-orange-color
-	margin-top: 0
-	line-height: rem-calc(142)
-	+font-60-semibold
+  color: $fire-orange-color
+  margin-top: 0
+  line-height: rem-calc(142)
+  +font-60-semibold
 
 #change-password-form
-	.actions
-		.rf-button
-			margin-top: 30px
+  .actions
+    .rf-button
+      margin-top: 30px
 
 #dashboard-projects
-	.in-process-tests, .drafts
-		.item
-			.content
-				.project-name
-					height: 54px
-					overflow: hidden
-	.drafts
-		@media #{$screen} and (max-width: 680px) and (min-width: 551px)
-			.project-status
-				right: 0
-			.item
-				padding: 0 5px
-				width: 50%
-				.testers-icon, .hours-icon
-					margin-right: 0
-			.items
-				> .row
-					margin: 0 -10px
-	.drafts, .in-process-tests
-		@media #{$screen} and (max-width: 550px)
-			.item
-				&, &:last-child
-					float: none
-					position: relative
-					margin-left: auto
-					margin-right: auto
-					width: 100%
-					max-width: 340px
+  .in-process-tests, .drafts
+    .item
+      .content
+        .project-name
+          height: 54px
+          overflow: hidden
+  .drafts
+    @media #{$screen} and (max-width: 680px) and (min-width: 551px)
+      .project-status
+        right: 0
+      .item
+        padding: 0 5px
+        width: 50%
+        .testers-icon, .hours-icon
+          margin-right: 0
+      .items
+        > .row
+          margin: 0 -10px
+  .drafts, .in-process-tests
+    @media #{$screen} and (max-width: 550px)
+      .item
+        &, &:last-child
+          float: none
+          position: relative
+          margin-left: auto
+          margin-right: auto
+          width: 100%
+          max-width: 340px
 
 .total-testers-count
-	.property-label
-		margin-bottom: 7px
-	.svg-wrap.hour
-		svg
-			width: 23px !important
-			margin-left: 4px
-			margin-right: 1px
+  .property-label
+    margin-bottom: 7px
+  .svg-wrap.hour
+    svg
+      width: 23px !important
+      margin-left: 4px
+      margin-right: 1px
 
 @media #{$medium-down}
-	.project-short-info
-		height: auto
-		padding-top: 20px
-		padding-bottom: 0 // 20px
-	.project-short-info-column
-		height: auto
-		&.total-cost, &.project-progress
-			margin-top: 20px
-	.managed-by-header, .total-cost-header, .project-progress-header
-		margin-bottom: 0
-	.total-cost-value
-		line-height: 4rem
-		font-size: 3rem
-		font-weight: 300
-		span
-			font-weight: 500
-	.project-progress-value
-		padding-top: 15px
+  .project-short-info
+    height: auto
+    padding-top: 20px
+    padding-bottom: 0 // 20px
+  .project-short-info-column
+    height: auto
+    &.total-cost, &.project-progress
+      margin-top: 20px
+  .managed-by-header, .total-cost-header, .project-progress-header
+    margin-bottom: 0
+  .total-cost-value
+    line-height: 4rem
+    font-size: 3rem
+    font-weight: 300
+    span
+      font-weight: 500
+  .project-progress-value
+    padding-top: 15px
