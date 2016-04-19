@@ -17,7 +17,7 @@
                   = embedded_svg_from_assets "rf-icon-user"
                 .text-label
                   |Personal data
-            li class="#{'active' if @password_change_tab_active}"
+            li id="#{'chng-pass_disable' if !!current_user.provider}" class="#{'active' if @password_change_tab_active}"
               a
                 .icon-wrap
                   = embedded_svg_from_assets "rf-icon-password"
@@ -46,11 +46,11 @@
                           |Your photo
 
                       div
-                        label.image-label for="input-file-uploader" class="#{'hide' unless @user.avatar.exists?}"
-                          img src=(@user.avatar.url(:profile_image) if @user.avatar.exists?(:profile_image))
+                        label.image-label for="input-file-uploader" class="#{'hide' unless @user.avatar.exists?(:profile_image)}"
+                          = image_tag(@user.avatar.url(:profile_image))
 
                         label.no-image for="input-file-uploader" class="#{'hide' if @user.avatar.exists?(:profile_image)}"
-                          img src="/assets/no_avatar.svg"
+                          = image_tag("no_avatar.svg")
                       div
                         label.change-photo-label for="input-file-uploader"
                           |Change photo
@@ -60,7 +60,7 @@
                     .columns.large-6.inputs-group
                       = rf_input name: "user[username]", label: "Username (required)", required: true, value: @user.username, required_message: "Please type username", taken_message: "Username already in use"
                       = rf_input name: "user[email]", required: true, label: "Email (required)", value: @user.email, required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "Email already in use"
-                      = rf_input name: "user[full_name]", label: "Full name", value: @user.full_name
+                      = rf_input name: "user[full_name]", label: "Full name", value: @user.full_name, validation: "name"
                       = rf_input name: "user[phone]", label: "Phone", value: @user.phone, validation: "phone"
                     .columns.large-6.inputs-group
                       = rf_input name: "user[country]", label: "Country", value: @user.country
@@ -74,18 +74,19 @@
 
             li class="#{'active' if @password_change_tab_active}"
               form#change-password-form novalidate="" resource="user" action="/users/password" method="post" ajax-method="put" show-preloader="" show-on-success=""
+                .form-message.hide
+                  p.h4.text-center
+                    |You have successfully changed password
                 .form-content
-                  .form-message.hide
-                    p.h4.text-center
-                      |You have successfully changed password
                   .inputs
                     .columns.large-5.large-centered
-                      = rf_input id: "user_password", name: "user[password]", label: "New password", type: "password", required: true, autocomplete: false
+                      / = rf_input id: "user_old_password", name: "user[old_password]", label: "Old password", type: "password", required: true, autocomplete: false
+                      = rf_input id: "user_password", name: "user[password]", label: "New password", type: "password", required_message: "Please type password", required: true, autocomplete: false
+                      = rf_input id: "user_confirm_password", name: "user[confirm_password]", label: "Re-enter password (required)", type: "password",required_message: "These passwords don't match", validation: "confirm_password", required: true, autocomplete: false
                     .clearfix
 
-
                   .actions
-                    .columns.large-5.large-centered
+                    .columns.large-5.large-centered 
                       = rf_button title: "change password", svg: "rf-icon-password", full_width: true
                     .clearfix
                 .preloader.hide

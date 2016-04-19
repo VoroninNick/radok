@@ -64,7 +64,7 @@ form for="project" url=wizard_path method="post" json="{}"
               .name.platform-label
                 = platform.name
               .human-svg-wrap.platform-user-icon
-                = embedded_svg_from_assets("user")
+                = image_tag("user.svg")
               .platform-options
                 - platform.children.each do |c|
                   - binding = sorted_platform_bindings.select { |b| b[:platform_id] == c.id }.first
@@ -74,7 +74,7 @@ form for="project" url=wizard_path method="post" json="{}"
                     .platform-option-label
                       = c.name
                     .input-wrap
-                      input pattern='[0-9]*' type='number' max='50' value="#{binding_current_testers_count}"
+                      input pattern='[1-9]$|^[1-4]\d$|^5[0]' maxlength='2' value="#{binding_current_testers_count}"
                       label class='decrement' for='platform-1-subitem-1'
                       label class='increment' for='platform-1-subitem-1'
 
@@ -327,15 +327,15 @@ form for="project" url=wizard_path method="post" json="{}"
         .input.string.project-contact-person-name.input-with-indent model="project.contact_person_name" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_name"
             |Name
-          input.set-error type="text" id="project_contact_person_name" value=@project.contact_person_name maxlength="100" data-field-name="Contact person name"
+          input.set-error type="text" id="project_contact_person_name" value=@project.contact_person_name data-field-name="Contact person name" validation="name"
           div#project_contact_person_name-error
-            label.error-max
-              |Available person name length is up to 100 charachters.
+            label.error-name
+              |Person name can contain up to 100 letters.
 
         .input.string.project-contact-person-email.input-with-indent model="project.contact_person_email" as="string"
           label.placeholder.hiding-placeholder for="project_contact_person_email"
             |Email
-          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email data-field-name="Contact person email"
+          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email data-field-name="Contact person email" validation="email"
           div#project_contact_person_email-error
             label.error-email
               |Please, provide a valid email.

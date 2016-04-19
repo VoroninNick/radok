@@ -36,7 +36,7 @@
                             .type-of-test-wrap
                               .type-of-test-icon
                                 .svg-wrap
-                                  = embedded_svg_from_assets(project.type_of_product_logo_path)
+                                  = image_tag("#{project.type_of_product_logo_path}.svg")
                               .type-of-test
                                 = project.type_of_test
                               /.testing-type ng-show="project.testing_type && project.testing_type.length"
@@ -45,7 +45,7 @@
                             .testers-and-hours
                               .testers
                                 .testers-icon
-                                  = embedded_svg_from_assets("user")
+                                  = image_tag("user.svg")
                                 .total-testers-count
                                   - if (count = project.total_testers_count) > 0
                                     = "#{count} testers"
@@ -53,7 +53,7 @@
                                     |Not specified
                               .hours
                                 .hours-icon
-                                  = embedded_svg_from_assets("clock")
+                                  = image_tag("clock.svg")
                                 .hours-count
                                   = project.ps__hours
                                   |&thinsp;&thinsp;hours each
@@ -85,8 +85,6 @@
                               - if project.expected_tested_at
                                 = project.remaining_time_string
                               - else
-
-
 
       - if @finished_projects.try(&:any?)
         .finished-tests

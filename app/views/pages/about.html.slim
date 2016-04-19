@@ -37,7 +37,6 @@
         .columns.large-12.leaders
           .row
 
-
   - if @clients.try(:any?)
     #about__clients.page-content-row-wrap.about-row-wrap
       .row
@@ -54,6 +53,6 @@
                   = image_tag client.logo.url
             .columns.large-2.small-4.item.invitation
               a href="#"
-                = embedded_svg_from_assets("question.svg")
+                = image_tag("question.svg")
 
                 label You could be next!

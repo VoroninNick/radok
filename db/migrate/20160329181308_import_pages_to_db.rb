@@ -4,66 +4,6 @@ class ImportPagesToDb < ActiveRecord::Migration
       DELETE FROM pages;
 
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(1,'Pages::HowItWorks',NULL,'','/crowdsourced-testing-process','2015-09-23 18:51:14.000694','2016-02-11 17:26:38.191345');
-      INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(3,'Pages::About',NULL,'#about-content.page-content-rows
-        #about__who-we-are.page-content-row-wrap.about-row-wrap
-          .row.center-items-vertically.row-reverse
-            .columns.large-3.medium-3.small-12.image-wrap-outer
-              .image-wrap.small-text-center
-                img src="/assets/rf-logo-rocket.svg" /
-            .columns.large-8.medium-9.small-12.text-column
-              .header.small-text-center
-                | Who we are
-              .description
-                p
-                  | We are a team of more than 1500 certified testing professionals, each with many years of experience. We are passionate about what we do, namely making this world a little better by helping deliver better software. We strive to achieve no less than perfection for our clients.
-        #about__what-we-test-row-wrap.page-content-row-wrap.about-row-wrap
-          .row
-            .columns.large-12
-              h2.header
-                | What we test
-              .subheader
-                | We carefully test your application service web page or game with the help of thousands of professionally trained testers.
-            .columns.large-12.products
-              .row
-                - @product_types.each do |product_type|
-                  .columns.large-3.small-6.item
-                    .image-wrap
-                      = embedded_svg_from_absolute_path(product_type.image)
-
-                    .title.ng-binding
-                      = product_type.name
-
-        - if @leaders.try(:any?)
-          #about__leaders-row-wrap.page-content-row-wrap.about-row-wrap
-            .row
-              .columns.large-6
-                .header
-                  | Our top 10 QA Testers
-                .subheader
-              .columns.large-12.leaders
-                .row
-
-
-        - if @clients.try(:any?)
-          #about__clients.page-content-row-wrap.about-row-wrap
-            .row
-              .columns.large-12
-                .header
-                  | We work with
-                .subheader
-                  | The best brands in the world
-              .columns.large-12.clients
-                .row
-                  - @clients.each do |client|
-                    .columns.large-2.small-4.item
-                      a.ng-scope href=client.client_url title=client.name
-                        = embedded_svg_from_absolute_path(client.logo)
-                  .columns.large-2.small-4.item.invitation
-                    a href="#"
-                      = embedded_svg_from_assets("question.svg")
-
-                      label You could be next!
-      ','/crowdsourced-company-about','2015-09-23 19:19:13.558410','2016-02-11 16:25:47.315818');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(4,'Pages::Contact',NULL,'','/crowdsourced-testing-contact','2015-09-23 19:19:54.261268','2015-10-14 15:49:22.574697');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(5,'Pages::Pricing',NULL,'<div class="page-content-rows" id="pricing-page-content-rows">
                 <div class="page-content-row-wrap">
@@ -83,7 +23,7 @@ class ImportPagesToDb < ActiveRecord::Migration
                               $
                             </div>
                             <div class="price">
-                              39
+                              29
                             </div>
                             <div class="price-per">
                               /per platform<br>/per hour

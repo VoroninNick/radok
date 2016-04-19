@@ -2,7 +2,7 @@
   #wizard-full-summary-inner
     #wizard-full-summary-header
       .wizard-full-summary-icon
-        = embedded_svg_from_assets("finish_flag")
+        = image_tag("finish_flag.svg")
       .text
         |Summary
     #wizard-full-summary-content.row
@@ -46,14 +46,14 @@
           |Your product will be tested by:
         .property-value
           .svg-wrap
-            = embedded_svg_from_assets("user")
+            = image_tag("user-yellow.svg")
           .text
             span data-bind="project.total_testers_count"
               = project.total_testers_count
             |&thinsp; testers
           br
           .svg-wrap.hour
-            = embedded_svg_from_assets("clock")
+            = image_tag("clock-yellow.svg")
           .text
             span data-bind="project.hours_per_tester"
               = project.ps__hours
@@ -166,20 +166,11 @@
           .property-value
             = project.project_access_comment
 
-
-
-      /.columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
-        .property-label
-          |Here is project url:
-        .property-value.text-transform-none data-bind="project.project_url"
-          a href=project.project_access__url
-            = project.project_access__url
-      /.columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
+      .columns.large-12.property.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
         .property-label
           |You've provided the following instructions:
-        .property-input-value
-          textarea.instructions
-            = project.instructions
+        .property-value.instructions
+          = project.instructions
 
       .columns.large-6
         .full-summary-total-cost
@@ -191,13 +182,13 @@
             |total
             br
             |cost
-      /- if !project.completed?
+      - if !project.completed?
         .columns.large-6
           = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment", "requires-auth": "true" })
-      /.columns.large-6.left style="clear: left;"
-        .promo-code-field
-          label for="promo_code"
-            |Promo code
-          input type="text" placeholder="XXXX"
-          button.ok
-            = embedded_svg_from_assets "rf-icon-ok"
+        .columns.large-6.left style="clear: left;"
+          .promo-code-field
+            label for="promo_code"
+              |Promo code
+            input type="text" placeholder="XXXX"
+            button.ok
+              = image_tag "rf-icon-ok.svg"

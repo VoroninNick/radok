@@ -11,12 +11,12 @@
           .inputs
             .row
               .columns.large-6
-                = rf_input(label: "Your name", name: "faq_request[name]", required: true)
+                = rf_input(label: "Your name", name: "faq_request[name]", required: true, validation: "name")
                 = rf_input(label: "Email", validation: "email", name: "faq_request[email]", required: true)
-                = rf_input(label: "Subject", name: "faq_request[subject]", required: true)
+                = rf_input(label: "Subject", name: "faq_request[subject]", required: true, maxlength: "50", invalid_message: "Subject can be up to 50 letters long.")
 
               .columns.large-6
-                = rf_input(type: "text", number_inputs_height: 3, name: "faq_request[description]", required: true, label: "Message")
+                = rf_input(type: "text", number_inputs_height: 3, name: "faq_request[description]", required: true, label: "Message", maxlength: "1000", invalid_message: "Your message is too long!")
 
           .actions
             .row.text-right

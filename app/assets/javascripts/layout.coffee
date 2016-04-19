@@ -64,19 +64,28 @@ $("body").on "click", "[open-popup]", (event)->
   $this = $(this)
   if $this.attr("disabled") == 'disabled'
     return
-  open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
-  condition = true
-  if open_popup_from_popup_only
-    condition = $this.closest(".ngdialog").length > 0
-  if condition
-    event.preventDefault()
-    $current_popup = $(this).closest(".ngdialog")
-    $current_popup.addClass("hide")
-    popup_name = $this.attr("open-popup")
-    if $this.attr("requires-auth") && $("html").attr("data-logged-in") != "true"
-      openPopup("user_pages__static_sign_in")
-    else
-      openPopup(popup_name)
+  $.ajax(
+    url: "user_logged"
+    type: "GET"
+    dataType: "json"
+    success: (data)->
+      if !data.logged
+        open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
+        condition = true
+        if open_popup_from_popup_only
+          condition = $this.closest(".ngdialog").length > 0
+        if condition
+          event.preventDefault()
+          $current_popup = $(this).closest(".ngdialog")
+          $current_popup.addClass("hide")
+          popup_name = $this.attr("open-popup")
+          if $this.attr("requires-auth") && $("html").attr("data-logged-in") != "true"
+            openPopup("user_pages__static_sign_in")
+          else
+            openPopup(popup_name)
+      else
+        location.reload()
+  )
 
 $.fn.valid = ->
   return true
@@ -174,6 +183,7 @@ $("body").on "submit", "form:not([no-processing])", (event)->
     form_type.validateForm.call($form)
   else
     $form.validateForm()
+
   valid_form = $form.find(".rf-input.invalid").length == 0
 
   if valid_form
@@ -309,21 +319,35 @@ $.fn.validateInput = ->
     $rf_input.find(".error.required").removeClass("hide")
     $rf_input.find(".error.invalid").addClass("hide")
 
+  max_length = $rf_input.find("input").attr("maxlength") || $rf_input.find("textarea").attr("maxlength") || ""
   validation_options_str = $rf_input.attr("validation") || ""
   validation_options = validation_options_str.split(" ")
 
   if valid
     if validation_options.indexOf("email") >= 0
       valid = validateEmail(value)
-
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
+    if validation_options.indexOf("confirm_password") >= 0
+      valid = validateConfirmPassword($rf_input)
+
+      $identical_error = $rf_input.find(".error.identical")
+      if $identical_error.length
+        $identical_error.removeClass("hide")
+      else
+        $error = "<label for='user_confirm_password' class='error remote identical'>These passwords don't match</label>"
+        $rf_input.prepend($error)
+
+      if valid
+        $rf_input.parent().find(".error.remote.identical").addClass("hide")
+      else
+        $rf_input.parent().find(".error.remote.identical").removeClass("hide")
+
     if validation_options.indexOf("phone") >= 0
       valid = validatePhoneNumber(value)
-
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
@@ -331,6 +355,13 @@ $.fn.validateInput = ->
 
     if validation_options.indexOf("name") >= 0
       valid = validateName(value)
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
+    if max_length
+      valid = (value.length < max_length)
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
@@ -356,6 +387,9 @@ $.fn.validateForm = (options)->
     $rf_input.validateInput()
   $form
 
+validateConfirmPassword = (el) ->
+  el.val() == el.prev().val()
+
 validateEmail = (email) ->
   re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
   re.test email
@@ -374,7 +408,7 @@ $("body").on "change blur keyup", "form .rf-input", (event)->
     $rf_input.find(".error.taken").addClass("hide")
   $rf_input.validateInput()
 
-$("body").on "click", ".tab-labels > :not(.active)", ->
+$("body").on "click", ".tab-labels > :not(#chng-pass_disable, .active)", ->
   $tab_label = $(this)
   $tab_labels = $tab_label.closest(".tab-labels")
   tab_index = $tab_label.index()

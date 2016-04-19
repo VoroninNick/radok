@@ -50,6 +50,10 @@ class UserPagesController < ApplicationController
     end
   end
 
+  def user_logged
+    render json: { logged: !!user_signed_in?}
+  end
+
   def profile
     @password_change_tab_active = flash[:forgot_password].present?
     @personal_data_tab_active = !@password_change_tab_active

@@ -2,7 +2,7 @@
   #wizard-full-summary-inner
     #wizard-full-summary-header
       .wizard-full-summary-icon
-        = embedded_svg_from_assets("finish_flag")
+        = image_tag("finish_flag.svg")
       .text
         |Summary
     #wizard-full-summary-content.row
@@ -43,7 +43,7 @@
               /- if platform[:testers_count] > 0
                 .platform
                   .platform-svg
-                    = embedded_svg_from_assets(platform[:logo_path])
+                    = image_tag("#{platform[:logo_path]}")
                   .platform-name
                     = platform[:name]
                   .platform-subitems
@@ -57,14 +57,14 @@
           |Your product will be tested by:
         .property-value
           .svg-wrap
-            = embedded_svg_from_assets("user")
+            = image_tag("user-yellow.svg")
           .text
             span data-bind="project.total_testers_count"
               = project.total_testers_count
             |&thinsp; testers
           br
           .svg-wrap.hour
-            = embedded_svg_from_assets("clock")
+            = image_tag("clock-yellow.svg")
           .text
             span data-bind="project.hours_per_tester"
               = project.ps__hours
@@ -125,7 +125,7 @@
             input id="promo_code" type="text" placeholder="XXXX" disabled=("disabled" if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
 
             button.ok
-              = embedded_svg_from_assets "rf-icon-ok"
+              = image_tag "rf-icon-ok.svg"
             .cancel-promo-code
 
         .clearfix

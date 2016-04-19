@@ -14,1596 +14,1592 @@ $platform-indent: 1rem
 $wizard-step-side-padding: #{$wizard-step-counter-diameter + rem-calc(30)}
 
 %right-window-header
-	+font-18-semibold
-	color: $light-black-color
-	height: $text-header-height
-	line-height: $text-header-height
-	text-align: center
-	text-transform: uppercase
-	background-color: $sky-blue-color
+  +font-18-semibold
+  color: $light-black-color
+  height: $text-header-height
+  line-height: $text-header-height
+  text-align: center
+  text-transform: uppercase
+  background-color: $sky-blue-color
 
 %banner
-	height: $wizard-banner-height
-	background-color: $wizard-banner-background-color
-	background-repeat: no-repeat
-	.title
-		+font-36
-		color: $white-color
-	.description
-		color: $sky-blue-color
-		+font-14-light
+  height: $wizard-banner-height
+  background-color: $wizard-banner-background-color
+  background-repeat: no-repeat
+  .title
+    +font-36
+    color: $white-color
+  .description
+    color: $sky-blue-color
+    +font-14-light
 
 .banner
-	@extend %banner
+  @extend %banner
 
 = input-base
-	border: 1px solid $light-gray-text-color
-	color: $light-black-color
-	padding: 4px 12px
+  border: 1px solid $light-gray-text-color
+  color: $light-black-color
+  padding: 4px 12px
 
 = textarea-width
-	width: #{grid-calc(12, 12)}
-	max-width: rem-calc(600)
+  width: #{grid-calc(12, 12)}
+  max-width: rem-calc(600)
 
 = go-next-button($background-image: true)
-	background-color: $fire-orange-color
-	color: white
-	width: $go-next-button-width
-	height: $go-next-button-height
-	display: block
-	margin: $go-next-button-margin-top auto 0 auto
-	cursor: pointer
-	padding: rem-calc(7) 0 0 rem-calc(92)
-	text-align: left
+  background-color: $fire-orange-color
+  color: white
+  width: $go-next-button-width
+  height: $go-next-button-height
+  display: block
+  margin: $go-next-button-margin-top auto 0 auto
+  cursor: pointer
+  padding: rem-calc(7) 0 0 rem-calc(92)
+  text-align: left
 
-	@if $background-image != false
-		background-image: asset-url("rf-icon-rocket.svg")
-		background-repeat: no-repeat
-		background-position: rem-calc(34) rem-calc(10)
+  @if $background-image != false
+    background-image: asset-url("rf-icon-rocket.svg")
+    background-repeat: no-repeat
+    background-position: rem-calc(34) rem-calc(10)
 
 %go-next-button
-	+go-next-button
+  +go-next-button
 
 = platform-name
-	display: inline-block
-	line-height: 40px
-	vertical-align: top
-	color: $yellow-orange-color
-	font-size: 18px
-	font-weight: 500
-	text-transform: uppercase
-	&.with-bg-image
-		padding-left: 50px
-		background-repeat: no-repeat
-		background-size: 40px 40px
-		height: 40px
-		line-height: 40px
+  display: inline-block
+  line-height: 40px
+  vertical-align: top
+  color: $yellow-orange-color
+  font-size: 18px
+  font-weight: 500
+  text-transform: uppercase
+  &.with-bg-image
+    padding-left: 50px
+    background-repeat: no-repeat
+    background-size: 40px 40px
+    height: 40px
+    line-height: 40px
 
 #wizard-content
-	+grid-row
-	position: relative
+  +grid-row
+  position: relative
 #wizard-steps
-	width: 100%
-	padding-right: $wizard-summary-width
+  width: 100%
+  padding-right: $wizard-summary-width
 
 #wizard-help
-	margin-top: #{$wizard-step-vertical-indent * 2}
-	width: $wizard-summary-width
-	height: auto
-	position: absolute
-	right: 0
-	top: 0
-	.header
-		@extend %right-window-header
-	.content
-		+font-14-semibold
-		background: $white-color
-		padding: rem-calc(8) rem-calc(16) rem-calc(48) rem-calc(16)
-		position: relative
-	.go-button
-		margin: 0
-		svg
-			margin: 0 8px
-	.configure-button
-		margin: 0
-		text-align: center
-		.inner
-			display: inline-block
-		.svg-wrap
-			display: inline-block
-			svg
-				margin: 0
-		.button-label
-			display: inline-block
-			+font-21-semibold
+  margin-top: #{$wizard-step-vertical-indent * 2}
+  width: $wizard-summary-width
+  height: auto
+  position: absolute
+  right: 0
+  top: 0
+  .header
+    @extend %right-window-header
+  .content
+    +font-14-semibold
+    background: $white-color
+    padding: rem-calc(8) rem-calc(16) rem-calc(48) rem-calc(16)
+    position: relative
+  .go-button
+    margin: 0
+    svg
+      margin: 0 8px
+  .configure-button
+    margin: 0
+    text-align: center
+    .inner
+      display: inline-block
+    .svg-wrap
+      display: inline-block
+      svg
+        margin: 0
+    .button-label
+      display: inline-block
+      +font-21-semibold
 
 #wizard-help-fixed
-	position: relative
-	width: $wizard-summary-width
-	height: 100px
-	background: inherit
-	&.fixed-top
-		top: #{$header-height + $go-next-button-margin-top}
-		position: fixed
+  position: relative
+  width: $wizard-summary-width
+  height: 100px
+  background: inherit
+  &.fixed-top
+    top: #{$header-height + $go-next-button-margin-top}
+    position: fixed
 
 #wizard-summary
-	margin-top: $wizard-step-vertical-indent
-	width: $wizard-summary-width
-	height: auto
-	position: absolute
-	right: 0
-	top: 0
-	.progress-bar
-		height: rem-calc(5)
-		position: relative
-		.completed-step-number, .total-steps
-			position: absolute
-			color: $yellow-orange-color
-		.total-steps
-			right: 0
-	.progress-area
-		height: rem-calc(5)
-		.progress-line
-			height: inherit
-			width: 0
-			background: $yellow-orange-color
-			max-width: 100%
-			position: absolute
-			top: 0
-			left: 0
-			+transition_all("width 0.3s")
-		.progress-steps
-			.progress-step
-				height: 5px
-				position: relative
-				float: left
-				padding-left: 1px
-				&:before
-					position: relative
-					display: block
-					width: 100%
-					height: 100%
-					content: ""
-					background: $light-gray-text-color
-				&.proceeded
-					&:before
-						background-color: $yellow-orange-color
+  margin-top: $wizard-step-vertical-indent
+  width: $wizard-summary-width
+  height: auto
+  position: absolute
+  right: 0
+  top: 0
+  .progress-bar
+    height: rem-calc(5)
+    position: relative
+    .completed-step-number, .total-steps
+      position: absolute
+      color: $yellow-orange-color
+    .total-steps
+      right: 0
+  .progress-area
+    height: rem-calc(5)
+    .progress-line
+      height: inherit
+      width: 0
+      background: $yellow-orange-color
+      max-width: 100%
+      position: absolute
+      top: 0
+      left: 0
+      +transition_all("width 0.3s")
+    .progress-steps
+      .progress-step
+        height: 5px
+        position: relative
+        float: left
+        padding-left: 1px
+        &:before
+          position: relative
+          display: block
+          width: 100%
+          height: 100%
+          content: ""
+          background: $light-gray-text-color
+        &.proceeded
+          &:before
+            background-color: $yellow-orange-color
 
-	.platforms
-		text-align: center
-		> .header
-			svg
-				width: 18px
-				height: 18px
-				fill: $yellow-orange-color
-		.platform-svg
-			display: inline-block
-			height: 40px
-			width: 40px
-			svg
-				fill: $light-gray-text-color
-				height: 18px
-				width: 18px
-		.columns
-			padding: 0
-			&:first-child
-				text-align: left
+  .platforms
+    text-align: center
+    > .header
+      svg
+        width: 18px
+        height: 18px
+        fill: $yellow-orange-color
+    .platform-svg
+      display: inline-block
+      height: 40px
+      width: 40px
+      svg
+        fill: $light-gray-text-color
+        height: 18px
+        width: 18px
+    .columns
+      padding: 0
+      &:first-child
+        text-align: left
 
-	.name, .platforms .rows
-		color: $yellow-orange-color
-		text-transform: uppercase
+  .name, .platforms .rows
+    color: $yellow-orange-color
+    text-transform: uppercase
 
-	.go-button
-		.button-label
-			+font-21-semibold
+  .go-button
+    .button-label
+      +font-21-semibold
 
 = wizard-total-cost-label
-	+font-14
-	line-height: 32px
-	color: $white-color
+  +font-14
+  line-height: 32px
+  color: $white-color
 
 = wizard-total-cost-total-price
-	+font-30
-	color: $yellow-orange-color
-	line-height: 12px
+  +font-30
+  color: $yellow-orange-color
+  line-height: 12px
 
 = wizard-total-cost-price-wrap
-	display: inline-block
-	width: rem-calc(130)
-	height: rem-calc(70)
-	background: $light-black-color
-	overflow: hidden
-	padding: 0 rem-calc(16)
-	float: left
+  display: inline-block
+  width: rem-calc(130)
+  height: rem-calc(70)
+  background: $light-black-color
+  overflow: hidden
+  padding: 0 rem-calc(16)
+  float: left
 
 = wizard-total-cost-price-wrap-inner
-	display: inline-block
-	position: relative
-	vertical-align: middle
+  display: inline-block
+  position: relative
+  vertical-align: middle
 
 = wizard-total-cost-currency
-	font-size: 1.2rem
-	display: inline
-	vertical-align: super
+  font-size: 1.2rem
+  display: inline
+  vertical-align: super
 
 #wizard-summary-fixed
-	position: relative
-	width: $wizard-summary-width
-	height: auto
-	background: inherit
+  position: relative
+  width: $wizard-summary-width
+  height: auto
+  background: inherit
 
-	&.fixed-top
-		top: #{$header-height + $go-next-button-margin-top}
-		position: fixed
+  &.fixed-top
+    top: #{$header-height + $go-next-button-margin-top}
+    position: fixed
 
-	> .header
-		@extend %right-window-header
+  > .header
+    @extend %right-window-header
 
-	.content
-		+font-14-semibold
-		background: $white-color
-		padding: rem-calc(8) rem-calc(16)
-		position: relative
+  .content
+    +font-14-semibold
+    background: $white-color
+    padding: rem-calc(8) rem-calc(16)
+    position: relative
+    .hours
+      width: 16px
+      height: 16px
 
-	.footer
-		padding-top: 1px
-		.price-wrap
-			+wizard-total-cost-price-wrap
-			.inner
-				+wizard-total-cost-price-wrap-inner
-			.currency
-				+wizard-total-cost-currency
-		.total-cost-label
-			+wizard-total-cost-label
-		.total-price
-			+wizard-total-cost-total-price
+  .footer
+    padding-top: 1px
+    .price-wrap
+      +wizard-total-cost-price-wrap
+      .inner
+        +wizard-total-cost-price-wrap-inner
+      .currency
+        +wizard-total-cost-currency
+    .total-cost-label
+      +wizard-total-cost-label
+    .total-price
+      +wizard-total-cost-total-price
 
 .popup
-	&.payment
-		.actions
-			.price-wrap
-				+wizard-total-cost-price-wrap
-				text-align: left
-				padding: 0 16px
-				width: 50%
-				.inner
-					+wizard-total-cost-price-wrap-inner
-				.currency
-					+wizard-total-cost-currency
-				.total-cost-label
-					+wizard-total-cost-label
-					color: $white-color
-					font-weight: 400
-				.total-price
-					+wizard-total-cost-total-price
-					font-weight: 400
+  &.payment
+    .actions
+      .price-wrap
+        +wizard-total-cost-price-wrap
+        text-align: left
+        padding: 0 16px
+        width: 50%
+        .inner
+          +wizard-total-cost-price-wrap-inner
+        .currency
+          +wizard-total-cost-currency
+        .total-cost-label
+          +wizard-total-cost-label
+          color: $white-color
+          font-weight: 400
+        .total-price
+          +wizard-total-cost-total-price
+          font-weight: 400
 
 .wizard
-	&.step-disabled-unless-active-or-proceeded
-		.wizard-step
-			&:not(.active)
-				.wizard-step-content
-					opacity: 0.3
-				.wizard-step-content-overlay
-					display: block
-					position: absolute
-					top: 0
-					bottom: 0
-					width: 100%
-					left: 0
-					z-index: 1
-			&.active
-				.wizard-step-line
-					&:before
-						bottom: 0
+  &.step-disabled-unless-active-or-proceeded
+    .wizard-step
+      &:not(.active)
+        .wizard-step-content
+          opacity: 0.3
+        .wizard-step-content-overlay
+          display: block
+          position: absolute
+          top: 0
+          bottom: 0
+          width: 100%
+          left: 0
+          z-index: 1
+      &.active
+        .wizard-step-line
+          &:before
+            bottom: 0
 
-		.wizard-step-counter, .wizard-full-summary-icon
-			.wizard-step.active &
-			border-color: $sky-blue-color
-			&:before
-				background-color: $fire-orange-color
-		.wizard-step.completed &
-			&:not(:hover):before
-				background-image: asset-url("rf-icon-ok.svg")
-				background-repeat: no-repeat
-				background-size: 16px 16px
-				background-position: 12px 12px
-				content: ""
-		&:hover
-			&:before
-				background-color: rgba($fire-orange-color, 0.6)
-		.wizard-step.unavailable &
-			&:hover
-				&:before
-					content: "x"
-					background-color: rgba($fire-orange-color, 0.3)
+    .wizard-step-counter, .wizard-full-summary-icon
+      .wizard-step.active &
+      border-color: $sky-blue-color
+      &:before
+        background-color: $fire-orange-color
+    .wizard-step.completed &
+      &:not(:hover):before
+        background-image: asset-url("rf-icon-ok.svg")
+        background-repeat: no-repeat
+        background-size: 16px 16px
+        background-position: 12px 12px
+        content: ""
+    &:hover
+      &:before
+        background-color: rgba($fire-orange-color, 0.6)
+    .wizard-step.unavailable &
+      &:hover
+        &:before
+          content: "x"
+          background-color: rgba($fire-orange-color, 0.3)
 
-	&:not(.step-disabled-unless-active-or-proceeded)
-		.wizard-step-edit-tooltip
-			display: none !important
-		.wizard-step
-			&.touched, &.activated
-				.wizard-step-line
-					&:before
-						bottom: 0
-				.wizard-step-counter, .wizard-full-summary-icon
-					border-color: $sky-blue-color
-					&:before
-						background-color: $fire-orange-color
-			&.completed
-				&:not(:hover):before
-					background-image: asset-url("rf-icon-ok.svg")
-					background-repeat: no-repeat
-					background-size: 16px 16px
-					background-position: 12px 12px
-					content: ""
-			&:hover
-				&:before
-					background-color: rgba($fire-orange-color, 0.6)
+  &:not(.step-disabled-unless-active-or-proceeded)
+    .wizard-step-edit-tooltip
+      display: none !important
+    .wizard-step
+      &.touched, &.activated
+        .wizard-step-line
+          &:before
+            bottom: 0
+        .wizard-step-counter, .wizard-full-summary-icon
+          border-color: $sky-blue-color
+          &:before
+            background-color: $fire-orange-color
+      &.completed
+        &:not(:hover):before
+          background-image: asset-url("rf-icon-ok.svg")
+          background-repeat: no-repeat
+          background-size: 16px 16px
+          background-position: 12px 12px
+          content: ""
+      &:hover
+        &:before
+          background-color: rgba($fire-orange-color, 0.6)
 
 form[for=project]
-	padding: #{$wizard-step-vertical-indent * 2} 0 0 0
+  padding: #{$wizard-step-vertical-indent * 2} 0 0 0
 
 .wizard-step
-	position: relative
-	border: none
-	padding: 0 0 #{$wizard-step-vertical-indent * 2} 0
+  position: relative
+  border: none
+  padding: 0 0 #{$wizard-step-vertical-indent * 2} 0
 
-	&.proceeded:not(.active)
-		.wizard-step-edit-tooltip
-			display: none
-		&:hover
-			.wizard-step-edit-tooltip
-				cursor: pointer
-				display: block
-				position: absolute
-				top: 52%
-				left: 55%
-				+transform(translate(-50%, -50%))
-				z-index: 2
-				svg
-					width: 80px
-					height: 80px
-					g
-						fill: #666
+  &.proceeded:not(.active)
+    .wizard-step-edit-tooltip
+      display: none
+    &:hover
+      .wizard-step-edit-tooltip
+        cursor: pointer
+        display: block
+        position: absolute
+        top: 52%
+        left: 55%
+        +transform(translate(-50%, -50%))
+        z-index: 2
+        svg
+          width: 80px
+          height: 80px
+          g
+            fill: #666
 
-	&[uneditable]
-		.wizard-step-edit-tooltip
-			display: none !important
+  &[uneditable]
+    .wizard-step-edit-tooltip
+      display: none !important
 
-	.wizard-step-line
-		position: absolute
-		width: $wizard-step-line-width
-		border-left: $wizard-step-line-width solid $dark-gray-color
-		top: 48px
-		bottom: -24px
-		left: 24px
+  .wizard-step-line
+    position: absolute
+    width: $wizard-step-line-width
+    border-left: $wizard-step-line-width solid $dark-gray-color
+    top: 48px
+    bottom: -24px
+    left: 24px
 
-		&:before
-			content: ""
-			position: absolute
-			transition: 0.5s all
-			left: -#{$wizard-step-line-width}
-			width: $wizard-step-line-width
-			border-left: $wizard-step-line-width $sky-blue-color solid
-			bottom: 100%
-			top: 0
-			+transition_all(0.5s all)
+    &:before
+      content: ""
+      position: absolute
+      transition: 0.5s all
+      left: -#{$wizard-step-line-width}
+      width: $wizard-step-line-width
+      border-left: $wizard-step-line-width $sky-blue-color solid
+      bottom: 100%
+      top: 0
+      +transition_all(0.5s all)
 
-	form
-		+grid-row
-		position: relative
-		.wizard-step-content
-			-webkit-filter: grayscale(1)
+  form
+    +grid-row
+    position: relative
+    .wizard-step-content
+      -webkit-filter: grayscale(1)
 
 .wizard-step-counter, .wizard-full-summary-icon, .invalid-steps-list .step-number
-	background: #FFF
-	border: 1px solid $dark-gray-color
-	border-radius: 50%
-	height: $wizard-step-counter-diameter
-	width: $wizard-step-counter-diameter
-	line-height: $wizard-step-counter-diameter
-	position: absolute
-	left: 0
-	top: 0
-	cursor: pointer
-	z-index: 1
+  background: #FFF
+  border: 1px solid $dark-gray-color
+  border-radius: 50%
+  height: $wizard-step-counter-diameter
+  width: $wizard-step-counter-diameter
+  line-height: $wizard-step-counter-diameter
+  position: absolute
+  left: 0
+  top: 0
+  cursor: pointer
+  z-index: 1
 
-	&:before
-		content: attr(data-number)
-		display: block
-		position: absolute
-		top: 3px
-		left: 3px
-		width: 40px
-		height: 40px
-		background-color: $light-gray-text-color
-		border-radius: 50%
-		line-height: 40px
-		color: white
-		+font-18-semibold
-		text-align: center
+  &:before
+    content: attr(data-number)
+    display: block
+    position: absolute
+    top: 3px
+    left: 3px
+    width: 40px
+    height: 40px
+    background-color: $light-gray-text-color
+    border-radius: 50%
+    line-height: 40px
+    color: white
+    +font-18-semibold
+    text-align: center
 
 .wizard-full-summary-icon
-	svg
-		z-index: 1
-		position: relative
-		width: 25px
-		height: 25px
-		top: 11px
-		left: 12px
-
-		path.my-color
-			fill: white
-		line.my-color
-			stroke: white
-		.stroke-my-color
-			stroke: white
+  img
+    z-index: 1
+    position: relative
+    width: 25px
+    height: 25px
+    left: 12px
 
 .wizard-step-content
-	opacity: 1
-	padding-left: $wizard-step-side-padding
-	position: relative
+  opacity: 1
+  padding-left: $wizard-step-side-padding
+  position: relative
+
 .wizard-step-header
-	+font-21-semibold
-	height: $text-header-height
-	line-height: $text-header-height
-	margin: 0 0 rem-calc(24) 0
+  +font-21-semibold
+  height: $text-header-height
+  line-height: $text-header-height
+  margin: 0 0 rem-calc(24) 0
 
 .option-image
-	text-align: center
-	label
-		cursor: pointer
-	.name
-		+font-18
-		color: $light-gray-text-color
-		display: block
-	.description
-		color: $light-gray-color
-		+font-12-light-italic
-		display: block
-		display: none
-		opacity: 0
-	img
-		opacity: 0.3
-	.label
-		cursor: pointer
-	svg
-		opacity: 0.3
-	&:hover
-		.name
-			color: $yellow-orange-color
-		.description
-			opacity: 1
-		img
-			opacity: 1
-		svg
-			opacity: 1
+  text-align: center
+  label
+    cursor: pointer
+  .name
+    +font-18
+    color: $light-gray-text-color
+    display: block
+  .description
+    color: $light-gray-color
+    +font-12-light-italic
+    display: block
+    display: none
+    opacity: 0
+  img
+    opacity: 0.3
+  .label
+    cursor: pointer
+  svg
+    opacity: 0.3
+  &:hover
+    .name
+      color: $yellow-orange-color
+    .description
+      opacity: 1
+    img
+      opacity: 1
+    svg
+      opacity: 1
 
 .option-image-input
-	&:checked
-		& + label
-			.name
-				color: $yellow-orange-color
-			.description
-				opacity: 1
-			img
-				opacity: 1
-			svg
-				opacity: 1
-				ellipse
-					&:first-child
-						stroke-width: 3px
+  &:checked
+    & + label
+      .name
+        color: $yellow-orange-color
+      .description
+        opacity: 1
+      img
+        opacity: 1
+      svg
+        opacity: 1
+        ellipse
+          &:first-child
+            stroke-width: 3px
 
 .go-back
-	display: none
-	font-size: 0.8rem
-	font-weight: 100
+  display: none
+  font-size: 0.8rem
+  font-weight: 100
 
 .step-nav-buttons
-	text-align: center
-	height: rem-calc(94)
+  text-align: center
+  height: rem-calc(94)
 .go-next-button
-	+go-next-button
-	display: none
+  +go-next-button
+  display: none
 .configure-button, .next-question-button, .go-button
-	+go-next-button(false)
-	max-width: 100%
-	padding-top: 0
-	padding-left: 0
-	line-height: $go-next-button-height
-	svg
-		height: 100%
-		margin: 0 rem-calc(30)
-		vertical-align: top
-		display: inline-block
-	.button-label
-		display: inline-block
-		+font-28-bold
-		text-transform: uppercase
-	img
-		position: relative
-		top: rem-calc(10)
-		left: rem-calc(34)
-	.next-step
-		text-transform: uppercase
-		+font-28-bold
-		line-height: rem-calc(35)
-	.next-step-name
-		+font-14-light
+  +go-next-button(false)
+  max-width: 100%
+  padding-top: 0
+  padding-left: 0
+  line-height: $go-next-button-height
+  svg
+    height: 100%
+    margin: 0 rem-calc(30)
+    vertical-align: top
+    display: inline-block
+  .button-label
+    display: inline-block
+    +font-28-bold
+    text-transform: uppercase
+  img
+    position: relative
+    top: rem-calc(10)
+    left: rem-calc(34)
+  .next-step
+    text-transform: uppercase
+    +font-28-bold
+    line-height: rem-calc(35)
+  .next-step-name
+    +font-14-light
 
 .summary-button
-	+go-next-button
-	+font-28-bold
-	text-transform: uppercase
-	line-height: 50px
+  +go-next-button
+  +font-28-bold
+  text-transform: uppercase
+  line-height: 50px
 
 .option-image
-	@extend .columns
+  @extend .columns
 
 .platform
-	+grid-column(6)
-	margin-top: $platform-indent
-	margin-bottom: $platform-indent
-	.human-svg-wrap
-		float: right
-		position: relative
-		width: 50px
-		margin-right: 20px
-		text-align: center
-		svg
-			fill: $yellow-orange-color
-			width: 30px
-			height: 30px
-	> .svg-wrap
-		display: inline-block
-		margin-right: 10px
-		svg
-			width: 40px
-			height: 40px
-	> .name
-		+platform-name
+  +grid-column(6)
+  margin-top: $platform-indent
+  margin-bottom: $platform-indent
+  .human-svg-wrap
+    float: right
+    position: relative
+    width: 50px
+    margin-right: 20px
+    text-align: center
+    svg
+      fill: $yellow-orange-color
+      width: 30px
+      height: 30px
+  > .svg-wrap
+    display: inline-block
+    margin-right: 10px
+    svg
+      width: 40px
+      height: 40px
+  > .name
+    +platform-name
 
 .platform-content
-	position: relative
+  position: relative
 
 .platform-price
-	color: $yellow-orange-color
-	float: right
-	display: inline-block
-	width: 90px
-	height: 30px
-	line-height: 30px
-	text-align: center
-	font-weight: 500
-	.currency
-		display: inline-block
-		float: left
-		height: inherit
-		width: 20px
-		text-align: center
-	.price
-		background: $light-black-color
-		width: 50px
-		height: inherit
-		display: inline-block
-		float: left
+  color: $yellow-orange-color
+  float: right
+  display: inline-block
+  width: 90px
+  height: 30px
+  line-height: 30px
+  text-align: center
+  font-weight: 500
+  .currency
+    display: inline-block
+    float: left
+    height: inherit
+    width: 20px
+    text-align: center
+  .price
+    background: $light-black-color
+    width: 50px
+    height: inherit
+    display: inline-block
+    float: left
 
 .comment-label
-	float: left
-	line-height: 49px
-	font-size: 0.7rem
-	font-weight: 300
-	&.empty
-		color: $sky-blue-color
-		text-decoration: dotted
-		vertical-align: bottom
-		height: $input-height
-		display: inline-block
-		border-bottom: 1px dotted
+  float: left
+  line-height: 49px
+  font-size: 0.7rem
+  font-weight: 300
+  &.empty
+    color: $sky-blue-color
+    text-decoration: dotted
+    vertical-align: bottom
+    height: $input-height
+    display: inline-block
+    border-bottom: 1px dotted
 
 .hours-per-tester
-	+grid-column(6)
-	margin-top: $platform-indent
-	margin-bottom: $platform-indent
-	.available-hours
-		.hour
-			border: solid 2px $light-gray-text-color
-			border-radius: 50%
-			display: inline-block
-			position: relative
-			text-align: center
-			line-height: 1
-			color: $light-gray-text-color
-			vertical-align: bottom
-			margin: 0 rem-calc(2)
-			&:before
-				display: block
-				position: relative
-				content: attr(data-hours)
-				font-weight: 500
-			&:after
-				display: block
-				position: relative
-				content: "hours"
-				font-weight: 300
-				font-size: 0.75rem
-			&.selected
-				border-color: $fire-orange-color
-				&:before, &:after
-					color: $fire-orange-color
-			&:nth-child(1)
-				width: 50px
-				height: 50px
-				padding-top: 8px
-				&:after
-					content: "hour"
-			&:nth-child(2)
-				width: 55px
-				height: 55px
-				font-size: 1.1rem
-				padding-top: 10px
-			&:nth-child(3)
-				width: 60px
-				height: 60px
-				font-size: 1.2rem
-				padding-top: 12px
-			&:nth-child(4)
-				width: 65px
-				height: 65px
-				font-size: 1.3rem
-				padding-top: 12px
-			&:nth-child(5)
-				width: 70px
-				height: 70px
-				font-size: 1.4rem
-				padding-top: 14px
+  +grid-column(6)
+  margin-top: $platform-indent
+  margin-bottom: $platform-indent
+  .available-hours
+    .hour
+      border: solid 2px $light-gray-text-color
+      border-radius: 50%
+      display: inline-block
+      position: relative
+      text-align: center
+      line-height: 1
+      color: $light-gray-text-color
+      vertical-align: bottom
+      margin: 0 rem-calc(2)
+      &:before
+        display: block
+        position: relative
+        content: attr(data-hours)
+        font-weight: 500
+      &:after
+        display: block
+        position: relative
+        content: "hours"
+        font-weight: 300
+        font-size: 0.75rem
+      &.selected
+        border-color: $fire-orange-color
+        &:before, &:after
+          color: $fire-orange-color
+      &:nth-child(1)
+        width: 50px
+        height: 50px
+        padding-top: 8px
+        &:after
+          content: "hour"
+      &:nth-child(2)
+        width: 55px
+        height: 55px
+        font-size: 1.1rem
+        padding-top: 10px
+      &:nth-child(3)
+        width: 60px
+        height: 60px
+        font-size: 1.2rem
+        padding-top: 12px
+      &:nth-child(4)
+        width: 65px
+        height: 65px
+        font-size: 1.3rem
+        padding-top: 12px
+      &:nth-child(5)
+        width: 70px
+        height: 70px
+        font-size: 1.4rem
+        padding-top: 14px
 
 .option-count
-	+grid-row
-	padding: 3px 0
-	label
-		float: left
-	.input-wrap
-		-webkit-user-select: none
-		position: relative
-		float: right
-		width: rem-calc(90)
-		text-align: center
-		input
-			width: 50px
-			text-align: center
-			border: 1px solid $white-color
-		&:hover
-			border-color: $sky-blue-color
-			outline: none
-		&:hover, input:focus ~
-			.decrement, .increment
-				opacity: 1
-		.decrement, .increment
-			position: absolute
-			display: block
-			top: 0
-			opacity: 0
-			color: $light-gray-text-color
-			&:before
-				display: block
-				font-weight: 600
-				line-height: 30px
-		.decrement
-			left: 0
-			&:before
-				content: "-"
-		.increment
-			right: 0
-			&:before
-				content: "+"
-		.decrement, .increment
-			&:hover
-				color: $sky-blue-color
+  +grid-row
+  padding: 3px 0
+  label
+    float: left
+  .input-wrap
+    -webkit-user-select: none
+    position: relative
+    float: right
+    width: rem-calc(90)
+    text-align: center
+    input
+      width: 50px
+      text-align: center
+      border: 1px solid $white-color
+    &:hover
+      border-color: $sky-blue-color
+      outline: none
+    &:hover, input:focus ~
+      .decrement, .increment
+        opacity: 1
+    .decrement, .increment
+      position: absolute
+      display: block
+      top: 0
+      opacity: 0
+      color: $light-gray-text-color
+      &:before
+        display: block
+        font-weight: 600
+        line-height: 30px
+    .decrement
+      left: 0
+      &:before
+        content: "-"
+    .increment
+      right: 0
+      &:before
+        content: "+"
+    .decrement, .increment
+      &:hover
+        color: $sky-blue-color
 
-	&.empty
-		> label, .platform-option-label, .input-wrap input
-			color: $light-gray-text-color
+  &.empty
+    > label, .platform-option-label, .input-wrap input
+      color: $light-gray-text-color
 
 input, textarea
-	+input-base
-	+placeholder
-		color: $light-gray-text-color
-		font-style: italic
-	&:focus
-		outline: none
-		border-color: $gray-text-color
+  +input-base
+  +placeholder
+    color: $light-gray-text-color
+    font-style: italic
+  &:focus
+    outline: none
+    border-color: $gray-text-color
 
 input[type=checkbox]
-	& + label
-		border-radius: 2px
-	&:checked
-		& + label
-			&:before
-				border-radius: 1px
-				width: 14px
-				height: 14px
-				top: 2px
-				left: 2px
+  & + label
+    border-radius: 2px
+  &:checked
+    & + label
+      &:before
+        border-radius: 1px
+        width: 14px
+        height: 14px
+        top: 2px
+        left: 2px
 
 input[type=radio]
-	&:not(.option-image-input)
-		& + label
-			border-radius: 50%
-		&:checked
-			& + label
-				&:before
-					border-radius: 50%
-					width: 12px
-					height: 12px
-					top: 3px
-					left: 3px
+  &:not(.option-image-input)
+    & + label
+      border-radius: 50%
+    &:checked
+      & + label
+        &:before
+          border-radius: 50%
+          width: 12px
+          height: 12px
+          top: 3px
+          left: 3px
 
 input
-	&:not([type=radio]), &:not([type=checkbox]), &:not([type=submit])
-		width: #{grid-calc(6, 12)}
-		max-width: rem-calc(320)
-		height: $input-height
+  &:not([type=radio]), &:not([type=checkbox]), &:not([type=submit])
+    width: #{grid-calc(6, 12)}
+    max-width: rem-calc(320)
+    height: $input-height
 textarea
-	+textarea-width
-	&:focus
-		outline: none
-		border-color: $gray-text-color
+  +textarea-width
+  &:focus
+    outline: none
+    border-color: $gray-text-color
 
 .input-related-content
-	.actions
-		max-width: rem-calc(600)
-		text-align: right
+  .actions
+    max-width: rem-calc(600)
+    text-align: right
 button
-	max-width: 100%
-	display: inline-block
-	text-align: center
-	background: $fire-orange-color
-	color: white
-	text-transform: uppercase
-	border: none
-	height: rem-calc(30)
-	padding: 0 1rem
-	&:focus
-		outline: none
+  max-width: 100%
+  display: inline-block
+  text-align: center
+  background: $fire-orange-color
+  color: white
+  text-transform: uppercase
+  border: none
+  height: rem-calc(30)
+  padding: 0 1rem
+  &:focus
+    outline: none
 
 .inputs
-	&.horizontal
-		+flexbox
-		+flex-wrap(wrap)
-		> .input , > .checklist-item
-			+flex-grow(1)
+  &.horizontal
+    +flexbox
+    +flex-wrap(wrap)
+    > .input , > .checklist-item
+      +flex-grow(1)
 
 = question
-	padding: 32px 0 20px 0
-	.required-symbol
-		color: $yellow-orange-color
-		margin-left: 3px
+  padding: 32px 0 20px 0
+  .required-symbol
+    color: $yellow-orange-color
+    margin-left: 3px
 
 = question-text
-	+font-21-semibold
-	line-height: 50px
+  +font-21-semibold
+  line-height: 50px
 
 .question-text
-	+question-text
+  +question-text
 
 .question
-	+question
+  +question
 
 checkbox-list
-	display: block
-	padding-bottom: 30px
-	.error-messages
-		color: red
-		+font-14-light-italic
-	.text
-		+font-21-semibold
-		line-height: 50px
-		&.centered
-			text-align: center
+  display: block
+  padding-bottom: 30px
+  .error-messages
+    color: red
+    +font-14-light-italic
+  .text
+    +font-21-semibold
+    line-height: 50px
+    &.centered
+      text-align: center
 
 .wizard-step-content-content question
-	&:first-child
-		.question
-			padding-top: 0
-			.text
-				line-height: $text-header-height
+  &:first-child
+    .question
+      padding-top: 0
+      .text
+        line-height: $text-header-height
 
 .input
-	.description
-		color: $light-gray-text-color
-		+font-12-light-italic
+  .description
+    color: $light-gray-text-color
+    +font-12-light-italic
 
 .question
-	p.light
-		color: $light-gray-text-color
-		+font-14-light
+  p.light
+    color: $light-gray-text-color
+    +font-14-light
 
 .selectize-control.multi .selectize-input > div
-	background: $white-color
+  background: $white-color
 
 body
-	div.tagsinput
-		+input-base
-		width: #{grid-calc(12, 12)} !important
-		max-width: rem-calc(600)
+  div.tagsinput
+    +input-base
+    width: #{grid-calc(12, 12)} !important
+    max-width: rem-calc(600)
 
-		span.tag
-			background-color: $white-color
-			border: none
-			color: $light-black-color
+    span.tag
+      background-color: $white-color
+      border: none
+      color: $light-black-color
 
-		input
-			max-width: none !important
+    input
+      max-width: none !important
 
 .intro-step
-	.question
-		padding: 0
+  .question
+    padding: 0
 
 #wizard-controller
-	min-height: calc(100vh - #{$header-height})
+  min-height: calc(100vh - #{$header-height})
 
 #wizard-summary
-	.go-next-button
-		+button-with-subtitle
-		.rocket-svg
-			+button-svg-wrap
-			svg
-				+button-svg
-		&.disabled
-			cursor: default
-			opacity: 1
-			background-color: $white-color
-			.next-step
-				color: $inactive-button-text-color
-			.next-step-name
-				color: $inactive-button-text-color
-			.rocket-svg
-				path
-					fill: $inactive-button-text-color
+  .go-next-button
+    +button-with-subtitle
+    .rocket-svg
+      +button-svg-wrap
+      svg
+        +button-svg
+    &.disabled
+      cursor: default
+      opacity: 1
+      background-color: $white-color
+      .next-step
+        color: $inactive-button-text-color
+      .next-step-name
+        color: $inactive-button-text-color
+      .rocket-svg
+        path
+          fill: $inactive-button-text-color
 
-		.next-step
-			+button-title
-		.next-step-name
-			font-size: 14px
-			font-weight: 300
-			top: -8px
-			position: relative
+    .next-step
+      +button-title
+    .next-step-name
+      font-size: 14px
+      font-weight: 300
+      top: -8px
+      position: relative
 
-	.or-go-back-wrap
-		display: block
-		text-align: center
-		font-size: 0.8rem
-		font-weight: 300
-		color: $light-gray-text-color
+  .or-go-back-wrap
+    display: block
+    text-align: center
+    font-size: 0.8rem
+    font-weight: 300
+    color: $light-gray-text-color
 
-	.go-back-button
-		width: 200px
-		float: none
-		display: inline
-		text-align: center
-		height: 40px
-		line-height: 40px
-		color: $sky-blue-color
-		cursor: pointer
-		-webkit-user-select: none
+  .go-back-button
+    width: 200px
+    float: none
+    display: inline
+    text-align: center
+    height: 40px
+    line-height: 40px
+    color: $sky-blue-color
+    cursor: pointer
+    -webkit-user-select: none
 
 .wizard-step-edit-tooltip
-	display: none
+  display: none
 
 .intro-step
-	&.proceeded
-		.wizard-step-content
-			opacity: 1
+  &.proceeded
+    .wizard-step-content
+      opacity: 1
 
 .intro-step.proceeded
-	.question > .text
-		opacity: 0.3
-	.option-image input:not(:checked) ~ *
-		opacity: 0.3
+  .question > .text
+    opacity: 0.3
+  .option-image input:not(:checked) ~ *
+    opacity: 0.3
 
 .highlighted-text
-	color: $yellow-orange-color
-	text-transform: uppercase
+  color: $yellow-orange-color
+  text-transform: uppercase
 
 = save-button
-	color: $sky-blue-color
-	text-transform: uppercase
-	background-color: $white-color
-	display: inline-block
-	width: 100%
-	height: 30px
-	line-height: 30px
-	margin-top: 1px
-	position: relative
-	+font-14-semibold
-	text-align: center
-	cursor: pointer
+  color: $sky-blue-color
+  text-transform: uppercase
+  background-color: $white-color
+  display: inline-block
+  width: 100%
+  height: 30px
+  line-height: 30px
+  margin-top: 1px
+  position: relative
+  +font-14-semibold
+  text-align: center
+  cursor: pointer
 
 = save-button-svg
-	display: inline-block
-	fill: $sky-blue-color
-	width: 24px
-	height: 16px
-	margin: 0 5px 0 0px
+  display: inline-block
+  fill: $sky-blue-color
+  width: 24px
+  height: 16px
+  margin: 0 5px 0 0px
 
 = save-button-hover
-	background: rgba($sky-blue-color, 0.1)
+  background: rgba($sky-blue-color, 0.1)
 
 .save-button
-	+save-button
-	&:hover
-		+save-button-hover
-	svg
-		+save-button-svg
+  +save-button
+  &:hover
+    +save-button-hover
+  svg
+    +save-button-svg
 
 .project-saved
-	+save-button
-	+save-button-hover
-	cursor: default
+  +save-button
+  +save-button-hover
+  cursor: default
 
 .checkout-button
-	height: rem-calc(70)
-	width: rem-calc(70)
-	background: $fire-orange-color
-	display: inline-block
-	cursor: pointer
-	float: left
-	svg
-		width: rem-calc(38)
-		height: rem-calc(38)
-		top: 16px
-		left: 16px
-		position: relative
-	&.disabled, &[disabled]
-		background: $white-color
-		color: $inactive-button-text-color
-		svg
-			path
-				fill: $inactive-button-text-color
+  height: rem-calc(70)
+  width: rem-calc(70)
+  background: $fire-orange-color
+  display: inline-block
+  cursor: pointer
+  float: left
+  svg
+    width: rem-calc(38)
+    height: rem-calc(38)
+    top: 16px
+    left: 16px
+    position: relative
+  &.disabled, &[disabled]
+    background: $white-color
+    color: $inactive-button-text-color
+    svg
+      path
+        fill: $inactive-button-text-color
 
 .steps-completed, steps-progress
-	float: left
-	width: 100%
-	padding: 20px 15px 0 15px
-	+font-14-semibold
+  float: left
+  width: 100%
+  padding: 20px 15px 0 15px
+  +font-14-semibold
 
 .wizard-step-footnotes
-	+grid-row
-	color: $light-gray-text-color
-	+font-12-light-italic
-	.footnote
-		+grid-column(12)
+  +grid-row
+  color: $light-gray-text-color
+  +font-12-light-italic
+  .footnote
+    +grid-column(12)
 
 .intro-step
-	question
-		&:not(:first-child)
-			.question
-				padding-top: 3rem
+  question
+    &:not(:first-child)
+      .question
+        padding-top: 3rem
 
 .rf-button
-	&.rf-configure-button, &.rf-step-configure-button
-		.svg-wrap
-			margin-left: 0
-			margin-right: 17px
-			svg
-				top: -2px
-				position: relative
-		.button-text-wrap
-			.button-title
-				+font-21
+  &.rf-configure-button, &.rf-step-configure-button
+    .svg-wrap
+      margin-left: 0
+      margin-right: 17px
+      svg
+        top: -2px
+        position: relative
+    .button-text-wrap
+      .button-title
+        +font-21
 
-	&.rf-next-step-button, &.rf-go-to-summary-button, &.rf-confirm-button
-		.svg-wrap
-			margin-left: 0
-			margin-right: 14px
-			svg
-				position: relative
-				top: -2px
-		.button-text-wrap
-			.inner
-				top: 17px
-		.button-title
-			+font-21
+  &.rf-next-step-button, &.rf-go-to-summary-button, &.rf-confirm-button
+    .svg-wrap
+      margin-left: 0
+      margin-right: 14px
+      svg
+        position: relative
+        top: -2px
+    .button-text-wrap
+      .inner
+        top: 17px
+    .button-title
+      +font-21
 
-	&.rf-next-step-button
-		.svg-wrap
-			margin-right: 10px
-
-.wizard-step
-	.question
-		width: 95%
-		display: block
-		.text
-			+question-text
-			&.centered
-				text-align: center
-	.input
-		&.radio
-			padding-bottom: 10px
+  &.rf-next-step-button
+    .svg-wrap
+      margin-right: 10px
 
 .wizard-step
-	.url-or-files
-		.columns
-			&:last-child
-				float: left
+  .question
+    width: 95%
+    display: block
+    .text
+      +question-text
+      &.centered
+        text-align: center
+  .input
+    &.radio
+      padding-bottom: 10px
+
+.wizard-step
+  .url-or-files
+    .columns
+      &:last-child
+        float: left
 
 #wizard-controller
-	#wizard-summary
-		display: none
-	.rf-step-configure-button
-		display: none
+  #wizard-summary
+    display: none
+  .rf-step-configure-button
+    display: none
 
-	&.configure-mode
-		#wizard-help
-			display: none
-		#wizard-summary
-			display: block
-		.rf-step-configure-button
-			display: none !important
+  &.configure-mode
+    #wizard-help
+      display: none
+    #wizard-summary
+      display: block
+    .rf-step-configure-button
+      display: none !important
 
 .wizard-platforms-step
-	platform.first
-		.platform
-			clear: left
+  platform.first
+    .platform
+      clear: left
 
 +keyframes(current-task-blink)
-	0%, 100%
-		color: $sky-blue-color
-	50%
-		color: $yellow-orange-color
+  0%, 100%
+    color: $sky-blue-color
+  50%
+    color: $yellow-orange-color
 
 #wizard-summary
-	.current-task
+  .current-task
 
 .checkbox-list
-	.options
-		&.horizontal
-			+flexbox
-			+flex-wrap(wrap)
-			.checklist-option
-				+flex-grow(1)
-				input
-					display: none
+  .options
+    &.horizontal
+      +flexbox
+      +flex-wrap(wrap)
+      .checklist-option
+        +flex-grow(1)
+        input
+          display: none
 
 .wizard-step
-	.input
-		> .description
-			display: block
-			margin-left: 38px
+  .input
+    > .description
+      display: block
+      margin-left: 38px
 
 = delete_button
-	&:before
-		content: "x"
-		color: $fire-orange-color
-		display: inline-block
-		margin-left: 5px
-		cursor: pointer
+  &:before
+    content: "x"
+    color: $fire-orange-color
+    display: inline-block
+    margin-left: 5px
+    cursor: pointer
 
 
 input.file-upload-input
-	display: none
+  display: none
 
 .test_case_files-list, .file-upload-files-list
-	.file
-		position: relative
-	.delete
-		+delete_button
+  .file
+    position: relative
+  .delete
+    +delete_button
 
-	.preloader
-		background: asset-url('preloader.gif') no-repeat
-		background-size: cover
-		display: inline-block
-		padding: 0
-		width: 16px
-		height: 16px
-		position: relative
-		left: auto
-		top: auto
-		transform: none
+  .preloader
+    background: asset-url('preloader.gif') no-repeat
+    background-size: cover
+    display: inline-block
+    padding: 0
+    width: 16px
+    height: 16px
+    position: relative
+    left: auto
+    top: auto
+    transform: none
 
-	.file-name
-		display: inline-block
+  .file-name
+    display: inline-block
 
 div.tagsinput span.tag a
-	color: $fire-orange-color
+  color: $fire-orange-color
 
 .rf-input[type=tags]
-	.input-border-wrap
-		z-index: -1
-	div.tagsinput
-		max-width: 100%
+  .input-border-wrap
+    z-index: -1
+  div.tagsinput
+    max-width: 100%
 
 .rf-next-step-button, .rf-go-to-summary-button, .rf-confirm-button
-	&.rf-button-without-subtitle
-		line-height: 40px
+  &.rf-button-without-subtitle
+    line-height: 40px
 
 comment-with-price
-	label.comment-label, textarea
-		display: none !important
+  label.comment-label, textarea
+    display: none !important
 
 .wizard
-	.input
-		> label
+  .input
+    > label
 
-		&.hide-star
-			abbr
-				display: none
-		&.image_radio_buttons
-			input
-				display: none
-			.options
-				span
-					display: inline-block
-					text-align: center
-					label
-						display: block
-			&.option-large-3
-				.options
-					span
-						width: percentage(1/4)
-			&.option-large-4
-				.options
-					span
-						width: percentage(1/3)
-	.available-hours
-		input
-			display: none
+    &.hide-star
+      abbr
+        display: none
+    &.image_radio_buttons
+      input
+        display: none
+      .options
+        span
+          display: inline-block
+          text-align: center
+          label
+            display: block
+      &.option-large-3
+        .options
+          span
+            width: percentage(1/4)
+      &.option-large-4
+        .options
+          span
+            width: percentage(1/3)
+  .available-hours
+    input
+      display: none
 
 #wizard-controller
-	.label
-		+question-text
-		display: block
-		height: 50px
-	.input
-		position: relative
-		&.radio-button
-			.custom-radio-button
-				+custom-radio-button
-			.label
-				+radio-button-label
-			input
-				display: none
-			&.checked, input:checked ~ label.custom-radio-button
-				+custom-radio-button-checked
+  .label
+    +question-text
+    display: block
+    height: 50px
+  .input
+    position: relative
+    &.radio-button
+      .custom-radio-button
+        +custom-radio-button
+      .label
+        +radio-button-label
+      input
+        display: none
+      &.checked, input:checked ~ label.custom-radio-button
+        +custom-radio-button-checked
 
-		&.collection-radio-buttons
-			.option
-				.custom-radio-button
-					+custom-radio-button
-					margin-right: rem-calc(10)
-					position: relative
-					top: 4px
-				.label
-					+radio-button-label
-				input
-					display: none
-				&.checked, input:checked ~ label.custom-radio-button
-					+custom-radio-button-checked
+    &.collection-radio-buttons
+      .option
+        .custom-radio-button
+          +custom-radio-button
+          margin-right: rem-calc(10)
+          position: relative
+          top: 4px
+        .label
+          +radio-button-label
+        input
+          display: none
+        &.checked, input:checked ~ label.custom-radio-button
+          +custom-radio-button-checked
 
-		&.text, &.without-label
-			.placeholder
-				top: 40px
-			&.focus
-				.placeholder
-					top: 0
+    &.text, &.without-label
+      .placeholder
+        top: 40px
+      &.focus
+        .placeholder
+          top: 0
 
-		&.project-auth-login, &.project-auth-password
-			.placeholder
-				top: 30px
+    &.project-auth-login, &.project-auth-password
+      .placeholder
+        top: 30px
 
-			&.focus
-				.placeholder
-					top: 0px
+      &.focus
+        .placeholder
+          top: 0px
 
-		label.custom-checkbox
-			+custom-checkbox-button
-			position: relative
-			top: 4px
-			margin-right: 10px
+    label.custom-checkbox
+      +custom-checkbox-button
+      position: relative
+      top: 4px
+      margin-right: 10px
 
-		.option
-			&.checked, input:checked ~
-				label.custom-checkbox
-					+custom-checkbox-button-checked
+    .option
+      &.checked, input:checked ~
+        label.custom-checkbox
+          +custom-checkbox-button-checked
 
-		input
-			&[type=checkbox]
-				display: none
+    input
+      &[type=checkbox]
+        display: none
 
-		.placeholder
-			+wizard-input-placeholder
+    .placeholder
+      +wizard-input-placeholder
 
-		.input-tag
-			margin-top: 30px
+    .input-tag
+      margin-top: 30px
 
-		&.focus, &.not-empty
-			.placeholder
-				+filled-wizard-input-placeholder
+    &.focus, &.not-empty
+      .placeholder
+        +filled-wizard-input-placeholder
 
 .input
-	&.collection-checkboxes, &.collection-radio-buttons
-		.options
-			.option
-				display: inline-block
-				float: left
-				margin-right: 35px
-				margin-bottom: 10px
+  &.collection-checkboxes, &.collection-radio-buttons
+    .options
+      .option
+        display: inline-block
+        float: left
+        margin-right: 35px
+        margin-bottom: 10px
 
-				+iphone5-down
-					width: 50%
-					margin-right: 0
+        +iphone5-down
+          width: 50%
+          margin-right: 0
 
 .option-count
 
 .platform-option-label
-	float: left
+  float: left
 
 #wizard-summary
-	.platforms
-		> .header
-			svg
-				fill: $light-gray-text-color
-				&.user
-					width: 24px
-					height: 24px
-				&.clock
-					top: 3px
-					position: relative
+  .platforms
+    > .header
+      svg
+        fill: $light-gray-text-color
+        &.user
+          width: 24px
+          height: 24px
+        &.clock
+          top: 3px
+          position: relative
 
 .wizard
-	#wizard-full-summary
-		padding-right: 30px
-		textarea.instructions
-			max-width: none
+  #wizard-full-summary
+    padding-right: 30px
+    textarea.instructions
+      max-width: none
 
 
 @media #{$small-only}
-	#project-test-type
-		img
-			width: 82px
-		.ux img
-			width: 115px
+  #project-test-type
+    img
+      width: 82px
+    .ux img
+      width: 115px
 
 @media #{$xsmall-only}
-	#project-test-type
-		img
-			width: 62.5px
-		.ux img
-			width: 115px
+  #project-test-type
+    img
+      width: 62.5px
+    .ux img
+      width: 115px
 
 #wizard-controller
-	&:not(.configure-mode)
-		#project-test-type
-			display: none
+  &:not(.configure-mode)
+    #project-test-type
+      display: none
 
-		.rf-configure-button, &.rf-step-configure-button
-			display: none
+    .rf-configure-button, &.rf-step-configure-button
+      display: none
 
 .rf-go-to-summary-button, #wizard-summary .rf-confirm-button
-	display: none
+  display: none
 
-	svg
-		width: 25px !important
-		top: 3px !important
+  svg
+    width: 25px !important
+    top: 3px !important
 
-		line.my-color
-			stroke: white
-		.stroke-my-color
-			stroke: white
+    line.my-color
+      stroke: white
+    .stroke-my-color
+      stroke: white
 
 .wizard-step
-	&.active
-		.wizard-step-line
-			&:before
-				bottom: 0
-		.wizard-step-counter
-			border-color: $sky-blue-color
-			&:before
-				background-color: $fire-orange-color
+  &.active
+    .wizard-step-line
+      &:before
+        bottom: 0
+    .wizard-step-counter
+      border-color: $sky-blue-color
+      &:before
+        background-color: $fire-orange-color
 
 .star
-	&:before
-		content: "*"
-		color: #FFA500
-		margin-left: 3px
+  &:before
+    content: "*"
+    color: #FFA500
+    margin-left: 3px
 
 // Wizard new style
 
 .with-distance
-	padding-bottom: 20px
+  padding-bottom: 20px
 
 .with-input-distance
-	margin-top: 40px
+  margin-top: 40px
 
 .image-radio-button
-	label.label
-		color: $dark-gray-color !important
-		font-size: $font-size-18 !important
-		padding-top: 10px
-		@media #{$small-only}
-			font-size: $font-size-15 !important
-	&:hover, &.checked
-		label.label
-			color: $yellow-orange-color !important
+  label.label
+    color: $dark-gray-color !important
+    font-size: $font-size-18 !important
+    padding-top: 10px
+    @media #{$small-only}
+      font-size: $font-size-15 !important
+  &:hover, &.checked
+    label.label
+      color: $yellow-orange-color !important
 
 .hours-per-tester
-	p
-		font-weight: 300
-		font-size: $font-size-15
+  p
+    font-weight: 300
+    font-size: $font-size-15
 
 .your-comment-label
-	font-size: $font-size-14 !important
-	line-height: 25px !important
-	height: 25px !important
+  font-size: $font-size-14 !important
+  line-height: 25px !important
+  height: 25px !important
 
 .input
-	.hiding-placeholder
-		top: 0 !important
-	&.not-empty
-		.hiding-placeholder
-			display: none !important
+  .hiding-placeholder
+    top: 0 !important
+  &.not-empty
+    .hiding-placeholder
+      display: none !important
 
 [step="2"]
-	.wizard-step-content
-		> .label
-			padding-bottom: 20px
-			height: auto !important
+  .wizard-step-content
+    > .label
+      padding-bottom: 20px
+      height: auto !important
 
 .rf-wizard-test-files-upload-button
-	height: 30px !important
+  height: 30px !important
 
-	.svg-wrap
-		top: -4px !important
-		position: relative !important
-		margin-left: 0 !important
-		margin-right: 15px !important
+  .svg-wrap
+    top: -4px !important
+    position: relative !important
+    margin-left: 0 !important
+    margin-right: 15px !important
 
-	svg
-		height: 30px !important
+  svg
+    height: 30px !important
 
-	.button-title
-		line-height: 30px !important
-		font-size: 18px !important
-		position: relative !important
-		top: -1px !important
+  .button-title
+    line-height: 30px !important
+    font-size: 18px !important
+    position: relative !important
+    top: -1px !important
 
 .nested-input-group
-	padding-left: 35px
-	padding-top: 10px
+  padding-left: 35px
+  padding-top: 10px
 
 .input-with-indent
-	margin-top: 5px !important
-	margin-bottom: 5px !important
+  margin-top: 5px !important
+  margin-bottom: 5px !important
 
 .file-upload-files-list
-	margin-top: 12px !important
-	.file
-		margin: 7px 0 !important
+  margin-top: 12px !important
+  .file
+    margin: 7px 0 !important
 
 .input.radio-button
-	.custom-radio-button + label
-		vertical-align: top
+  .custom-radio-button + label
+    vertical-align: top
 
 #project_exploratory_instructions
-	@media #{$small-only}
-		min-height: 90px !important
+  @media #{$small-only}
+    min-height: 90px !important
 
 .input, .nested-input-group
-	& + .input.radio-button
-		margin-top: 25px !important
+  & + .input.radio-button
+    margin-top: 25px !important
 
 .input.radio-button
-	& + &
-		margin-top: rem-calc(10) !important
+  & + &
+    margin-top: rem-calc(10) !important
 
 // validation for wizard
 
 #wizard-content
-	.error, .error-max, .error-email, .error-phone
-		color: $fire-orange-color
-		font-size: $font-size-14
-	.error-max, .error-email, .error-phone
-		display: none
+  .error, .error-max, .error-email, .error-phone, .error-name
+    color: $fire-orange-color
+    font-size: $font-size-14
+  .error-max, .error-email, .error-phone, .error-name
+    display: none
 
 // anonymous tests wrap in popup
 
 .anonymous-tests-wrap
-	.row
-		text-align: center
-	.test
-		text-align: center
-		opacity: 0.6
-		a
-			display: block
-		span
-			padding-top: 10px
-			display: block
-			color: $dark-gray-color !important
-			font-size: $font-size-18 !important
-			height: 50px
-			line-height: 25px
-			font-weight: 500
-		&:hover
-			opacity: 1
+  .row
+    text-align: center
+  .test
+    text-align: center
+    opacity: 0.6
+    a
+      display: block
+    span
+      padding-top: 10px
+      display: block
+      color: $dark-gray-color !important
+      font-size: $font-size-18 !important
+      height: 50px
+      line-height: 25px
+      font-weight: 500
+    &:hover
+      opacity: 1
 
 .input
-	.error
-		display: none
+  .error
+    display: none
 
 .input.tags
 
 .input.touched.invalid, .wizard-step.changed-from-this .input.invalid
-	input
-		border-color: $fire-orange-color
-	.error
-		display: block
-	&.tags
-		input
-			border-color: transparent
-		&.invalid
-			.tagsinput
-				border-color: $fire-orange-color
-		&.focus
-			.error, .placeholder
-				display: none !important
+  input
+    border-color: $fire-orange-color
+  .error
+    display: block
+  &.tags
+    input
+      border-color: transparent
+    &.invalid
+      .tagsinput
+        border-color: $fire-orange-color
+    &.focus
+      .error, .placeholder
+        display: none !important
 
-	&.string, &.text, &.url, &.tags
-		.error
-			position: absolute
-			line-height: 30px
-			padding: 0 12px
+  &.string, &.text, &.url, &.tags
+    .error
+      position: absolute
+      line-height: 30px
+      padding: 0 12px
 
-	.placeholder
-		&.hiding-placeholder
-			display: none !important
+  .placeholder
+    &.hiding-placeholder
+      display: none !important
 
 // Super full summary
 
 .super-full-summary
-	.platform
-		width: 100% !important
-		.platform-name
-			width: 100% !important
-		.platform-subitem
-			.name, .count
-				display: inline-block
-			.name
-				float: left
-				clear: left
-			.count
-				float: right
-				color: $yellow-orange-color
-				font-weight: 500
+  .platform
+    width: 100% !important
+    .platform-name
+      width: 100% !important
+    .platform-subitem
+      .name, .count
+        display: inline-block
+      .name
+        float: left
+        clear: left
+      .count
+        float: right
+        color: $yellow-orange-color
+        font-weight: 500
 
 +small
-	#wizard-help, #wizard-summary
-		display: none !important
-	#wizard-steps
-		padding-right: 0 !important
-	#wizard-full-summary
-		padding-right: 0 !important
+  #wizard-help, #wizard-summary
+    display: none !important
+  #wizard-steps
+    padding-right: 0 !important
+  #wizard-full-summary
+    padding-right: 0 !important
 
 @media #{$small-only}, #{$medium-only}
-	.wizard-step-content
-		padding-left: rem-calc(60)
+  .wizard-step-content
+    padding-left: rem-calc(60)
 
-	.input.image-radio-button
-		.label
-			height: auto !important
-			line-height: 18px !important
-		&.project_product_type
-			margin-bottom: 3rem
+  .input.image-radio-button
+    .label
+      height: auto !important
+      line-height: 18px !important
+    &.project_product_type
+      margin-bottom: 3rem
 
-	#wizard-controller
-		.label
-			line-height: 1.3
-			height: auto
+  #wizard-controller
+    .label
+      line-height: 1.3
+      height: auto
 
-	.platform
-		width: 100%
-		padding-left: 0
+  .platform
+    width: 100%
+    padding-left: 0
 
-	.hours-per-tester
-		width: 100%
-		padding-left: 0
+  .hours-per-tester
+    width: 100%
+    padding-left: 0
 
-	.option-count
-		.increment, .decrement
-			opacity: 1 !important
+  .option-count
+    .increment, .decrement
+      opacity: 1 !important
 
 +small($include-normal-ratio: false)
-	.hours-per-tester
-		.available-hours
-			.hour
-				zoom: 0.8
+  .hours-per-tester
+    .available-hours
+      .hour
+        zoom: 0.8
 
 +iphone5-down
-	.hours-per-tester
-		.available-hours
-			.hour
-				zoom: 0.68
-		&:after
-			font-size: 0.85rem
+  .hours-per-tester
+    .available-hours
+      .hour
+        zoom: 0.68
+    &:after
+      font-size: 0.85rem
 
 .invalid-steps-list
-	padding-bottom: 1rem
-	.step
-		position: relative
-		padding-left: 60px
-	.step-name
-		font-size: 1.3125rem
-		font-weight: 500
-		line-height: 50px
-	.step-number
-		&:before
-			background-color: $fire-orange-color
+  padding-bottom: 1rem
+  .step
+    position: relative
+    padding-left: 60px
+  .step-name
+    font-size: 1.3125rem
+    font-weight: 500
+    line-height: 50px
+  .step-number
+    &:before
+      background-color: $fire-orange-color
 
 #platforms-empty-error
-	display: block
-	margin-bottom: 3rem
+  display: block
+  margin-bottom: 3rem
 
 .platforms-input
-	&:not(.touched)
-		& ~ #platforms-empty-error
-			display: none !important
+  &:not(.touched)
+    & ~ #platforms-empty-error
+      display: none !important
 
 .full-summary-pay-buttons
-	padding: 3rem 0
+  padding: 3rem 0
 
 // payment-popup
 .choose-payment-method-title
-	text-align: center
-	margin: 1rem 0
+  text-align: center
+  margin: 1rem 0
 
 .payment-type
-	&.first
-		margin-left: 18.75%
+  &.first
+    margin-left: 18.75%
 
 +small
-	.wizard-step-content
-		padding-right: 15px
-	input
-		&:not([type=radio]), &:not([type=checkbox]), &:not([type=submit])
-			width: 100%
-			max-width: none
-	.small-padding-0
-		padding: 0
-	.small-padding-right-0
-		padding-right: 0
-	.small-margin-bottom-24
-		margin-bottom: 24px
-	#promo_code
-		width: calc(100% - 80px)
+  .wizard-step-content
+    padding-right: 15px
+  input
+    &:not([type=radio]), &:not([type=checkbox]), &:not([type=submit])
+      width: 100%
+      max-width: none
+  .small-padding-0
+    padding: 0
+  .small-padding-right-0
+    padding-right: 0
+  .small-margin-bottom-24
+    margin-bottom: 24px
+  #promo_code
+    width: calc(100% - 80px)
 
 .price-and-buttons
-	float: left
-	clear: left
-	margin-top: 70px
+  float: left
+  clear: left
+  margin-top: 70px
 
 .payment-method-coming-soon
-	+question-text
-	text-align: center
-	margin-top: 30px
-	margin-bottom: 50px
+  +question-text
+  text-align: center
+  margin-top: 30px
+  margin-bottom: 50px
 
 input#promo_code
-	width: 130px
+  width: 130px
 
 .cancel-promo-code
-	+delete_button
-	.promo-code-field &
-		display: none
-	.promo-code-field.success &
-		display: inline-block
+  +delete_button
+  .promo-code-field &
+    display: none
+  .promo-code-field.success &
+    display: inline-block
 
 .super-full-summary
-	.platforms
-		> .columns
-			float: left
-			&:nth-child(2n+3)
-				clear: left
-	.property
-		padding-left: 15px !important
-		padding-right: 15px !important
+  .platforms
+    > .columns
+      float: left
+      &:nth-child(2n+3)
+        clear: left
+  .property
+    padding-left: 15px !important
+    padding-right: 15px !important

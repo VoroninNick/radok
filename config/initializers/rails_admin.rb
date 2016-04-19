@@ -49,8 +49,8 @@ def content_field(name = :content)
   field name, :text do
     html_attributes do
       {
-          class: "my-codemirror",
-          mode: "slim"
+        class: "my-codemirror",
+        mode: "slim"
       }
     end
 
@@ -81,7 +81,6 @@ end
 def page_fields(hide_content = false)
   field :banner
   content_field  if !hide_content
-
   html_block_fields
   field :url
   field :seo_tags
@@ -136,7 +135,7 @@ RailsAdmin.config do |config|
 
   ## == Cancan ==
   config.authorize_with :cancan
-  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(Contact Dashboard Devices FaqIndex NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [
     FormConfigs::ContactFeedback,
@@ -202,7 +201,6 @@ RailsAdmin.config do |config|
                  Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
   include_models(config, Client)
   include_models(config, Wizard::PromoCode)
-  include_models(config, WizardText)
   include_models(config, WizardSettings)
 
   config.model Cms::MetaTags do
@@ -339,7 +337,6 @@ RailsAdmin.config do |config|
   config.model Pages::SignUp do
     pages_navigation_label
 
-
     edit do
       field :seo_tags
       field :sitemap_record
@@ -355,14 +352,6 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model Pages::HowItWorks do
-    pages_navigation_label
-
-    edit do
-      page_fields
-    end
-  end
-
   config.model Pages::TestInfo do
     visible false
   end
@@ -374,7 +363,6 @@ RailsAdmin.config do |config|
       field :banner
       field :seo_tags
       field :sitemap_record
-
     end
   end
 
@@ -564,12 +552,6 @@ RailsAdmin.config do |config|
         end
         field :admin_comment, :ck_editor
       end
-    end
-  end
-
-  config.model WizardText do
-    edit do
-      content_field :wizard_help_slim
     end
   end
 

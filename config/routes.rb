@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   #get "chess_timer", to: "application#chess_timer"
   get "robots.txt", to: "pages#robots_txt"
   get "w", to: "wizard#new_and_allow"
+  get "user_logged", to: 'user_pages#user_logged', as: "user_logged"
 
   scope "emails", controller: "emails" do
     root action: :index, as: :emails
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
     post "", to: "wizard#create"#, as: "wizard"
   end
 
+  get "/crowdsourced-company-about", to: "pages#about"
   get "sitemap", format: :xml, to: "sitemap#index", as: :sitemap
   get "mail", to: "yandex#mail_form"
   post "schedule-call", to: "contact#schedule_call", as: :schedule_call

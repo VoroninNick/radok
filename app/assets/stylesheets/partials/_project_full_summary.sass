@@ -1,225 +1,185 @@
 $wizard-summary-horizontal-padding: ($wizard-step-counter-diameter + rem-calc(30) - rem-calc(15))
 
 #wizard-full-summary
-	position: relative
-	padding-right: $wizard-summary-width
-
-	&.super-full-summary
-		padding-right: 0
-
-	.property
-		padding: 16px 0
-
+  position: relative
+  padding-right: $wizard-summary-width
+  &.super-full-summary
+    padding-right: 0
+  .property
+    padding: 16px 0
 
 #wizard-full-summary-header
-	padding: 0 $wizard-step-side-padding
-	.text
-		+font-21-semibold
-		color: $fire-orange-color
-		text-transform: uppercase
-		line-height: 48px
+  padding: 0 $wizard-step-side-padding
+  .text
+    +font-21-semibold
+    color: $fire-orange-color
+    text-transform: uppercase
+    line-height: 48px
 
 #wizard-full-summary-inner
-
-	padding-bottom: 40px
-
+  padding-bottom: 40px
 
 = large-property-value
-	color: $yellow-orange-color
-	+font-18-semibold
-	text-transform: uppercase
-	a
-		color: inherit
+  color: $yellow-orange-color
+  +font-18-semibold
+  text-transform: uppercase
+  a
+    color: inherit
 
 = small-property-value
-	color: $yellow-orange-color
-	+font-15-semibold
-	text-transform: uppercase
-	a
-		color: inherit
+  color: $yellow-orange-color
+  +font-15-semibold
+  text-transform: uppercase
+  a
+    color: inherit
 
 = large-property-label
-	+font-21-semibold
+  +font-21-semibold
 
 = small-property-label
-	+font-16-semibold
+  +font-16-semibold
 
 #wizard-full-summary-content
-	//max-width: 640px
-	//margin-left: auto
-	//margin-right: auto
-	background: $white-color
-	padding: 0 $wizard-summary-horizontal-padding 40px $wizard-summary-horizontal-padding
-	margin: 0
+  background: $white-color
+  padding: 0 $wizard-summary-horizontal-padding 40px $wizard-summary-horizontal-padding
+  margin: 0
+  .property-label
+    +large-property-label
+  .property-value
+    +large-property-value
+  .property-input-value
+    textarea
+      background: transparent
+      border: 1px solid $light-gray-color
+  .platforms
+    .platform
+      padding: 0
+      float: left
+      &:nth-child(3n+1)
+        clear: left
+    .platform-name
+      +platform-name
+    .platform-svg
+      display: inline-block
+      svg
+        fill: $light-gray-text-color
+        height: 40px
+        width: 40px
+    .platform-name
+      display: inline-block
 
+  .total-testers-count
+    .svg-wrap
+      margin-right: 20px
+      display: inline-block
+    .text
+      display: inline-block
+      line-height: 30px
+      text-transform: uppercase
+      color: $yellow-orange-color
+      vertical-align: top
 
-
-	.property-label
-		+large-property-label
-	.property-value
-		+large-property-value
-
-	.property-input-value
-		textarea
-			background: transparent
-			border: 1px solid $light-gray-color
-
-
-	.platforms
-		.platform
-			//width: 100%
-			//width: percentage(1/3)
-			padding: 0
-			float: left
-
-			&:nth-child(3n+1)
-				clear: left
-		.platform-name
-			+platform-name
-		.platform-svg
-			display: inline-block
-
-			svg
-				fill: $light-gray-text-color
-				height: 40px
-				width: 40px
-		.platform-name
-			display: inline-block
-
-	.total-testers-count
-		.svg-wrap
-
-			margin-right: 20px
-			display: inline-block
-			svg
-				width: 30px
-				height: 30px
-				fill: $yellow-orange-color
-		.text
-			display: inline-block
-			line-height: 30px
-			text-transform: uppercase
-			color: $yellow-orange-color
-			vertical-align: top
-
-
-	@media #{$small-only}, #{$medium-only}
-		padding: 0 0 40px 0
+  @media #{$small-only}, #{$medium-only}
+    padding: 0 0 40px 0
 
 #wizard-full-summary-header
-	margin-bottom: rem-calc(12)
-	.text
-		height: rem-calc(48)
-		color: $fire-orange-color
+  margin-bottom: rem-calc(12)
+  .text
+    height: rem-calc(48)
+    color: $fire-orange-color
 
 .large-indent
-	margin-top: 50px
-
-
+  margin-top: 50px
 
 .finished-project-short-info
-	.property-label
-		+small-property-label
-	.property-value
-		+small-property-value
-
-	.property
-		margin: 0 0 24px 0
-		&:first-child
-			margin-top: 24px
-
-	.report-link
-		svg
-			display: inline-block
-			g
-				fill: $light-gray-color
-		.file-name
-			display: inline-block
-			vertical-align: top
-
+  .property-label
+    +small-property-label
+  .property-value
+    +small-property-value
+  .property
+    margin: 0 0 24px 0
+    &:first-child
+      margin-top: 24px
+  .report-link
+    svg
+      display: inline-block
+      g
+        fill: $light-gray-color
+    .file-name
+      display: inline-block
+      vertical-align: top
 
 .full-summary-total-cost
-	background-color: $light-black-color
-	height: 70px
-	position: relative
-
-	.dollar
-		+wizard-total-cost-currency
-		color: $yellow-orange-color
-		position: absolute
-		font-size: 2.2rem
-		font-weight: 400
-		line-height: 70px
-		text-align: center
-		width: 54px
-	.total-price
-		+wizard-total-cost-total-price
-		color: white
-		height: 50px
-		top: 10px
-		position: relative
-		border: $sky-blue-color 1px solid
-		margin-left: 54px
-		margin-right: 80px
-		line-height: 50px
-		padding: 0 12px
-
-	.total-cost-label
-		position: absolute
-
-		right: 0
-		width: 80px
-		text-align: center
-
-		color: $yellow-orange-color
-		text-transform: uppercase
-		font-weight: 500
-		line-height: 16px
-		top: 19px
+  background-color: $light-black-color
+  height: 70px
+  position: relative
+  .dollar
+    +wizard-total-cost-currency
+    color: $yellow-orange-color
+    position: absolute
+    font-size: 2.2rem
+    font-weight: 400
+    line-height: 70px
+    text-align: center
+    width: 54px
+  .total-price
+    +wizard-total-cost-total-price
+    color: white
+    height: 50px
+    top: 10px
+    position: relative
+    border: $sky-blue-color 1px solid
+    margin-left: 54px
+    margin-right: 80px
+    line-height: 50px
+    padding: 0 12px
+  .total-cost-label
+    position: absolute
+    right: 0
+    width: 80px
+    text-align: center
+    color: $yellow-orange-color
+    text-transform: uppercase
+    font-weight: 500
+    line-height: 16px
+    top: 19px
 
 .promo-code-field
-	margin-top: 10px
-
-	padding: 0 0 0 54px
-	label
-		display: block
-		font-size: 14px
-		font-weight: 100
-	input
-		border: none
-	button
-		vertical-align: top
-		width: 30px
-		padding: 0
-
-	.error
-		display: none
-		font-weight: 400
-
-	.waiting-preloader
-		display: none
-
-	&.invalid
-		.error
-			display: block
-		.field-label
-			display: none
-
-	.success-label
-		display: none
-		color: $sky-blue-color
-		font-weight: 500
-
-	&.waiting
-		.error
-			display: none
-		.field-label
-			display: none
-		.waiting-preloader
-			display: block
-
-	&.success
-		.success-label
-			display: block
-		button
-			display: none
+  margin-top: 10px
+  padding: 0 0 0 54px
+  label
+    display: block
+    font-size: 14px
+    font-weight: 100
+  input
+    border: none
+  button
+    vertical-align: top
+    width: 30px
+    padding: 0
+  .error
+    display: none
+    font-weight: 400
+  .waiting-preloader
+    display: none
+  &.invalid
+    .error
+      display: block
+    .field-label
+      display: none
+  .success-label
+    display: none
+    color: $sky-blue-color
+    font-weight: 500
+  &.waiting
+    .error
+      display: none
+    .field-label
+      display: none
+    .waiting-preloader
+      display: block
+  &.success
+    .success-label
+      display: block
+    button
+      display: none
