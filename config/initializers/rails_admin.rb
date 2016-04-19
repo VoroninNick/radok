@@ -136,7 +136,7 @@ RailsAdmin.config do |config|
 
   ## == Cancan ==
   config.authorize_with :cancan
-  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(Contact Dashboard Devices FaqIndex NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [
     FormConfigs::ContactFeedback,
@@ -352,14 +352,6 @@ RailsAdmin.config do |config|
     edit do
       field :seo_tags
       field :sitemap_record
-    end
-  end
-
-  config.model Pages::HowItWorks do
-    pages_navigation_label
-
-    edit do
-      page_fields
     end
   end
 
