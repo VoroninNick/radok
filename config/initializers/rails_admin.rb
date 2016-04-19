@@ -9,6 +9,7 @@ def pages_models
     next if filename == 'home'
     next if filename == 'about'
     next if filename == 'testing_services'
+    next if filename == 'terms_of_use'
 
     "Pages::" + filename.camelize
   end.compact
@@ -43,8 +44,6 @@ def include_models(config, *models)
     end
   end
 end
-
-
 
 def content_field(name = :content)
   field name, :text do
@@ -96,15 +95,15 @@ def configure_codemirror_html_field(name)
 
     assets do
       {
-          mode: "/assets/codemirror/modes/#{mode}.js",
-          theme: "/assets/codemirror/themes/#{theme}.css",
+        mode: "/assets/codemirror/modes/#{mode}.js",
+        theme: "/assets/codemirror/themes/#{theme}.css",
       }
     end
 
     config do
       {
-          mode: mode,
-          theme: theme,
+        mode: mode,
+        theme: theme,
       }
     end
   end
@@ -113,9 +112,7 @@ end
 def configure_html_blocks
   m = self.abstract_model.model
   if m.respond_to?(:html_block_field_names)
-
     m.html_block_field_names.each do |name|
-
     end
   end
 end
@@ -123,18 +120,13 @@ end
 def html_block_fields
   m = self.abstract_model.model
   if m.respond_to?(:html_block_field_names)
-
     m.html_block_field_names.each do |name|
       content_field name.to_sym
     end
   end
 end
 
-
-
 RailsAdmin.config do |config|
-
-  ### Popular gems integration
 
   ## == Devise ==
   config.authenticate_with do
@@ -144,8 +136,7 @@ RailsAdmin.config do |config|
 
   ## == Cancan ==
   config.authorize_with :cancan
-
-  page_model_names = %w(Contact Dashboard FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TermsOfUse TestInfo Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(Contact Dashboard Devices FaqIndex HowItWorks NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
 
   form_config_models = [
     FormConfigs::ContactFeedback,
@@ -228,7 +219,6 @@ RailsAdmin.config do |config|
     field :content
   end
 
-
   config.model WizardSettings do
     settings_navigation_label
 
@@ -264,7 +254,6 @@ RailsAdmin.config do |config|
     field :password, :string
     field :percentage_discount
   end
-
 
   %w(FaqRequest ContactFeedback ScheduleCall PaymentRequest).each do |name|
     config.model "FormConfigs::#{name}" do
@@ -318,14 +307,6 @@ RailsAdmin.config do |config|
     pages_navigation_label
     edit do
       content_field
-    end
-  end
-
-  config.model Pages::Contact do
-    pages_navigation_label
-
-    edit do
-      page_fields(true)
     end
   end
 
@@ -402,18 +383,8 @@ RailsAdmin.config do |config|
 
     edit do
       field :banner
-      #field :url
       field :seo_tags
       field :sitemap_record
-    end
-  end
-
-  config.model Pages::TermsOfUse do
-    pages_navigation_label
-
-    edit do
-      page_fields
-
     end
   end
 
@@ -422,7 +393,6 @@ RailsAdmin.config do |config|
 
     edit do
       field :banner
-      #field :url
       field :seo_tags
       field :sitemap_record
     end
@@ -443,7 +413,6 @@ RailsAdmin.config do |config|
 
   config.model Wizard::Device do
     weight -100
-
     object_label_method :object_label
 
     list do
@@ -500,7 +469,6 @@ RailsAdmin.config do |config|
       field :username
       field :email
       field :confirmed?, :boolean
-
     end
 
     create do
@@ -516,8 +484,8 @@ RailsAdmin.config do |config|
           true
         end
       end
-
     end
+
     edit do
       field :subscribed
       field :username
@@ -535,12 +503,8 @@ RailsAdmin.config do |config|
       field :zip_code
       field :company_url
       field :image
-
-
     end
   end
-
-
 
   config.model Cms::SitemapElement do
     visible false
@@ -590,7 +554,6 @@ RailsAdmin.config do |config|
 
       group :other do
         field :total_price
-        #field :total_price_with_discount
         field :percentage_discount do
           read_only true
         end
@@ -609,7 +572,6 @@ RailsAdmin.config do |config|
       content_field :wizard_help_slim
     end
   end
-
 
   config.model Templates::MailerTemplate do
     visible false

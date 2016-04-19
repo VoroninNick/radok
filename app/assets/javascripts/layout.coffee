@@ -8,7 +8,6 @@ setTimeout ()->
     $rf_input.find("input").attr("type", "password")
   50
 
-#window.wizard_root_path = "/ordering-crowdsourced-testing"
 window.wizard_root_path = $("form[for]").attr("url") || $("#dashboard-projects").attr("data-wizard-root")
 $header_user = $("#header-user")
 window.logged_in = $("html").data().loggedIn == true
@@ -28,8 +27,6 @@ $("body").on "click", ".logout-link", (event)->
     success: ->
       window.location.reload()
   )
-
-$("body").on "clickout", ".logout-link", ->
 
 $(".menu").on "click", ".has-dropdown", ->
   $this = $(this)
@@ -52,9 +49,6 @@ window.openPopup = (popup_name)->
 $("[disable-click-on-active]").on "click", ".active", (event)->
   $this = $(this)
   event.preventDefault()
-
-#$("#header-menu").on "click", "[id=header-user].unlogged", ->
-#  openPopup("user_pages__static_sign_in")
 
 $.fn.closeDialog = ()->
   $ng_dialog = $(this).closest(".ngdialog")
@@ -188,6 +182,8 @@ $("body").on "submit", "form:not([no-processing])", (event)->
       form_data = form_type.serialize.call($form)
     else
       form_data = $form.serializeArray()
+      $(form_data).each ->
+        this.value = this.value.trim()
 
     if form_type.url
       url = form_type.url.apply($form)
@@ -240,8 +236,6 @@ $("body").on "show_success", "form.forgot-password-form", (event, data)->
   $email_placeholder = $form.find(".success-handler .email-placeholder")
   user = data.user
   $email_placeholder.text(user.email)
-
-#$("body").on "focus keypress", "input[type=password]", (event)->
 
 $("body").on "capson", ->
   $(".caps-lock-warning").removeClass("hide")
@@ -297,8 +291,7 @@ $.fn.validateInput = ->
   form_try_send = $form.hasClass("try-send")
   touched = $rf_input.hasClass("touched")
   required = !!$rf_input.attr("required")
-  value = $rf_input.val()
-  #$input = $rf_input.find("input, textarea")
+  value = $rf_input.val().trim()
 
   if value && value.length
     $rf_input.addClass('not-empty').removeClass("empty")
@@ -309,7 +302,6 @@ $.fn.validateInput = ->
 
   if required
     valid = value && value.length
-  #valid = valid && $rf_input.find(".error.remote").length > 0
 
   if valid
     $rf_input.find(".error.required").addClass("hide")
@@ -337,8 +329,8 @@ $.fn.validateInput = ->
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
-    if validation_options.indexOf("phone") >= 0
-      valid = validatePhoneNumber(value)
+    if validation_options.indexOf("name") >= 0
+      valid = validateName(value)
       if valid
         $rf_input.find(".error.invalid").addClass("hide")
       else
@@ -372,9 +364,12 @@ validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){8,14}[0-9]$/
   re.test number
 
+validateName = (name) ->
+  re = /^[a-zA-Z\s]*$/
+  re.test name
+
 $("body").on "change blur keyup", "form .rf-input", (event)->
   $rf_input = $(this)
-  #$rf_input = $input.closest(".rf-input")
   if event.type == 'change'
     $rf_input.find(".error.taken").addClass("hide")
   $rf_input.validateInput()
@@ -393,7 +388,6 @@ $("body").on "click", ".tab-labels > :not(.active)", ->
   $tab_content = $tab_contents.children().eq(tab_index)
   $tab_label.addClass("active")
   $tab_content.addClass("active")
-  #setContainerSize()
 
 setContainerSize = ()->
   $profile_tab_contents_wrap = $(".profile-tab-contents-row-wrap")
@@ -401,8 +395,7 @@ setContainerSize = ()->
   wrap_height = $("#wrap").height()
   header_height = $("#header").height()
   main_height = $("main").height()
-  #profile_header_outer_height = $("#profile-header").outerHeight()
-  #$profile_tabs_wrap_height = $(".profile-tab-labels-row-wrap").height()
+
   difference = wrap_height - (header_height + main_height)
   if difference > 0
     min_height = $profile_tab_contents_wrap.height() + difference
@@ -432,8 +425,6 @@ $("body").on "change", "#subscribe_form__subscribe", ->
     data: data
     success: ->
   )
-
-$("body").on "submit", "", ()->
 
 $("body").on "change", "#input-file-uploader", ->
   $photo_image_wrap = $(".photo-image-wrap")
@@ -477,25 +468,20 @@ $("body").on "change", "#input-file-uploader", ->
         success: (data)->
           $header_img.attr('src', data.user.avatar.header_image.url)
           $img.attr('src', data.user.avatar.profile_image.url)
-        error: ->
       )
+
     reader.readAsDataURL(file);
   else
     $image_label.text("File type is not supported")
 
-#$("body").on "change", "#personal-data"
-
 $('body').on 'input propertychange', "#personal-data input", (evt) ->
   $input = $(this)
-
   # If it's the propertychange event, make sure it's the value that changed.
   if window.event and event.type == 'propertychange' and event.propertyName != 'value'
     return
-
   # Clear any previously set timer before setting a fresh one
   window.clearTimeout $(this).data('timeout')
   $(this).data 'timeout', setTimeout((->
-    # Do your thing here
       $form = $input.closest("form")
       $form.submit()
     ), 2000)
@@ -575,7 +561,6 @@ $(document).on "ready", ->
         return 1;
     }
   })
-  #$.read_models()
 
 $("body").on "click", ".return_to_wizard", (e)->
   e.preventDefault()
@@ -587,6 +572,17 @@ $("body").on "click", ".schedule-call-button", ->
 $("body").on "click", "#header-mobile-menu-button-wrap", ()->
   $("body").toggleClass("mobile-menu-opened")
 
+$("body").on "click change change-code keyup keypress", "#footer-subscribe-input", ()->
+  $email = $(this).val()
+  $subscribe_button = $("#subscribe-button")
+  $error = $("#subscribe_form .error-subscribe")
+  if validateEmail($email)
+    $subscribe_button.removeAttr("disabled")
+    $error.addClass("hide")
+  else
+    $subscribe_button.attr("disabled", "true")
+    $error.removeClass("hide")
+
 $(".subscribe-block form").on "after_error", (e, xhr, state, options)->
   response = xhr.responseJSON
   c = response.code
@@ -594,6 +590,8 @@ $(".subscribe-block form").on "after_error", (e, xhr, state, options)->
   if c && c.length > 0
     if c.indexOf("List_RoleEmailMember: ") == 0
       msg = c.substr("List_RoleEmailMember: ".length)
+    else
+      msg = c
   subscribed = response.subscribed
   if subscribed
     msg = "This email already subscribed"

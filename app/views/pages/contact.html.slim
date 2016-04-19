@@ -3,64 +3,39 @@
     = render "page_banner"
   .page-content-rows
     #contact-info-and-map.page-content-row-wrap
-      = html_block_with_fallback :contact_info_and_map, true
-        .row
-          .columns.large-12
-            .header
-              |We are here
-          #contact-data.columns.large-5.medium-6.small-text-center
-            /.property
-              .property-header
-                |Operating Address
-              .text
-                |103 Niagara St. Toronto,
-                br
-                |Ontario, M5V 1C3
-            .property
-              .property-header
-                |Address
-              .text
-                |7 St. Marks Rd. Toronto,
-                br
-                |Ontario, M6S 2H5
-            .property
-              .property-header
-                |Call us
-              .text
-                a href="tel:+15145858198"
-                  |+1-514-585-8198
-            .property
-              .property-header
-                |Stay in touch with our social channels:
-              .social-icons
-                = render "social_links"
-
-
-          #contact-map.columns.large-7.medium-6
-            map zoom="11" center="45.500706, -73.574401" disable-default-u-i="true"
-              marker position="45.500706, -73.574401" title="Hello Marker"  draggable="true" visible="true"
-
-
-
-    /#contact-feedback.page-content-row-wrap
-      .row.contact-form-row
-        .columns.large-12.small-text-center.header-column
-          .header
-            |Send us your feedback
-          .subheader
-            |For any question or comment contact us via the form below and we'll back to you quickly.
+      .row
         .columns.large-12
-          .row
-            form novalidate="" name="contact"
-              .columns.medium-6.fields-group-column
-                rf-input ng-model="contact_request.name" ng-required="true" label="Your name"
-                rf-input ng-model="contact_request.email" is-email="" label="Email" ng-required="true"
-                rf-input ng-model="contact_request.subject" ng-required="false" label="Subject"
-              /my-input name="subject" ng-model="contact_request.subject" required="" label="Subject"
-              /my-input name="name" type="name" ng-model="contact_request.name" required="" label="Your name"
-              /my-input name="email" type="email" ng-model="contact_request.email" required="" label="Email"
-              .columns.medium-6.fields-group-column
-                rf-input type="text" n-inputs-height="3" ng-model="contact_request.description" label="Type your question's subject here..."
-                /rf-textarea name="description" ng-model="contact_request.description" required="" label="Type your question's subject here..."
-                rf-button class="contact-form-button" svg="#{asset_path('rf-icon-email.svg')}" title="Send message" ng-disabled="contact.$invalid"  ng-click="submitRequest(); $event.preventDefault()"
+          .header
+            |We are here
+        #contact-data.columns.large-5.medium-6.small-text-center
+          .property
+            .property-header
+              |Operating Address
+            .text
+              |103 Niagara St. Toronto,
+              br
+              |Ontario, M5V 1C3
+          .property
+            .property-header
+              |Address
+            .text
+              |7 St. Marks Rd. Toronto,
+              br
+              |Ontario, M6S 2H5
+          .property
+            .property-header
+              |Call us
+            .text
+              a href="tel:+15145858198"
+                |+1-514-585-8198
+          .property
+            .property-header
+              |Stay in touch with our social channels: links`
+            .social-icons
+              = render "social_links"
+
+        #contact-map.columns.large-7.medium-6
+          map zoom="11" center="45.500706, -73.574401" disable-default-u-i="true"
+            marker position="45.500706, -73.574401" title="Hello Marker"  draggable="true" visible="true"
+
     = render "contact_form"

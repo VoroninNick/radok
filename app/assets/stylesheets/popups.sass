@@ -1,8 +1,3 @@
-//.popup
-	-webkit-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
-	-moz-box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
-	box-shadow: 0px -1px 20px 0px rgba(0,0,0,0.75)
-
 .ngdialog
 	&.ngdialog-theme-default
 		overflow-y: auto
@@ -25,7 +20,6 @@
 				font-size: 35px
 				line-height: 16px
 				color: #F5EFEF
-
 
 	&.ngdialog-payment
 		.ngdialog-content
@@ -51,12 +45,8 @@
 		a
 			text-decoration: none
 			color: $sky-blue-color
-
-
-
 		+small
 			padding: 0
-
 
 	.oauth-login, .oauth-sign-up
 		padding-top: 24px
@@ -72,32 +62,23 @@
 			width: 32px
 			height: 32px
 			margin-left: 20px
-			//background: red
 			border-radius: 50%
 			&:first-child
 				margin-left: 0
 
-
-
-
-
 	.terms-of-use-info
-		//background: #fff
 		padding-top: 10px
 		text-align: center
 		+font-14-light-italic
 		color: $gray-text-color
 		line-height: 16px
+
 	.additional-information-slider
 		margin-top: 30px
 		text-align: center
 		&:not(.opened)
 			color: $sky-blue-color
 			cursor: pointer
-
-
-
-
 
 	&.forgot-password
 		.text
@@ -112,27 +93,20 @@
 		max-width: 540px
 		margin: 50px auto 50px auto
 
-
-
-
 .form
 	.actions
 		> *:first-child
-			//width: 166px
 			color: $gray-text-color
 			display: inline-block
 			text-align: center
 			vertical-align: middle
-
 		> *:nth-child(2)
-			//width: 310px
 			display: inline-block
 			button
 				width: 100%
 				height: 70px
 				text-transform: uppercase
 				+font-28-bold
-
 	.input
 		padding-bottom: 16px
 		&:last-child
@@ -146,7 +120,6 @@
 			display: inline-block
 			max-width: none
 			background: rgba(0,0,0,0)
-
 			+semibold
 			&:focus
 				background-color: $sky-blue-color
@@ -162,12 +135,10 @@
 
 		&.password
 			padding: 20px 0
-
 			input
 				height: 50px
 			.show-password-button, .hide-password-button
 				top: 12px
-
 		select
 			height: 30px
 			background: rgba(0, 0, 0, 0)
@@ -178,8 +149,6 @@
 			right: 9px
 			top: 2px
 			cursor: pointer
-
-
 			svg
 				width: 26px
 				height: 26px
@@ -192,22 +161,18 @@
 	.forgot-password-link-wrap
 		text-align: right
 	.sign-up-invitation
-
 	.actions
 		line-height: 70px
 		height: 70px
 		margin: 40px 0 0 0
 
-
 .payment-type
 	display: inline-block
 	width: grid-calc(3, 12)
 	float: left
-
 	.title
 		+font-12-light
 		text-align: center
-
 	svg
 		width: 100%
 		height: 100%
@@ -234,9 +199,7 @@
 	margin: -10px 0 0 40px
 .paypal-card-svg-wrap
 	top: 27px
-	//position: relative
 	position: absolute
-	//left: 28px
 	left: 50%
 	+transform(translateX(-50%))
 
@@ -246,13 +209,10 @@
 			&, & *
 				fill: #8a8b8d !important
 	.paypal-card-svg-wrap
-		#pay, #pal
-			//fill: $light-gray-color
 		#pay
 			fill: #999a9c
 		#pal
 			fill: #a5a6a8
-	// 999a9c
 	.master-card-svg-wrap
 		#Rectangle-1
 			fill: #999a9c
@@ -269,7 +229,6 @@
 			fill: #9a9b9d
 		#v-up
 			fill: #b7b8ba
-
 
 .pay-later-svg-wrap
 	max-width: 70px
@@ -304,7 +263,6 @@
 		.actions
 			.button-wrap, .price-wrap
 				padding: 0
-
 			.payment-pay-button
 				width: 50%
 			.price-wrap
@@ -312,20 +270,12 @@
 				width: 50%
 				background: $light-black-color
 				float: left
-
-
 	&.confirmation-congratulations
 		.form-content
 			padding-bottom: 30px
 
-
-
 #payment_popup
-
 
 .sign-up-invitation
 	.inner
 		white-space: nowrap
-
-		//.no-account
-			@media screen and (max-width: 380px) and ()
