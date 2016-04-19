@@ -1,42 +1,41 @@
-= html_block_with_fallback(:header)
-  header#header  ng-controller="NavigationController" ng-class="headerClass()"
-    #fixed-header
-      #header-row
-        #header-logo
-          a href=home_path ng-class="navClass('home')"
-            = image_tag "new_logo.png"
-        #header-menu
-          = top_nav(menu: menu_items, item_class: "header-menu-item")
+header#header  ng-controller="NavigationController" ng-class="headerClass()"
+  #fixed-header
+    #header-row
+      #header-logo
+        a href=home_path ng-class="navClass('home')"
+          = image_tag "new_logo.png"
+      #header-menu
+        = top_nav(menu: menu_items, item_class: "header-menu-item")
 
-          #header-user  class=header_user_class
-            - if !current_user
-              a.user-icon.unlogged href=new_user_session_path open-popup=("user_pages__static_sign_in" unless controller_name.to_s == "user_pages" || controller_name.to_s.scan(/\Ausers/).any? || controller_name.to_s.scan(/\Adevise/).any?)
-                div angular-ripple=""
-                  .inner
+        #header-user  class=header_user_class
+          - if !current_user
+            a.user-icon.unlogged href=new_user_session_path open-popup=("user_pages__static_sign_in" unless controller_name.to_s == "user_pages" || controller_name.to_s.scan(/\Ausers/).any? || controller_name.to_s.scan(/\Adevise/).any?)
+              div angular-ripple=""
+                .inner
+                  .svg-wrap
+                    = embedded_svg_from_assets("rf-unlogged")
+                  span.subtitle
+                    |Sign in
+          - else
+            .user-icon.logged ng-click="toggleUserDropdown()" off-click="closeUserDropdown()" class="#{ 'no-avatar' unless current_user.avatar.exists?(:header_image) }"
+              div angular-ripple=""
+                .inner
+                  - if !current_user.avatar.exists?(:header_image)
                     .svg-wrap
-                      = embedded_svg_from_assets("rf-unlogged")
-                    span.subtitle
-                      |Sign in
-            - else
-              .user-icon.logged ng-click="toggleUserDropdown()" off-click="closeUserDropdown()" class="#{ 'no-avatar' unless current_user.avatar.exists?(:header_image) }"
-                div angular-ripple=""
-                  .inner
-                    - if !current_user.avatar.exists?(:header_image)
-                      .svg-wrap
-                        = embedded_svg_from_assets("no_avatar.svg")
-                    - else
-                      .image-wrap
-                        = image_tag(current_user.avatar.url(:header_image))
+                      = embedded_svg_from_assets("no_avatar.svg")
+                  - else
+                    .image-wrap
+                      = image_tag(current_user.avatar.url(:header_image))
 
-            - if current_user
-              .dropdown.hide
-                rf-button size="small" title="My dashboard" svg="#{asset_path('rf-icon-configure.svg')}" class="my-dashboard-button-link" ng-click="goToDashboard()"
-                = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link", href: "/dashboard")
-                = rf_button(size: :small, title: "Start new test", svg: "rf-rocket-up-right.svg", class: "my-dashboard-button-link wizard-button", href: wizard_path)
-                .links
-                  a.left href="/profile"
-                    |Edit my profile
-                  a.right.logout-link href=destroy_user_session_path
-                    |Sign out
-          #header-mobile-menu-button-wrap ng-class="mobileMenuButtonClass()" ng-click="toggleMobileMenu()"
-            .inner
+          - if current_user
+            .dropdown.hide
+              rf-button size="small" title="My dashboard" svg="#{asset_path('rf-icon-configure.svg')}" class="my-dashboard-button-link" ng-click="goToDashboard()"
+              = rf_button(size: :small, title: "My dashboard", svg: "rf-icon-configure.svg", class: "my-dashboard-button-link", href: "/dashboard")
+              = rf_button(size: :small, title: "Start new test", svg: "rf-rocket-up-right.svg", class: "my-dashboard-button-link wizard-button", href: wizard_path)
+              .links
+                a.left href="/profile"
+                  |Edit my profile
+                a.right.logout-link href=destroy_user_session_path
+                  |Sign out
+        #header-mobile-menu-button-wrap ng-class="mobileMenuButtonClass()" ng-click="toggleMobileMenu()"
+          .inner
