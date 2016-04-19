@@ -39,8 +39,6 @@ class WizardController < ApplicationController
     @platform_ids_by_product_type = Wizard::ProductType.platform_ids_by_product_type
   end
 
-
-
   def new
     @head_title = "Wizard"
     @project = Wizard::Test.new

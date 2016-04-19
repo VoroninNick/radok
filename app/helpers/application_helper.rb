@@ -10,7 +10,6 @@ module ApplicationHelper
     end
     res = doc.to_html
     res = res.html_safe if html_safe
-
     res
   end
 
@@ -123,6 +122,7 @@ module ApplicationHelper
     input_type = :password if type.to_s == 'password'
     input_type = :email if type.to_s == 'email'
     input_type = :tel if type.to_s == 'tel'
+
     input_tag_options[:type] = "#{input_type}"
     wrap_class = ""
     if options[:autocomplete] == false
@@ -132,14 +132,15 @@ module ApplicationHelper
       wrap_class += "autocomplete-off"
     end
     tag_name = :textarea if type.to_sym == :text
+    #input_tag_options[:name] ||= form_prefix
 
     if options[:validation] && options[:validation].include?("email")
-      options[:invalid_message] = "Please, enter a valid email"
+      options[:invalid_message] ||= "Please, enter a valid email"
     elsif options[:validation] && options[:validation].include?("phone")
-      options[:invalid_message] = "Please, enter a phone number"
+      options[:invalid_message] ||= "Please, enter a valid phone number"
+    elsif options[:validation] && options[:validation].include?("name")
+      options[:invalid_message] ||= "Name can contain letters only"
     end
-
-    #input_tag_options[:name] ||= form_prefix
 
     options[:required_message] ||= "#{options[:label]} is required"
     required_message = options[:required_message]

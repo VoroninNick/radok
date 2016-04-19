@@ -58,17 +58,17 @@
                 .columns.large-8.inputs
                   .row
                     .columns.large-6.inputs-group
-                      = rf_input name: "user[username]", label: "Username (required)", required: true, value: @user.username
-                      = rf_input name: "user[email]", required: true, label: "Email (required)", value: @user.email
-                      = rf_input name: "user[full_name]", label: "Full name", value: @user.full_name
-                      = rf_input name: "user[phone]", label: "Phone", value: @user.phone
+                      = rf_input name: "user[username]", label: "Username (required)", required: true, value: @user.username, required_message: "Please type username", taken_message: "Username already in use"
+                      = rf_input name: "user[email]", required: true, label: "Email (required)", value: @user.email, required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "Email already in use"
+                      = rf_input name: "user[full_name]", label: "Full name", value: @user.full_name, validation: "name"
+                      = rf_input name: "user[phone]", label: "Phone", value: @user.phone, validation: "phone"
                     .columns.large-6.inputs-group
                       = rf_input name: "user[country]", label: "Country", value: @user.country
                       = rf_input name: "user[city]", label: "City", value: @user.city
                       = rf_input name: "user[zip_code]", label: "ZIP code", value: @user.zip_code
                       = rf_input name: "user[billing_address]", label: "Billing address", value: @user.billing_address
 
-                .columns.large-12
+                .columns.large-2.pull-right
                   .delete-account
                     |Delete account
 

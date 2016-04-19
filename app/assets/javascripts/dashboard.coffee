@@ -77,7 +77,6 @@ $("[parallax-banner]").each ->
   parallax = new Parallax(this)
 
 activate_carousel_controls = ()->
-  #console.log "move", arguments
   index = $("#home-feedbacks .owl-carousel").data().owlCarousel.currentItem
   $bullets = $("#home-slider-bullets li")
   $bullets.removeClass("active")
@@ -187,5 +186,3 @@ initialize_google_map = ->
   });
 
 initialize_google_map()
-
-

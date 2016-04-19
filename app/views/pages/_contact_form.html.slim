@@ -1,37 +1,28 @@
 #feedback-form.standard-form
-  = html_block_with_fallback :feedback_form, true, nil, self
-    .row.faq-form-row
-      .columns.small-12.small-centered.medium-12.medium-uncentered.large-12.header-column
-        .header
-          |Send us your feedback
-        h1.subheader
-          |For any question or comment, contact us via the form below and we’ll get back to you quickly.
-      .columns.large-12
-        form#contact-feedback-form  action="/contact_feedback" method="post"  novalidate="" show-preloader="" resource="contact_feedback" show-success=""
-          .form-content
-            .inputs
-              div.row
-                .columns.large-6
-                  = rf_input(label: "Your name", name: "contact_feedback[name]", required: true)
-                  = rf_input(label: "Email", type: "email", name: "contact_feedback[email]", required: true)
-                  = rf_input(label: "Subject", name: "contact_feedback[subject]", required: true)
-
-                .columns.large-6
-
-                  = rf_input(type: "text", number_inputs_height: 3, name: "contact_feedback[description]", label: "Message", required: true)
-
-
-
-
-            .actions
-              .text-right
-                = rf_button(svg: "rf-icon-email", title: "Send a message")
-
-          .preloader.hide
-            = image_tag("preloader.gif")
-
-          .success-handler.hide
-            p.h4.text-center
-              |Your message have been successfully sent!
-            p
-              |Our manager will contact you as soon as possible.
+  .row.faq-form-row
+    .columns.small-12.small-centered.medium-12.medium-uncentered.large-12.header-column
+      .header
+        |Send us your feedback
+      h1.subheader
+        |For any question or comment, contact us via the form below and we’ll get back to you quickly.
+    .columns.large-12
+      form#contact-feedback-form  action="/contact_feedback" method="post"  novalidate="" show-preloader="" resource="contact_feedback" show-success=""
+        .form-content
+          .inputs
+            div.row
+              .columns.large-6
+                = rf_input(label: "Your name", value: current_user.try(:username), name: "contact_feedback[name]", required: true, validation: "name")
+                = rf_input(label: "Email", value: current_user.try(:email), type: "email", name: "contact_feedback[email]", required: true, validation: "email")
+                = rf_input(label: "Subject", name: "contact_feedback[subject]", required: true, maxlength: "50", invalid_message: "Subject can be up to 50 letters long.")
+              .columns.large-6
+                = rf_input(label: "Message", type: "text", number_inputs_height: 3, name: "contact_feedback[description]", required: true, maxlength: "1000", invalid_message: "Your message is too long!")
+          .actions
+            .text-right
+              = rf_button(svg: "rf-icon-email", title: "Send a message")
+        .preloader.hide
+          = image_tag("preloader.gif")
+        .success-handler.hide
+          p.h4.text-center
+            |Your message have been successfully sent!
+          p
+            |Our manager will contact you as soon as possible.
