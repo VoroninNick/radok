@@ -23,9 +23,9 @@ $page-row-wrap-padding: 40px 0 65px 0
 		margin-#{$default-float}: 0
 		margin-#{$opposite-direction}: 0
 
-
 .text-center
 	text-align: center
+
 .text-right
 	text-align: right
 
@@ -43,9 +43,6 @@ label, button, input[type=submit], input[type=button]
 
 .hide
 	display: none !important
-//.invisible
-	display: none !important
-
 
 $simple-form-input-height: 36px
 
@@ -56,10 +53,8 @@ button, label, input[type=button], input[type=submit]
 	border: none
 	height: $simple-form-input-height
 	+font-14-semibold
-
 	&:first-child
 		margin-top: 0
-
 	&:focus
 		color: white
 		background: $sky-blue-color
@@ -67,22 +62,17 @@ button, label, input[type=button], input[type=submit]
 %simple-contact-form-section
 	background: $white-color
 	padding: 40px 0 80px 0
-
 	.header
 		@extend %large-section-header-text
 	.subheader
 		@extend %section-subheader-text
-
 	form
 		margin-top: 4rem
-
 	input
 		height: $simple-form-input-height
 		margin-top: 11px
-
 	input, textarea
 		border: none
-
 	input:not([type=button])
 		+white-input
 	textarea
@@ -91,12 +81,9 @@ button, label, input[type=button], input[type=submit]
 		width: 100%
 		background: #fff
 		max-width: none
-
 	@media #{$small-only}
 		textarea
 			margin-top: 11px
-
-
 
 = page-row-wrap
 	padding: $page-row-wrap-padding
@@ -104,7 +91,6 @@ button, label, input[type=button], input[type=submit]
 		+large-section-header-text
 		line-height: 1
 		margin-bottom: 12px
-
 	.time
 		color: $yellow-orange-color
 		+font-14
@@ -118,21 +104,16 @@ button, label, input[type=button], input[type=submit]
 		max-width: 100%
 	.text-column
 		padding-top: 30px
-
 	&:nth-child(2n+1)
 		.text-column
 			float: left
-
 	&:nth-child(2n+2)
 		background-color: $white-color
 		.image-column
 			float: right
 
-
-
 = button-with-subtitle-and-header
 	height: auto
-
 	.button
 		+button-with-subtitle
 		width: 300px
@@ -185,7 +166,6 @@ button, label, input[type=button], input[type=submit]
 			margin-top: 3rem
 			margin-bottom: 0
 
-
 = two-horizontal-per-row-mobile
 	@media #{$medium-only}, #{$screen} and (max-width: 480px)
 		.item
@@ -193,7 +173,6 @@ button, label, input[type=button], input[type=submit]
 				text-align: center
 			.image-wrap
 				text-align: center
-
 	@media #{$screen} and (max-width: 480px)
 		.item
 			.image-wrap-outer, .text-outer
@@ -231,7 +210,6 @@ button, label, input[type=button], input[type=submit]
 		height: 48px
 		line-height: 40px
 		padding: 0 1px
-
 		a
 			position: relative
 			display: block
@@ -247,7 +225,6 @@ button, label, input[type=button], input[type=submit]
 				position: absolute
 				bottom: 0px
 				height: 8px
-
 			&:before
 				width: 100%
 				background-color: $light-gray-text-color
@@ -270,7 +247,6 @@ button, label, input[type=button], input[type=submit]
 			top: 5px
 			&, & *
 				fill: $light-gray-text-color
-
 		&.active
 			svg
 				&, & *
@@ -309,8 +285,6 @@ button, label, input[type=button], input[type=submit]
 
 = input-placeholder
 	color: $light-gray-text-color
-	//top: 15px
-	//top: 30px
 	top: 40px
 	left: 0
 	line-height: 24px
@@ -330,25 +304,16 @@ button, label, input[type=button], input[type=submit]
 	.rf-input-wrap, rf-input, .rf-input:not(.checkbox-list)
 		display: block
 		position: relative
-		//padding: 20px 0
 		padding: 30px 0 0 0
-
 		margin-top: 10px
-
 		.input-border-wrap
 			position: absolute
-			//top: 15px
-			//top: 10px
 			top: 30px
-			//bottom: 15px
-			//bottom: 10px
 			bottom: 0
 			width: 100%
 			border: 1px solid $light-gray-text-color
-
 		label
 			+input-placeholder
-
 		input, textarea
 			max-width: 100%
 			width: 100%
@@ -358,15 +323,12 @@ button, label, input[type=button], input[type=submit]
 			padding: 4px 12px
 			z-index: 1
 			display: block
-
 		input
 			&:not([type]), &[type=text], &[type=password], &[type=email]
 				height: 50px
-
 		&[type=text]
 			&[n-inputs-height='3']
 				textarea
-					//height: 190px
 					height: 230px
 			&[n-inputs-height='2']
 				textarea
@@ -376,7 +338,6 @@ button, label, input[type=button], input[type=submit]
 			.input-border-wrap
 				border-color: $sky-blue-color
 			label
-				//top: -15px
 				top: 0
 				color: $sky-blue-color
 		&.ng-touched.ng-invalid
@@ -386,13 +347,10 @@ button, label, input[type=button], input[type=submit]
 				display: block
 		&.focus-in, &.not-empty
 			label
-				//top: -15px
 				top: 0
-
 		.error-messages
 			top: 24px
 			text-align: right
-
 			position: absolute
 			width: 100%
 			bottom: 0
@@ -403,39 +361,24 @@ button, label, input[type=button], input[type=submit]
 		&[disabled]
 			opacity: 0.6
 
-//input[type=button]
-	background: $fire-orange-color
-	color: white
-	text-transform: uppercase
-	+font-21-semibold
-	float: right
-	padding: 0 15px
-	width: auto
 .rf-button
 	line-height: 1
 	text-align: left
 	&.rf-button
-
 	.rf-button-content
 		+flexbox
-	//+button-with-subtitle-and-header
 	&.rf-button-raised
 		background-color: $fire-orange-color
 		height: 70px
 		.svg-wrap
 			line-height: 70px
 			vertical-align: middle
-			//margin: 0 10px
-			//margin: 0 10px
 			display: inline-block
 			svg
 				vertical-align: middle
-
 				&, & *
-					//fill: white
 				.my-color
 					fill: white
-
 			&.svg-size-medium
 				svg, img
 					width: 40px
@@ -445,35 +388,29 @@ button, label, input[type=button], input[type=submit]
 					width: 24px
 					height: 24px
 		.button-text-wrap
-			//margin: 0 10px
-
 			text-align: left
 			.inner
 				position: relative
-
 		.button-subtitle
 			text-transform: none
 			+font-14-light
 			text-align: left
-
 	.button-title
-
 		+button-title
-		//+font-21-semibold
 		+font-28-semibold
 		display: inline-block
 		text-align: left
+		@media #{$xsmall-only}
+			+font-21-semibold
 
 	&.rf-button-with-subtitle
 		.button-text-wrap
 			.inner
-				//top: 15px
 				top: 13px
 	&.rf-button-without-subtitle
 		line-height: 70px
 		.button-text-wrap
 			.inner
-				//top: 20px
 	&.rf-upload-button
 		line-height: 35px
 	&.rf-button-with-svg
@@ -483,7 +420,6 @@ button, label, input[type=button], input[type=submit]
 		text-align: center
 		.rf-button-content-wrap
 			display: inline-block
-
 	&.rf-button-auto-width
 		.svg-wrap
 			margin-left: 10px
@@ -493,19 +429,15 @@ button, label, input[type=button], input[type=submit]
 		.svg-wrap
 			margin-left: 10px
 			margin-right: 25px
-
 	&.rf-button-unraised
 		background: transparent
 		+font-14-light
 		line-height: 1
 		text-transform: none
-
 		.button-title
 			color: $sky-blue-color
-
 		&.rf-button-align-content-left
 			padding: 0
-
 	&.rf-button-size-small
 		height: 35px
 		line-height: 35px
@@ -517,15 +449,12 @@ button, label, input[type=button], input[type=submit]
 		.button-title
 			+font-16
 
-
-
 svg
 	max-width: 100%
+
 a
 	color: $sky-blue-color
 	text-decoration: none
-
-
 
 .steps-completed, steps-progress
 	padding: 0
@@ -559,13 +488,10 @@ a
 					&:after
 						background-color: $yellow-orange-color
 
-
-
 input[type=radio], input[type=checkbox], .checklist-item input
 
 = basic_option_input
 	display: none
-
 	&:not(.option-image-input)
 		& + label
 			border: 1px solid $light-gray-text-color
@@ -573,16 +499,12 @@ input[type=radio], input[type=checkbox], .checklist-item input
 			width: 20px
 			height: 20px
 			margin-right: rem-calc(16)
-
 			& + label
 				display: inline-block
 				vertical-align: top
-		//line-height: 20px
-
 		&:not(:checked)
 			& ~ .input-related-content
 				display: none
-
 		&:checked
 			& + label
 				border-color: $sky-blue-color
@@ -590,16 +512,14 @@ input[type=radio], input[type=checkbox], .checklist-item input
 					content: ""
 					position: relative
 					display: block
-
 					background: $fire-orange-color
-.checklist-item
 
+.checklist-item
 
 checkbox-list
 	&.ng-invalid
 		.question
 			.text
-				//color: #F00
 
 a
 	text-decoration: none
@@ -610,15 +530,12 @@ a
 	.rf-input:not(.checkbox-list)
 		.error
 			font-weight: 500
-			//color: $yellow-orange-color
 			color: $error-color
 		&.invalid.touched
 			.field-label
 				display: none
-
 			input
 				&[type=text], &[type=password], &[type=email]
-					//border: 1px solid $yellow-orange-color
 					border: 1px solid $error-color
 			textarea
 				border: 1px solid $error-color
@@ -632,14 +549,11 @@ a
 
 .form-errors
 	text-align: center
-	//color: $yellow-orange-color
 	color: $error-color
-
 
 .standard-form
 	.header + .subheader
 		max-width: 400px
-
 
 .rf-input
 	&:not(.touched)
