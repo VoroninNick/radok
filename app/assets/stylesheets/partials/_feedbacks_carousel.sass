@@ -4,37 +4,25 @@
 
 #pricing__feedbacks
 	.quote
-		//max-height: 42px
 		.text
-			//max-height: 42px
 			max-height: none
 		&:before
 			color: #ffcebf
 	.carousel-wrapper
-		//padding-top: 50px
 		position: relative
-
-
-
 
 .carousel-wrapper
 	text-align: center
 	overflow: hidden
-	//padding-top: 10px
 	padding-top: 0
 	.rn-carousel-indicator
 		span
 			+carousel-indicator-bullet
-
 	.owl-carousel
 		margin-bottom: 50px
 		padding-left: 0
 		.owl-wrapper-outer
-			//overflow: visible
 			height: auto !important
-
-
-
 	.rn-carousel-control
 		width: 100%
 		.rn-carousel-control-prev
@@ -46,54 +34,41 @@
 			left: auto
 
 .feedbacks-carousel
-	//height: 150px
 	height: auto
 
 .feedback
 	position: relative
-	//height: 150px
 	height: auto
-	//border: 10px solid white
 	overflow: hidden
-
-
 	.feedback-inner
 		max-width: 600px
-		//margin: 0 auto
 		+font-14-semibold
-		//transform: translate(-50%, -50%)
 		+transform(translateX(-50%))
-		//top: 50%
 		left: 50%
-		//position: absolute
 		position: relative
 		width: 100%
 		.quote
-			//overflow-y: hidden
-			//max-height: 105px
 			color: $yellow-orange-color
 			text-align: center
-			padding-left: 50px
-			padding-top: 20px
+			padding: 20px 50px 20px 50px
 			left: -50px
 			position: relative
-			&:before
-				//content: open-quote
-				content: "\201C"
+			&:before, &:after
 				color: #6D3D31
 				font-size: 120px
-
 				position: absolute
 				display: block
-				left: 0
-				//line-height: 45px
 				line-height: 60px
+			&:before
+				content: "\201C"
+				left: 0
+			&:after
+				content: "\201D"
+				right: 0
 			.text
 				max-height: 105px
-				//overflow-y: hidden
 				line-height: 21px
 				overflow: hidden
-
 		.logo-wrap
 			text-align: center
 			ng-include
@@ -112,16 +87,9 @@
 			text-transform: uppercase
 			color: $dark-gray-color
 
-
-	&:nth-child(2n+1)
-	//background: lightblue
-	&:nth-child(2n)
-//background: lightsalmon
-
 @media #{$small-only}
 	.rn-carousel-control
 		display: none
-
 	.feedback
 		.feedback-inner
 			.quote
@@ -130,5 +98,5 @@
 				padding-top: 40px
 				&:before
 					+transform(translateX(-50%))
-					left: 50%
+					left: 10%
 					top: 20px

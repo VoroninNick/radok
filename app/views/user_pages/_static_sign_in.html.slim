@@ -1,48 +1,46 @@
-= html_block_with_fallback(:sign_in)
-  .popup.sign-in
-    .form-partial.sign-in
-      .header
-        .title
-          | Login
-      .content
-        form.form.login-form action=user_session_path method="post" novalidate="" show-preloader="" resource="user" close-on-success="true" reload-on-success="true"
-          .form-content
-            .oauth-login
-              .header
-                | Login using social networks
-              = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: false,  google_oauth2: "/users/auth/google_oauth2?sign-in", github: "/users/auth/github?sign-in"}
-              .or
-                | or
+.popup.sign-in
+  .form-partial.sign-in
+    .header
+      .title
+        | Login
+    .content
+      form.form.login-form action=user_session_path method="post" novalidate="" show-preloader="" resource="user" close-on-success="true" reload-on-success="true"
+        .form-content
+          .oauth-login
+            .header
+              | Login using social networks
+            = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: false,  google_oauth2: "/users/auth/google_oauth2?sign-in", github: "/users/auth/github?sign-in"}
+            .or
+              | or
 
-            .form-errors.hide
+          .form-errors.hide
+            .columns.large-12
+              p.semibold.unconfirmed.hide
+                = t("form-errors.unconfirmed")
+              p.semibold.invalid_password_or_login.hide
+                = t("form-errors.invalid_password_or_login")
+          .caps-lock-warning.hide
+            | Warning: Caps-lock is on
+
+          .inputs
+            .row
               .columns.large-12
-                p.semibold.unconfirmed.hide
-                  = t("form-errors.unconfirmed")
-                p.semibold.invalid_password_or_login.hide
-                  = t("form-errors.invalid_password_or_login")
-            .caps-lock-warning.hide
-              | Warning: Caps-lock is on
+                = rf_input(label: "Username or email", name: "user[login]", required: true, required_message: "Please type username or email")
+                /! ngRepeat: (error_key, error_value) in error()
+                = rf_input(label: "password", name: "user[password]", type: "password", required: true, required_message: "Please type password")
 
-            .inputs
-              .row
-                .columns.large-12
-                  = rf_input(label: "Username or email", name: "user[login]", required: true, required_message: "Please type username or email")
-                  /! ngRepeat: (error_key, error_value) in error()
-                  = rf_input(label: "password", name: "user[password]", type: "password", required: true, required_message: "Please type password")
+              .columns.large-12.forgot-password-link-wrap
+                a href=new_user_password_path open-popup="user_pages__forgot_password" open-popup-from-popup-only="true"  Forgot your password?
+          .actions
+            .columns.small-5
+              .sign-up-invitation
+                .inner
+                  span.no-account
+                    | No account?&nbsp;
+                  a href="/sign-up"
+                    |Sign up
+            .columns.small-7
+              = rf_button title: "LOGIN", raised: true, class: "login-button"
 
-                .columns.large-12.forgot-password-link-wrap
-                  a href=new_user_password_path open-popup="user_pages__forgot_password" open-popup-from-popup-only="true"  Forgot your password?
-            .actions
-              .columns.small-5
-                .sign-up-invitation
-                  .inner
-                    span.no-account
-                      | No account?&nbsp;
-                    a href="/sign-up"
-                      |Sign up
-              .columns.small-7
-                = rf_button title: "LOGIN", raised: true, class: "login-button"
-
-          .preloader.hide
-            = image_tag("preloader.gif")
-
+        .preloader.hide
+          = image_tag("preloader.gif")

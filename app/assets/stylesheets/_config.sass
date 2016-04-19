@@ -3,7 +3,6 @@ $fira-sans-font-family: "Fira Sans", sans-serif
 $sky-blue-color: #00c6f2
 $fire-orange-color: #ff5a2a
 $yellow-orange-color: #ffaa2d
-
 $light-black-color: #2f3035
 $dark-gray-color: #818286
 $light-gray-color: #a7a9ac
@@ -11,11 +10,8 @@ $gray-text-color: #bcbec0
 $light-gray-text-color: #d1d3d4
 $inactive-button-text-color: #ddd
 $home-text-header-color: #939598
-
 $description-text-gray-color: #75706b
-
 $white-color: #f2f2f2
-
 $error-color: $fire-orange-color
 
 $font-size-200: rem-calc(200)
@@ -47,7 +43,6 @@ $font-size-12: rem-calc(12)
 = italic
 	font-style: italic
 
-
 .semibold
 	+semibold
 
@@ -63,9 +58,6 @@ $font-size-12: rem-calc(12)
 	+semibold
 = font-50
 	font-size: $font-size-50
-
-
-
 = font-50-semibold
 	+font-50
 	+semibold
@@ -76,7 +68,6 @@ $font-size-12: rem-calc(12)
 	+semibold
 = font-48
 	font-size: $font-size-48
-
 = font-40
 	font-size: $font-size-40
 = font-40-semibold
@@ -89,7 +80,6 @@ $font-size-12: rem-calc(12)
 = font-32-semibold
 	+font-32
 	+semibold
-
 = font-30
 	font-size: $font-size-30
 = font-28
@@ -160,11 +150,8 @@ $font-size-12: rem-calc(12)
 	+semibold
 	+font-14
 
-
-
 .font-14-semibold
 	+font-14-semibold
-
 
 = h2
 	+font-50-semibold
@@ -176,13 +163,10 @@ $font-size-12: rem-calc(12)
 	color: $light-black-color
 	line-height: 1
 
-
 .h2
 	+h2
 .h4
 	+h4
-
-
 
 = placeholder
 	&::-webkit-input-placeholder
@@ -194,10 +178,8 @@ $font-size-12: rem-calc(12)
 	&::-ms-input-placeholder
 		@content
 
-
 .text-center
 	text-align: center
-
 
 = button-with-subtitle
 	position: relative
@@ -207,21 +189,23 @@ $font-size-12: rem-calc(12)
 	margin-top: 10px
 	padding-left: 50px
 	background-image: none
-	//background-color: $white-color
 	opacity: 1
 
 = button-title
 	font-weight: 500
 	font-size: 28px
 	text-transform: uppercase
+
 = button-svg-wrap
 	position: absolute
 	left: 13px
 	top: 10px
+
 = button-subtitle
 	text-transform: none
 	position: relative
 	top: -5px
+
 = button-svg
 	height: 40px
 
@@ -234,28 +218,19 @@ $font-size-12: rem-calc(12)
 		padding-bottom: 6px
 		padding-top: 6px
 		color: $description-text-gray-color
-		//line-height: 1.7
 		&:before
 			left: 0
-			//content: "\2014"
 			content: "●"
 			color: $sky-blue-color
-			//margin-right: 5px
 			position: absolute
 			display: inline-block
 			font-weight: 400
 
-
-
-
 %ul-with-blue-markers
 	+ul-with-blue-markers
-
 	&.outside-markers
 		li
 			padding-left: 0
-
-
 			&:before
 				left: -16px
 
@@ -264,7 +239,6 @@ ul.with-blue-markers
 
 = large-section-header-text
 	+h2
-	//line-height: 95px
 	line-height: 1
 
 = section-subheader-text
@@ -273,6 +247,7 @@ ul.with-blue-markers
 
 %large-section-header-text
 	+large-section-header-text
+
 %section-subheader-text
 	+section-subheader-text
 	margin-top: 0
@@ -282,17 +257,13 @@ ul.with-blue-markers
 	color: $home-text-header-color
 	+font-16-light
 
-
-
 h2
 	+h2
 
 h4, .h4
 	+h4
 
-
 = small($base-size: 640px, $include-normal-ratio: true)
-
 	$min-ratio: 1.5
 	$min-res: $min-ratio * 96dpi
 

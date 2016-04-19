@@ -5,27 +5,22 @@
       #wizard-steps
         = render "wizard_form"
 
-
       - if !@project.persisted?
-        == slim(WizardText.first.try(&:wizard_help_slim), self)
-          #wizard-help
-            #wizard-help-fixed
-              .header
-                |Welcome!
-              .content
-                #wizard-help-welcome
-                  |Please choose&nbsp;
-                  span.highlighted-text
-                    |Type of test
-                  |&nbsp;and&nbsp;
-                  span.highlighted-text
-                    |Platform
-                  |&nbsp;to proceed with the test wizard
-
-
-              .footer
-                = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
-
+        #wizard-help
+          #wizard-help-fixed
+            .header
+              |Welcome!
+            .content
+              #wizard-help-welcome
+                |Please choose&nbsp;
+                span.highlighted-text
+                  |Type of test
+                |&nbsp;and&nbsp;
+                span.highlighted-text
+                  |Platform
+                |&nbsp;to proceed with the test wizard
+            .footer
+              = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
 
       #wizard-summary
         #wizard-summary-fixed.fixed-top
@@ -41,29 +36,26 @@
               |&thinsp;for&thinsp;
               span.highlighted-text data-bind="project.product_type"
                 = @project.product_type_name
-
-            /p.current-task
-                    |Please select platforms to be tested
+            p.current-task
+              |Please select platforms to be tested
 
             .platforms.hide ng-show="wizard.total_testers_count"
               .row.header
-                .columns.large-6
+                .columns.large-8
                   |Platforms:
-                .columns.large-3.icon.human
+                .columns.large-2.icon.human
                   = embedded_svg_from_assets("user", class: "user")
-                .columns.large-3.icon.hours
+                .columns.large-2.icon.hours
                   = embedded_svg_from_assets("clock", class: "clock")
+              .rows
 
           .save-button ng-click="saveProject()"
-            /= svg_placeholder "download"
             ng-include src="'/assets/download.svg'"
             span.button-label
               |Save this project
           .project-saved
             span.button-label
               |Project saved
-
-
           .footer.hide
             .price-wrap
               .total-cost-label
@@ -74,43 +66,24 @@
                 span data-bind="total_price"
                   |0
 
-            .checkout-button disabled="disabled" ng-class="!wizard.ready_to_checkout ? 'disabled' : '' " open-popup="payment" requires-auth="true"
-              /= svg_placeholder "rf-rocket-up-right"
+            .checkout-button disabled="disabled" open-popup="payment" requires-auth="true"
               ng-include src="'/assets/rf-rocket-up-right.svg'"
                 = embedded_svg_from_assets "rf-rocket-up-right"
 
-
-            /steps-progress steps="wizard.configuration_steps"
-            /.steps-completed
-                    label
-                      |Steps completed:
-                    .progress-bar
-                      .progress-area
-                        .progress-steps
-                          .progress-step ng-repeat="step in wizard.steps track by $index" ng-class="step.proceeded ? 'proceeded' : '' " style="width: {{100 / wizard.steps.length}}%;"
-                      /.completed-step-number
-                        |{{wizard.active_step_id - 1}}
-                      /.total-steps
-                        |{{wizard.steps.length}}
             = steps_progress(4)
-
-
-            /rf-button class="rf-next-step-button" align-content="left" full-width="" svg="/assets/rf-icon-rocket.svg" title="Next step" subtitle="{{wizard.next_step.number}}. {{wizard.next_step.name}}" ng-click="next_step()" ng-show="wizard.next_step" ng-disabled="wizard.active_step_form.$invalid"
 
             = rf_button class: "rf-next-step-button", align_content: "left", full_width: true, svg: "rf-icon-rocket", title: "Next step", disabled: false
             = rf_button class: "rf-go-to-summary-button", align_content: "left", full_width: true, svg: "finish_flag", title: "Summary", disabled: false
-            = rf_button class: "rf-confirm-button", align_content: "left", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" }
+            .confirm-button-container
+              = rf_button class: "rf-confirm-button", align_content: "left", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" }
 
-            /next-step-button step-number="2" step-name="test name" model-active-step="wizard.active_step" model-next-step="wizard.next_step" ng-click="next_step()"
             .or-go-back-wrap.hide
               |or
               .go-back-button ng-click="go_back()"
-                |go back to STEP
+                | go back to STEP
                 |&thinsp;
                 span.prev-step-number
                   |
-
-
 
 = popup "payment"
 

@@ -3,7 +3,6 @@ $home-banner-medium-height: rem-calc(400)
 $banner-title-color: #e6e7e9
 #home-controller
 	color: $description-text-gray-color
-	//line-height: 1.25
 	line-height: 1.4
 
 #home-banner
@@ -29,26 +28,23 @@ $banner-title-color: #e6e7e9
 	.description-block
 		white-space: initial
 		position: absolute
-		left: 50%
+		left: 45%
 		right: 0
 		width: 50%
 		top: 0
 		bottom: 0
-		max-width: 500px
+		max-width: 750px
 		color: $banner-title-color
 		padding: 80px 0 0 0
 		z-index: 2
-
-
 
 		.title
 			+h2
 			color: $white-color
 			margin-top: 0
 			margin-bottom: 0
-
 			line-height: 1
-			max-width: 500px
+			max-width: 750px
 		.description
 			max-width: 400px
 			margin-top: 1rem
@@ -60,7 +56,6 @@ $banner-title-color: #e6e7e9
 				width: 250px
 			.link
 				color: $sky-blue-color
-
 			p
 				+font-12
 				margin: 0
@@ -79,28 +74,19 @@ $banner-title-color: #e6e7e9
 		top: 0
 		bottom: 0
 		width: 100%
-		//width: 50%
-		//max-width: 1366px
-
 		.layer
 			img
-				//width: 100% !important
 				width: auto !important
-				//width: 1366px !important
 				height: auto !important
-		//+transform(scale(0.6))
 
 		@media #{$screen} and (min-width: 1400px)
-			//left: 10%
 
 		@media #{$screen} and (min-width: 1800px)
-			//left: 15%
 
 		@media #{$screen} and (max-width: 1440px)
 			+transform(translate(5%, 0%))
 		@media #{$medium-down}
 			display: none
-
 		@media #{$screen} and (min-width: 1025px) and (max-width: 1440px)
 			left: -25%
 
@@ -121,36 +107,26 @@ $banner-title-color: #e6e7e9
 	overflow: hidden !important
 	&:first-child
 		.layer
-
 			&:first-child
 				z-index: 2
 				img
 					+transform(translate(20%, 0%))
-
 			&:nth-child(2)
 				z-index: 1
 				img
 					+transform(translate(10%, 15%))
-			&:nth-child(3)
-
 
 #home-slider-carousel
 	height: 100%
 	margin: 0
 
-
-
 .section-header
 	text-align: center
-	//color: $dark-gray-color
 	color: $home-text-header-color
 	+font-16
-	//height: rem-calc(75)
 	height: auto
 	line-height: rem-calc(75)
-
 	margin-top: 0
-	//margin-bottom: 0
 	margin-bottom: 25px
 	font-weight: 400
 
@@ -164,9 +140,6 @@ $banner-title-color: #e6e7e9
 	&.with-subheader
 		height: auto
 
-
-
-
 @media #{$medium-down}
 	#home-banner
 		.description-block
@@ -177,21 +150,14 @@ $banner-title-color: #e6e7e9
 		.description-block
 			.title
 
-
-
-
-
 #home-what-for-you
 	padding: 40px 0 50px 0
 	.title
 		+h2
 		color: $light-black-color
-
 	ul
 		+font-16-light
 		+ul-with-blue-markers
-
-
 	.svg-wrap
 		text-align: center
 	svg
@@ -204,8 +170,6 @@ $banner-title-color: #e6e7e9
 	@media #{$small-only}
 		.title
 			line-height: 4rem
-
-
 
 .statistics
 	background-color: $light-black-color
@@ -223,7 +187,6 @@ $banner-title-color: #e6e7e9
 		height: rem-calc(115)
 		line-height: rem-calc(115)
 		font-size: rem-calc(95)
-		//+semibold
 		color: white
 		border: 2px $sky-blue-color solid
 		padding: 0 rem-calc(20)
@@ -234,7 +197,6 @@ $banner-title-color: #e6e7e9
 		+font-30
 		line-height: rem-calc(32)
 		display: inline-block
-
 	.by
 		line-height: 115px
 		text-align: center
@@ -248,31 +210,12 @@ $banner-title-color: #e6e7e9
 			.text
 				margin-top: 1rem
 				display: block
-				//br
-					display: none
 
 	@media #{$small-only}
 		padding-bottom: 100px
 		.section-header
 			height: 90px
 			line-height: 90px
-
-
-#body
-
-	//ul[rn-carousel]
-		height: auto
-		li
-			position: relative
-			display: inline-block
-			height: auto
-		.feedback-inner
-			position: relative
-		.quote
-			.text
-				max-height: none !important
-
-
 
 #home-feedbacks
 	background: $light-black-color
@@ -292,8 +235,6 @@ $banner-title-color: #e6e7e9
 		right: 0
 		left: auto
 
-
-
 #home-carousel-wrapper
 	text-align: center
 	.rn-carousel-indicator span, .owl-pagination .owl-page
@@ -311,16 +252,11 @@ $banner-title-color: #e6e7e9
 #home-feedbacks-carousel
 	height: 150px
 
-
 .home-feedback
 	position: relative
 	height: 150px
-	//border: 10px solid white
-
-
 	.feedback-inner
 		max-width: 600px
-		//margin: 0 auto
 		+font-14-semibold
 		transform: translate(-50%, -50%)
 		top: 50%
@@ -333,18 +269,13 @@ $banner-title-color: #e6e7e9
 			padding-left: 50px
 			position: relative
 			&:before
-				//content: open-quote
 				content: "\201C"
 				color: #6D3D31
 				font-size: 120px
-
 				position: absolute
 				display: block
 				left: 0
-				//line-height: 45px
 				line-height: 60px
-
-
 		.name, .position
 			text-align: right
 			+light
@@ -354,16 +285,9 @@ $banner-title-color: #e6e7e9
 			text-transform: uppercase
 			color: $dark-gray-color
 
-
-	&:nth-child(2n+1)
-		//background: lightblue
-	&:nth-child(2n)
-		//background: lightsalmon
-
 @media #{$small-only}
 	.rn-carousel-control
 		display: none
-
 
 #home-feedbacks
 	.owl-carousel
@@ -391,48 +315,31 @@ $banner-title-color: #e6e7e9
 	.button-container
 		padding-top: 32px
 
-
-
-
 button.start-now-button, button.schedule-call-button
 	+button-with-subtitle-and-header
 .button-container
 	text-align: center
-	//max-width: 362px
 	max-width: 310px
 	margin: 0 auto
 	float: none !important
 	position: relative
-
-
 	.sub-button-text
-		//font-size: 12px
 		font-size: 14px
 		font-weight: 300
 		margin-top: 6px
 		text-align: left
 		padding-left: 89px
-
-		//.learn-more
-			padding-left: 86px
 		a
 			color: $sky-blue-color
 			display: inline
 
-
 #home-banner .button-container
 	margin: 45px 0 0 0 !important
-
 
 #home-banner
 	.owl-wrapper-outer, .owl-wrapper, .owl-item, .home-parallax-banner
 		height: 100%
-
-
 	.owl-controls
-		//position: absolute
-		//bottom: 0
-		//right: 200px
 		width: 100%
 		max-width: 1000px
 		right: auto
@@ -440,7 +347,6 @@ button.start-now-button, button.schedule-call-button
 		margin: 0 auto
 		bottom: 33px
 		text-align: right
-
 	.owl-pagination
 		.owl-page
 			display: inline-block
@@ -458,5 +364,3 @@ button.start-now-button, button.schedule-call-button
 
 #home-devices
 	background: $white-color
-
-

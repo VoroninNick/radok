@@ -48,12 +48,10 @@
 	[collapsable-content]
 		display: none
 		height: auto
-		//max-height: 0
 		+transition_all(max-height 0.4s)
 		overflow: hidden
 	&.expanded
 		[collapsable-content]
-			//max-height: 500px
 
 #dashboard-projects
 	.item
@@ -62,17 +60,10 @@
 		&.columns
 			&:last-child
 				float: left
-
-
-
-
-
-
 		> .inner
 			position: relative
 			display: block
 			background: $white-color
-
 			> .my-row
 				+grid-row
 				> .my-column
@@ -80,7 +71,6 @@
 		.content
 			color: $home-text-header-color
 			+font-14-semibold
-
 			.type-of-test-wrap
 				line-height: 24px
 				text-align: center
@@ -103,43 +93,34 @@
 				svg
 					width: 18px
 					height: 18px
-
 			.testers-icon
 				svg
 					width: 26px
 					height: 26px
-
 			.type-of-test-icon
 				svg
 					width: 26px
 					height: 24px
-
 			.type-of-test-icon, .type-of-test, .testing-type, .testers-icon, .total-testers-count, .hours-icon, .hours-count
 				display: inline-block
 				vertical-align: top
-
 			.testers, .hours
 				width: 50%
 				display: inline-block
 				float: left
-
 			.type-of-test-logo
-				//display: inline-block
 				text-align: center
 				margin: 10px 0 0 0
 				svg
 					width: 100px
 					height: 100px
 					display: inline-block
-
 				&:not(.ux)
 					svg
 						width: 85px
-
 			.project-name
 				text-align: center
 				width: 100%
-
 			.testers-and-hours
 				padding-top: 1rem
 
@@ -155,18 +136,15 @@
 				line-height: 50px
 				cursor: pointer
 
-
 	.project-name
 		color: $sky-blue-color
 		+font-18-semibold
 		text-transform: uppercase
-
 	.drafts
 		.item
 			.content
 				.type-of-test-wrap
 					text-align: left
-
 	.drafts, .in-process-tests
 		.project-status
 			position: absolute
@@ -179,31 +157,24 @@
 			height: 30px
 			line-height: 30px
 			text-align: center
-
 	.in-process-tests
 		.project-name
 			margin-top: 50px
 			margin-bottom: 25px
-
 		.remaining-time
 			text-align: right
 			color: $light-gray-text-color
 			margin-top: 30px
-
 		.item
 			.content
 				padding-bottom: 24px
-
 	.finished-tests
 		.item
 			margin-top: 1px
 			margin-bottom: 1px
-			//padding-right: 65px
-			//padding-left: 15px
 			padding-left: 0
 			padding-right: 50px
 			position: relative
-
 			.header
 				height: 50px
 				background: $white-color
@@ -220,12 +191,10 @@
 							path
 								fill: white
 
-
 		.project-status
 			position: absolute
 			width: 50px
 			height: 50px
-			//right: 15px
 			right: 0
 			top: 0
 
@@ -235,7 +204,6 @@
 				svg
 					width: 26px
 					height: 26px
-					//position: relative
 					position: absolute
 					top: 12px
 					left: 12px
@@ -253,7 +221,6 @@
 					color: $fire-orange-color
 					text-align: center
 					display: block
-					//display: none
 			.fail-svg-wrap
 				width: 100%
 				height: 100%
@@ -285,7 +252,6 @@
 					height: 12px
 					+transform(rotate(270deg))
 
-
 .project-progress-value
 	[animate-progress-number]
 		top: 0
@@ -295,12 +261,6 @@
 		position: relative
 		top: -27px
 		left: 4px
-
-
-
-
-
-
 
 .rf-button
 	&.rf-button-raised
@@ -319,7 +279,6 @@
 					height: 24px
 					left: 14px
 					top: 13px
-
 					path.my-color
 						fill: white
 					line.my-color
@@ -331,7 +290,6 @@
 			.button-text-wrap
 				.inner
 					top: 0
-
 			.button-title
 				+font-18-semibold
 				text-align: left
@@ -340,8 +298,6 @@
 				+font-14-light
 				text-transform: none
 				text-align: left
-				//top: -8px
-
 				position: relative
 
 .delete-draft-button
@@ -350,32 +306,27 @@
 .finished-project-short-info
 	background: $white-color
 
-
-// =====================================
-// -------------------------------------
 // Project Info
-// -------------------------------------
-// =====================================
+
 .project-name-row
 	margin-top: 40px
 	margin-bottom: 56px
 
 .project-name
 	display: inline-block
+
 .status-completed
 	display: inline-block
 	width: 28px
 	height: 28px
 	border: 2px solid
 	border-radius: 50%
-
 	vertical-align: top
 
 	&.status-successful
 		padding-top: 3px
 		padding-left: 3px
 		border-color: $sky-blue-color
-
 		svg
 			polygon
 				fill: $sky-blue-color
@@ -386,7 +337,6 @@
 		svg
 			g
 				fill: red
-
 
 .download-report
 	svg
@@ -406,13 +356,9 @@
 	height: 300px
 	background: $white-color
 	.managed-by
-
 		.inner
 			display: inline-block
 			max-width: 150px
-
-
-
 	.managed-by-avatar
 		margin-bottom: 10px
 		padding-top: 10px
@@ -420,10 +366,12 @@
 			width: 80px
 			height: 80px
 			border-radius: 50%
+
 .managed-by-name
 	+font-18-semibold
 	color: $yellow-orange-color
 	text-transform: uppercase
+
 .project-short-info-column
 	text-align: center
 	border-right: 1px solid $sky-blue-color
@@ -435,6 +383,7 @@
 .managed-by-header, .total-cost-header, .project-progress-header
 	+font-21-semibold
 	margin-bottom: 25px
+
 .total-cost-value
 	color: $fire-orange-color
 	margin-top: 0
@@ -446,7 +395,6 @@
 		.rf-button
 			margin-top: 30px
 
-
 #dashboard-projects
 	.in-process-tests, .drafts
 		.item
@@ -454,7 +402,6 @@
 				.project-name
 					height: 54px
 					overflow: hidden
-
 	.drafts
 		@media #{$screen} and (max-width: 680px) and (min-width: 551px)
 			.project-status
@@ -462,14 +409,11 @@
 			.item
 				padding: 0 5px
 				width: 50%
-
 				.testers-icon, .hours-icon
 					margin-right: 0
-
 			.items
 				> .row
 					margin: 0 -10px
-
 	.drafts, .in-process-tests
 		@media #{$screen} and (max-width: 550px)
 			.item
@@ -481,15 +425,12 @@
 					width: 100%
 					max-width: 340px
 
-
 .total-testers-count
 	.property-label
 		margin-bottom: 7px
-
 	.svg-wrap.hour
 		svg
 			width: 23px !important
-			//height: 23px
 			margin-left: 4px
 			margin-right: 1px
 
@@ -498,22 +439,17 @@
 		height: auto
 		padding-top: 20px
 		padding-bottom: 0 // 20px
-
 	.project-short-info-column
 		height: auto
 		&.total-cost, &.project-progress
 			margin-top: 20px
-
 	.managed-by-header, .total-cost-header, .project-progress-header
 		margin-bottom: 0
-
 	.total-cost-value
 		line-height: 4rem
 		font-size: 3rem
 		font-weight: 300
-
 		span
 			font-weight: 500
-
 	.project-progress-value
 		padding-top: 15px
