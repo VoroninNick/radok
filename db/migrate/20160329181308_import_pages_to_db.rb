@@ -2694,7 +2694,6 @@ class ImportPagesToDb < ActiveRecord::Migration
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(22,'Templates::PaymentRequestAdminNotification',NULL,NULL,NULL,'2016-02-11 15:24:31.711084','2016-02-11 15:24:31.711084');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(23,'Templates::ScheduleCallAdminNotification',NULL,NULL,NULL,'2016-02-11 15:25:03.259243','2016-02-11 15:25:03.259243');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(24,'Templates::ConfirmationInstructions',NULL,NULL,NULL,'2016-02-11 15:36:11.308725','2016-02-11 15:36:11.308725');
-      INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(25,'Templates::ResetPasswordInstructions',NULL,NULL,NULL,'2016-02-11 15:36:45.907082','2016-02-11 15:36:45.907082');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(26,'Templates::WelcomeEmail',NULL,NULL,NULL,'2016-02-11 15:37:09.571284','2016-02-11 15:37:09.571284');
     SQL
   end
