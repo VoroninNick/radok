@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   #get "chess_timer", to: "application#chess_timer"
   get "robots.txt", to: "pages#robots_txt"
   get "w", to: "wizard#new_and_allow"
+  get "user_logged", to: 'user_pages#user_logged', as: "user_logged"
 
   scope "emails", controller: "emails" do
     root action: :index, as: :emails

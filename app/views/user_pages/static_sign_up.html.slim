@@ -18,10 +18,10 @@
           .inputs
             .row
               .columns.large-12
-                = rf_input(label: "Username (required)", required: true, name: "user[username]", required_message: "Please, type username", taken_message: "Username already in use" )
-                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please, type email", validation: "email", invalid_message: "Please, type valid email", taken_message: "Email already in use", value: @user.email)
-                = rf_input(label: "Password (required)", type: "password", required: true, name: "user[password]", required_message: "Please, type password")
-
+                = rf_input(label: "Username (required)", required: true, name: "user[username]", required_message: "Please type username", taken_message: "Username already in use" )
+                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "Email already in use", value: @user.email)
+                = rf_input(label: "Password (required)", type: "password", required: true, name: "user[password]", required_message: "Please type password")
+                = rf_input(label: "Re-enter password (required)", type: "password", required: true, name: "user[confirm_password]", validation: "confirm_password", required_message: "These passwords don't match")
               .columns.large-12.additional-information-slider.opened ng-class=("{opened: show_more == true}") ng-click=("show_more = true")
                 | Additional information (not necessary)
               .columns.large-12.additional-inputs ng-show="show_more"

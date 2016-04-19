@@ -439,6 +439,7 @@ form[for=project]
   opacity: 1
   padding-left: $wizard-step-side-padding
   position: relative
+
 .wizard-step-header
   +font-21-semibold
   height: $text-header-height
@@ -1396,10 +1397,10 @@ comment-with-price
 // validation for wizard
 
 #wizard-content
-  .error, .error-max, .error-email, .error-phone
+  .error, .error-max, .error-email, .error-phone, .error-name
     color: $fire-orange-color
     font-size: $font-size-14
-  .error-max, .error-email, .error-phone
+  .error-max, .error-email, .error-phone, .error-name
     display: none
 
 // anonymous tests wrap in popup

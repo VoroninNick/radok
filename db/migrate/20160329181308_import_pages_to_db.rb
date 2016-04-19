@@ -23,7 +23,7 @@ class ImportPagesToDb < ActiveRecord::Migration
                               $
                             </div>
                             <div class="price">
-                              39
+                              29
                             </div>
                             <div class="price-per">
                               /per platform<br>/per hour
