@@ -80,7 +80,6 @@
                 .form-content
                   .inputs
                     .columns.large-5.large-centered
-                      | TEST | TEST | TEST | TEST | TEST | TEST
                       = rf_input id: "user_password", name: "user[password]", label: "New password", type: "password", required_message: "Please type password", required: true, autocomplete: false
                       = rf_input id: "user_confirm_password", name: "user[confirm_password]", label: "Re-enter password (required)", type: "password",required_message: "These passwords don't match", validation: "confirm_password", required: true, autocomplete: false
                     .clearfix
