@@ -1256,7 +1256,7 @@ validatePhoneNumber = (number) ->
   return (re.test(number) && number.length <= 20) || number.length == 0 || !number
 
 validateName = (name) ->
-  re = /^[a-zA-Z\s]*$/
+  re = /^[a-zA-Z\-'\s]+$/
   return (name && re.test(name) && name.length <= 100) || (name.length == 0) || !name
 
 $("body").on "upload_files.test_files delete_files.test_files change.project.project_url", ()->
