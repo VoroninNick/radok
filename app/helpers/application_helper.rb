@@ -132,7 +132,6 @@ module ApplicationHelper
       wrap_class += "autocomplete-off"
     end
     tag_name = :textarea if type.to_sym == :text
-    #input_tag_options[:name] ||= form_prefix
 
     if options[:validation] && options[:validation].include?("email")
       options[:invalid_message] ||= "Please, enter a valid email"

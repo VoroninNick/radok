@@ -63,8 +63,8 @@
                       = rf_input name: "user[full_name]", label: "Full name", value: @user.full_name, validation: "name"
                       = rf_input name: "user[phone]", label: "Phone", value: @user.phone, validation: "phone"
                     .columns.large-6.inputs-group
-                      = rf_input name: "user[country]", label: "Country", value: @user.country
-                      = rf_input name: "user[city]", label: "City", value: @user.city
+                      = rf_input name: "user[country]", label: "Country", value: @user.country, validation: "address", invalid_message: "Country can contain letters, hyphens and apostrophes"
+                      = rf_input name: "user[city]", label: "City", value: @user.city, validation: "address", invalid_message: "City can contain letters, hyphens and apostrophes"
                       = rf_input name: "user[zip_code]", label: "ZIP code", value: @user.zip_code
                       = rf_input name: "user[billing_address]", label: "Billing address", value: @user.billing_address
 
@@ -86,7 +86,7 @@
                     .clearfix
 
                   .actions
-                    .columns.large-5.large-centered 
+                    .columns.large-5.large-centered
                       = rf_button title: "change password", svg: "rf-icon-password", full_width: true
                     .clearfix
                 .preloader.hide

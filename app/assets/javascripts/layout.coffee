@@ -360,6 +360,13 @@ $.fn.validateInput = ->
       else
         $rf_input.find(".error.invalid").removeClass("hide")
 
+    if validation_options.indexOf("address") >= 0
+      valid = validateAddress(value)
+      if valid
+        $rf_input.find(".error.invalid").addClass("hide")
+      else
+        $rf_input.find(".error.invalid").removeClass("hide")
+
     if max_length
       valid = (value.length < max_length)
       if valid
@@ -401,6 +408,10 @@ validatePhoneNumber = (number) ->
 validateName = (name) ->
   re = /^[a-zA-Z\s]*$/
   re.test name
+
+validateAddress = (address) ->
+  re = /^[a-zA-Z\-'\s]+$/
+  return re.test(address) && address.length <= 100
 
 $("body").on "change blur keyup", "form .rf-input", (event)->
   $rf_input = $(this)
