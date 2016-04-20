@@ -151,11 +151,12 @@ window.step_types = {
     checkIsCompleted : ()->
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
-      auth_required = (project.authentication_required && project.auth_login && project.auth_password) || !project.authentication_required
+      auth_required = (project.authentication_required && project.auth_login.length > 0 && project.auth_password.length > 0) || !project.authentication_required
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
+      console.log auth_required
       return ( url_valid || file_upload_valid ) && auth_required && contact_person_valid
   }
 }
@@ -1053,26 +1054,30 @@ $("body").on "change code-change keyup keypress", "#project_auth_login, #project
   validate_auth_credentials()
 
 validate_auth_credentials =() ->
-  if $("#project_auth_login").val().length > 0
-    $("#project_auth_login_required_true").fadeOut()
-  else
-    $("#project_auth_login_required_true").fadeIn()
+  if $("[model*='project.authentication_required'] input:checked").val() == 'true'
+    if $("#project_auth_login").val().length > 0
+      $("#project_auth_login_required_true").fadeOut()
+    else
+      $("#project_auth_login_required_true").fadeIn()
 
-  if $("#project_auth_password").val().length > 0
-    $("#project_auth_password_required_true").fadeOut()
+    if $("#project_auth_password").val().length > 0
+      $("#project_auth_password_required_true").fadeOut()
+    else
+      $("#project_auth_password_required_true").fadeIn()
   else
-    $("#project_auth_password_required_true").fadeIn()
+    $("#project_auth_login_required_true").fadeOut()
+    $("#project_auth_password_required_true").fadeOut()
 
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
   $input = $(".project_exploratory_instructions_input")
   $credentials_inputs = $(".project-auth-login, .project-auth-password")
 
+  validate_auth_credentials()
   if requires_auth
     $credentials_inputs.removeClass("hide")
   else
     $credentials_inputs.addClass("hide")
-  validate_auth_credentials()
 
 show_or_hide_auth_test_driven_development_inputs = ()->
   methodology_type = $("[model*='project.methodology_type'] input:checked").val() == 'true'
