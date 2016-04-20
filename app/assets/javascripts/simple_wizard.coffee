@@ -151,12 +151,11 @@ window.step_types = {
     checkIsCompleted : ()->
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
-      auth_required = (project.authentication_required && project.auth_login.length > 0 && project.auth_password.length > 0) || !project.authentication_required
+      auth_required = (project.authentication_required && project.auth_login.length > 0 && project.auth_password.length > 0) || project.authentication_required == 'false'
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
-      console.log auth_required
       return ( url_valid || file_upload_valid ) && auth_required && contact_person_valid
   }
 }
@@ -1057,16 +1056,17 @@ validate_auth_credentials =() ->
   if $("[model*='project.authentication_required'] input:checked").val() == 'true'
     if $("#project_auth_login").val().length > 0
       $("#project_auth_login_required_true").fadeOut()
+      $("#project_auth_login").removeClass("invalid")
     else
       $("#project_auth_login_required_true").fadeIn()
+      $("#project_auth_login").addClass("invalid")
 
     if $("#project_auth_password").val().length > 0
       $("#project_auth_password_required_true").fadeOut()
+      $("#project_auth_password").removeClass("invalid")
     else
       $("#project_auth_password_required_true").fadeIn()
-  else
-    $("#project_auth_login_required_true").fadeOut()
-    $("#project_auth_password_required_true").fadeOut()
+      $("#project_auth_password").addClass("invalid")
 
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'

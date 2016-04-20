@@ -61,14 +61,16 @@ $("body").on "click", ".ngdialog-overlay, .ngdialog-close", ->
   $ng_dialog.closeDialog()
 
 $("body").on "click", "[open-popup]", (event)->
+  event.preventDefault()
   $this = $(this)
   if $this.attr("disabled") == 'disabled'
     return
   $.ajax(
-    url: "user_logged"
+    url: "/user_logged"
     type: "GET"
     dataType: "json"
     success: (data)->
+      console.log data
       if !data.logged
         open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
         condition = true
@@ -84,7 +86,8 @@ $("body").on "click", "[open-popup]", (event)->
           else
             openPopup(popup_name)
       else
-        location.reload()
+        popup_name = $this.attr("open-popup")
+        openPopup(popup_name)
   )
 
 $.fn.valid = ->

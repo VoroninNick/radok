@@ -310,13 +310,13 @@ form for="project" url=wizard_path method="post" json="{}"
             .input.string.project-auth-login.input-with-indent model="project.auth_login" as="string"
               label.placeholder.hiding-placeholder for="project_auth_login"
                 |Username
-              input type="text" id="project_auth_login" value=@project.auth_login
+              input.set-error type="text" id="project_auth_login" value=@project.auth_login data-field-name="Please, provide authentification username"
               #project_auth_login_required_true.error
                 |Please, provide a username
             .input.string.project-auth-password.input-with-indent model="project.auth_password" as="string"
               label.placeholder.hiding-placeholder for="project_auth_password"
                 |Password
-              input type="text" id="project_auth_password" value=@project.auth_password
+              input.set-error type="text" id="project_auth_password" value=@project.auth_password data-field-name="Please, provide authentification password"
               #project_auth_password_required_true.error
                 |Please, provide a password
         .clearfix
