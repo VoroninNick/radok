@@ -1070,9 +1070,9 @@ show_or_hide_auth_credentials_inputs = ()->
 
   if requires_auth
     $credentials_inputs.removeClass("hide")
-    validate_auth_credentials()
   else
     $credentials_inputs.addClass("hide")
+  validate_auth_credentials()
 
 show_or_hide_auth_test_driven_development_inputs = ()->
   methodology_type = $("[model*='project.methodology_type'] input:checked").val() == 'true'

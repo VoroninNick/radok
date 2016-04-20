@@ -51,7 +51,7 @@ class UserPagesController < ApplicationController
   end
 
   def user_logged
-    render json: { logged: !!user_signed_in?}
+    render json: { user_logged: !!user_signed_in?}
   end
 
   def profile
