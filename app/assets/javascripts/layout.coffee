@@ -392,15 +392,15 @@ validateConfirmPassword = (el) ->
 
 validateEmail = (email) ->
   re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
-  re.test email
+  return re.test email && email.length <= 255
 
 validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){8,14}[0-9]$/
-  re.test number
+  return re.test number && number.length <= 20
 
 validateName = (name) ->
   re = /^[a-zA-Z\s]*$/
-  re.test name
+  return re.test name && name.length <= 100
 
 $("body").on "change blur keyup", "form .rf-input", (event)->
   $rf_input = $(this)
