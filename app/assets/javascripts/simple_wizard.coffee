@@ -458,6 +458,18 @@ window.validate_inputs_on_init = ()->
     $input = $(this)
     validate_input.call($input)
 
+$("body").on "change.project.total_price", ()->
+  price = project.total_price
+  $(".full-summary-total-cost .total-price").text(price)
+  $("[data-bind=total_price]").text(price)
+  showStepsProgress()
+
+  $error = $("#platforms-empty-error")
+  if price > 0
+    $error.fadeOut()
+  else
+    $error.fadeIn()
+
 $("body").on "change.project.test_platforms_bindings", (e)->
   $platforms_field = $(".wizard [as=platforms]")
   $options = $platforms_field.find(".option-count")
@@ -577,7 +589,8 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
   stringified_value = value
   if Array.isArray(value)
     stringified_value = value.join(", ")
-  stringified_value = stringified_value.trim()
+  if typeof(stringified_value) == "string"
+    stringified_value = stringified_value.trim()
 
   $("[data-bind='#{model}']").text(stringified_value)
 
