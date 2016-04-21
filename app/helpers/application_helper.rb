@@ -137,8 +137,8 @@ module ApplicationHelper
       options[:invalid_message] ||= "Please, enter a valid email"
     elsif options[:validation] && options[:validation].include?("phone")
       options[:invalid_message] ||= "Please, enter a valid phone number"
-    elsif options[:validation] && options[:validation].include?("name")
-      options[:invalid_message] ||= "Name can contain letters, hyphens and apostrophes"
+    elsif options[:validation] && (options[:validation].include?("name") || options[:validation].include?("address"))
+      options[:invalid_message] ||= "Can contain letters, hyphens, apostrophes"
     end
 
     options[:required_message] ||= "#{options[:label]} is required"
