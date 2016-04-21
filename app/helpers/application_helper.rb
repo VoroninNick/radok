@@ -133,12 +133,14 @@ module ApplicationHelper
     end
     tag_name = :textarea if type.to_sym == :text
 
-    if options[:validation] && options[:validation].include?("email")
-      options[:invalid_message] ||= "Please, enter a valid email"
-    elsif options[:validation] && options[:validation].include?("phone")
-      options[:invalid_message] ||= "Please, enter a valid phone number"
-    elsif options[:validation] && (options[:validation].include?("name") || options[:validation].include?("address"))
-      options[:invalid_message] ||= "Can contain letters, hyphens, apostrophes"
+    if options[:validation] && !options[:invalid_message]
+      if options[:validation].include?("email")
+        options[:invalid_message] = "Please, enter a valid email"
+      elsif options[:validation].include?("phone")
+        options[:invalid_message] = "Please, enter a valid phone number"
+      elsif(options[:validation].include?("name") || options[:validation].include?("address"))
+        options[:invalid_message] = "Can contain letters, hyphens, apostrophes"
+      end
     end
 
     options[:required_message] ||= "#{options[:label]} is required"
