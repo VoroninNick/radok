@@ -1064,13 +1064,6 @@ validate_auth_credentials =(that) ->
       $error.fadeIn()
       $this.addClass("invalid")
 
-    # if $("#project_auth_password").val().length > 0
-    #   $("#project_auth_password_required_true").fadeOut()
-    #   $("#project_auth_password").removeClass("invalid")
-    # else
-    #   $("#project_auth_password_required_true").fadeIn()
-    #   $("#project_auth_password").addClass("invalid")
-
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
   $input = $(".project_exploratory_instructions_input")
