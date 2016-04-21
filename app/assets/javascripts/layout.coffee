@@ -70,7 +70,6 @@ $("body").on "click", "[open-popup]", (event)->
     type: "GET"
     dataType: "json"
     success: (data)->
-      console.log data
       if !data.logged
         open_popup_from_popup_only = !!$this.attr("open-popup-from-popup-only")
         condition = true

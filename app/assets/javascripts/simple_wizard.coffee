@@ -1050,32 +1050,36 @@ validate_methodology_type = ()->
       $test_case_files_input.addClass("invalid-required invalid")
 
 $("body").on "change code-change keyup keypress", "#project_auth_login, #project_auth_password", ()->
-  validate_auth_credentials()
+  validate_auth_credentials(this)
 
-validate_auth_credentials =() ->
-  if $("[model*='project.authentication_required'] input:checked").val() == 'true'
-    if $("#project_auth_login").val().length > 0
-      $("#project_auth_login_required_true").fadeOut()
-      $("#project_auth_login").removeClass("invalid")
+validate_auth_credentials =(that) ->
+  $this = $(that)
+  $error = $("##{$this.attr('id')}_required_true")
+  requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
+  if requires_auth
+    if $this.val().length > 0
+      $error.fadeOut()
+      $this.removeClass("invalid")
     else
-      $("#project_auth_login_required_true").fadeIn()
-      $("#project_auth_login").addClass("invalid")
+      $error.fadeIn()
+      $this.addClass("invalid")
 
-    if $("#project_auth_password").val().length > 0
-      $("#project_auth_password_required_true").fadeOut()
-      $("#project_auth_password").removeClass("invalid")
-    else
-      $("#project_auth_password_required_true").fadeIn()
-      $("#project_auth_password").addClass("invalid")
+    # if $("#project_auth_password").val().length > 0
+    #   $("#project_auth_password_required_true").fadeOut()
+    #   $("#project_auth_password").removeClass("invalid")
+    # else
+    #   $("#project_auth_password_required_true").fadeIn()
+    #   $("#project_auth_password").addClass("invalid")
 
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
   $input = $(".project_exploratory_instructions_input")
   $credentials_inputs = $(".project-auth-login, .project-auth-password")
 
-  validate_auth_credentials()
   if requires_auth
     $credentials_inputs.removeClass("hide")
+    validate_auth_credentials("#project_auth_login")
+    validate_auth_credentials("#project_auth_password")
   else
     $credentials_inputs.addClass("hide")
 
