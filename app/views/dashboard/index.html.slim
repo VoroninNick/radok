@@ -1,5 +1,5 @@
 .page
-  = render "page_banner"
+  = render 'page_banner'
   #dashboard-projects data-wizard-root=wizard_path
     - if !(@drafts.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?))
       .no-projects
@@ -22,8 +22,8 @@
                       .my-row
                         .my-column
                           .content
-                            .type-of-test-logo class=("ux" if project.usability_test?)
-                              = embedded_svg_from_absolute_path(project.type_of_test_logo)
+                            .type-of-test-logo class=('ux' if project.usability_test?)
+                              = image_tag (project.type_of_test_logo)
                             .project-name
                               = project.pi__project_name
                             .steps-completed
@@ -36,7 +36,7 @@
                             .type-of-test-wrap
                               .type-of-test-icon
                                 .svg-wrap
-                                  = image_tag("#{project.type_of_product_logo_path}.svg")
+                                  = image_tag(project.type_of_product_logo_path)
                               .type-of-test
                                 = project.type_of_test
                               /.testing-type ng-show="project.testing_type && project.testing_type.length"
@@ -45,7 +45,7 @@
                             .testers-and-hours
                               .testers
                                 .testers-icon
-                                  = image_tag("user.svg")
+                                  = image_tag('user.svg')
                                 .total-testers-count
                                   - if (count = project.total_testers_count) > 0
                                     = "#{count} testers"
@@ -53,14 +53,14 @@
                                     |Not specified
                               .hours
                                 .hours-icon
-                                  = image_tag("clock.svg")
+                                  = image_tag('clock.svg')
                                 .hours-count
                                   = project.ps__hours
                                   |&thinsp;&thinsp;hours each
                       .actions
-                        .delete-draft-button ng-click="deleteDraft(project)"
+                        .delete-draft-button ng-click='deleteDraft(project)'
                           |Delete draft
-                        = rf_button title: "Complete", subtitle: "Draft", svg: "finish_flag", class: "complete-draft-button"
+                        = rf_button title: 'Complete', subtitle: 'Draft', svg: 'finish_flag', class: 'complete-draft-button'
 
       - if @in_progress_tests.try(&:any?)
         .in-process-tests
@@ -77,10 +77,10 @@
                       .my-row
                         .my-column
                           .content
-                            .type-of-test-logo ng-include="project.type_of_test_logo"
+                            .type-of-test-logo ng-include='project.type_of_test_logo'
                             .project-name
                               = project.project_name
-                            = render "project_progress", percent: project.percent_completed_counter
+                            = render 'project_progress', percent: project.percent_completed_counter
                             .remaining-time
                               - if project.expected_tested_at
                                 = project.remaining_time_string
@@ -95,21 +95,18 @@
               - @finished_projects_groups.each do |project_group|
                 .columns.large-6
                   - project_group.each do |project|
-                    .item.collapsed collapsable=""
-                      .header expander=""
+                    .item.collapsed collapsable=''
+                      .header expander=''
                         .project-name
                           = project.project_name
                         .dropdown-arrow.collapsed
-                          = embedded_svg_from_assets("rf-icon-arrow-left")
+                          = image_tag('rf-icon-arrow-left.svg')
 
                       .project-status class=(project.successful? ? 'success' : 'failure' )
                         - if project.successful?
                           .success-svg-wrap
-                            = embedded_svg_from_assets("rf-icon-ok")
-                        - else
-                          /.fail-svg-wrap
-                            = embedded_svg_from_assets("close")
-                      .finished-project-short-info collapsable-content=""
+                            = image_tag('rf-icon-ok-blue.svg')
+                      .finished-project-short-info collapsable-content=''
                         /.row
                         .columns.large-12.property
                           .property-label
@@ -141,6 +138,6 @@
                           .columns.large-12.property
                             .report-link
                               a href=project.report.url
-                                = embedded_svg_from_assets("file-download")
+                                = embedded_svg_from_assets('file-download')
                                 .file-name
                                   = project.report_file_bane

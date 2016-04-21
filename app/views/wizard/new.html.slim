@@ -1,9 +1,9 @@
 .wizard class="#{@wizard_options.try{|hash| hash.keep_if{|k, v|  !!v }.keys.map(&:to_s).map(&:humanize).map(&:parameterize).join(" ")   } }"
   #wizard-controller data-hour-price=WizardSettings.hour_price class="#{'configure-mode' if @project.persisted?}" test-json=(@project.to_json if @project.persisted?) data-product-type-names=@product_type_names data-test-type-names=@test_type_names
-    = render "page_banner"
+    = render 'page_banner'
     #wizard-content
       #wizard-steps
-        = render "wizard_form"
+        = render 'wizard_form'
 
       - if !@project.persisted?
         #wizard-help
@@ -20,7 +20,7 @@
                   |Platform
                 |&nbsp;to proceed with the test wizard
             .footer
-              = rf_button(class: "rf-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
+              = rf_button(class: 'rf-configure-button', full_width: true, svg: 'rf-icon-configure', title: 'configure', disabled: false)
 
       #wizard-summary
         #wizard-summary-fixed.fixed-top
@@ -29,27 +29,27 @@
           .content
             p.test-type-and-product-type
               |You ordered&thinsp;
-              span.highlighted-text data-bind="project.test_type"
+              span.highlighted-text data-bind='project.test_type'
                 = @project.test_type_name
               span.highlighted-text
                 |&thinsp;test
               |&thinsp;for&thinsp;
-              span.highlighted-text data-bind="project.product_type"
+              span.highlighted-text data-bind='project.product_type'
                 = @project.product_type_name
             p.current-task
               |Please select platforms to be tested
 
-            .platforms.hide ng-show="wizard.total_testers_count"
+            .platforms.hide ng-show='wizard.total_testers_count'
               .row.header
                 .columns.large-8
                   |Platforms:
                 .columns.large-2.icon.human
-                  = image_tag("user.svg")
+                  = image_tag('user.svg')
                 .columns.large-2.icon.hours
-                  = image_tag("clock.svg")
+                  = image_tag('clock.svg')
               .rows
 
-          .save-button ng-click="saveProject()"
+          .save-button ng-click='saveProject()'
             ng-include src="'/assets/download.svg'"
             span.button-label
               |Save this project
@@ -63,19 +63,19 @@
               .total-price
                 .currency
                   |$
-                span data-bind="total_price"
+                span data-bind='total_price'
                   |0
 
-            .checkout-button disabled="disabled" open-popup="payment" requires-auth="true"
+            .checkout-button disabled='disabled' open-popup='payment' requires-auth='true'
               ng-include src="'/assets/rf-rocket-up-right.svg'"
                 = image_tag "rf-rocket-up-right.svg"
 
             = steps_progress(4)
 
-            = rf_button class: "rf-next-step-button", align_content: "left", full_width: true, svg: "rf-icon-rocket", title: "Next step", disabled: false
-            = rf_button class: "rf-go-to-summary-button", align_content: "left", full_width: true, svg: "finish_flag", title: "Summary", disabled: false
+            = rf_button class: 'rf-next-step-button', align_content: 'left', full_width: true, svg: 'rf-icon-rocket', title: 'Next step', disabled: false
+            = rf_button class: 'rf-go-to-summary-button', align_content: 'left', full_width: true, svg: 'finish_flag', title: 'Summary', disabled: false
             .confirm-button-container
-              = rf_button class: "rf-confirm-button", align_content: "left", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" }
+              = rf_button class: 'rf-confirm-button', align_content: 'left', full_width: true, svg: 'rf-rocket-up-right', title: 'Confirm', disabled: false, html: { 'open-popup': 'payment', 'requires-auth': 'true' }
 
             .or-go-back-wrap.hide
               |or&nbsp;
@@ -85,8 +85,8 @@
                 span.prev-step-number
                   |
 
-= popup "payment"
+= popup 'payment'
 
-= popup "invalid_fields"
+= popup 'invalid_fields'
 
-= popup "pay_later"
+= popup 'pay_later'
