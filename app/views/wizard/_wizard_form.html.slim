@@ -74,7 +74,7 @@ form for="project" url=wizard_path method="post" json="{}"
                     .platform-option-label
                       = c.name
                     .input-wrap
-                      input pattern='[1-9]$|^[1-4]\d$|^5[0]' maxlength='2' value="#{binding_current_testers_count}"
+                      input maxlength='2' value="#{binding_current_testers_count}"
                       label class='decrement' for='platform-1-subitem-1'
                       label class='increment' for='platform-1-subitem-1'
 
@@ -213,7 +213,7 @@ form for="project" url=wizard_path method="post" json="{}"
               |Please provide testing instructions for the testers here...
             label.error.error-required for="project_exploratory_instructions"
               |Please provide testing instructions for the testers here...
-            textarea.set-error id="project_exploratory_instructions" maxlength="2000" data-field-name="Exploratory instructions" y
+            textarea.set-error id="project_exploratory_instructions" maxlength="2000" data-field-name="Exploratory instructions"
               = @project.exploratory_description
             #project_exploratory_instructions-error
               label.error-max
@@ -310,13 +310,13 @@ form for="project" url=wizard_path method="post" json="{}"
             .input.string.project-auth-login.input-with-indent model="project.auth_login" as="string"
               label.placeholder.hiding-placeholder for="project_auth_login"
                 |Username
-              input type="text" id="project_auth_login" value=@project.auth_login
+              input.set-error type="text" id="project_auth_login" value=@project.auth_login data-field-name="Please, provide authentification username"
               #project_auth_login_required_true.error
                 |Please, provide a username
             .input.string.project-auth-password.input-with-indent model="project.auth_password" as="string"
               label.placeholder.hiding-placeholder for="project_auth_password"
                 |Password
-              input type="text" id="project_auth_password" value=@project.auth_password
+              input.set-error type="text" id="project_auth_password" value=@project.auth_password data-field-name="Please, provide authentification password"
               #project_auth_password_required_true.error
                 |Please, provide a password
         .clearfix
