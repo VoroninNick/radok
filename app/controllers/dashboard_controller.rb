@@ -5,8 +5,7 @@ class DashboardController < ApplicationController
     user_tests = current_user.tests
     @drafts = user_tests.drafts
     @in_progress_tests = user_tests.processing_projects
-    # @finished_projects = user_tests.tested_projects
-    @finished_projects = @in_progress_tests
+    @finished_projects = user_tests.tested_projects
     a = @finished_projects.to_a
     if a.any?
       @finished_projects_groups = a.each_slice((a.size/2.to_f).round).to_a

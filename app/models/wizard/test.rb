@@ -98,7 +98,6 @@ class Wizard::Test < ActiveRecord::Base
       pp[:testers_count] = p[:testers_count]
       request_platform_bindings << pp
     end
-    # request_platform_bindings = platforms.map { |p| pp = {}; pp[:platform_id] = p[:platform_id]; pp[:testers_count] = p[:testers_count]; pp }
     current_platform_bindings = test_platforms_bindings.pluck_to_hash(:platform_id, :testers_count)
     current_platform_binding_ids = current_platform_bindings.map { |p| p[:platform_id] }
 
@@ -117,7 +116,7 @@ class Wizard::Test < ActiveRecord::Base
     end
 
     platform_bindings_to_update.each do |b|
-      p = test_platforms_bindings.where(platform_id: b[:platform_id]).first;
+      p = test_platforms_bindings.where(platform_id: b[:platform_id]).first
       if (p[:testers_count] != b[:testers_count]) && (b[:testers_count] <= 50)
         p.update_attributes!(testers_count: b[:testers_count])
       end
@@ -126,8 +125,7 @@ class Wizard::Test < ActiveRecord::Base
 
   def platform_roots
     root_ids = platforms.map(&:root_id).uniq
-    roots = Wizard::Platform.find(root_ids)
-    return roots
+    Wizard::Platform.find(root_ids)
   end
 
   def test_type_name
@@ -169,8 +167,7 @@ class Wizard::Test < ActiveRecord::Base
 
   def pi__project_name
     name = self['project_name']
-    name = "Test ##{self.id}" if name.blank?
-    name
+    "Test ##{id}" if name.blank?
   end
 
   def project_name
@@ -223,19 +220,19 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def test_mobile_app?
-    product_type.name.downcase == "mobile apps"
+    product_type.name.downcase == 'mobile apps'
   end
 
   def test_responsive_website?
-    product_type.name.downcase == "responsive website"
+    product_type.name.downcase == 'responsive website'
   end
 
   def test_software?
-    product_type.name.downcase == "software"
+    product_type.name.downcase == 'software'
   end
 
   def test_games?
-    product_type.name.downcase == "games"
+    product_type.name.downcase == 'games'
   end
 
   def report_file_name
@@ -330,11 +327,11 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def exploratory?
-    methodology_type.blank? || methodology_type == "exploratory"
+    methodology_type.blank? || methodology_type == 'exploratory'
   end
 
   def test_case_driven?
-    methodology_type == "test_case_driven"
+    methodology_type == 'test_case_driven'
   end
 
   def self.available_project_languages
@@ -346,32 +343,26 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def remaining_time_string
-    timespan = Time.diff(DateTime.now, self.expected_tested_at)
+    timespan = Time.diff(DateTime.now, expected_tested_at)
     total_days = timespan.total_days
-    quantified_day_word = "days"
+    quantified_day_word = 'days'
 
-    if total_days % 10 == 1
-      quantified_day_word = quantified_day_word.singularize
-    end
+    quantified_day_word = quantified_day_word.singularize if total_days % 10 == 1
 
-    if total_days > 0
-      "#{total_days} #{quantified_day_word}"
-    end
+    "#{total_days} #{quantified_day_word}" if total_days > 0
   end
 
   def main_components
-    self['main_components'].try{|s| s.split(",") } || []
+    self['main_components'].try{ |s| s.split(',') } || []
   end
 
   def main_components=(val)
-    if val.respond_to?(:join)
-      val = val.join(",")
-    end
+    val = val.join(',') if val.respond_to?(:join)
     self['main_components'] = val
   end
 
   def total_price_with_discount
-    price = self.total_price
+    price = total_price
     if percentage_discount?
       coefficient = 1 - (percentage_discount.to_f / 100)
       return (price * coefficient).ceil
@@ -380,7 +371,7 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def percentage_discount
-    self.promo_code.try{|c| c.percentage_discount.to_i } || 0
+    promo_code.try{ |c| c.percentage_discount.to_i } || 0
   end
 
   def percentage_discount?
@@ -445,8 +436,8 @@ class Wizard::Test < ActiveRecord::Base
 
       t.percentage_discount percentage_discount
 
-      t.test_case_files test_case_files.pluck(:data_file_name).map{|name| {name: name} }
-      t.test_files test_files.pluck(:data_file_name).map{|name| {name: name} }
+      t.test_case_files test_case_files.pluck(:data_file_name).map{ |name| { name: name} }
+      t.test_files test_files.pluck(:data_file_name).map{ |name| {name: name} }
     end
   end
 
