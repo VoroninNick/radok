@@ -1,6 +1,6 @@
 window.project ?= {}
-window.$wizard_controller = $("#wizard-controller")
-window.price_per_hour = parseInt($wizard_controller.attr("data-hour-price"))
+window.$wizard_controller = $('#wizard-controller')
+window.price_per_hour = parseInt($wizard_controller.attr('data-hour-price'))
 log_input_value = false
 window.assets ?= {}
 window.assets.test_case_files ?= []
@@ -15,7 +15,7 @@ window.small = (size = 640)->
     return false
 
 window.get_model_target = (model)->
-  model_keys = model.split(".")
+  model_keys = model.split('.')
   last_key = model_keys[model_keys.length - 1]
   target = window
   for key, index in model_keys
@@ -26,92 +26,92 @@ window.get_model_target = (model)->
   target
 
 window.get_model_value = (model)->
-  model_keys = model.split(".")
+  model_keys = model.split('.')
   last_key = model_keys[model_keys.length - 1]
   target = get_model_target(model)
   target[last_key]
 
 assign_model_key = (model, val)->
-  model_keys = model.split(".")
+  model_keys = model.split('.')
   last_key = model_keys[model_keys.length - 1]
   target = get_model_target(model)
   target[last_key] = val
 
 window.input_types = {
-  "string" : {
+  'string' : {
     dom_value : (input)->
-      $(input).find("input").val()
+      $(input).find('input').val()
 
     set_dom_value : (value)->
-      $(this).find("input").val(value)
+      $(this).find('input').val(value)
   }
-  "url" : {
+  'url' : {
     dom_value : (input)->
-      $(input).find("input").val()
+      $(input).find('input').val()
 
     set_dom_value : (value)->
-      $(this).find("input").val(value)
+      $(this).find('input').val(value)
   }
-  "text" : {
+  'text' : {
     dom_value : (input)->
-      $(input).find("textarea").val()
+      $(input).find('textarea').val()
 
     set_dom_value : (value)->
-      $(this).find("textarea").val(value)
+      $(this).find('textarea').val(value)
   }
-  "radio-button" : {
+  'radio-button' : {
     dom_value : (input)->
-      type = $(input).attr("as")
-      model = $(input).attr("model")
+      type = $(input).attr('as')
+      model = $(input).attr('model')
       value = $(".input.#{type}[model='#{model}'] input:checked").val()
       value
 
     set_dom_value : (value)->
-      type = $(this).attr("as")
-      model = $(this).attr("model")
+      type = $(this).attr('as')
+      model = $(this).attr('model')
       value = $(".input.#{type}[model='#{model}'] input:checked").val()
       value
   }
-  "image-radio-button" : {
+  'image-radio-button' : {
     dom_value : (input)->
       window.input_types['radio-button'].dom_value(input)
     set_dom_value : (value)->
       input_types['radio-button'].set_dom_value.call(this, value)
   }
-  "collection-checkboxes" : {
+  'collection-checkboxes' : {
     dom_value : (input)->
       $input = $(input)
-      $input.find(".option input:checked").map(
+      $input.find('.option input:checked').map(
         (index, item)->
           return $(item).val()
       ).toArray()
 
     set_dom_value : (value)->
       $input = $(this)
-      $input.find(".option input:checked").prop("checked", false)
+      $input.find('.option input:checked').prop('checked', false)
       for element in value
-        $input.find(".option input").filter("[value='#{element}']").prop("checked", true)
+        $input.find('.option input').filter("[value='#{element}']").prop('checked', true)
   }
-  "collection-radio-buttons" : {
+  'collection-radio-buttons' : {
     dom_value : (input)->
-      window.input_types["collection-checkboxes"].dom_value.apply(this, arguments)
+      window.input_types['collection-checkboxes'].dom_value.apply(this, arguments)
 
     set_dom_value : (value)->
-      window.input_types["collection-checkboxes"].set_dom_value.apply(this, arguments)
+      window.input_types['collection-checkboxes'].set_dom_value.apply(this, arguments)
   }
-  "platforms" : {
+  'platforms' : {
     dom_value : (input)->
       project.selected_platforms
     set_dom_value : (value)->
   }
-  "tags" : {
+  'tags' : {
     dom_value : (input)->
       $input = $(input)
-      val = $input.find("input").val()
+      val = $input.find('input').val()
       if !val.length
         return []
       else
-        return val.split(",")
+        return val.split(',')
     set_dom_value : (value)->
   }
 }
@@ -151,12 +151,15 @@ window.step_types = {
     checkIsCompleted : ()->
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
-      auth_required = (project.authentication_required && project.auth_login.length > 0 && project.auth_password.length > 0) || project.authentication_required == 'false'
+      auth_required = project.authentication_required
+      auth_not_required = project.authentication_required == 'false' || 'null'
+      credentials_valid = project.auth_login.length > 0 && project.auth_password.length > 0
+      auth_valid = auth_required && credentials_valid || auth_not_required
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
-      return ( url_valid || file_upload_valid ) && auth_required && contact_person_valid
+      return ( url_valid || file_upload_valid ) && auth_valid && contact_person_valid
   }
 }
 
@@ -164,8 +167,8 @@ window.wizard_form = {
   update_model_value : (value)->
     difference = diff(window.project, value)
     $.extend(window.project, value)
-    $body = $("body")
-    model_name = "project"
+    $body = $('body')
+    model_name = 'project'
     for k,v of difference
       full_model_key = "#{model_name}.#{k}"
       $body.trigger("change.#{full_model_key}")
@@ -173,8 +176,8 @@ window.wizard_form = {
 
   set_model_value : (value)->
     window.project = value
-  jquery_form : $("form[for]")
-  url : $("form[for]").attr("url")
+  jquery_form : $('form[for]')
+  url : $('form[for]').attr('url')
 
   create_method : ()->
     'post'
@@ -190,7 +193,7 @@ window.wizard_form = {
     if self.url[self.url.length - 1] == '/'
       @url + @get_model().id
     else
-      @url + "/" + @get_model().id
+      @url + '/' + @get_model().id
 
   get_model : ()->
     project
@@ -202,11 +205,11 @@ window.wizard_form = {
   push : ()->
     self = wizard_form
     project_data_for_push = clone(project, {
-      except_keys: w("test_files test_case_files platforms selected_platforms")
+      except_keys: w('test_files test_case_files platforms selected_platforms')
     })
     data = {test: project_data_for_push}
 
-    $("form[for]").trigger("before_push")
+    $('form[for]').trigger('before_push')
 
     res = do_push = true
     if res
@@ -225,7 +228,7 @@ window.wizard_form = {
         data: data
         dataType: 'json'
         success: (response_data)->
-          self.jquery_form.trigger("after_push")
+          self.jquery_form.trigger('after_push')
           self.update_model_value(response_data)
           self.jquery_form.trigger("after_#{action}")
       }
@@ -234,95 +237,95 @@ window.wizard_form = {
       )
 }
 
-$("body").on "change", ".wizard .input.image-radio-button, .wizard .input.radio-button", ()->
+$('body').on 'change', '.wizard .input.image-radio-button, .wizard .input.radio-button', ()->
   $input = $(this)
-  model = $input.attr("model")
-  if $input.hasClass("image-radio-button")
-    html_class = "image-radio-button"
+  model = $input.attr('model')
+  if $input.hasClass('image-radio-button')
+    html_class = 'image-radio-button'
   else
-    html_class = "radio-button"
+    html_class = 'radio-button'
 
-  $(".input.#{html_class}[model='#{model}']").removeClass("checked").addClass("unchecked")
+  $(".input.#{html_class}[model='#{model}']").removeClass('checked').addClass('unchecked')
 
-  $html_input = $input.find("input")
+  $html_input = $input.find('input')
   value = $html_input.val()
 
-  $input.addClass("checked").removeClass("unchecked")
+  $input.addClass('checked').removeClass('unchecked')
   wizard_form.update_model_value(value)
 
-$("body").on "change code-change keyup keypress", ".wizard [as=platforms] .option-count input", (e)->
-  if e.type == "keypress"
+$('body').on 'change code-change keyup keypress', '.wizard [as=platforms] .option-count input', (e)->
+  if e.type == 'keypress'
     if !( (e.which >= 48 && e.which <= 57) || e.which == 8)
       return false
   $input = $(this)
   original_value = $input.val()
   value = original_value
-  if value == ""
-    value = "0"
+  if value == ''
+    value = '0'
   if value.length > 1 && value[0] == '0'
     value = value.slice(1, value.length)
   if value != original_value
     $input.val(value)
   update_price()
 
-$("body").on "change code-change keyup keypress", ".set-error", (e)->
+$('body').on 'change code-change keyup keypress', '.set-error', (e)->
   set_error(this)
 
-$(document).on "ready", (e) ->
-  $(".set-error").each ->
+$(document).on 'ready', (e) ->
+  $('.set-error').each ->
     set_error(this)
 
 set_error = (that)->
   $input = $(that)
   error_select = "##{$input.attr('id')}-error"
   # maxlength
-  if $input.attr("maxlength")
-    $max_error = $(error_select + " .error-max")
-    if $input.val().length == parseInt($input.attr("maxlength"))
+  if $input.attr('maxlength')
+    $max_error = $(error_select + ' .error-max')
+    if $input.val().length == parseInt($input.attr('maxlength'))
       $max_error.fadeIn()
-      $input.removeClass("valid").addClass("invalid")
+      $input.removeClass('valid').addClass('invalid')
     else
       $max_error.fadeOut()
-      $input.removeClass("invalid").addClass("valid")
+      $input.removeClass('invalid').addClass('valid')
 
   # email
-  else if $input.attr("validation") == "email"
-    $email_error = $(error_select + " .error-email")
+  else if $input.attr('validation') == 'email'
+    $email_error = $(error_select + ' .error-email')
     if validateEmail($input.val())
       $email_error.fadeOut()
-      $input.removeClass("invalid").addClass("valid")
+      $input.removeClass('invalid').addClass('valid')
     else
       $email_error.fadeIn()
-      $input.addClass("invalid").removeClass("valid")
+      $input.addClass('invalid').removeClass('valid')
 
   # phone number
-  else if $input.attr("validation") == "phone"
-    $phone_error = $(error_select + " .error-phone")
+  else if $input.attr('validation') == 'phone'
+    $phone_error = $(error_select + ' .error-phone')
     if validatePhoneNumber($input.val())
       $phone_error.fadeOut()
-      $input.removeClass("invalid").addClass("valid")
+      $input.removeClass('invalid').addClass('valid')
     else
       $phone_error.fadeIn()
-      $input.addClass("invalid").removeClass("valid")
+      $input.addClass('invalid').removeClass('valid')
   # name
-  else if $input.attr("validation") == "name"
-    $name_error = $(error_select + " .error-name")
+  else if $input.attr('validation') == 'name'
+    $name_error = $(error_select + ' .error-name')
     if validateName($input.val())
       $name_error.fadeOut()
-      $input.removeClass("invalid").addClass("valid")
+      $input.removeClass('invalid').addClass('valid')
     else
       $name_error.fadeIn()
-      $input.addClass("invalid").removeClass("valid")
+      $input.addClass('invalid').removeClass('valid')
 
   # valid
   else
-    $input.removeClass("invalid").addClass("valid")
+    $input.removeClass('invalid').addClass('valid')
 
 update_price = ()->
   test_platforms_bindings = []
-  $platforms_field = $("[as=platforms]")
-  $platforms = $platforms_field.find(".platform")
-  $visible_platforms = $platforms.filter(":not(.hide)")
+  $platforms_field = $('[as=platforms]')
+  $platforms = $platforms_field.find('.platform')
+  $visible_platforms = $platforms.filter(':not(.hide)')
 
   selected_platforms = []
   selected_platform_ids = []
@@ -332,15 +335,15 @@ update_price = ()->
 
   $visible_platforms.each ->
     $platform = $(this)
-    $platform_subitems = $platform.find(".option-count")
-    platform_id = parseInt($platform.attr("data-id"))
+    $platform_subitems = $platform.find('.option-count')
+    platform_id = parseInt($platform.attr('data-id'))
     platform_testers_count = 0
 
     $platform_subitems.each ->
       $platform_subitem = $(this)
       test_platform_binding = {}
-      subitem_id = parseInt($platform_subitem.attr("platform-subitem-id"))
-      testers_count = parseInt($platform_subitem.find("input").val())
+      subitem_id = parseInt($platform_subitem.attr('platform-subitem-id'))
+      testers_count = parseInt($platform_subitem.find('input').val())
       platform_testers_count += testers_count
       test_platform_binding['subitem_id'] = subitem_id
       test_platform_binding['testers_count'] = testers_count
@@ -389,37 +392,37 @@ update_price = ()->
   project.total_price = total_price
   project.selected_platforms = selected_platforms
 
-  $platforms_field.trigger("change.project.total_testers_count")
-  $platforms_field.trigger("change.project.test_platforms_bindings")
-  $platforms_field.trigger("change.project.total_price")
-  $platforms_field.trigger("change.project.selected_platforms")
+  $platforms_field.trigger('change.project.total_testers_count')
+  $platforms_field.trigger('change.project.test_platforms_bindings')
+  $platforms_field.trigger('change.project.total_price')
+  $platforms_field.trigger('change.project.selected_platforms')
 
 window.input_value = ()->
   $input = $(this)
-  input_type = $input.attr("as") || $input.attr("type")
-  input_data_type = $input.attr("data-type")
+  input_type = $input.attr('as') || $input.attr('type')
+  input_data_type = $input.attr('data-type')
 
-  if !$input.filter("input").length && input_type && input_types[input_type]
+  if !$input.filter('input').length && input_type && input_types[input_type]
     value = input_types[input_type].dom_value($input)
   else
     value = $input.val()
 
-  if input_data_type == "integer"
+  if input_data_type == 'integer'
     value = parseInt(value)
   value
 
 window.validate_input = (value)->
   $input = $(this)
-  input_type = $input.attr("as")
+  input_type = $input.attr('as')
   input_type_class = input_types[input_type]
   if value == undefined
     value = input_value.call($input)
-  if typeof(value) == "string"
+  if typeof(value) == 'string'
     value = value.trim()
 
   # Validation
   validation_options = {
-    required: $input.hasAttribute("required")
+    required: $input.hasAttribute('required')
   }
 
   validation_result = {}
@@ -444,58 +447,58 @@ window.validate_input = (value)->
   valid = invalid_classes.length == 0
   invalid = !valid
 
-  $input.removeClass(valid_classes.join(" ")).addClass(invalid_classes.join(" "))
+  $input.removeClass(valid_classes.join(' ')).addClass(invalid_classes.join(' '))
 
   if invalid
-    $input.addClass("invalid")
+    $input.addClass('invalid')
   else
-    $input.removeClass("invalid")
+    $input.removeClass('invalid')
 
   # End of validation
 
 window.validate_inputs_on_init = ()->
-  $(".input[model], input[model]").each ()->
+  $('.input[model], input[model]').each ()->
     $input = $(this)
     validate_input.call($input)
 
-$("body").on "change.project.total_price", ()->
+$('body').on 'change.project.total_price', ()->
   price = project.total_price
-  $(".full-summary-total-cost .total-price").text(price)
-  $("[data-bind=total_price]").text(price)
+  $('.full-summary-total-cost .total-price').text(price)
+  $('[data-bind=total_price]').text(price)
   showStepsProgress()
 
-  $error = $("#platforms-empty-error")
+  $error = $('#platforms-empty-error')
   if price > 0
     $error.fadeOut()
   else
     $error.fadeIn()
 
-$("body").on "change.project.test_platforms_bindings", (e)->
-  $platforms_field = $(".wizard [as=platforms]")
-  $options = $platforms_field.find(".option-count")
-  $options.addClass("empty")
+$('body').on 'change.project.test_platforms_bindings', (e)->
+  $platforms_field = $('.wizard [as=platforms]')
+  $options = $platforms_field.find('.option-count')
+  $options.addClass('empty')
   if project.test_platforms_bindings && project.test_platforms_bindings.length
     reached_maximum = false
     for b in project.test_platforms_bindings
-      $options.filter("[platform-subitem-id=#{b.subitem_id}]").removeClass("empty")
+      $options.filter("[platform-subitem-id=#{b.subitem_id}]").removeClass('empty')
 
   # Short summary
-      $input = $options.filter("[platform-subitem-id=#{b.subitem_id}]").find("input")
+      $input = $options.filter("[platform-subitem-id=#{b.subitem_id}]").find('input')
       if b.testers_count && (b.testers_count > 50)
         reached_maximum = true
       if reached_maximum
-        $("#platforms-max-error").fadeIn()
+        $('#platforms-max-error').fadeIn()
       else
-        $("#platforms-max-error").fadeOut()
+        $('#platforms-max-error').fadeOut()
 
-  $short_summary = $("#wizard-summary")
-  $short_summary_platforms_block = $("#wizard-summary .platforms")
-  $platform_rows_block = $short_summary_platforms_block.find(".rows")
-  rows = ("")
+  $short_summary = $('#wizard-summary')
+  $short_summary_platforms_block = $('#wizard-summary .platforms')
+  $platform_rows_block = $short_summary_platforms_block.find('.rows')
+  rows = ('')
 
   if project.selected_platforms && project.selected_platforms.length > 0
-    $short_summary.find(".current-task").addClass("hide")
-    $short_summary_platforms_block.removeClass("hide")
+    $short_summary.find('.current-task').addClass('hide')
+    $short_summary_platforms_block.removeClass('hide')
     for p in project.selected_platforms
       row = \
         ("<div class='row'>
@@ -505,17 +508,17 @@ $("body").on "change.project.test_platforms_bindings", (e)->
            </div>")
       rows += row
   else
-    $short_summary.find(".current-task").removeClass("hide")
-    $short_summary_platforms_block.addClass("hide")
+    $short_summary.find('.current-task').removeClass('hide')
+    $short_summary_platforms_block.addClass('hide')
   $platform_rows_block.html(rows)
 
   # Full summary
 
-  $full_summary = $("#wizard-full-summary-content")
-  platforms_html = ""
+  $full_summary = $('#wizard-full-summary-content')
+  platforms_html = ''
   if project.selected_platforms && project.selected_platforms.length
     for p in project.selected_platforms
-      platform_subitems_html = ""
+      platform_subitems_html = ''
       selected_children = p.children.filter(
         (subitem)->
           project.test_platforms_bindings.map(
@@ -524,7 +527,7 @@ $("body").on "change.project.test_platforms_bindings", (e)->
           ).indexOf(subitem.id) >= 0
       )
       p.selected_children = selected_children
-      subitems_html = ""
+      subitems_html = ''
       for subitem in p.selected_children
         subitem_html = "<div class='platform-subitem'>#{subitem.name}</div>"
         subitems_html += subitem_html
@@ -537,36 +540,36 @@ $("body").on "change.project.test_platforms_bindings", (e)->
       "
       platforms_html += platform_html
 
-  $full_summary.find(".platforms").html(platforms_html)
+  $full_summary.find('.platforms').html(platforms_html)
 
 window.check_for_step_completeness = ()->
   $step = $(this)
-  step_type = $step.attr("type")
+  step_type = $step.attr('type')
   if step_types[step_type]
     completed = step_types[step_type].checkIsCompleted.apply($step)
-    data_completed = $step.data("completed")
+    data_completed = $step.data('completed')
     if data_completed != completed
       $step.data('completed', completed)
       if completed
-        $step.addClass("completed")
-        $step.trigger("step_completed")
+        $step.addClass('completed')
+        $step.trigger('step_completed')
       else
-        $step.removeClass("completed")
-        $step.trigger("step_uncompleted")
+        $step.removeClass('completed')
+        $step.trigger('step_uncompleted')
 
 log_project_main_components = false
 
-$("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
+$('body').on 'change keyup dom_change', '.input[model], input[model]', (e)->
   $input = $(this)
-  $html_input = $input.filter("input")
+  $html_input = $input.filter('input')
   if !$html_input.length
-    $html_input = $input.find("input")
+    $html_input = $input.find('input')
 
   ignore = (e.type == 'keyup' && $html_input.length && (e.which == 13))
   if ignore
     return false
 
-  model = $input.attr("model")
+  model = $input.attr('model')
   value = input_value.call($input)
 
   validate_input.call($input, value)
@@ -575,29 +578,29 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
     assign_model_key(model, value)
 
   project.saved = false
-  disabled_trigger_changes = $input.attr("trigger-changes") == "false"
+  disabled_trigger_changes = $input.attr('trigger-changes') == 'false'
   if !disabled_trigger_changes
     notifyProjectHasUnsavedChanges()
 
   $input.trigger("change.#{model}")
 
-  $wizard_controller = $(".wizard-controller")
-  $step = $(this).closest(".wizard-step")
+  $wizard_controller = $('.wizard-controller')
+  $step = $(this).closest('.wizard-step')
 
   check_for_step_completeness.apply($step)
 
   stringified_value = value
   if Array.isArray(value)
-    stringified_value = value.join(", ")
-  if typeof(stringified_value) == "string"
+    stringified_value = value.join(', ')
+  if typeof(stringified_value) == 'string'
     stringified_value = stringified_value.trim()
 
   $("[data-bind='#{model}']").text(stringified_value)
 
-  disabled_push = $input.attr("push") == 'false'
+  disabled_push = $input.attr('push') == 'false'
 
   if !disabled_push && wizard_form.is_persisted.apply(wizard_form)
-    save_timeout_id = $wizard_controller.data("save_timeout_id")
+    save_timeout_id = $wizard_controller.data('save_timeout_id')
     if save_timeout_id
       clearTimeout(save_timeout_id)
     save_timeout_id = setTimeout(
@@ -605,11 +608,11 @@ $("body").on "change keyup dom_change", ".input[model], input[model]", (e)->
         wizard_form.push.apply(wizard_form)
       2000
     )
-    $wizard_controller.data("save_timeout_id", save_timeout_id)
+    $wizard_controller.data('save_timeout_id', save_timeout_id)
   enable_checkout_button_if_project_valid()
 
-$("body").on "change.project.total_testers_count", ()->
-  model = "project.total_testers_count"
+$('body').on 'change.project.total_testers_count', ()->
+  model = 'project.total_testers_count'
   value = project.total_testers_count
   $("[data-bind='#{model}']").text(value)
 
@@ -620,47 +623,47 @@ scrollToFirstStep = ()->
 scrollToStep = (step_id)->
   if step_id == undefined || step_id == null
     return
-  $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
+  $visible_steps = $('.configuration-steps .wizard-step:not(.hide)')
   available_step = project.available_step_ids.indexOf(step_id) >= 0
 
   if available_step
     $visible_steps.filter(".wizard-step[step=#{project.current_step_id}]")
-    top = $visible_steps.filter("[step=#{step_id}]").offset().top - $("#header").height() - 50
-    $("html, body").animate({scrollTop: top})
+    top = $visible_steps.filter("[step=#{step_id}]").offset().top - $('#header').height() - 50
+    $('html, body').animate({scrollTop: top})
     return true
 
 show_mini_summary = ()->
-  $("#wizard-summary .footer").removeClass("hide")
+  $('#wizard-summary .footer').removeClass('hide')
 
 window.showStepsProgress = ()->
-  $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
-  progress_steps_str = ""
+  $visible_steps = $('.configuration-steps .wizard-step:not(.hide)')
+  progress_steps_str = ''
   steps_count = $visible_steps.length
   step_percentage_width = "#{100 / steps_count}%"
   $visible_steps.each ()->
     $step = $(this)
-    completed = !!$step.data("completed")
-    step_id = $step.attr("step")
+    completed = !!$step.data('completed')
+    step_id = $step.attr('step')
     $progress_step = $("steps-progress .step[step=#{step_id}]")
     if completed
-      $progress_step.addClass("proceeded")
+      $progress_step.addClass('proceeded')
     else
-      $progress_step.removeClass("proceeded")
+      $progress_step.removeClass('proceeded')
 
     step_html = "<div step='#{step_id}' class='step #{'proceeded' if completed}' style='width: #{step_percentage_width}'><div class='inner'></div></div>"
     progress_steps_str += step_html
 
-  $("steps-progress .progress").html(progress_steps_str)
+  $('steps-progress .progress').html(progress_steps_str)
 
 notifyProjectSaved = ()->
-  $(".save-button").hide()
-  $(".project-saved").fadeIn()
+  $('.save-button').hide()
+  $('.project-saved').fadeIn()
 
 window.notifyProjectHasUnsavedChanges = ()->
-  $(".project-saved").hide()
-  $(".save-button").fadeIn()
+  $('.project-saved').hide()
+  $('.save-button').fadeIn()
 
-$("body").on "click", ".save-button", ()->
+$('body').on 'click', '.save-button', ()->
   wizard_form.push.apply(wizard_form)
 
 next_step = ()->
@@ -677,77 +680,77 @@ prev_step = ()->
     change_step(prev_step_id, $current_step, false)
     scrollToStep(prev_step_id)
 
-$("body").on "click", ".go-back-button", ()->
+$('body').on 'click', '.go-back-button', ()->
   prev_step()
 
-$("body").on "click", ".rf-next-step-button", ()->
+$('body').on 'click', '.rf-next-step-button', ()->
   step = next_step()
 
-$("body").on "change", ".project_test_type", ()->
+$('body').on 'change', '.project_test_type', ()->
   if is_configure_mode()
     hide_unavailable_steps()
     showStepsProgress()
 
-$("body").on "change", ".project_product_type", ->
+$('body').on 'change', '.project_product_type', ->
   hide_unavailable_platforms()
 
 show_full_summary = ()->
-  $("#wizard-full-summary").removeClass("hide")
+  $('#wizard-full-summary').removeClass('hide')
 
 is_configure_mode = ()->
-  $wizard_controller.hasClass("configure-mode")
+  $wizard_controller.hasClass('configure-mode')
 
 hide_unavailable_platforms = ()->
-  $platforms_input = $("[as=platforms]")
-  checked_value = $("[model*=product_type].checked").map(
+  $platforms_input = $('[as=platforms]')
+  checked_value = $('[model*=product_type].checked').map(
     (index, item)->
-      return $(item).attr("value")
+      return $(item).attr('value')
   )[0]
 
-  platforms_by_product_type_name = JSON.parse($platforms_input.attr("platforms-by-product-type"))
+  platforms_by_product_type_name = JSON.parse($platforms_input.attr('platforms-by-product-type'))
   platform_ids = platforms_by_product_type_name[checked_value]
 
-  $platforms = $(".input[as=platforms] .platform")
-  $platforms.addClass("hide")
+  $platforms = $('.input[as=platforms] .platform')
+  $platforms.addClass('hide')
   for platform_id in platform_ids
     $platform = $platforms.filter("[data-id=#{platform_id}]")
-    $platform.removeClass("hide")
+    $platform.removeClass('hide')
 
-  $platforms.filter(":not(.hide)").each(
+  $platforms.filter(':not(.hide)').each(
     (index)->
       $p = $(this)
       if (index + 1) % 2 == 0
-        $p.addClass("even").removeClass("odd")
+        $p.addClass('even').removeClass('odd')
       else
-        $p.addClass("odd").removeClass("even")
+        $p.addClass('odd').removeClass('even')
   )
 
 get_test_type_name = ()->
-  project.test_type || $("[model*=test_type].checked").attr("value").toLowerCase()
+  project.test_type || $('[model*=test_type].checked').attr('value').toLowerCase()
 
 hide_unavailable_steps = ()->
-  $step = $(".project-components-step")
+  $step = $('.project-components-step')
   test_type_name = get_test_type_name()
   $next_step = $step.next()
   if test_type_name.toLowerCase() == 'functional' || test_type_name.toLowerCase() == 'localization'
-    $step.removeClass("hide")
-    $next_step.find(".wizard-step-counter").attr("data-number", 4)
+    $step.removeClass('hide')
+    $next_step.find('.wizard-step-counter').attr('data-number', 4)
     project.last_step_index = 3
   else
-    $step.addClass("hide")
-    $next_step.find(".wizard-step-counter").attr("data-number", 3)
+    $step.addClass('hide')
+    $next_step.find('.wizard-step-counter').attr('data-number', 3)
     project.last_step_index = 2
 
-$("body").on "click", ".option-count .decrement, .option-count .increment", ->
+$('body').on 'click', '.option-count .decrement, .option-count .increment', ->
   $btn = $(this)
-  increment = $btn.hasClass("increment")
+  increment = $btn.hasClass('increment')
   decrement = !increment
-  $input_wrap = $btn.closest(".input-wrap")
-  $option_count = $input_wrap.closest(".option-count")
-  $platforms_input = $option_count.closest("div.platforms-input")
-  if $platforms_input.hasClass("touched")
-    $platforms_input.addClass("touched")
-  $input = $input_wrap.find("input")
+  $input_wrap = $btn.closest('.input-wrap')
+  $option_count = $input_wrap.closest('.option-count')
+  $platforms_input = $option_count.closest('div.platforms-input')
+  if $platforms_input.hasClass('touched')
+    $platforms_input.addClass('touched')
+  $input = $input_wrap.find('input')
 
   $input.focus()
   step = 1
@@ -763,60 +766,60 @@ $("body").on "click", ".option-count .decrement, .option-count .increment", ->
 
   if value != new_value
     $input.trigger_val(new_value)
-    $input.trigger("dom_change")
+    $input.trigger('dom_change')
 
 log_tags = false
 set_presence_class = ()->
   $input = $(this)
-  if $input.hasClass("string") || $input.hasClass("tags")
-    val = $input.find("input").val()
+  if $input.hasClass('string') || $input.hasClass('tags')
+    val = $input.find('input').val()
   else
-    val = $input.find("textarea").val()
+    val = $input.find('textarea').val()
 
   if is_present(val)
-    $input.addClass("not-empty").removeClass("empty")
+    $input.addClass('not-empty').removeClass('empty')
   else
-    $input.addClass("empty").removeClass("not-empty")
+    $input.addClass('empty').removeClass('not-empty')
 
-inputs_selector_for_presence =  ".input.string, .input.text, .input[as=tags]"
+inputs_selector_for_presence =  '.input.string, .input.text, .input[as=tags]'
 
-$("body").on "change keyup", inputs_selector_for_presence, ()->
+$('body').on 'change keyup', inputs_selector_for_presence, ()->
   set_presence_class.call(this)
 
-$("body").on "focus focusin focusout", ".input", (e)->
+$('body').on 'focus focusin focusout', '.input', (e)->
   $input = $(this)
-  if e.type == 'focusout' && !$input.hasClass("touched")
-    $input.addClass("touched")
-    $input.trigger("touched")
+  if e.type == 'focusout' && !$input.hasClass('touched')
+    $input.addClass('touched')
+    $input.trigger('touched')
   if e.type == 'focusin' || e.type == 'focus'
-    $input.addClass("focus")
+    $input.addClass('focus')
   else
-    $input.removeClass("focus")
+    $input.removeClass('focus')
 
   if e.type == 'focusin' || e.type == 'focus'
-    $step = $input.closest(".wizard-step")
-    step_id = parseInt($step.attr("step"))
+    $step = $input.closest('.wizard-step')
+    step_id = parseInt($step.attr('step'))
     change_step(step_id, $step, false)
 
-$("body").on "click", ".input.collection-checkboxes", ()->
+$('body').on 'click', '.input.collection-checkboxes', ()->
   $input = $(this)
-  $input.addClass("touched")
+  $input.addClass('touched')
 
 change_step = (step_id, $current_step = null, check_for_current_step_id = true)->
   if !check_for_current_step_id || step_id != project.current_step_id
 
     # validate current step before change
     $current_step ?= $(".wizard-step[step=#{project.current_step_id}]")
-    $current_step.addClass("changed-from-this")
-    $current_step.find(".input").each ()->
+    $current_step.addClass('changed-from-this')
+    $current_step.find('.input').each ()->
       $input = $(this)
       validate_input.call($input)
 
     project.current_step_id = step_id
-    $visible_steps = $(".configuration-steps .wizard-step:not(.hide)")
+    $visible_steps = $('.configuration-steps .wizard-step:not(.hide)')
     available_step_ids = $visible_steps.map(
       (index, item)->
-        local_step_id = $(item).attr("step")
+        local_step_id = $(item).attr('step')
         if local_step_id == undefined  || local_step_id == null
           return null
         return parseInt(local_step_id)
@@ -828,7 +831,7 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
     available_prev_step = available_step_ids.indexOf(step_id) > 0
     $target = $current_step
     if !$target || !$target.length
-      $target = $("body")
+      $target = $('body')
 
     changed_available_next_step = available_next_step != project.available_next_step
     project.available_next_step = available_next_step
@@ -839,7 +842,7 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
       project.next_step_id = null
 
     if changed_available_next_step
-      $target.trigger("change.project.available_next_step")
+      $target.trigger('change.project.available_next_step')
 
     changed_available_prev_step = available_prev_step != project.available_prev_step
     project.available_prev_step = available_prev_step
@@ -850,18 +853,18 @@ change_step = (step_id, $current_step = null, check_for_current_step_id = true)-
       project.prev_step_id = null
 
     if changed_available_prev_step
-      $target.trigger("change.project.available_prev_step")
+      $target.trigger('change.project.available_prev_step')
 
-    $('body').trigger("change.project.current_step_id")
+    $('body').trigger('change.project.current_step_id')
 
-$("body").on "change.project.current_step_id", ()->
+$('body').on 'change.project.current_step_id', ()->
   if project.current_step_id == null
     prev_step_number = parseInt($('.wizard-step:visible:last .wizard-step-counter').attr('data-number'))
   step_id = project.current_step_id
   $step = $(".wizard-step[step=#{step_id}]")
-  $(".wizard-step.active").removeClass("active")
-  $step.addClass("active")
-  number = $step.find(".wizard-step-counter").attr("data-number")
+  $('.wizard-step.active').removeClass('active')
+  $step.addClass('active')
+  number = $step.find('.wizard-step-counter').attr('data-number')
 
   prev_step_number ?= number - 1
   $prev_step_number = $('.go-back-button .prev-step-number')
@@ -869,127 +872,127 @@ $("body").on "change.project.current_step_id", ()->
   if prev_step_number > 0
     $prev_step_number.text(prev_step_number)
   else
-    $prev_step_number.text("")
+    $prev_step_number.text('')
 
   if !project.next_step_id
-    $(".rf-next-step-button").hide()
-    $(".rf-go-to-summary-button").fadeIn()
+    $('.rf-next-step-button').hide()
+    $('.rf-go-to-summary-button').fadeIn()
   else
-    $(".rf-go-to-summary-button").hide()
-    $(".rf-next-step-button").fadeIn()
+    $('.rf-go-to-summary-button').hide()
+    $('.rf-next-step-button').fadeIn()
 
   if !!project.current_step_id
-    $mini_summary_large_confirm_button = $("#wizard-summary .rf-confirm-button")
+    $mini_summary_large_confirm_button = $('#wizard-summary .rf-confirm-button')
     $mini_summary_large_confirm_button.hide()
   else
-    $(".rf-go-to-summary-button").hide()
+    $('.rf-go-to-summary-button').hide()
 
-$("body").on "click", ".rf-go-to-summary-button", ()->
-  $(".wizard-step.active").removeClass("active")
-  top = $("#wizard-full-summary").offset().top - $("#header").height() - 50
-  $("html, body").animate({scrollTop: top})
+$('body').on 'click', '.rf-go-to-summary-button', ()->
+  $('.wizard-step.active').removeClass('active')
+  top = $('#wizard-full-summary').offset().top - $('#header').height() - 50
+  $('html, body').animate({scrollTop: top})
 
   project.prev_step_id = project.current_step_id
   project.current_step_id = null
   $button = $(this)
   $button.hide()
-  $mini_summary_large_confirm_button = $("#wizard-summary .rf-confirm-button")
+  $mini_summary_large_confirm_button = $('#wizard-summary .rf-confirm-button')
   $mini_summary_large_confirm_button.fadeIn()
-  $('body').trigger("change.project.current_step_id")
+  $('body').trigger('change.project.current_step_id')
 
-$("body").on "change.project.available_next_step", ()->
+$('body').on 'change.project.available_next_step', ()->
   if project.available_next_step
-    $(".rf-next-step-button").fadeIn()
+    $('.rf-next-step-button').fadeIn()
   else
-    $(".rf-next-step-button").fadeOut()
+    $('.rf-next-step-button').fadeOut()
 
-$("body").on "change.project.available_prev_step", ()->
-  $go_back_wrap = $(".or-go-back-wrap")
+$('body').on 'change.project.available_prev_step', ()->
+  $go_back_wrap = $('.or-go-back-wrap')
   if project.available_prev_step
-    $go_back_wrap.removeClass("hide")
+    $go_back_wrap.removeClass('hide')
     $go_back_wrap.fadeIn()
   else
     $go_back_wrap.fadeOut()
 
 init_string_inputs = ()->
-  $(".input.string").each ->
+  $('.input.string').each ->
     $input = $(this)
-    val = $input.find("input").val()
+    val = $input.find('input').val()
     if is_present(val)
-      $input.addClass("not-empty")
+      $input.addClass('not-empty')
     else
-      $input.removeClass("not-empty")
+      $input.removeClass('not-empty')
 
 init_tags_input = ()->
-  $input = $('.input[model="project.main_components"] input')
+  $input = $(".input[model='project.main_components'] input")
   val = $input.val()
-  $input_wrap = $input.closest(".input")
+  $input_wrap = $input.closest('.input')
 
   if is_present(val)
-    $input_wrap.addClass("not-empty").removeClass("empty")
+    $input_wrap.addClass('not-empty').removeClass('empty')
   else
-    $input_wrap.addClass("empty").removeClass("not-empty")
+    $input_wrap.addClass('empty').removeClass('not-empty')
 
   $input.tagsInput({
     width: 'auto'
-    defaultText: ""
+    defaultText: ''
     onRemoveTag: ()->
       $html_input = $(this)
-      $input = $html_input.closest(".input")
-      $html_input.trigger("change")
+      $input = $html_input.closest('.input')
+      $html_input.trigger('change')
 
     onAddTag: ()->
       $html_input = $(this)
-      $input = $html_input.closest(".input")
-      $html_input.trigger("change")
+      $input = $html_input.closest('.input')
+      $html_input.trigger('change')
 
     onChange: ()->
       $html_input = $(this)
-      $input = $html_input.closest(".input")
-      $html_input.trigger("change")
-      empty = !($input.children().filter("input").val().length)
+      $input = $html_input.closest('.input')
+      $html_input.trigger('change')
+      empty = !($input.children().filter('input').val().length)
       if empty
-        $input.addClass("empty").removeClass("not-empty")
+        $input.addClass('empty').removeClass('not-empty')
       else
-        $input.addClass("not-empty").removeClass("empty")
+        $input.addClass('not-empty').removeClass('empty')
   })
 
-$("body").on "click", ".input.image-radio-button", ()->
-  $(this).trigger("focusin")
+$('body').on 'click', '.input.image-radio-button', ()->
+  $(this).trigger('focusin')
 
-$("body").on "click", ".input.tags label", ()->
-  $input = $(this).closest(".input")
-  $input.find("div.tagsinput").trigger("click")
+$('body').on 'click', '.input.tags label', ()->
+  $input = $(this).closest('.input')
+  $input.find('div.tagsinput').trigger('click')
 
-$("body").on "change.project.product_type", ()->
-  $project_test_type = $("#project-test-type")
+$('body').on 'change.project.product_type', ()->
+  $project_test_type = $('#project-test-type')
 
   if project.product_type
     $project_test_type.fadeIn()
   if small() && !project.test_type
     top = $project_test_type.offset().top
-    $("body").animate({scrollTop: top})
+    $('body').animate({scrollTop: top})
 
   if wizard_form.is_persisted.apply(wizard_form)
     update_price()
-    $platforms_step = $(".wizard-step[type=platforms]")
+    $platforms_step = $('.wizard-step[type=platforms]')
     step_types['platforms'].checkIsCompleted.apply($platforms_step)
     showStepsProgress()
 
-$("body").on "change.project.test_type", ()->
+$('body').on 'change.project.test_type', ()->
   if project.test_type
-    $("#project-product-type").fadeIn()
-    $(".rf-configure-button, .rf-step-configure-button").fadeIn()
+    $('#project-product-type').fadeIn()
+    $('.rf-configure-button, .rf-step-configure-button').fadeIn()
 
   enable_checkout_button_if_project_valid()
-  $exploratory_instructions_block = $("#wizard-full-summary .exploratory_instructions_block")
-  if wizard_form.is_persisted.apply(wizard_form) && project.methodology_type == "exploratory"
+  $exploratory_instructions_block = $('#wizard-full-summary .exploratory_instructions_block')
+  if wizard_form.is_persisted.apply(wizard_form) && project.methodology_type == 'exploratory'
     $exploratory_instructions_block.fadeIn()
   else
     $exploratory_instructions_block.fadeOut()
 
 window.get_test_invalid_steps = ()->
-  $(".configuration-steps .wizard-step:not(.hide):not(.completed)")
+  $('.configuration-steps .wizard-step:not(.hide):not(.completed)')
 
 is_valid_project = (steps)->
   valid_project = wizard_form.is_persisted.apply(wizard_form)
@@ -1000,108 +1003,109 @@ is_valid_project = (steps)->
   valid_project
 
 enable_checkout_button_if_project_valid = ()->
-  $checkout_button = $(".checkout-button")
-  $confirm_button = $(".rf-confirm-button")
+  $checkout_button = $('.checkout-button')
+  $confirm_button = $('.rf-confirm-button')
   if is_valid_project()
-    $checkout_button.removeAttr("disabled")
-    $confirm_button.removeAttr("disabled")
+    $checkout_button.removeAttr('disabled')
+    $confirm_button.removeAttr('disabled')
   else
-    $checkout_button.attr("disabled", "disabled")
-    $confirm_button.attr("disabled", "disabled")
+    $checkout_button.attr('disabled', 'disabled')
+    $confirm_button.attr('disabled', 'disabled')
 
-$("body").on "change.project.authentication_required", ()->
+$('body').on 'change.project.authentication_required', ()->
   show_or_hide_auth_credentials_inputs()
 
-$("body").on "change.project.methodology_type", ()->
+$('body').on 'change.project.methodology_type', ()->
   show_or_hide_exploratory_instructions_input()
   validate_methodology_type()
 
 show_or_hide_exploratory_instructions_input = ()->
   testing_type = $(".input[model*='project.methodology_type'] input:checked").val()
-  $input = $(".project_exploratory_instructions_input")
-  $file_input = $(".test-case-files-input")
-  $test_case_inputs_wrap = $("#test-case-driven-inputs-wrap")
+  $input = $('.project_exploratory_instructions_input')
+  $file_input = $('.test-case-files-input')
+  $test_case_inputs_wrap = $('#test-case-driven-inputs-wrap')
 
   if testing_type == 'exploratory'
-    $input.removeClass("hide")
-    $test_case_inputs_wrap.addClass("hide")
+    $input.removeClass('hide')
+    $test_case_inputs_wrap.addClass('hide')
   else
-    $input.addClass("hide")
-    $test_case_inputs_wrap.removeClass("hide")
+    $input.addClass('hide')
+    $test_case_inputs_wrap.removeClass('hide')
 
 validate_methodology_type = ()->
-  $exploratory_input = $(".project_exploratory_instructions_input")
-  $test_case_files_input = $(".test_case_files_input")
+  $exploratory_input = $('.project_exploratory_instructions_input')
+  $test_case_files_input = $('.test_case_files_input')
   if project.methodology_type == 'exploratory'
-    $test_case_files_input.removeAttr("required")
-    $test_case_files_input.removeClass("invalid-required invalid")
-    $exploratory_input.attr("required", "true")
-    if $exploratory_input.hasClass("empty")
-      $exploratory_input.addClass("invalid-required invalid")
+    $test_case_files_input.removeAttr('required')
+    $test_case_files_input.removeClass('invalid-required invalid')
+    $exploratory_input.attr('required', 'true')
+    if $exploratory_input.hasClass('empty')
+      $exploratory_input.addClass('invalid-required invalid')
     else
-      $exploratory_input.removeClass("invalid-required invalid").addClass("valid")
+      $exploratory_input.removeClass('invalid-required invalid').addClass('valid')
   else
-    $exploratory_input.removeAttr("required")
-    $exploratory_input.removeClass("invalid-required invalid")
-    $test_case_files_input.attr("required", "true")
-    if $(".test_case_files-list").children().length > 0
-      $test_case_files_input.removeClass("invalid-required invalid")
+    $exploratory_input.removeAttr('required')
+    $exploratory_input.removeClass('invalid-required invalid')
+    $test_case_files_input.attr('required', 'true')
+    if $('.test_case_files-list').children().length > 0
+      $test_case_files_input.removeClass('invalid-required invalid')
     else
-      $test_case_files_input.addClass("invalid-required invalid")
+      $test_case_files_input.addClass('invalid-required invalid')
 
-$("body").on "change code-change keyup keypress", "#project_auth_login, #project_auth_password", ()->
+$('body').on 'change code-change keyup keypress', '#project_auth_login, #project_auth_password', ()->
   validate_auth_credentials(this)
 
 validate_auth_credentials =(that) ->
   $this = $(that)
   $error = $("##{$this.attr('id')}_required_true")
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
-  if requires_auth
-    if $this.val().length > 0
-      $error.fadeOut()
-      $this.removeClass("invalid")
-    else
-      $error.fadeIn()
-      $this.addClass("invalid")
+  unless requires_auth
+    return
+  if $this.val().length > 0
+    $error.fadeOut()
+    $this.removeClass('invalid')
+  else
+    $error.fadeIn()
+    $this.addClass('invalid')
 
 show_or_hide_auth_credentials_inputs = ()->
   requires_auth = $("[model*='project.authentication_required'] input:checked").val() == 'true'
-  $input = $(".project_exploratory_instructions_input")
-  $credentials_inputs = $(".project-auth-login, .project-auth-password")
+  $input = $('.project_exploratory_instructions_input')
+  $credentials_inputs = $('.project-auth-login, .project-auth-password')
 
   if requires_auth
-    $credentials_inputs.removeClass("hide")
-    validate_auth_credentials("#project_auth_login")
-    validate_auth_credentials("#project_auth_password")
+    $credentials_inputs.removeClass('hide')
+    validate_auth_credentials('#project_auth_login')
+    validate_auth_credentials('#project_auth_password')
   else
-    $credentials_inputs.addClass("hide")
+    $credentials_inputs.addClass('hide')
 
 show_or_hide_auth_test_driven_development_inputs = ()->
   methodology_type = $("[model*='project.methodology_type'] input:checked").val() == 'true'
-  $input = $("#test-case-driven-inputs-wrap")
-  $another_inputs = $(".project-auth-login, .project-auth-password")
+  $input = $('#test-case-driven-inputs-wrap')
+  $another_inputs = $('.project-auth-login, .project-auth-password')
 
-  if methodology_type = "exploratory"
-    $another_inputs.addClass("hide")
+  if methodology_type = 'exploratory'
+    $another_inputs.addClass('hide')
   else
-    $another_inputs.removeClass("hide")
+    $another_inputs.removeClass('hide')
 
-$("body").on "change", "input.file-upload-input", ->
+$('body').on 'change', 'input.file-upload-input', ->
   input = this
   $input = $(input)
-  $upload_area = $input.closest(".upload-area")
-  list_selector = $input.attr("list-selector")
+  $upload_area = $input.closest('.upload-area')
+  list_selector = $input.attr('list-selector')
   $list = $(list_selector)
   model = $input.attr('model')
-  attachment_name = $input.attr("data-attachment-name")
-  $step = $input.closest(".wizard-step")
+  attachment_name = $input.attr('data-attachment-name')
+  $step = $input.closest('.wizard-step')
   new_files_length = input.files.length
   new_files_saved_count = 0
 
   for file in input.files
-    filename = file.name.replace(/%|:|\||@|\$|\#| /gi, "_")
+    filename = file.name.replace(/%|:|\||@|\$|\#| /gi, '_')
     if filename.match(/\\/gi)
-      chopped_name = filename.split("\\")
+      chopped_name = filename.split('\\')
       filename = chopped_name[chopped_name.length - 1]
     $list.append("<div class='file' data-temp-id='#{$list.children().length + 1}' data-file-name='#{filename}'><span class='file-name'>#{filename}</span><span class='preloader'></span><span class='delete'></span></div>")
     f = {name: filename}
@@ -1118,83 +1122,83 @@ $("body").on "change", "input.file-upload-input", ->
 
     reader.readAsDataURL(file);
 
-  data_start_temp_id = ($list.children().last().attr("data-temp-id")  || 0) + 1
+  data_start_temp_id = ($list.children().last().attr('data-temp-id')  || 0) + 1
 
   $input.simpleUpload("#{wizard_root_path}/#{project.id}/#{attachment_name}?data-temp-id-start=#{data_start_temp_id}", {
     maxFileSize: 209715200,
 
     success: (data)->
       file_name = data.data_file_name
-      $file = $list.children().filter(":not(.loaded)").filter("[data-file-name='#{file_name}']")
-      $error = $list.parent().find(".upload-error")
-      $file.attr("data-id", data.id)
-      $file.addClass("loaded")
-      $error.addClass("hide")
-      $file.find("span.preloader").hide()
+      $file = $list.children().filter(':not(.loaded)').filter("[data-file-name='#{file_name}']")
+      $error = $list.parent().find('.upload-error')
+      $file.attr('data-id', data.id)
+      $file.addClass('loaded')
+      $error.addClass('hide')
+      $file.find('span.preloader').hide()
 
     error: (error)->
-      $file = $list.children().filter(":not(.loaded)").last()
-      $error = $list.parent().find(".upload-error")
-      $file.addClass("hide")
-      $error.removeClass("hide")
-      $("#test-case-files-required-error").hide()
+      $file = $list.children().filter(':not(.loaded)').last()
+      $error = $list.parent().find('.upload-error')
+      $file.addClass('hide')
+      $error.removeClass('hide')
+      $('#test-case-files-required-error').hide()
   })
 
   $input.trigger("upload_files.#{attachment_name}")
   $input.trigger("change.#{model}")
   check_for_step_completeness.apply($step)
 
-$("body").on "click", ".file-upload-files-list .delete", ->
+$('body').on 'click', '.file-upload-files-list .delete', ->
   $file = $(this).closest('.file')
   file_index = $file.index()
-  asset_id = $file.attr("data-id")
-  $list = $file.closest(".file-upload-files-list")
+  asset_id = $file.attr('data-id')
+  $list = $file.closest('.file-upload-files-list')
   model = $list.attr('model')
-  attachment_name = $list.attr("data-attachment-name")
+  attachment_name = $list.attr('data-attachment-name')
 
   $file.remove()
   get_model_value(model).splice(file_index, 1)
 
   $.ajax({
     url: "#{wizard_root_path}/#{project.id}/#{attachment_name}/#{asset_id}"
-    type: "delete"
-    dataType: "json"
+    type: 'delete'
+    dataType: 'json'
   })
 
   $list.trigger("delete_files.#{attachment_name}")
-  $step = $list.closest(".wizard-step")
+  $step = $list.closest('.wizard-step')
   check_for_step_completeness.apply($step)
   validate_project_access_test_url_and_files()
 
-$("body").on "click", ".rf-test-case-files-upload-button", (e)->
-  $input = $("input#test_case_files")
+$('body').on 'click', '.rf-test-case-files-upload-button', (e)->
+  $input = $('#test_case_files')
   $input.click()
 
-$("body").on "click", ".rf-wizard-test-files-upload-button", (e)->
+$('body').on 'click', '.rf-wizard-test-files-upload-button', (e)->
   e.stopImmediatePropagation()
   e.preventDefault()
-  $input = $("input#test_files")
+  $input = $('#test_files')
   $input.click()
 
-$("body").on "after_push", ()->
+$('body').on 'after_push', ()->
   notifyProjectSaved()
 
-$("body").on "after_create", ()->
+$('body').on 'after_create', ()->
   state = {}
-  title = ""
+  title = ''
   url = wizard_form.update_url.apply(wizard_form)
   history.pushState(state, title, url);
 
-$("body").on "click", ".rf-configure-button, .rf-step-configure-button", (e)->
-  $(".rf-step-configure-button").attr("style", "")
-  $(".rf-step-configure-button").fadeOut()
+$('body').on 'click', '.rf-configure-button, .rf-step-configure-button', (e)->
+  $('.rf-step-configure-button').attr('style', '')
+  $('.rf-step-configure-button').fadeOut()
   init_configure_mode()
   scrollToFirstStep()
   wizard_form.push.apply(wizard_form)
   notifyProjectSaved()
 
 init_configure_mode = ()->
-  $wizard_controller.addClass("configure-mode")
+  $wizard_controller.addClass('configure-mode')
   hide_unavailable_steps()
   showStepsProgress()
   hide_unavailable_platforms()
@@ -1202,7 +1206,7 @@ init_configure_mode = ()->
   show_mini_summary()
 
 init_loaded_project = ()->
-  str = $wizard_controller.attr("test-json")
+  str = $wizard_controller.attr('test-json')
   if str
     data = JSON.parse(str)
     $.extend(window.project, data)
@@ -1212,51 +1216,51 @@ init_loaded_project = ()->
     change_step(project.current_step_id, null, false)
     scrollToStep(project.current_step_id)
 
-    $(".input[model][as]").each ()->
+    $('.input[model][as]').each ()->
       $input = $(this)
-      type = $input.attr("as")
-      model = $input.attr("model")
+      type = $input.attr('as')
+      model = $input.attr('model')
       value = byString(model);
       current_value = input_types[type].dom_value($input)
       if value != current_value
         input_types[type].set_dom_value.call($input, value)
-        $input.trigger("change")
-        $input.trigger("dom_change")
+        $input.trigger('change')
+        $input.trigger('dom_change')
         $input.trigger("change.#{model}")
 
-$("body").on "step_completed step_uncompleted", ".wizard-step", (e)->
+$('body').on 'step_completed step_uncompleted', '.wizard-step', (e)->
   $step = $(this)
-  step_id = $step.attr("step")
+  step_id = $step.attr('step')
   $progress_step = $("steps-progress .progress .step[step=#{step_id}]")
   if e.type == 'step_completed'
-    $progress_step.addClass("proceeded")
+    $progress_step.addClass('proceeded')
   else
-    $progress_step.removeClass("proceeded")
+    $progress_step.removeClass('proceeded')
 
 init_option_count_inputs = ()->
   if Modernizr.touchevents
-    $("body .option-count input").attr("type", "number")
+    $('body .option-count input').attr('type', 'number')
 
 log_project_access_test_url_and_files = false
 
 validate_project_access_test_url_and_files = ()->
-  valid = (project.project_url && project.project_url.length > 0 ) || $(".test_files-list").children().length > 0
-  $error = $("#test-url-or-files-required-error")
+  valid = (project.project_url && project.project_url.length > 0 ) || $('.test_files-list').children().length > 0
+  $error = $('#test-url-or-files-required-error')
   if (project.project_url && project.project_url.length > 0 )
     valid = validateURL(project.project_url)
     if valid
       $error.fadeOut()
     else
       $error.fadeIn()
-      $error.html("Please, provide a valid URL")
+      $error.html('Please, provide a valid URL')
   else
-    valid = $(".test_files-list").children().length > 0
+    valid = $('.test_files-list').children().length > 0
     if valid
       $error.fadeOut()
     else
-      $(".test_case_files_input .upload-error").hide()
+      $('.test_case_files_input .upload-error').hide()
       $error.fadeIn()
-      $error.html("Please, provide a valid URL or upload at least one file")
+      $error.html('Please, provide a valid URL or upload at least one file')
 
 validateURL = (url) ->
   re = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i
@@ -1274,22 +1278,22 @@ validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/
   return (name && re.test(name) && name.length <= 100) || (name.length == 0) || !name
 
-$("body").on "upload_files.test_files delete_files.test_files change.project.project_url", ()->
+$('body').on 'upload_files.test_files delete_files.test_files change.project.project_url', ()->
   validate_project_access_test_url_and_files()
 
-$("body").on "upload_files.test_case_files delete_files.test_case_files", ()->
-  $error = $("#test-case-files-required-error")
-  if $(".test_case_files-list").children().length > 0
+$('body').on 'upload_files.test_case_files delete_files.test_case_files', ()->
+  $error = $('#test-case-files-required-error')
+  if $('.test_case_files-list').children().length > 0
     $error.fadeOut()
   else
     $error.fadeIn()
 
-$("body").on "delete_files.test_files", ()->
+$('body').on 'delete_files.test_files', ()->
 
 # Initialize wizard
 
 window.project ?= {}
-window.platforms = JSON.parse($("[as=platforms]").attr("options"))
+window.platforms = JSON.parse($('[as=platforms]').attr('options'))
 init_loaded_project()
 init_option_count_inputs()
 init_string_inputs()
@@ -1307,128 +1311,128 @@ init_tags_input()
 # Step 4
 show_or_hide_auth_credentials_inputs()
 
-$(".hour").filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
+$('.hour').filter("[data-hours=#{project.hours_per_tester}]").addClass('selected')
 
-$(".wizard-step").on "disappear", ()->
-  $wizard_full_summary = $("#wizard-full-summary")
-  active_summary = $wizard_full_summary.filter(":appeared").length > 0
+$('.wizard-step').on 'disappear', ()->
+  $wizard_full_summary = $('#wizard-full-summary')
+  active_summary = $wizard_full_summary.filter(':appeared').length > 0
   if active_summary
     project.current_step_id = null
     project.prev_step_id = project.available_step_ids[project.available_step_ids.length]
     project.next_step_id = false
 
-$("body").on "change.project.hours_per_tester", ()->
-  $hour_labels = $(".hour")
-  $hour_labels.filter(".selected").removeClass("selected")
-  $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass("selected")
+$('body').on 'change.project.hours_per_tester', ()->
+  $hour_labels = $('.hour')
+  $hour_labels.filter('.selected').removeClass('selected')
+  $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass('selected')
 
-$("body").on "keypress", "input", (e)->
+$('body').on 'keypress', 'input', (e)->
   $input = $(this)
-  $wrap = $input.closest(".input")
-  if e.which == 13 && ($input.attr('type') == 'text' || $wrap.hasClass("string") || $wrap.hasClass("url") )
+  $wrap = $input.closest('.input')
+  if e.which == 13 && ($input.attr('type') == 'text' || $wrap.hasClass('string') || $wrap.hasClass('url') )
     return false
 
-$("body .promo-code-field button").on "click", (e)->
+$('body .promo-code-field button').on 'click', (e)->
   e.preventDefault()
   $button = $(this)
-  $promo_code_field = $button.closest(".promo-code-field")
-  $label = $promo_code_field.find("label")
-  $invalid_code_error = $(".error-invalid")
-  $input = $promo_code_field.find("input")
-  $waiting_label = $promo_code_field.find(".waiting")
+  $promo_code_field = $button.closest('.promo-code-field')
+  $label = $promo_code_field.find('label')
+  $invalid_code_error = $('.error-invalid')
+  $input = $promo_code_field.find('input')
+  $waiting_label = $promo_code_field.find('.waiting')
   password = $input.val()
   data = { promo_code: { password: password } }
-  url = $("form[for=project]").attr("url") + "/" + project.id + "/promo_code"
+  url = $('form[for=project]').attr('url') + '/' + project.id + '/promo_code'
   $.ajax(
     data: data
     dataType: 'json'
-    type: "post"
+    type: 'post'
     url: url
     success: (res)->
       project.percentage_discount = res.percentage_discount
-      $promo_code_field.removeClass("waiting invalid")
-      $promo_code_field.addClass("success")
-      $(".percentage-discount").show().text(project.percentage_discount)
+      $promo_code_field.removeClass('waiting invalid')
+      $promo_code_field.addClass('success')
+      $('.percentage-discount').show().text(project.percentage_discount)
       update_price()
 
     error: ()->
-      $promo_code_field.removeClass("waiting")
-      $promo_code_field.addClass("invalid")
-      $input.removeAttr("disabled")
+      $promo_code_field.removeClass('waiting')
+      $promo_code_field.addClass('invalid')
+      $input.removeAttr('disabled')
   )
 
-  $promo_code_field.addClass("waiting")
-  $input.attr("disabled", "disabled")
+  $promo_code_field.addClass('waiting')
+  $input.attr('disabled', 'disabled')
 
-$("body .promo-code-field .cancel-promo-code").on "click", (e)->
+$('body .promo-code-field .cancel-promo-code').on 'click', (e)->
   e.preventDefault()
   $button = $(this)
-  $promo_code_field = $button.closest(".promo-code-field")
-  $label = $promo_code_field.find("label")
-  $invalid_code_error = $(".error-invalid")
-  $input = $promo_code_field.find("input")
-  $waiting_label = $promo_code_field.find(".waiting")
+  $promo_code_field = $button.closest('.promo-code-field')
+  $label = $promo_code_field.find('label')
+  $invalid_code_error = $('.error-invalid')
+  $input = $promo_code_field.find('input')
+  $waiting_label = $promo_code_field.find('.waiting')
   data = {}
-  url = $("form[for=project]").attr("url") + "/" + project.id + "/promo_code"
+  url = $('form[for=project]').attr('url') + '/' + project.id + '/promo_code'
   $.ajax(
     data: data
     dataType: 'json'
-    type: "delete"
+    type: 'delete'
     url: url
     success: (res)->
       project.percentage_discount = 0
-      $promo_code_field.removeClass("waiting invalid")
-      $promo_code_field.removeClass("success")
-      $input.removeAttr("disabled")
-      $(".percentage-discount").hide()
+      $promo_code_field.removeClass('waiting invalid')
+      $promo_code_field.removeClass('success')
+      $input.removeAttr('disabled')
+      $('.percentage-discount').hide()
       update_price()
     error: ()->
-      $promo_code_field.removeClass("waiting")
-      $promo_code_field.addClass("invalid")
-      $input.attr("disabled", "disabled")
+      $promo_code_field.removeClass('waiting')
+      $promo_code_field.addClass('invalid')
+      $input.attr('disabled', 'disabled')
   )
 
-  $promo_code_field.addClass("waiting")
-  $input.attr("disabled", "disabled")
+  $promo_code_field.addClass('waiting')
+  $input.attr('disabled', 'disabled')
 
-$(".checkout-button, .confirm-button-container").on "click", (e)->
+$('.checkout-button, .confirm-button-container').on 'click', (e)->
   $button = $(this)
   $invalid_test_steps = get_test_invalid_steps()
   if !is_valid_project($invalid_test_steps)
-    $popup = $("#invalid_fields_popup")
+    $popup = $('#invalid_fields_popup')
     openPopup($popup)
-    $invalid_steps_list = $popup.find("div.invalid-steps-list")
-    invalid_steps_list_items_html = ""
+    $invalid_steps_list = $popup.find('div.invalid-steps-list')
+    invalid_steps_list_items_html = ''
 
     $invalid_test_steps.each ()->
       $step = $(this)
-      step_name = $step.attr("data-name")
-      step_number = $step.find(".wizard-step-counter").attr("data-number")
-      step_id = $step.attr("step")
-      invalid_fields_html = ""
-      $fields = $step.find(".input.invalid, :not(.input) .error:visible, .set-error.invalid")
-      $fields.addClass("touched")
-      $fields.filter(".input").addClass("touched")
+      step_name = $step.attr('data-name')
+      step_number = $step.find('.wizard-step-counter').attr('data-number')
+      step_id = $step.attr('step')
+      invalid_fields_html = ''
+      $fields = $step.find('.input.invalid, :not(.input) .error:visible, .set-error.invalid')
+      $fields.addClass('touched')
+      $fields.filter('.input').addClass('touched')
       $fields.each ()->
         $this = $(this)
         $field = $this
-        if $this.filter(".error").length
-          if $this.closest(".input").length > 0
+        if $this.filter('.error').length
+          if $this.closest('.input').length > 0
             return
-        if $this.filter(".input").length
-          field_name = $field.attr("data-name") || $field.find(".placeholder").text()
-          field_html_id = $field.attr("id") || $field.attr("data-input-id") || $field.find("input, textarea").attr("id")
-        else if $this.filter(".error").length
-          field_name = $field.attr("data-field-name") || $field.attr('data-group-name') || $field.text()
-          field_html_id = $field.attr("for") || $field.attr("data-input-id")
-        else if $this.filter(".set-error").length
-          field_name = $field.attr("data-field-name") || $field.text()
-          field_html_id = $field.attr("data-input-id") || $field.attr("for")
+        if $this.filter('.input').length
+          field_name = $field.attr('data-name') || $field.find('.placeholder').text()
+          field_html_id = $field.attr('id') || $field.attr('data-input-id') || $field.find('input, textarea').attr('id')
+        else if $this.filter('.error').length
+          field_name = $field.attr('data-field-name') || $field.attr('data-group-name') || $field.text()
+          field_html_id = $field.attr('for') || $field.attr('data-input-id')
+        else if $this.filter('.set-error').length
+          field_name = $field.attr('data-field-name') || $field.text()
+          field_html_id = $field.attr('data-input-id') || $field.attr('for')
         if field_html_id
           field_link = "##{field_html_id}"
         else
           field_link = false
-        href_str = ""
+        href_str = ''
         if field_link
           href_str = "href='#{field_link}'"
         invalid_fields_html += "<div><a class='invalid-field-link' #{href_str}>#{field_name}</a></div>"
@@ -1438,26 +1442,26 @@ $(".checkout-button, .confirm-button-container").on "click", (e)->
     $invalid_steps_list.html(invalid_steps_list_items_html)
     return false
 
-$(".popup.invalid-fields").on "click", ".invalid-field-link", (e)->
+$('.popup.invalid-fields').on 'click', '.invalid-field-link', (e)->
   $link = $(this)
   e.preventDefault()
   $link.closeDialog()
-  selector = $link.attr("href")
+  selector = $link.attr('href')
   scroll_to_step = true
   $target = null
-  step_id = $link.closest("div.step").attr("step-id")
+  step_id = $link.closest('div.step').attr('step-id')
   if scroll_to_step
-    $target = $(".wizard-step").filter("[step=#{step_id}]")
+    $target = $('.wizard-step').filter("[step=#{step_id}]")
   else
     $target = $(selector)
   top = $target.offset().top - 128
   change_step(step_id)
-  $("body").animate(scrollTop: top)
+  $('body').animate(scrollTop: top)
 
-$("form[for]").on "submit", (e)->
+$('form[for]').on 'submit', (e)->
   e.preventDefault()
   return false
 
-$("form[for]").on "keyup", "input", (e)->
+$('form[for]').on 'keyup', 'input', (e)->
   if e.which == 13
     return false
