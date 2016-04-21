@@ -23,7 +23,7 @@
                         .my-column
                           .content
                             .type-of-test-logo class=("ux" if project.usability_test?)
-                              = embedded_svg_from_absolute_path(project.type_of_test_logo)
+                              = image_tag (project.type_of_test_logo)
                             .project-name
                               = project.pi__project_name
                             .steps-completed
@@ -36,7 +36,7 @@
                             .type-of-test-wrap
                               .type-of-test-icon
                                 .svg-wrap
-                                  = image_tag("#{project.type_of_product_logo_path}.svg")
+                                  = image_tag(project.type_of_product_logo_path)
                               .type-of-test
                                 = project.type_of_test
                               /.testing-type ng-show="project.testing_type && project.testing_type.length"
@@ -100,15 +100,12 @@
                         .project-name
                           = project.project_name
                         .dropdown-arrow.collapsed
-                          = embedded_svg_from_assets("rf-icon-arrow-left")
+                          = image_tag("rf-icon-arrow-left.svg")
 
                       .project-status class=(project.successful? ? 'success' : 'failure' )
                         - if project.successful?
                           .success-svg-wrap
-                            = embedded_svg_from_assets("rf-icon-ok")
-                        - else
-                          /.fail-svg-wrap
-                            = embedded_svg_from_assets("close")
+                            = image_tag("rf-icon-ok.svg")
                       .finished-project-short-info collapsable-content=""
                         /.row
                         .columns.large-12.property
