@@ -6,8 +6,6 @@
     background-color: $light-black-color
     height: 145px
     padding: 0 24px
-
-
     .currency
       color: $yellow-orange-color
       display: inline
@@ -50,7 +48,7 @@
   .not-certain
     padding-top: 15px
   .content
-    height: 380px
+    height: 390px
     background-color: $white-color
     padding: 0 24px
     .text-content
@@ -161,6 +159,12 @@
         float: right
         position: relative
         padding-top: 0
+
+@media #{medium-only}
+  .plans-section
+    .not-certain
+      position: relative
+      top: 15px
 
 li.feedback
   list-style: none
