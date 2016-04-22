@@ -77,7 +77,7 @@ $('body').on 'click', '[open-popup]', (event)->
           condition = $this.closest('.ngdialog').length > 0
         if condition
           event.preventDefault()
-          $current_popup = $(this).closest('.ngdialog')
+          $current_popup = $this.closest('.ngdialog')
           $current_popup.addClass('hide')
           popup_name = $this.attr('open-popup')
           if $this.attr('requires-auth') && $('html').attr('data-logged-in') != 'true'
