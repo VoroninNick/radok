@@ -130,11 +130,11 @@ window.step_types = {
   }
   'project_info' : {
     checkIsCompleted : ()->
-      valid_name = (project.project_name && project.project_name.length > 0) && project.project_name.length < 100
-      valid_version = (project.project_version && project.project_version.length > 0) && project.project_version.length < 20
+      valid_name = project.project_name && project.project_name.length > 0 && project.project_name.length < 100
+      valid_version = project.project_version && project.project_version.length > 0 && project.project_version.length < 20
       valid_project_languages = project.project_languages && project.project_languages.length > 0
       valid_report_languages = project.report_languages && project.report_languages.length > 0
-      valid_comment = (project.project_info_comment && project.project_info_comment.length < 500) || !project.project_info_comment
+      valid_comment = (project.project_info_comment && project.project_info_comment.length < 500) || !project.project_info_comment || project.project_info_comment.length == 0
       valid_name && valid_version && valid_project_languages && valid_report_languages && valid_comment
   }
   'project_components' : {
