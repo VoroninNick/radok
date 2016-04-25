@@ -347,21 +347,22 @@ $.fn.validateInput = ->
     if validation_options.indexOf('name') >= 0
       result = validateName(value)
     if validation_options.indexOf('username') >= 0
-      result = validateUsername(value)
+      result = validateCredentials(value)
     if validation_options.indexOf('password') >= 0
-      valid = validatePassword(value)
+      result = validateCredentials(value)
     if validation_options.indexOf('address') >= 0
       valid = validateAddress(value)
     if max_length
       valid = ($rf_input.val().length < max_length)
 
-    valid = result.min && result.max && result.match
-    if !result.match
-      $rf_input.find('.error.invalid').html($rf_input.find('input').attr('invalid_message'))
-    if !result.min
-      $rf_input.find('.error.invalid').html('Input is too short!!')
-    if !result.max
-      $rf_input.find('.error.invalid').html('Input is too long!!')
+    if result
+      valid = (result.min && result.max && result.match)
+      if !result.match
+        $rf_input.find('.error.invalid').html($rf_input.find('input').attr('invalid_message'))
+      if !result.min
+        $rf_input.find('.error.invalid').html('Input is too short!!')
+      if !result.max
+        $rf_input.find('.error.invalid').html('Input is too long!!')
 
     if valid
       $rf_input.find('.error.invalid').addClass('hide')
@@ -406,7 +407,7 @@ validateName = (name) ->
   min = name.length >= 8
   return (match: match, max: max, min: min)
 
-validateUsername = (username) ->
+validateCredentials = (username) ->
   re = /^[\w]+$/
   match = re.test(username)
   max = username.length <= 100
