@@ -348,6 +348,8 @@ $.fn.validateInput = ->
       result = validateName(value)
     if validation_options.indexOf('username') >= 0
       result = validateCredentials(value)
+    if validation_options.indexOf('sign_in') >= 0
+      result = validateSignInCredentials(value)
     if validation_options.indexOf('password') >= 0
       result = validateCredentials(value)
     if validation_options.indexOf('address') >= 0
@@ -405,6 +407,12 @@ validateName = (name) ->
   match = re.test(name)
   max = name.length <= 100
   min = name.length >= 8
+  return (match: match, max: max, min: min)
+
+validateSignInCredentials = (value) ->
+  match = validateCredentials(value).match || validateEmail(value)
+  max = value.length <= 255
+  min = value.length >= 6
   return (match: match, max: max, min: min)
 
 validateCredentials = (username) ->

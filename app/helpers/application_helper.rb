@@ -138,12 +138,12 @@ module ApplicationHelper
         options[:invalid_message] = "Please, enter a valid email"
       elsif options[:validation].include?("phone")
         options[:invalid_message] = "Please, enter a valid phone number"
-      elsif options[:validation].include?("username")
-        options[:invalid_message] = "Can contain only letters"
+      elsif (options[:validation].include?("username") || options[:validation].include?("password"))
+        options[:invalid_message] = "Can contain only letters and digits"
       elsif (options[:validation].include?("name") || options[:validation].include?("address"))
         options[:invalid_message] = "Can contain letters, hyphens, apostrophes"
-      elsif options[:validation].include?("password")
-        options[:invalid_message] = "Can contain only letters and numbers"
+      elsif options[:validation].include?("sign_in")
+        options[:invalid_message] = "Provide valid name or email"
       end
     end
 
