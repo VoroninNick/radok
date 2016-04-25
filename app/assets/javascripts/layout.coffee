@@ -369,6 +369,13 @@ $.fn.validateInput = ->
       else
         $rf_input.find('.error.invalid').removeClass('hide')
 
+    if validation_options.indexOf('password') >= 0
+      valid = validatePassword(value)
+      if valid
+        $rf_input.find('.error.invalid').addClass('hide')
+      else
+        $rf_input.find('.error.invalid').removeClass('hide')
+
     if validation_options.indexOf('address') >= 0
       valid = validateAddress(value)
       if valid
@@ -421,6 +428,11 @@ validateName = (name) ->
 validateUsername = (username) ->
   re = /^[a-zA-Z\s]+$/
   return re.test(username) && username.length <= 100
+
+validatePassword = (password) ->
+  re = /^[\w]+$/
+  return re.test(password) && password.length <= 50
+
 
 validateAddress = (address) ->
   re = /^[a-zA-Z\-'\s]+$/

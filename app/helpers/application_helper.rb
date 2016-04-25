@@ -142,6 +142,8 @@ module ApplicationHelper
         options[:invalid_message] = "Can contain only letters"
       elsif (options[:validation].include?("name") || options[:validation].include?("address"))
         options[:invalid_message] = "Can contain letters, hyphens, apostrophes"
+      elsif options[:validation].include?("password")
+        options[:invalid_message] = "Can contain only letters and numbers"
       end
     end
 
