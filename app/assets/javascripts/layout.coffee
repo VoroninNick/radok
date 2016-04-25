@@ -356,6 +356,8 @@ $.fn.validateInput = ->
       valid = validateAddress(value)
     if validation_options.indexOf('billing_address') >= 0
       result = validateBillingAddress(value)
+    if validation_options.indexOf('zip_code') >= 0
+      result = validateZipCode(value)
     if max_length
       valid = ($rf_input.val().length < max_length)
 
@@ -427,6 +429,11 @@ validateCredentials = (username) ->
 validateAddress = (address) ->
   re = /^[a-zA-Z\-'\s]+$/
   return re.test(address) && address.length <= 100
+
+validateZipCode = (zip_code) ->
+  max = zip_code.length <= 20
+  min = zip_code.length >= 5
+  return (match: true, max: max, min: min)
 
 validateBillingAddress = (address) ->
   max = address.length <= 200

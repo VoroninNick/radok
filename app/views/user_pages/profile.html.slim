@@ -65,7 +65,7 @@
                     .columns.large-6.inputs-group
                       = rf_input name: 'user[country]', label: 'Country', value: @user.country, validation: 'address'
                       = rf_input name: 'user[city]', label: 'City', value: @user.city, validation: 'address'
-                      = rf_input name: 'user[zip_code]', label: 'ZIP code', value: @user.zip_code
+                      = rf_input name: 'user[zip_code]', label: 'ZIP code', value: @user.zip_code, validation: 'zip_code'
                       = rf_input name: 'user[billing_address]', label: 'Billing address', value: @user.billing_address, validation: 'billing_address'
 
                 .columns.large-2.pull-right
