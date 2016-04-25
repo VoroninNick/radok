@@ -354,6 +354,8 @@ $.fn.validateInput = ->
       result = validateCredentials(value)
     if validation_options.indexOf('address') >= 0
       valid = validateAddress(value)
+    if validation_options.indexOf('billing_address') >= 0
+      result = validateBillingAddress(value)
     if max_length
       valid = ($rf_input.val().length < max_length)
 
@@ -425,6 +427,11 @@ validateCredentials = (username) ->
 validateAddress = (address) ->
   re = /^[a-zA-Z\-'\s]+$/
   return re.test(address) && address.length <= 100
+
+validateBillingAddress = (address) ->
+  max = address.length <= 200
+  min = address.length >= 6
+  return (match: true, max: max, min: min)
 
 $('body').on 'change blur keyup', 'form .rf-input', (event)->
   $rf_input = $(this)
