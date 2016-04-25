@@ -326,16 +326,8 @@ $.fn.validateInput = ->
   validation_options = validation_options_str.split(' ')
 
   if valid
-    if validation_options.indexOf('email') >= 0
-      valid = validateEmail(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
     if validation_options.indexOf('confirm_password') >= 0
       valid = validateConfirmPassword($rf_input)
-
       $identical_error = $rf_input.find('.error.identical')
       if $identical_error.length
         $identical_error.removeClass('hide')
@@ -348,47 +340,33 @@ $.fn.validateInput = ->
       else
         $rf_input.parent().find('.error.remote.identical').removeClass('hide')
 
+    if validation_options.indexOf('email') >= 0
+      valid = validateEmail(value)
     if validation_options.indexOf('phone') >= 0
       valid = validatePhoneNumber(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
     if validation_options.indexOf('name') >= 0
-      valid = validateName(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
+      result = validateName(value)
     if validation_options.indexOf('username') >= 0
-      valid = validateUsername(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
+      result = validateUsername(value)
     if validation_options.indexOf('password') >= 0
       valid = validatePassword(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
     if validation_options.indexOf('address') >= 0
       valid = validateAddress(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
     if max_length
-      valid = (value.length < max_length)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
+      valid = ($rf_input.val().length < max_length)
+
+    valid = result.min && result.max && result.match
+    if !result.match
+      $rf_input.find('.error.invalid').html($rf_input.find('input').attr('invalid_message'))
+    if !result.min
+      $rf_input.find('.error.invalid').html('Input is too short!!')
+    if !result.max
+      $rf_input.find('.error.invalid').html('Input is too long!!')
+
+    if valid
+      $rf_input.find('.error.invalid').addClass('hide')
+    else
+      $rf_input.find('.error.invalid').removeClass('hide')
 
   if !valid
     $form.addClass('invalid').removeClass('valid')
@@ -423,16 +401,17 @@ validatePhoneNumber = (number) ->
 
 validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/
-  return re.test(name) && name.length <= 100
+  match = re.test(name)
+  max = name.length <= 100
+  min = name.length >= 8
+  return (match: match, max: max, min: min)
 
 validateUsername = (username) ->
-  re = /^[a-zA-Z\s]+$/
-  return re.test(username) && username.length <= 100
-
-validatePassword = (password) ->
   re = /^[\w]+$/
-  return re.test(password) && password.length <= 50
-
+  match = re.test(username)
+  max = username.length <= 100
+  min = username.length >= 8
+  return (match: match, max: max, min: min)
 
 validateAddress = (address) ->
   re = /^[a-zA-Z\-'\s]+$/
