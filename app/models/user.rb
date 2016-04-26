@@ -2,46 +2,42 @@
 #
 # Table name: users
 #
-#  id                      :integer          not null, primary key
-#  encrypted_password      :string           default(""), not null
-#  reset_password_token    :string
-#  reset_password_sent_at  :datetime
-#  remember_created_at     :datetime
-#  sign_in_count           :integer          default(0), not null
-#  current_sign_in_at      :datetime
-#  last_sign_in_at         :datetime
-#  current_sign_in_ip      :string
-#  last_sign_in_ip         :string
-#  confirmation_token      :string
-#  confirmed_at            :datetime
-#  confirmation_sent_at    :datetime
-#  unconfirmed_email       :string
-#  first_name              :string
-#  last_name               :string
-#  country                 :string
-#  city                    :string
-#  zip_code                :integer
-#  company_url             :string
-#  username                :string
-#  image                   :string
-#  email                   :string
-#  billing_cardholder_name :string
-#  billing_address         :string
-#  billing_card_number     :string
-#  billing_cvv_number      :string
-#  full_name               :string
-#  subscribed              :boolean
-#  avatar_file_name        :string
-#  avatar_content_type     :string
-#  avatar_file_size        :integer
-#  avatar_updated_at       :datetime
-#  created_at              :datetime
-#  updated_at              :datetime
-#  role                    :string
-#  phone                   :string
-#  provider                :string
-#  uid                     :string
-#  saved_at                :datetime
+#  id                     :integer          not null, primary key
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string
+#  last_sign_in_ip        :string
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
+#  first_name             :string
+#  last_name              :string
+#  country                :string
+#  city                   :string
+#  zip_code               :integer
+#  company_url            :string
+#  username               :string
+#  image                  :string
+#  email                  :string
+#  full_name              :string
+#  subscribed             :boolean
+#  phone                  :string
+#  avatar_file_name       :string
+#  avatar_content_type    :string
+#  avatar_file_size       :integer
+#  avatar_updated_at      :datetime
+#  created_at             :datetime
+#  updated_at             :datetime
+#  role                   :string
+#  provider               :string
+#  uid                    :string
+#  saved_at               :datetime
 #
 
 class User < ActiveRecord::Base

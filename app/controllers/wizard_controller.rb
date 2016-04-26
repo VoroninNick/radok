@@ -1,55 +1,41 @@
 class WizardController < ApplicationController
-
   before_action :authenticate, only: [:dashboard_projects, :delete_dashboard_project]
-
   before_action :set_wizard_options, only: [:edit_or_show, :new, :new_and_allow]
 
   def edit_or_show
     @project = Wizard::Test.find(params[:id])
-
     @created = true
     @head_title = "Wizard Test ##{@project.id}"
-
-    @wizard_options = {
-        step_disabled_unless_active_or_proceeded: false
-    }
+    @wizard_options = { step_disabled_unless_active_or_proceeded: false }
 
     if !@project.completed?
-      set_page_metadata("wizard")
+      set_page_metadata('wizard')
       @head_title = @project.project_name
-      render "new"
+      render 'new'
     else
-      redirect_to  dashboard_project_path(id: @project.id)
+      redirect_to dashboard_project_path(id: @project.id)
     end
   end
 
   def set_wizard_options
     @product_type_names = Wizard::ProductType.all.pluck(:name).to_json
     @test_type_names = Wizard::TestType.all.pluck(:name).to_json
-
     @product_types = Wizard::ProductType.all
     @test_types = Wizard::TestType.all
-
     @root_platforms = Wizard::Platform.roots
     @platforms_json = @root_platforms.map(&:recursive_to_hash).to_json
-
     @project_languages = Wizard::ProjectLanguage.all.pluck(:name)
     @report_languages = Wizard::ReportLanguage.all.pluck(:name)
-
     @platform_ids_by_product_type = Wizard::ProductType.platform_ids_by_product_type
   end
 
   def new
-    @head_title = "Wizard"
+    @head_title = 'Wizard'
     @project = Wizard::Test.new
-    #last_test = Wizard::Test.last
-    #id =  last_test.id + 1
     id = rand(1000)
     @project.project_name = "Test ##{id}"
-    @project.methodology_type ||= "exploratory"
-
+    @project.methodology_type ||= 'exploratory'
     @intro_step = true
-
     @all_platforms = Wizard::Platform.roots
 
     (@all_platforms.map(&:id) - @project.platforms.map(&:id)).each do |p_id|
@@ -58,59 +44,39 @@ class WizardController < ApplicationController
       @project.platforms << p
     end
 
-    @wizard_options = {
-        step_disabled_unless_active_or_proceeded: false
-    }
+    @wizard_options = { step_disabled_unless_active_or_proceeded: false }
 
-    set_page_metadata("wizard")
-
-    render "new"
+    set_page_metadata('wizard')
+    render 'new'
   end
 
   def short_wizard
     redirect_to wizard_path
   end
 
-  def render_in_development
-    render "in_development"
-  end
-
   def new_and_allow
     @allow = true
-    self.new
+    new
   end
 
   def create
     @test = Wizard::Test.create(test_params)
     @test.user_id = current_user.try(&:id)
-    if @test.save
-      if current_user.nil?
-        id = @test.id
-        if !session[:tests]
-          session[:tests] = [id]
-        else
-          if !session[:tests].include?(id)
-            session[:tests] << id
-          end
-        end
-       # return render inline: session[:tests].inspect
+    if @test.save && current_user.nil?
+      id = @test.id
+      if !session[:tests]
+        session[:tests] = [id]
+      else
+        session[:tests] << id if !session[:tests].include?(id)
       end
-      #render json: @test
-      #render "show.json", status: 201
       render inline: @test.to_builder.target!, status: 201
     end
   end
 
   def update
     @test = Wizard::Test.find(params[:id])
-
-    #return render inline: test_params.to_json
     @test.update(test_params)
-    if @test.save
-      #render json: test
-      #render "show.json", status: 200
-      render inline: @test.to_builder.target!, status: 200
-    end
+    render inline: @test.to_builder.target!, status: 200 if @test.save
   end
 
   def payment
@@ -122,7 +88,6 @@ class WizardController < ApplicationController
       render inline: @payment.to_builder.target!, status: 201
     end
   end
-
 
   def pay_later
     pay_later_params = params[:pay_later]
@@ -163,7 +128,6 @@ class WizardController < ApplicationController
     else
       render json: {}, status: 400
     end
-
   end
 
   def destroy
@@ -206,33 +170,24 @@ class WizardController < ApplicationController
     data = params[:data]
     if data.is_a?(Hash)
       state = params[:state]
-      if state
-        data[:state] = state.to_json
-      end
+      data[:state] = state.to_json if state
     end
-
     result = {}
     if id = data.delete(:id)
       result[:action] = 'update'
       SimpleWizardTest.find(id).update(data)
     else
       result[:action] = 'create'
-
       t = SimpleWizardTest.create!(data)
       result[:id] = t.id
     end
-
     result[:success] = true
-
     render json: result
   end
 
   def dashboard_projects
-    drafted_projects = SimpleWizardTest.all.map{|t| t.parse_state; t }
-    data = {
-        drafts: drafted_projects
-    }
-
+    drafted_projects = SimpleWizardTest.all.map { |t| t.parse_state; t }
+    data = { drafts: drafted_projects }
     render json: data
   end
 
@@ -240,18 +195,16 @@ class WizardController < ApplicationController
     id = params[:id].try(&:to_i)
     result = {}
     if id && count = SimpleWizardTest.delete(id)
-      result = {count: count}
+      result = { count: count }
     else
       if id.blank?
-        result = { error: "please provide id" }
+        result = { error: 'please provide id' }
       else
-        result = { error: "id does not exist" }
+        result = { error: 'id does not exist' }
       end
     end
-
     render json: result
   end
-
 
   def test_params
     test = params[:test]
@@ -260,16 +213,13 @@ class WizardController < ApplicationController
     test[:project_language_ids] = Wizard::ProjectLanguage.where(name: test.delete(:project_languages)).map(&:id)
     test[:report_language_ids] = Wizard::ReportLanguage.where(name: test.delete(:report_languages)).map(&:id)
     test[:exploratory_description] = test.delete(:exploratory_instructions)
-
     test[:testers_by_platform] = test.delete(:test_platforms_bindings).try{|bindings| bindings.map{|k, b| b['platform_id'] = b.delete('subitem_id').try(&:to_i); b['test_id'] = test['id'].to_i; b['testers_count'] = b['testers_count'].to_i  ; b }  }
-
     test
   end
 
   def payment_params
     p = params[:payment]
     p[:test_id] = params[:id]
-
     p
   end
 end

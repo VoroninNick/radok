@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411052806) do
+ActiveRecord::Schema.define(version: 20160426122244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,23 +144,14 @@ ActiveRecord::Schema.define(version: 20160411052806) do
   end
 
   create_table "payment_requests", force: :cascade do |t|
-    t.string   "full_name"
-    t.string   "phone"
     t.string   "email"
-    t.string   "comment"
-    t.string   "payment_type"
-    t.string   "billing_address"
-    t.string   "city"
-    t.string   "zip_code"
-    t.string   "country"
     t.string   "card_holder_name"
-    t.string   "card_number"
     t.string   "exp_month"
     t.string   "exp_year"
-    t.string   "cvv_number"
     t.integer  "test_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.boolean  "state"
   end
 
   create_table "schedule_call_requests", force: :cascade do |t|
@@ -231,11 +222,11 @@ ActiveRecord::Schema.define(version: 20160411052806) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "encrypted_password",      default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",           default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -253,10 +244,6 @@ ActiveRecord::Schema.define(version: 20160411052806) do
     t.string   "username"
     t.string   "image"
     t.string   "email"
-    t.string   "billing_cardholder_name"
-    t.string   "billing_address"
-    t.string   "billing_card_number"
-    t.string   "billing_cvv_number"
     t.string   "full_name"
     t.boolean  "subscribed"
     t.string   "phone"

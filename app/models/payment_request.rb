@@ -3,42 +3,27 @@
 # Table name: payment_requests
 #
 #  id               :integer          not null, primary key
-#  full_name        :string
-#  phone            :string
 #  email            :string
-#  comment          :string
-#  payment_type     :string
-#  billing_address  :string
-#  city             :string
-#  zip_code         :string
-#  country          :string
 #  card_holder_name :string
-#  card_number      :string
 #  exp_month        :string
 #  exp_year         :string
-#  cvv_number       :string
 #  test_id          :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  state            :boolean
 #
 
 class PaymentRequest < ActiveRecord::Base
   attr_accessible *attribute_names
-
   belongs_to :test, class: Wizard::Test
   attr_accessible :test
 
   def self.default_payment_type
-    #"visa_and_master_card"
-    "paypal"
+    'paypal'
   end
 
   def self.default_payment_type_paypal?
     default_payment_type == 'paypal'
-  end
-
-  def self.default_payment_type_visa_and_master_card?
-    default_payment_type == 'visa_and_master_card'
   end
 
   def to_builder
@@ -62,6 +47,6 @@ class PaymentRequest < ActiveRecord::Base
   end
 
   def pay_later?
-    self.payment_type == "pay_later"
+    self.payment_type == 'pay_later'
   end
 end
