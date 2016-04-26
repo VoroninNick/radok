@@ -9,7 +9,6 @@ class RemoveCreditCardDataFromDb < ActiveRecord::Migration
       t.remove :phone
       t.remove :comment
       t.remove :payment_type
-      t.remove :billing_address
       t.remove :city
       t.remove :zip_code
       t.remove :country

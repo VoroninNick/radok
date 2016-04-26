@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     post ":id/promo_code", to: "wizard#promo_code"
     delete ":id/promo_code", to: "wizard#cancel_promo_code", as: "cancel_promo_code"
     post ":id/payment", to: "wizard#payment", as: :test_payment
+    post '/paypal_callback', to: "wizard#paypal_callback", as: :paypal_callback
     post ":id/pay-later", to: "wizard#pay_later", as: :pay_later
     delete "/:id/:asset_field_name/:asset_id", to: "wizard#delete_files"
     post ":id/:asset_field_name", to: "wizard#upload_files"

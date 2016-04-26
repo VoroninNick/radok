@@ -1,16 +1,14 @@
 # == Schema Information
 #
 # Table name: payment_requests
-#
+#  CHANGE
 #  id               :integer          not null, primary key
-#  email            :string
-#  card_holder_name :string
-#  exp_month        :string
-#  exp_year         :string
 #  test_id          :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  state            :boolean
+#  state            :string
+#  payment_id       :string
+#  payment_type     :string
 #
 
 class PaymentRequest < ActiveRecord::Base

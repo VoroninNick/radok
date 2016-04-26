@@ -36,5 +36,9 @@ module RadokForce
       Rails.root.join('vendor', 'assets', 'bower_components', 'footable', 'css', 'fonts')
 
     config.assets.precompile << /.*.(?:eot|svg|ttf|woff|woff2)$/
+
+    PayPal::SDK::Core::Config.load('config/paypal.yml',  ENV['RACK_ENV'] || 'development')
+    PayPal::SDK.logger = Logger.new(STDERR)
+    PayPal::SDK.logger.level = Logger::INFO
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426122244) do
+ActiveRecord::Schema.define(version: 20160426130752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 20160426122244) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.boolean  "state"
+    t.string   "payment_type"
   end
 
   create_table "schedule_call_requests", force: :cascade do |t|
@@ -257,6 +258,7 @@ ActiveRecord::Schema.define(version: 20160426122244) do
     t.string   "provider"
     t.string   "uid"
     t.datetime "saved_at"
+    t.text     "billing_address"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

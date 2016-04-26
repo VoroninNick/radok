@@ -38,6 +38,7 @@
 #  provider               :string
 #  uid                    :string
 #  saved_at               :datetime
+#  billing_address        :text
 #
 
 class User < ActiveRecord::Base

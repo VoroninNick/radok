@@ -1,4 +1,3 @@
-- u = current_user
 .popup.payment
   .form-partial.payment
     .header
@@ -6,25 +5,25 @@
         |Payment
     .content
       .form
-        form.form.payment-form novalidate="" name="payment_form" method="post" resource="payment" show-success="" show-preloader="" type="payment"
+        form.form.payment-form novalidate='' name='payment_form' method='post' resource='payment' show-success='' show-preloader='' type='payment'
           .form-content
             .inputs
               .row
                 label.columns.large-12.choose-payment-method-title
-                  |Choose payment method below or schedule a call by "Pay later"
+                  |Choose payment method below or schedule a call by 'Pay later'
 
-                label.payment-type.first value="paypal"  class="#{'active' if PaymentRequest.default_payment_type_paypal?}"
+                label.payment-type.first value='paypal'  class="#{'active' if PaymentRequest.default_payment_type_paypal?}"
                   .image-wrap
                     .paypal-card-svg-wrap ng-include="'/assets/paypal.svg'"
-                      = embedded_svg_from_assets "paypal"
+                      = embedded_svg_from_assets 'paypal'
                   .title
                     |Pay with PayPal
                 .payment-type-separator
                   |Or
-                label.payment-type.pay-later value="pay_later" ng-model="payment_type" ng-click="payment_type = 'pay_later'" ng-class="{active: payment_type == 'pay_later'}"
+                label.payment-type.pay-later value='pay_later' ng-model='payment_type' ng-click="payment_type = 'pay_later'" ng-class="{active: payment_type == 'pay_later'}"
                   .image-wrap
                     .pay-later-svg-wrap ng-include="'/assets/rf-icon-time.svg'"
-                      = embedded_svg_from_assets "rf-icon-time"
+                      = embedded_svg_from_assets 'rf-icon-time'
                   .title
                     |Pay later
 
@@ -35,35 +34,35 @@
                         |Contact information
                       .columns.large-6
                         .inputs
-                          = rf_input name: "payment[full_name]", required: true, label: "Full name", value: u.try(&:full_name)
-                          = rf_input name: "payment[phone]", label: "Phone", value: u.try(&:phone)
-                          = rf_input name: "payment[email]", required: true, type: "email", label: "Email", value: u.try(&:email)
+                          = rf_input name: 'payment[full_name]', required: true, label: 'Full name', value: current_user.try(&:full_name)
+                          = rf_input name: 'payment[phone]', label: 'Phone', value: current_user.try(&:phone)
+                          = rf_input name: 'payment[email]', required: true, type: 'email', label: 'Email', value: current_user.try(&:email)
                       .columns.large-6
-                        = rf_input name: "payment[comment]", label: "Your comments...", type: "text", number_inputs_height: 3
+                        = rf_input name: 'payment[comment]', label: 'Your comments...', type: 'text', number_inputs_height: 3
 
                     .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                       .header
                         |Billing info
-                      = rf_input name: "payment[full_name]", required: true, label: "Full name", value: u.try(&:full_name)
-                      = rf_input name: "payment[billing_address]", required: true, label: "Billing address", value: u.try(&:billing_address)
+                      = rf_input name: 'payment[full_name]', required: true, label: 'Full name', value: current_user.try(&:full_name)
+                      = rf_input name: 'payment[billing_address]', required: true, label: 'Billing address'
                       .row
                         .columns.large-6
-                          = rf_input name: "payment[city]", required: true, label: "City", required_message: "City", value: u.try(&:city)
+                          = rf_input name: 'payment[city]', required: true, label: 'City', required_message: 'City', value: current_user.try(&:city)
                         .columns.large-6
-                          = rf_input name: "payment[zip_code]", required: true, label: "ZIP code", required_message: "ZIP code", value: u.try(&:zip_code)
-                      = rf_input name: "payment[country]", required: true, label: "Country", value: u.try(&:country)
+                          = rf_input name: 'payment[zip_code]', required: true, label: 'ZIP code', required_message: 'ZIP code', value: current_user.try(&:zip_code)
+                      = rf_input name: 'payment[country]', required: true, label: 'Country', value: current_user.try(&:country)
 
                     .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                       .header
                         |Credit card info
-                      = rf_input name: "payment[cardholder_name]", label: "Cardholder name"
-                      = rf_input name: "payment[card_number]", label: "Card number"
+                      = rf_input name: 'payment[cardholder_name]', label: 'Cardholder name'
+                      = rf_input name: 'payment[card_number]', label: 'Card number'
                       .row
                         .columns.large-6
-                          = rf_input name: "payment[exp_month]", label: "Exp. month"
+                          = rf_input name: 'payment[exp_month]', label: 'Exp. month'
                         .columns.large-6
-                          = rf_input name: "payment[exp_year]", label: "Exp. year"
-                      = rf_input name: "payment[cvv_number]", label: "CVV2/CVC2 number"
+                          = rf_input name: 'payment[exp_year]', label: 'Exp. year'
+                      = rf_input name: 'payment[cvv_number]', label: 'CVV2/CVC2 number'
 
                   .row.actions
                     .columns.small-5.large-6.text-right.show-if-paypal
@@ -73,17 +72,17 @@
                         .total-price
                           .currency
                             |$
-                          span data-bind="total_price"
+                          span data-bind='total_price'
                             |0
                     .columns.small-5.large-6.text-right.show-if-paypal
-                      = rf_button title: "Pay", svg: "rf-rocket-up-right", full_width: false, class: "payment-pay-button"
+                      = rf_button title: 'Pay', svg: 'rf-rocket-up-right', full_width: false, class: 'payment-pay-button'
                     .row
                       .columns.small-5.large-4
-                        a.return_to_wizard href=""
+                        a.return_to_wizard href=''
                           |< Return to Wizard
 
           .preloader.hide
-            = image_tag("preloader.gif")
+            = image_tag('preloader.gif')
           .success-handler.hide
             p.h4
               |Successfully created payment

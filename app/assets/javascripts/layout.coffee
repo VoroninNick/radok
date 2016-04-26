@@ -180,7 +180,7 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
     form_type = window.form_types[type]
   else
     form_type = {}
-
+  console.log form_type.serialize.call($form)
   if form_type.validateForm
     form_type.validateForm.call($form)
   else
@@ -226,6 +226,7 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
       dataType: 'json'
       type: method
       success: (data)->
+        console.log data
         state = {}
         state.$form = $form
         state.$preloader = $preloader
@@ -233,6 +234,7 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
         options = {}
         success_handler.call(this, data, state, options)
       error: (xhr)->
+        console.log xhr
         state = {}
         options = {}
         state.form_resource_name = form_resource_name
