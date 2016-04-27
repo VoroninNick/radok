@@ -84,6 +84,7 @@ class WizardController < ApplicationController
   end
 
   def payment
+    # with credit card
     # @payment = Payment.new({
     #   :intent => 'sale',
     #   :payer => {
@@ -112,6 +113,32 @@ class WizardController < ApplicationController
     # else
     #   render json: { error: @payment.error }, status: 500
     # end
+
+    @payment = Payment.new({
+      intent: 'sale',
+      redirect_urls: {
+        return_url: 'http://localhost:3000/payment/execute',
+        cancel_url: 'http://localhost:3000/'
+      },
+      payer: {
+        payment_method: 'paypal'
+      },
+      transactions: [
+        {
+          amount: {
+            total: '7.47',
+            currency: 'USD'
+          },
+          description: 'This is the payment transaction description.'
+        }
+      ] } )
+
+    if @payment.create
+      @redirect_url = @payment.links.find{|v| v.method == 'REDIRECT' }.href
+      render json: { payment: @payment.id, redirect_url: @redirect_url }
+    else
+      render json: { error: @payment }, status: 500
+    end
   end
 
   def pay_later

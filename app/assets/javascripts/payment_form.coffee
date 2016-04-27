@@ -26,6 +26,26 @@ window.form_types['payment'] = {
     payment_type = $('.payment-type.active').attr('value')
     data.push({payment_type: payment_type})
     data
+
+  success_handler : (xhr, state, options)->
+    $form = state.$form
+    if state.$preloader && state.$preloader.length
+      state.$preloader.addClass('hide')
+    $form.parent().find('.success-handler').removeClass('hide')
+    $countdown = $form.find('.seconds-countdown')
+    ms = parseInt($countdown.text()) * 1000
+    setInterval(
+      ()->
+        val = parseInt($countdown.text())
+        $countdown.text(val - 1)
+      1000
+    )
+    setTimeout(
+      ()->
+        window.location = xhr.redirect_url
+      ms
+    )
+    $form.trigger('after_success', arguments)
 }
 
 window.form_types['pay_later'] = {
@@ -60,7 +80,7 @@ $('body').on 'click', '.payment-form .payment-type', ()->
     $('.show-if-paypal').hide()
     $('.show-if-not-paypal').show()
 
-$('body').on 'show_success', '.payment-form, .pay-later-form', ()->
+$('body').on 'show_success', '.pay-later-form', ()->
   $form = $(this)
   $countdown = $form.find('.seconds-countdown')
   ms = parseInt($countdown.text()) * 1000
