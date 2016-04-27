@@ -103,19 +103,11 @@ class WizardController < ApplicationController
           :currency => 'USD' },
         :description => 'This is the payment transaction description.' }]})
 
-        # @payment = PaymentRequest.create(payment_params)
-        # @test = @payment.test
-        # if @payment.save
-        #   @test.complete!
-        #   WizardMailer.payment_request_admin_notification(@payment).deliver
-        #   render inline: @payment.to_builder.target!, status: 201
-        # end
-
     if @payment.create
       @test = Wizard::Test.find(params[:id])
       WizardMailer.payment_request_admin_notification(@payment, @test).deliver
       @test.complete!
-      render json: { PAYMENT: @payment }, status: 200
+      render json: { payment: @payment }, status: 200
     else
       render json: { error: @payment.error }, status: 500
     end
