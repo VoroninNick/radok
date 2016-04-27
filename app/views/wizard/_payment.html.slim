@@ -5,7 +5,7 @@
         |Payment
     .content
       .form
-        form.form.payment-form novalidate='' name='payment_form' action="/payment" method='post' resource='payment' show-success='' show-preloader='' type='payment'
+        form.form.payment-form novalidate='' name='payment_form' action='/payment' method='post' resource='payment' show-success='' show-preloader='' type='payment'
           .form-content
             .inputs
               .row
@@ -34,11 +34,12 @@
                         |Contact information
                       .columns.large-6
                         .inputs
-                          = rf_input name: 'pay_later[full_name]', required: true, label: 'Full name', value: current_user.try(&:full_name)
-                          = rf_input name: 'pay_later[phone]', label: 'Phone', value: current_user.try(&:phone)
-                          = rf_input name: 'pay_later[email]', required: true, type: 'email', label: 'Email', value: current_user.try(&:email)
+                          = rf_input label: 'Name', name: 'pay_later[full_name]', required: true, value: current_user.try(:name_or_username), validation: 'name', invalid_message: 'Enter valid full name'
+                          = rf_input label: 'Phone', name: 'pay_later[phone]', required: true, value: current_user.try(:phone), validation: 'phone', invalid_message: 'Enter valid phone number'
+                          = rf_input label: 'Email', name: 'pay_later[email]', required: true, value: current_user.try(:email), validation: 'email'
+
                       .columns.large-6
-                        = rf_input name: 'pay_later[description]', label: 'Your comments...', type: 'text', number_inputs_height: 3
+                        = rf_input label: 'Description', name: 'pay_later[description]', type: 'text', maxlength: '200', number_inputs_height: 3
 
                     .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                       .header
