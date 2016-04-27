@@ -84,36 +84,8 @@ class WizardController < ApplicationController
   end
 
   def payment
-    # with credit card
-    # @payment = Payment.new({
-    #   :intent => 'sale',
-    #   :payer => {
-    #     :payment_method => 'credit_card',
-    #     :funding_instruments => [{
-    #       :credit_card => {
-    #         :type => 'visa',
-    #         :number => '4567516310777851',
-    #         :expire_month => '11',
-    #         :expire_year => '2018',
-    #         :cvv2 => '874',
-    #         :first_name => 'Joe',
-    #         :last_name => 'Shopper'}}]},
-    #   :transactions => [{
-    #     :amount => {
-    #       :total => '1.00',
-    #       :currency => 'USD' },
-    #     :description => 'This is the payment transaction description.' }]})
-    #
-    # if @payment.create
-    #   @test = Wizard::Test.find(params[:id])
-    #   @payment_request = PaymentRequest.create(take some params from @payment)
-    #   WizardMailer.payment_request_admin_notification(@payment_request).deliver
-    #   @test.complete!
-    #   render json: { response: @payment }, status: 200
-    # else
-    #   render json: { error: @payment.error }, status: 500
-    # end
-
+    # with paypal
+    @test = Wizard::Test.find(params[:id])
     @payment = Payment.new({
       intent: 'sale',
       redirect_urls: {
@@ -126,18 +98,36 @@ class WizardController < ApplicationController
       transactions: [
         {
           amount: {
-            total: '7.47',
+            total: @test.total_price,
             currency: 'USD'
           },
           description: 'This is the payment transaction description.'
         }
-      ] } )
+      ]})
 
     if @payment.create
-      @redirect_url = @payment.links.find{|v| v.method == 'REDIRECT' }.href
+      @redirect_url = @payment.links.find{ |v| v.method == 'REDIRECT' }.href
+      @payment_request = PaymentRequest.create(
+        payment_method: @payment.payer.payment_method,
+        test_id: @test.id,
+        payment_id: @payment.id,
+        state: @payment.state,
+        email: current_user.email )
+
+      WizardMailer.payment_request_admin_notification(@payment_request).deliver
       render json: { payment: @payment.id, redirect_url: @redirect_url }
     else
-      render json: { error: @payment }, status: 500
+      render json: { error: @payment.error }, status: 500
+    end
+  end
+
+  def execute_payment
+    @payment = Payment.find(params[:paymentId])
+    if @payment.execute(payer_id: params[:PayerID])
+      @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
+      @test = Wizard::Test.find(@payment_request.test_id)
+      @test.complete!
+      redirect_to dashboard_path
     end
   end
 

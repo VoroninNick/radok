@@ -41,7 +41,7 @@
                       .columns.large-6
                         = rf_input label: 'Description', name: 'pay_later[description]', type: 'text', maxlength: '200', number_inputs_height: 3
 
-                    .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
+                    /.columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                       .header
                         |Billing info
                       = rf_input name: 'payment[full_name]', required: true, label: 'Full name', value: current_user.try(&:full_name)
@@ -53,7 +53,7 @@
                           = rf_input name: 'payment[zip_code]', required: true, label: 'ZIP code', required_message: 'ZIP code', value: current_user.try(&:zip_code)
                       = rf_input name: 'payment[country]', required: true, label: 'Country', value: current_user.try(&:country)
 
-                    .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
+                    /.columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                       .header
                         |Credit card info
                       = rf_input name: 'payment[cardholder_name]', label: 'Cardholder name'
@@ -64,6 +64,7 @@
                         .columns.large-6
                           = rf_input name: 'payment[exp_year]', label: 'Exp. year'
                       = rf_input name: 'payment[cvv_number]', label: 'CVV2/CVC2 number'
+
                   .row.actions
                     .columns.small-5.large-6.text-right
                       .price-wrap
@@ -91,7 +92,7 @@
             p.h4
               |Successfully created payment
             p
-              |You will be redirected to payment page for&thinsp;
+              |Payment page will be opened in&thinsp;
               span.seconds-countdown
                 |5
               |&thinsp;seconds!

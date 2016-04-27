@@ -6,11 +6,9 @@ window.form_types['payment'] = {
     if payment_type == 'pay_later'
       selector = '.show-if-pay-later .rf-input'
       another_selector =  '.show-if-not-pay-later .rf-input'
-      console.log "paylater"
     else
       selector = '.show-if-not-pay-later .rf-input'
       another_selector = '.show-if-pay-later .rf-input'
-      console.log "paypal"
     $form.find(another_selector).removeClass('invalid')
     $form.find(selector).each ->
       $rf_input = $(this)
@@ -42,9 +40,12 @@ window.form_types['payment'] = {
     )
     setTimeout(
       ()->
-        window.location = xhr.redirect_url
+        window.open(xhr.redirect_url,'_blank')
+        $form.closest('.ngdialog').addClass('hide')
+        window.location = '/dashboard'
       ms
     )
+
     $form.trigger('after_success', arguments)
 }
 

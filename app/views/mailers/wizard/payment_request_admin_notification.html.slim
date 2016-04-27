@@ -1,26 +1,5 @@
 table border="1"
-  - if @resource.payment_method == 'pay_later'
-    tr
-      td
-        |Full name
-      td
-        = @resource.full_name
-    tr
-      td
-        |Phone
-      td
-        = @resource.phone
-    tr
-      td
-        |Email
-      td
-        = @resource.email
-    tr
-      td
-        |Comment
-      td
-        = @resource.description
-  - elsif @resource.payment_method == 'credit_card'
+  - if @resource.payment_method == 'credit_card'
     tr
       td
         |Full name
@@ -67,7 +46,22 @@ table border="1"
       td
         = @resource.exp_year
   - elsif @resource.payment_method == 'paypal'
+    tr
+      td
+        |Payment method
+      td
+        = @resource.payment_method
+    tr
+      td
+        |Payment state
+      td
+        = @resource.state
+    tr
+      td
+        |Payment id
+      td
+        = @resource.id
 
 p
-  a href=test_path(id: @resource.test.id)
+  a href=test_path(id: @resource.test_id)
     | Test summary

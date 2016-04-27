@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     root action: :index, as: :templates
   end
 
+  get '/payment/execute', to: 'wizard#execute_payment', as: :execute_payment
   get 'robots.txt', to: 'pages#robots_txt'
   get 'w', to: 'wizard#new_and_allow'
   get 'user_logged', to: 'user_pages#user_logged', as: :user_logged
