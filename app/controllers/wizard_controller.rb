@@ -84,33 +84,34 @@ class WizardController < ApplicationController
   end
 
   def payment
-    @payment = Payment.new({
-      :intent => 'sale',
-      :payer => {
-        :payment_method => 'credit_card',
-        :funding_instruments => [{
-          :credit_card => {
-            :type => 'visa',
-            :number => '4567516310777851',
-            :expire_month => '11',
-            :expire_year => '2018',
-            :cvv2 => '874',
-            :first_name => 'Joe',
-            :last_name => 'Shopper'}}]},
-      :transactions => [{
-        :amount => {
-          :total => '1.00',
-          :currency => 'USD' },
-        :description => 'This is the payment transaction description.' }]})
-
-    if @payment.create
-      @test = Wizard::Test.find(params[:id])
-      WizardMailer.payment_request_admin_notification(@payment, @test).deliver
-      @test.complete!
-      render json: { payment: @payment }, status: 200
-    else
-      render json: { error: @payment.error }, status: 500
-    end
+    # @payment = Payment.new({
+    #   :intent => 'sale',
+    #   :payer => {
+    #     :payment_method => 'credit_card',
+    #     :funding_instruments => [{
+    #       :credit_card => {
+    #         :type => 'visa',
+    #         :number => '4567516310777851',
+    #         :expire_month => '11',
+    #         :expire_year => '2018',
+    #         :cvv2 => '874',
+    #         :first_name => 'Joe',
+    #         :last_name => 'Shopper'}}]},
+    #   :transactions => [{
+    #     :amount => {
+    #       :total => '1.00',
+    #       :currency => 'USD' },
+    #     :description => 'This is the payment transaction description.' }]})
+    #
+    # if @payment.create
+    #   @test = Wizard::Test.find(params[:id])
+    #   @payment_request = PaymentRequest.create(take some params from @payment)
+    #   WizardMailer.payment_request_admin_notification(@payment_request).deliver
+    #   @test.complete!
+    #   render json: { response: @payment }, status: 200
+    # else
+    #   render json: { error: @payment.error }, status: 500
+    # end
   end
 
   def pay_later

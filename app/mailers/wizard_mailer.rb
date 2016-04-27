@@ -1,11 +1,10 @@
 class WizardMailer < ApplicationMailer
 
 
-  def payment_request_admin_notification(payment, paid_test)
+  def payment_request_admin_notification(payment)
 
     to = FormConfigs::PaymentRequest.first.try(&:emails) || FormConfigs::PaymentRequest.default_emails
     @resource = payment
-    @test = paid_test
     mail(
         template_path: "mailers/wizard",
         template_name: "payment_request_admin_notification",

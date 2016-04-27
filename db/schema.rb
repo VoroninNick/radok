@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 20160427074738) do
     t.integer  "test_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "email"
     t.string   "payment_id"
     t.text     "link"
     t.string   "state"

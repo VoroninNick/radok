@@ -6,10 +6,11 @@ window.form_types['payment'] = {
     if payment_type == 'pay_later'
       selector = '.show-if-pay-later .rf-input'
       another_selector =  '.show-if-not-pay-later .rf-input'
+      console.log "paylater"
     else
       selector = '.show-if-not-pay-later .rf-input'
       another_selector = '.show-if-pay-later .rf-input'
-
+      console.log "paypal"
     $form.find(another_selector).removeClass('invalid')
     $form.find(selector).each ->
       $rf_input = $(this)
@@ -17,7 +18,7 @@ window.form_types['payment'] = {
       $form
 
   url : ()->
-    $('form[for=project]').attr('url') + '/' + project.id + '/payment'
+    $('form[for=project]').attr('url') + '/' + project.id + $('.payment-form').attr('action')
 
   serialize : ()->
     $form = $(this)
@@ -35,6 +36,7 @@ window.form_types['pay_later'] = {
 $('body').on 'click', '.payment-form .payment-type', ()->
   $active_payment_type = $('.payment-form .payment-type.active')
   $active_payment_type.removeClass('active')
+  $form = $('.payment-form')
   $payment_type = $(this)
   $payment_type.addClass('active')
   pay_later = $payment_type.hasClass('pay-later')
@@ -43,6 +45,8 @@ $('body').on 'click', '.payment-form .payment-type', ()->
   if pay_later
     $('.show-if-pay-later').removeClass('hide').show()
     $('.show-if-not-pay-later').hide()
+    $form.attr('action', '/pay-later')
+    $form.attr('resource', 'pay_later')
   else
     $('.show-if-pay-later').hide()
     $('.show-if-not-pay-later').show()
@@ -50,6 +54,8 @@ $('body').on 'click', '.payment-form .payment-type', ()->
   if paypal
     $('.show-if-paypal').show()
     $('.show-if-not-paypal').hide()
+    $form.attr('action', '/payment')
+    $form.attr('resource', 'payment')
   else
     $('.show-if-paypal').hide()
     $('.show-if-not-paypal').show()

@@ -5,12 +5,12 @@
         |Payment
     .content
       .form
-        form.form.payment-form novalidate='' name='payment_form' method='post' resource='payment' show-success='' show-preloader='' type='payment'
+        form.form.payment-form novalidate='' name='payment_form' action="/payment" method='post' resource='payment' show-success='' show-preloader='' type='payment'
           .form-content
             .inputs
               .row
                 label.columns.large-12.choose-payment-method-title
-                  |Choose payment method below or schedule a call by 'Pay later'
+                  /|Choose payment method below or schedule a call by 'Pay later'
 
                 label.payment-type.first value='paypal'  class="#{'active' if PaymentRequest.default_payment_type_paypal?}"
                   .image-wrap
@@ -34,11 +34,11 @@
                         |Contact information
                       .columns.large-6
                         .inputs
-                          = rf_input name: 'payment[full_name]', required: true, label: 'Full name', value: current_user.try(&:full_name)
-                          = rf_input name: 'payment[phone]', label: 'Phone', value: current_user.try(&:phone)
-                          = rf_input name: 'payment[email]', required: true, type: 'email', label: 'Email', value: current_user.try(&:email)
+                          = rf_input name: 'pay_later[full_name]', required: true, label: 'Full name', value: current_user.try(&:full_name)
+                          = rf_input name: 'pay_later[phone]', label: 'Phone', value: current_user.try(&:phone)
+                          = rf_input name: 'pay_later[email]', required: true, type: 'email', label: 'Email', value: current_user.try(&:email)
                       .columns.large-6
-                        = rf_input name: 'payment[comment]', label: 'Your comments...', type: 'text', number_inputs_height: 3
+                        = rf_input name: 'pay_later[description]', label: 'Your comments...', type: 'text', number_inputs_height: 3
 
                     .columns.large-6.fields-group.show-if-not-pay-later ng-show="payment_type != 'pay_later'"
                       .header
@@ -65,7 +65,7 @@
                       = rf_input name: 'payment[cvv_number]', label: 'CVV2/CVC2 number'
 
                   .row.actions
-                    .columns.small-5.large-6.text-right.show-if-paypal
+                    .columns.small-5.large-6.text-right
                       .price-wrap
                         .total-cost-label
                           |Total cost:
@@ -76,10 +76,14 @@
                             |0
                     .columns.small-5.large-6.text-right.show-if-paypal
                       = rf_button title: 'Pay', svg: 'rf-rocket-up-right', full_width: false, class: 'payment-pay-button'
-                    .row
-                      .columns.small-5.large-4
-                        a.return_to_wizard href=''
-                          |< Return to Wizard
+
+                    .columns.small-5.large-6.text-right.hide.show-if-pay-later
+                      = rf_button title: 'Call me', svg: 'rf-rocket-up-right', class: 'payment-pay-button'
+
+                  .row
+                    .columns.small-5.large-4
+                      a.return_to_wizard href=''
+                        |< Return to Wizard
 
           .preloader.hide
             = image_tag('preloader.gif')
