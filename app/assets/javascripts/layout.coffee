@@ -180,14 +180,12 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
     form_type = window.form_types[type]
   else
     form_type = {}
-  console.log form_type.serialize.call($form)
   if form_type.validateForm
     form_type.validateForm.call($form)
   else
     $form.validateForm()
 
   valid_form = $form.find('.rf-input.invalid').length == 0
-
   if valid_form
     $form_errors = $form.find('.form-errors')
     if form_type.serialize
@@ -219,14 +217,12 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
       $("[hide-during-send='']").addClass('hide')
     success_handler = form_type.success_handler || default_form_success_handler
     error_handler = form_type.error_handler || default_form_error_handler
-
     $.ajax(
       data: form_data
       url: url
       dataType: 'json'
       type: method
       success: (data)->
-        console.log data
         state = {}
         state.$form = $form
         state.$preloader = $preloader
@@ -234,7 +230,6 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
         options = {}
         success_handler.call(this, data, state, options)
       error: (xhr)->
-        console.log xhr
         state = {}
         options = {}
         state.form_resource_name = form_resource_name

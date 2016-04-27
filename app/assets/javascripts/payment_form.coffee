@@ -23,9 +23,7 @@ window.form_types['payment'] = {
     $form = $(this)
     data = $form.serializeArray()
     payment_type = $('.payment-type.active').attr('value')
-    location = window.location.href.split('/')
-    test_id = location[location.length - 1]
-    data.push({payment_type: payment_type}, {test_id: test_id})
+    data.push({payment_type: payment_type})
     data
 }
 
