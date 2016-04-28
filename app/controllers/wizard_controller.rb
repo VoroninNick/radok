@@ -84,7 +84,7 @@ class WizardController < ApplicationController
   end
 
   def payment
-    # with paypal
+    # with PayPal
     @test = Wizard::Test.find(params[:id])
     @payment = Payment.new({
       intent: 'sale',
@@ -126,6 +126,8 @@ class WizardController < ApplicationController
     @payment = Payment.find(params[:paymentId])
     if @payment.execute(payer_id: params[:PayerID])
       @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
+      @test = Wizard::Test.find(@payment.test_id)
+      @test.paid!
       redirect_to dashboard_path
     end
   end

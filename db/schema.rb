@@ -427,6 +427,7 @@ ActiveRecord::Schema.define(version: 20160427074738) do
     t.string   "contact_person_email"
     t.text     "admin_comment"
     t.integer  "promo_code_id"
+    t.date     "paid_at"
   end
 
   create_table "wizard_texts", force: :cascade do |t|
