@@ -60,6 +60,6 @@ class PaymentRequest < ActiveRecord::Base
   end
 
   def pay_later?
-    self.payment_type == 'pay_later'
+    payment_method == 'pay_later'
   end
 end
