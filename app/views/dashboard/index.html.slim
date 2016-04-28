@@ -39,7 +39,7 @@
                                   = image_tag(project.type_of_product_logo_path)
                               .type-of-test
                                 = project.type_of_test
-                              /.testing-type ng-show="project.testing_type && project.testing_type.length"
+                              .testing-type.pull-right ng-show="project.methodology_type && project.methodology_type.length"
                                 = project.testing_type
                               .clearfix
                             .testers-and-hours
@@ -84,7 +84,6 @@
                             .remaining-time
                               - if project.expected_tested_at
                                 = project.remaining_time_string
-                              - else
 
       - if @finished_projects.try(&:any?)
         .finished-tests

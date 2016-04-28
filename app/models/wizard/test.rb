@@ -79,7 +79,7 @@ class Wizard::Test < ActiveRecord::Base
 
   scope :drafts, -> { where('completed_at is null') }
   scope :unpaid_projects, -> { where('completed_at is not null and paid_at is null') }
-  scope :processing_projects, -> { where('completed_at is not null') }
+  scope :processing_projects, -> { where('completed_at is not null and paid_at is not null') }
   scope :tested_projects, -> { where('completed_at is not null and tested_at is not null') }
 
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
@@ -189,7 +189,7 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def testing_type
-    'Explained'
+    methodology_type.humanize if methodology_type.present?
   end
 
   def total_testers_count
