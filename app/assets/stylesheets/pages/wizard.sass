@@ -544,11 +544,10 @@ form[for=project]
   .human-svg-wrap
     float: right
     position: relative
-    width: 50px
+    width: 30px
     margin-right: 20px
     text-align: center
-    svg
-      fill: $yellow-orange-color
+    img
       width: 30px
       height: 30px
   > .svg-wrap
@@ -654,6 +653,13 @@ form[for=project]
         height: 70px
         font-size: 1.4rem
         padding-top: 14px
+
+@media #{$small-only}
+  .option-count .input-wrap
+    width: 60px !important
+    input
+      width: 30px !important
+      padding: 4px
 
 .option-count
   +grid-row

@@ -130,11 +130,11 @@ window.step_types = {
   }
   'project_info' : {
     checkIsCompleted : ()->
-      valid_name = (project.project_name && project.project_name.length > 0) && project.project_name.length < 100
-      valid_version = (project.project_version && project.project_version.length > 0) && project.project_version.length < 20
+      valid_name = project.project_name && project.project_name.length > 0 && project.project_name.length < 100
+      valid_version = project.project_version && project.project_version.length > 0 && project.project_version.length < 20
       valid_project_languages = project.project_languages && project.project_languages.length > 0
       valid_report_languages = project.report_languages && project.report_languages.length > 0
-      valid_comment = (project.project_info_comment && project.project_info_comment.length < 500) || !project.project_info_comment
+      valid_comment = (project.project_info_comment && project.project_info_comment.length < 500) || !project.project_info_comment || project.project_info_comment.length == 0
       valid_name && valid_version && valid_project_languages && valid_report_languages && valid_comment
   }
   'project_components' : {
@@ -1288,8 +1288,6 @@ $('body').on 'upload_files.test_case_files delete_files.test_case_files', ()->
   else
     $error.fadeIn()
 
-$('body').on 'delete_files.test_files', ()->
-
 # Initialize wizard
 
 window.project ?= {}
@@ -1325,6 +1323,20 @@ $('body').on 'change.project.hours_per_tester', ()->
   $hour_labels = $('.hour')
   $hour_labels.filter('.selected').removeClass('selected')
   $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass('selected')
+
+$('body').on 'change.project.project_name', ()->
+  $summary_project_name = $("[data-bind='project.project_name']").html()
+  start = 0
+  end = 30
+  splitted_name = ""
+  while end < $summary_project_name.length
+    splitted_name += "<span> #{$summary_project_name.slice(start, end)} </span> <br>"
+    start = end + 1
+    end += 30
+  if end >= $summary_project_name.length
+    splitted_name += "<span> #{$summary_project_name.slice(start, $summary_project_name.length - 1)} </span>"
+  if splitted_name.lenght > 30
+    $summary_project_name.html(splitted_name)
 
 $('body').on 'keypress', 'input', (e)->
   $input = $(this)

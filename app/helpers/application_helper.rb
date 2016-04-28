@@ -168,7 +168,7 @@ module ApplicationHelper
       content_tag(:label, taken_message, class: "hide error taken") +
       content_tag(:label, required_message, class: "hide error required") +
       content_tag(:label, invalid_message, class: "hide error invalid") +
-      content_tag(:label, class: "hide error unconfirmed") do content_tag(:span, "Please confirm your email") + link_to("resend instructions", "#", class: "resend_me_instructions") end +
+      content_tag(:label, class: "hide error unconfirmed") do content_tag(:span, "Please confirm your email") + link_to("Resend instructions", "", class: "resend_me_instructions") end +
       content_tag(:label, options[:label], class: "field-label") +
       content_tag(:div, nil, class: "input-border-wrap") +
 

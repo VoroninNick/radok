@@ -77,7 +77,7 @@ $('body').on 'click', '[open-popup]', (event)->
           condition = $this.closest('.ngdialog').length > 0
         if condition
           event.preventDefault()
-          $current_popup = $(this).closest('.ngdialog')
+          $current_popup = $this.closest('.ngdialog')
           $current_popup.addClass('hide')
           popup_name = $this.attr('open-popup')
           if $this.attr('requires-auth') && $('html').attr('data-logged-in') != 'true'
@@ -135,8 +135,10 @@ default_form_error_handler = (xhr, state, options)->
     $form_errors.removeClass('hide')
     if response_json.confirmed == false
       $form_errors.find('.unconfirmed').removeClass('hide')
+      $('[name="user[login]"]').addClass('invalid')
     else
       $form_errors.find('.unconfirmed').addClass('hide')
+      $('[name="user[login]"]').removeClass('invalid')
   else
     $form_errors.addClass('hide')
 
@@ -146,10 +148,12 @@ default_form_error_handler = (xhr, state, options)->
   $form_errors.find('.form-error').addClass('hide')
   if !isEmpty(form_errors)
     $form_errors.removeClass('hide')
+    $form.addClass('invalid').removeClass('valid')
     for error_key in form_errors
       $form_errors.find(".#{error_key}").removeClass('hide')
   else
     $form_errors.addClass('hide')
+    $form.addClass('valid').removeClass('invalid')
 
   $form.find('.inputs .error').addClass('hide')
   if !isEmpty(errors_by_field)
