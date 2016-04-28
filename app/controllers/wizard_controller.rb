@@ -114,6 +114,7 @@ class WizardController < ApplicationController
         state: @payment.state,
         email: current_user.email )
 
+      @test.complete!
       WizardMailer.payment_request_admin_notification(@payment_request).deliver
       render json: { payment: @payment.id, redirect_url: @redirect_url }
     else
@@ -125,8 +126,6 @@ class WizardController < ApplicationController
     @payment = Payment.find(params[:paymentId])
     if @payment.execute(payer_id: params[:PayerID])
       @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
-      @test = Wizard::Test.find(@payment_request.test_id)
-      @test.complete!
       redirect_to dashboard_path
     end
   end

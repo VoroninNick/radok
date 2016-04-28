@@ -32,6 +32,8 @@ window.form_types['payment'] = {
     $form.parent().find('.success-handler').removeClass('hide')
     $countdown = $form.find('.seconds-countdown')
     ms = parseInt($countdown.text()) * 1000
+    if !xhr.redirect_url
+      $form.find('.success-handler .page-open').html('Project page will be opened in ')
     setInterval(
       ()->
         val = parseInt($countdown.text())
@@ -40,9 +42,12 @@ window.form_types['payment'] = {
     )
     setTimeout(
       ()->
-        window.open(xhr.redirect_url,'_blank')
+        if xhr.redirect_url
+          window.open(xhr.redirect_url,'_blank')
+          window.location = '/dashboard'
+        else
+          window.location = "/dashboard/project/#{project.id}"
         $form.closest('.ngdialog').addClass('hide')
-        window.location = '/dashboard'
       ms
     )
 
