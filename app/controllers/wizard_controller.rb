@@ -90,7 +90,7 @@ class WizardController < ApplicationController
       intent: 'sale',
       redirect_urls: {
         return_url: 'http://localhost:3000/payment/execute',
-        cancel_url: 'http://localhost:3000/'
+        cancel_url: "http://localhost:3000/dashboard"
       },
       payer: {
         payment_method: 'paypal'
@@ -130,12 +130,9 @@ class WizardController < ApplicationController
       @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
       @test = Wizard::Test.find(@payment_request.test_id)
       @test.paid!
-      redirect_to dashboard_project_path(id: @test.id)
+      redirect_to dashboard_project_path(id: @test.id), notice: "Thank You! We will test Your project."
     else
-      p "=====================PAYMENT ERROR======================="
-      p @payment.error.inspect
-      p "============================================"
-      redirect_to home_path
+      redirect_to dashboard_project_path(id: @test.id), alert: "Ooops..! #{@payment.error.inspect}"
     end
   end
 
