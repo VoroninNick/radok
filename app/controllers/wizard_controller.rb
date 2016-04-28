@@ -36,6 +36,8 @@ class WizardController < ApplicationController
   def new
     @head_title = 'Wizard'
     @project = Wizard::Test.new
+    # last_test = Wizard::Test.last
+    # id =  last_test.id + 1
     id = rand(1000)
     @project.project_name = "Test ##{id}"
     @project.methodology_type ||= 'exploratory'
@@ -68,11 +70,9 @@ class WizardController < ApplicationController
     @test.user_id = current_user.try(&:id)
     if @test.save && current_user.nil?
       id = @test.id
-      if !session[:tests]
-        session[:tests] = [id]
-      else
-        session[:tests] << id if !session[:tests].include?(id)
-      end
+      session[:tests] = [id] unless session[:tests]
+      session[:tests] << id if !session[:tests].include?(id) && session[:tests]
+    elsif @test.save && current_user
       render inline: @test.to_builder.target!, status: 201
     end
   end
