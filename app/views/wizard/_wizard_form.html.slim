@@ -64,7 +64,7 @@ form for="project" url=wizard_path method="post" json="{}"
               .name.platform-label
                 = platform.name
               .human-svg-wrap.platform-user-icon
-                = image_tag("user.svg")
+                = image_tag("user-yellow.svg")
               .platform-options
                 - platform.children.each do |c|
                   - binding = sorted_platform_bindings.select { |b| b[:platform_id] == c.id }.first
