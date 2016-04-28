@@ -61,6 +61,11 @@ table border="1"
         |Payment id
       td
         = @resource.id
+    tr
+      td
+        |Payment URL
+      td
+        = @resource.link
 
 p
   a href=test_path(id: @resource.test_id)

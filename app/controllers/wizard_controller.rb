@@ -100,8 +100,9 @@ class WizardController < ApplicationController
           amount: {
             total: @test.total_price,
             currency: 'USD'
-          },
-          description: 'This is the payment transaction description.'
+          }
+          # ,
+          # description: 'This is the payment transaction description.'
         }
       ]})
 
@@ -112,7 +113,8 @@ class WizardController < ApplicationController
         test_id: @test.id,
         payment_id: @payment.id,
         state: @payment.state,
-        email: current_user.email )
+        email: current_user.email,
+        link: @redirect_url )
 
       @test.complete!
       WizardMailer.payment_request_admin_notification(@payment_request).deliver
@@ -126,9 +128,14 @@ class WizardController < ApplicationController
     @payment = Payment.find(params[:paymentId])
     if @payment.execute(payer_id: params[:PayerID])
       @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
-      @test = Wizard::Test.find(@payment.test_id)
+      @test = Wizard::Test.find(@payment_request.test_id)
       @test.paid!
-      redirect_to dashboard_path
+      redirect_to dashboard_project_path(id: @test.id)
+    else
+      p "=====================PAYMENT ERROR======================="
+      p @payment.error.inspect
+      p "============================================"
+      redirect_to home_path
     end
   end
 

@@ -34,6 +34,8 @@ $('.menu').on 'click', '.has-dropdown', ->
 
 window.openPopup = (popup_name)->
   if typeof popup_name == 'string'
+    if popup_name.indexOf '/' > -1
+      popup_name = popup_name.replace('/', '__')
     $popup = $("[id=#{popup_name}_popup]")
   else if popup_name instanceof(jQuery)
     $popup = popup_name
