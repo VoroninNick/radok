@@ -1,25 +1,5 @@
 - cache('app/views/pages/home.html.slim') do
   #home-controller
-    sass:
-      #home-menu
-        > .columns
-          padding: 0
-          height: 100px
-          line-height: 100px
-
-      #home-slider-carousel
-        .owl-item:nth-child(2)
-          .layer
-            &:nth-child(1) // notebook
-              img
-                transform: translate(2%, 7%)
-            &:nth-child(2) // planet
-              img
-                transform: translate(3%, -15%)
-
-        &:not(.owl-carousel)
-          li:not(:first-child)
-            display: none
 
     #home-banner.banner
       ul#home-slider-carousel rn-carousel="" rn-carousel-pause-on-hover="" rn-carousel-index="homeBannerCarouselIndex" rn-carousel-auto-slide="2"

@@ -67,7 +67,7 @@
         margin-left: 0
 
   .terms-of-use-info
-    padding-top: 10px
+    padding-top: 35px
     text-align: center
     +font-14-light-italic
     color: $gray-text-color
@@ -88,6 +88,14 @@
       > *:first-child
         line-height: 18px
         display: inline-block
+
+  &.sign-in
+    .error.unconfirmed
+      width: 100%
+      .resend_me_instructions
+        +font-14-light
+        padding-left: 10rem
+
   .page &
     width: 100%
     max-width: 540px
@@ -273,8 +281,6 @@
   &.confirmation-congratulations
     .form-content
       padding-bottom: 30px
-
-#payment_popup
 
 .sign-up-invitation
   .inner

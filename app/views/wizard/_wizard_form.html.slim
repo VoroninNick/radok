@@ -196,8 +196,9 @@ form for="project" url=wizard_path method="post" json="{}"
       .wizard-step-line
       .wizard-step-counter data-number="3"
       .wizard-step-content
-        .label
+        label.label
           |What methodology are you looking for?
+          span.star
 
         .input.radio-button model="project.methodology_type" as="radio-button"  class="#{@project.exploratory? ? 'checked' : 'unchecked' }" value="exploratory"
           input type="radio" value="exploratory" id="project_methodology_type_exploratory" name="project_methodology_type" checked=('checked' if @project.exploratory?)
