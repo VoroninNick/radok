@@ -1,6 +1,18 @@
+# == Schema Information
+#
+# Table name: faq_articles
+#
+#  id           :integer          not null, primary key
+#  published    :boolean
+#  name         :string
+#  content      :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  url_fragment :string
+#
+
 class FaqArticlesController < ApplicationController
   before_action :set_page_banner, only: [:index, :show]
-
   def index
     init_articles
     article_url_fragment = FaqArticle.published.pluck(:url_fragment).first
@@ -27,11 +39,8 @@ class FaqArticlesController < ApplicationController
       render json: { result: 'error', code: 500 }
     end
   end
-
   def set_page_banner
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-FAQ.png')
-    @banner = Banner.new(title: 'FAQ', description: 'Get an answer to what You may not know')
-    @banner.attach_background_image(banner_url)
+    @banner = Banner.find_by(page_id: 11)
     super
   end
 end

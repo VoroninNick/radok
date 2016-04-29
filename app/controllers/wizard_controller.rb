@@ -14,9 +14,9 @@ class WizardController < ApplicationController
         step_disabled_unless_active_or_proceeded: false
     }
 
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-wizard.png')
-    @banner = Banner.new
-    @banner.attach_background_image(banner_url)
+    # banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-wizard.png')
+    # @banner = Banner.new
+    # @banner.attach_background_image(banner_url)
 
     if !@project.completed?
       set_page_metadata("wizard")

@@ -15,38 +15,23 @@ class PagesController < ApplicationController
   end
 
   def pricing
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-pricing.png')
-    @banner = Banner.new(title: 'Pricing', description: 'Select the testing solutions that meet Your needs')
-    @banner.attach_background_image(banner_url)
     render 'default'
   end
 
   def how_it_works
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-testing-services.png')
-    @banner = Banner.new
-    # @banner = Banner.new(title: 'Testing services', description: '- Only 3 easy steps to make Your web app/web work bugless!')
-    @banner.attach_background_image(banner_url)
   end
 
   def testing_services
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-testing-services.png')
-    @banner = Banner.new(title: 'The level of testing you need')
-    @banner.attach_background_image(banner_url)
   end
 
   def about
     @product_types = Wizard::ProductType.all
     @leaders = nil
     @clients = Client.all.sort_by_sorting_position
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-about-us.png')
-    @banner = Banner.new(title: '1500 certified testers', description: 'Young team of professional testers.')
-    @banner.attach_background_image(banner_url)
+    @banner = Banner.find_by(page_id: 3)
   end
 
   def contact
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-contacts.jpg')
-    @banner = Banner.new
-    @banner.attach_background_image(banner_url)
   end
 
   def home
@@ -113,9 +98,6 @@ class PagesController < ApplicationController
         operating_systems: 48,
         screen_sizes: 25
     }
-    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-device-lab.png')
-    @banner = Banner.new(title: 'Device Lab', description: 'Test devices')
-    @banner.attach_background_image(banner_url)
   end
 
   def robots_txt

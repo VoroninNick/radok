@@ -18,7 +18,7 @@ class Page < ActiveRecord::Base
   has_sitemap_record
 
   after_save :reload_routes, if: proc { self.url_changed? }
-
+ 
   def self.default_url
     self.name.split("::").last.underscore.humanize.parameterize
   end
@@ -31,17 +31,7 @@ class Page < ActiveRecord::Base
     false
   end
 
-
   def reload_routes
     DynamicRouter.reload
-
   end
-
-  # def store_if_url_changed
-  #
-  # end
-  #
-  # def check_if_url_changed?
-  #   return self.url_changed?
-  # end
-end
+ end
