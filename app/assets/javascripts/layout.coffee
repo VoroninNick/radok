@@ -329,16 +329,8 @@ $.fn.validateInput = ->
   validation_options = validation_options_str.split(' ')
 
   if valid
-    if validation_options.indexOf('email') >= 0
-      valid = validateEmail(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
     if validation_options.indexOf('confirm_password') >= 0
       valid = validateConfirmPassword($rf_input)
-
       $identical_error = $rf_input.find('.error.identical')
       if $identical_error.length
         $identical_error.removeClass('hide')
@@ -351,33 +343,40 @@ $.fn.validateInput = ->
       else
         $rf_input.parent().find('.error.remote.identical').removeClass('hide')
 
+    if validation_options.indexOf('email') >= 0
+      valid = validateEmail(value)
     if validation_options.indexOf('phone') >= 0
       valid = validatePhoneNumber(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
     if validation_options.indexOf('name') >= 0
-      valid = validateName(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
+      result = validateName(value)
+    if validation_options.indexOf('username') >= 0
+      result = validateCredentials(value)
+    if validation_options.indexOf('sign_in') >= 0
+      result = validateSignInCredentials(value)
+    if validation_options.indexOf('password') >= 0
+      result = validateCredentials(value)
     if validation_options.indexOf('address') >= 0
       valid = validateAddress(value)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
-
+    if validation_options.indexOf('billing_address') >= 0
+      result = validateBillingAddress(value)
+    if validation_options.indexOf('zip_code') >= 0
+      result = validateZipCode(value)
     if max_length
-      valid = (value.length < max_length)
-      if valid
-        $rf_input.find('.error.invalid').addClass('hide')
-      else
-        $rf_input.find('.error.invalid').removeClass('hide')
+      valid = ($rf_input.val().length < max_length)
+
+    if result
+      valid = (result.min && result.max && result.match)
+      if !result.match
+        $rf_input.find('.error.invalid').html($rf_input.find('input').attr('invalid_message'))
+      if !result.min
+        $rf_input.find('.error.invalid').html('Input is too short!!')
+      if !result.max
+        $rf_input.find('.error.invalid').html('Input is too long!!')
+
+    if valid
+      $rf_input.find('.error.invalid').addClass('hide')
+    else
+      $rf_input.find('.error.invalid').removeClass('hide')
 
   if !valid
     $form.addClass('invalid').removeClass('valid')
@@ -412,11 +411,37 @@ validatePhoneNumber = (number) ->
 
 validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/
-  return re.test(name) && name.length <= 100
+  match = re.test(name)
+  max = name.length <= 100
+  min = name.length >= 8
+  return (match: match, max: max, min: min)
+
+validateSignInCredentials = (value) ->
+  match = validateCredentials(value).match || validateEmail(value)
+  max = value.length <= 255
+  min = value.length >= 6
+  return (match: match, max: max, min: min)
+
+validateCredentials = (username) ->
+  re = /^[\w]+$/
+  match = re.test(username)
+  max = username.length <= 100
+  min = username.length >= 8
+  return (match: match, max: max, min: min)
 
 validateAddress = (address) ->
   re = /^[a-zA-Z\-'\s]+$/
   return re.test(address) && address.length <= 100
+
+validateZipCode = (zip_code) ->
+  max = zip_code.length <= 20
+  min = zip_code.length >= 5
+  return (match: true, max: max, min: min)
+
+validateBillingAddress = (address) ->
+  max = address.length <= 200
+  min = address.length >= 6
+  return (match: true, max: max, min: min)
 
 $('body').on 'change blur keyup', 'form .rf-input', (event)->
   $rf_input = $(this)
