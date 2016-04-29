@@ -1,36 +1,30 @@
-= html_block_with_fallback(:confirmation_congratulations)
-  .popup.confirmation-congratulations
-    .form-partial.forgot-password
-      .header
-        .title
-          |Welcome
-      .content
+.popup.confirmation-congratulations
+  .form-partial.forgot-password
+    .header
+      .title
+        |Welcome
+    .content
 
-        .form
-          form.forgot-password-form method="post" action=user_password_path novalidate="" show-preloader="" resource="user" show-success=""
-            .form-content
-              .text.semibold.text-center
-                |You're successfully created account and logged in!
+      .form
+        form.forgot-password-form method='post' action=user_password_path novalidate='' show-preloader='' resource='user' show-success=''
+          .form-content
+            .text.semibold.text-center
+              |You have successfully created account and logged in!
 
-              - if anonymous_test_ids.try(&:any?)
-                .uncompleted-tests-wrap.anonymous-tests-wrap
-                  .text.semibold.text-center
-                    |You have uncompleted tests. Do you want to complete them now? In any case you can access them later from your dashboard.
+            - if anonymous_test_ids.try(&:any?)
+              .uncompleted-tests-wrap.anonymous-tests-wrap
+                .text.semibold.text-center
+                  |You have uncompleted tests. Do you want to complete them now? In any case you can access them later from your dashboard.
 
-                  .row
-                    - tests = Wizard::Test.where(id: anonymous_test_ids)
-                    - tests.each do |test|
-                      .columns.large-4.test class="#{'large-centered' if tests.count == 1}"
-                        a href=test_path(id: test.id)
-                          = image_tag(test.test_type.image.url(:original))
-                          span
-                            = test.project_name
+                .row
+                  - tests = Wizard::Test.where(id: anonymous_test_ids)
+                  - tests.each do |test|
+                    .columns.large-4.test class="#{'large-centered' if tests.count == 1}"
+                      a href=test_path(id: test.id)
+                        = image_tag(test.test_type.image.url(:original))
+                        span
+                          = test.project_name
 
-
-              .actions
-                .columns.large-8.large-push-2
-                  = rf_button(title: "Start-now", svg: "rf-rocket-up-right", align_content: "left", full_width: true, href: wizard_path)
-
-
-
-
+            .actions
+              .columns.large-8.large-push-2
+                = rf_button(title: 'Start-now', svg: 'rf-rocket-up-right', align_content: 'left', full_width: true, href: wizard_path)

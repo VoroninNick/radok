@@ -34,6 +34,8 @@ $('.menu').on 'click', '.has-dropdown', ->
 
 window.openPopup = (popup_name)->
   if typeof popup_name == 'string'
+    if popup_name.indexOf '/' > -1
+      popup_name = popup_name.replace('/', '__')
     $popup = $("[id=#{popup_name}_popup]")
   else if popup_name instanceof(jQuery)
     $popup = popup_name
@@ -184,14 +186,12 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
     form_type = window.form_types[type]
   else
     form_type = {}
-
   if form_type.validateForm
     form_type.validateForm.call($form)
   else
     $form.validateForm()
 
   valid_form = $form.find('.rf-input.invalid').length == 0
-
   if valid_form
     $form_errors = $form.find('.form-errors')
     if form_type.serialize
@@ -223,7 +223,6 @@ $('body').on 'submit', 'form:not([no-processing])', (event)->
       $("[hide-during-send='']").addClass('hide')
     success_handler = form_type.success_handler || default_form_success_handler
     error_handler = form_type.error_handler || default_form_error_handler
-
     $.ajax(
       data: form_data
       url: url

@@ -1,5 +1,4 @@
 .page
-  = render 'page_banner'
   #dashboard-projects data-wizard-root=wizard_path
     - if !(@drafts.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?))
       .no-projects
@@ -39,7 +38,7 @@
                                   = image_tag(project.type_of_product_logo_path)
                               .type-of-test
                                 = project.type_of_test
-                              /.testing-type ng-show="project.testing_type && project.testing_type.length"
+                              .testing-type.pull-right ng-show="project.methodology_type && project.methodology_type.length"
                                 = project.testing_type
                               .clearfix
                             .testers-and-hours
@@ -47,8 +46,8 @@
                                 .testers-icon
                                   = image_tag('user.svg')
                                 .total-testers-count
-                                  - if (count = project.total_testers_count) > 0
-                                    = "#{count} testers"
+                                  - if project.total_testers_count > 0
+                                    = "#{project.total_testers_count} testers"
                                   - else
                                     |Not specified
                               .hours
@@ -61,6 +60,51 @@
                         .delete-draft-button ng-click='deleteDraft(project)'
                           |Delete draft
                         = rf_button title: 'Complete', subtitle: 'Draft', svg: 'finish_flag', class: 'complete-draft-button'
+
+      - if @unpaid.try(&:any?)
+        .drafts
+          .row
+            .columns.large-12.header
+              |Waiting for payment
+            .items.columns.large-12
+              .row
+                - @unpaid.each do |project|
+                  .columns.medium-6.large-4.item data-test-id=project.id
+                    a.inner href=test_path(id: project.id)
+                      .project-status
+                        |Unpaid
+                      .my-row
+                        .my-column
+                          .content
+                            .type-of-test-logo class=('ux' if project.usability_test?)
+                              = image_tag (project.type_of_test_logo)
+                            .project-name
+                              = project.pi__project_name
+                            .type-of-test-wrap
+                              .type-of-test-icon
+                                .svg-wrap
+                                  = image_tag(project.type_of_product_logo_path)
+                              .type-of-test
+                                = project.type_of_test
+                              .testing-type.pull-right ng-show="project.methodology_type && project.methodology_type.length"
+                                = project.testing_type
+                              .clearfix
+                            .testers-and-hours
+                              .testers
+                                .testers-icon
+                                  = image_tag('user.svg')
+                                .total-testers-count
+                                  = "#{project.total_testers_count} testers"
+                              .hours
+                                .hours-icon
+                                  = image_tag('clock.svg')
+                                .hours-count
+                                  = project.ps__hours
+                                  |&thinsp;&thinsp;hours each
+                      .actions
+                        .delete-draft-button
+                          | Delete project
+                        = rf_button title: "Complete", subtitle: "Payment", svg: "rf-rocket-up-right", class: "complete-payment-button"
 
       - if @in_progress_tests.try(&:any?)
         .in-process-tests
@@ -77,14 +121,14 @@
                       .my-row
                         .my-column
                           .content
-                            .type-of-test-logo ng-include='project.type_of_test_logo'
+                            .type-of-test-logo class=('ux' if project.usability_test?)
+                              = image_tag (project.type_of_test_logo)
                             .project-name
                               = project.project_name
                             = render 'project_progress', percent: project.percent_completed_counter
                             .remaining-time
                               - if project.expected_tested_at
                                 = project.remaining_time_string
-                              - else
 
       - if @finished_projects.try(&:any?)
         .finished-tests
@@ -107,7 +151,7 @@
                           .success-svg-wrap
                             = image_tag('rf-icon-ok-blue.svg')
                       .finished-project-short-info collapsable-content=''
-                        /.row
+                        .row
                         .columns.large-12.property
                           .property-label
                             |Type of test
@@ -141,3 +185,5 @@
                                 = embedded_svg_from_assets('file-download')
                                 .file-name
                                   = project.report_file_bane
+
+/= popup 'wizard/payment'

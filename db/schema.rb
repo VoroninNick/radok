@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411052806) do
+ActiveRecord::Schema.define(version: 20160427074738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,21 +146,23 @@ ActiveRecord::Schema.define(version: 20160411052806) do
   create_table "payment_requests", force: :cascade do |t|
     t.string   "full_name"
     t.string   "phone"
-    t.string   "email"
-    t.string   "comment"
-    t.string   "payment_type"
+    t.string   "description"
+    t.string   "payment_method"
     t.string   "billing_address"
     t.string   "city"
     t.string   "zip_code"
     t.string   "country"
     t.string   "card_holder_name"
     t.string   "card_number"
-    t.string   "exp_month"
-    t.string   "exp_year"
-    t.string   "cvv_number"
+    t.string   "expire_month"
+    t.string   "expire_year"
     t.integer  "test_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "email"
+    t.string   "payment_id"
+    t.text     "link"
+    t.string   "state"
   end
 
   create_table "schedule_call_requests", force: :cascade do |t|
@@ -425,6 +427,7 @@ ActiveRecord::Schema.define(version: 20160411052806) do
     t.string   "contact_person_email"
     t.text     "admin_comment"
     t.integer  "promo_code_id"
+    t.date     "paid_at"
   end
 
   create_table "wizard_texts", force: :cascade do |t|

@@ -37,6 +37,7 @@
 #  contact_person_email    :string
 #  admin_comment           :text
 #  promo_code_id           :integer
+#  paid_at                 :date
 #
 
 class Wizard::Test < ActiveRecord::Base
@@ -44,12 +45,11 @@ class Wizard::Test < ActiveRecord::Base
   has_attachments :test_case_files
   has_attachments :test_files
 
-  has_many :payment_requests
+  has_one :payment_request
   has_many :platforms,
            class_name: Wizard::Platform,
            through: :test_platforms_bindings
   has_many :test_platforms_bindings, class_name: Wizard::TestPlatform
-  # , foreign_key: [:test_id, :platform_id]
 
   belongs_to :product_type, class_name: Wizard::ProductType
   belongs_to :promo_code, class_name: Wizard::PromoCode
@@ -78,7 +78,8 @@ class Wizard::Test < ActiveRecord::Base
   accepts_nested_attributes_for :test_platforms_bindings
 
   scope :drafts, -> { where('completed_at is null') }
-  scope :processing_projects, -> { where('completed_at is not null') }
+  scope :unpaid_projects, -> { where('completed_at is not null and paid_at is null') }
+  scope :processing_projects, -> { where('completed_at is not null and paid_at is not null') }
   scope :tested_projects, -> { where('completed_at is not null and tested_at is not null') }
 
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
@@ -188,7 +189,7 @@ class Wizard::Test < ActiveRecord::Base
   end
 
   def testing_type
-    'Explained'
+    methodology_type.humanize if methodology_type.present?
   end
 
   def total_testers_count
@@ -205,6 +206,10 @@ class Wizard::Test < ActiveRecord::Base
 
   def completed?
     completed_at.present?
+  end
+
+  def paid?
+    paid_at.present?
   end
 
   def localization_test?
@@ -462,5 +467,9 @@ class Wizard::Test < ActiveRecord::Base
 
   def complete!
     self.update_attributes!(completed_at: DateTime.now, skip_callbacks: true)
+  end
+
+  def paid!
+    self.update_attributes!(paid_at: DateTime.now, skip_callbacks: true)
   end
 end

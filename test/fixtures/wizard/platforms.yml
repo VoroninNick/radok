@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: wizard_platforms
+#
+#  id                  :integer          not null, primary key
+#  name                :string
+#  testers_count       :integer
+#  ancestry            :string
+#  position            :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  avatar_file_name    :string
+#  avatar_content_type :string
+#  avatar_file_size    :integer
+#  avatar_updated_at   :datetime
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:

@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   def index
     user_tests = current_user.tests
     @drafts = user_tests.drafts
+    @unpaid = user_tests.unpaid_projects
     @in_progress_tests = user_tests.processing_projects
     @finished_projects = user_tests.tested_projects
     a = @finished_projects.to_a

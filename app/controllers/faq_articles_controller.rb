@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: faq_articles
+#
+#  id           :integer          not null, primary key
+#  published    :boolean
+#  name         :string
+#  content      :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  url_fragment :string
+#
+
 class FaqArticlesController < ApplicationController
   def index
     init_articles
