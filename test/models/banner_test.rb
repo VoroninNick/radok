@@ -15,7 +15,6 @@
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
 #  title_html_tag                :string
-#  banner_url                    :string
 #
 
 require 'test_helper'
