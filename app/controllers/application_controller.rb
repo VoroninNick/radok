@@ -19,8 +19,7 @@ class ApplicationController < ActionController::Base
   after_filter :set_csrf_cookie_for_ng
 
   rescue_from CanCan::AccessDenied do |exception|
-    #redirect_to main_app.root_url, :alert => exception.message
-    render template: "errors/access_denied", layout: "not_found"
+    render template: 'errors/access_denied', layout: 'not_found'
   end
 
   def session_inspect
@@ -44,44 +43,47 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me, :confirm_success_url, :config_name, :full_name, :phone, :registration) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password,
+                                                            :password_confirmation, :remember_me,
+                                                            :confirm_success_url, :config_name, 
+                                                            :full_name, :phone, :registration) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password, :remember_me) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password,
+                                                                   :password_confirmation, :current_password) }
   end
 
   def authenticate
-
   end
 
   def menu_items
     unlogged_user_menu = [
-        { title: "For clients",
+        { title: 'For clients',
           subitems: [
-              {title: "Testing services", href: testing_services_path},
-              {title: "Devices", href: devices_path},
-              {title: "Pricing", href: pricing_path},
-              {title: "FAQ", href: faq_path}
+              {title: 'Testing services', href: testing_services_path},
+              {title: 'Devices', href: devices_path},
+              {title: 'Pricing', href: pricing_path},
+              {title: 'FAQ', href: faq_path}
           ]
         },
-        {title: "How it works", href: how_it_works_path},
-        {title: "About us", href: about_path},
-        {title: "Contact us", href: contact_path}
+        {title: 'How it works', href: how_it_works_path},
+        {title: 'About us', href: about_path},
+        {title: 'Contact us', href: contact_path}
     ]
 
     logged_user_menu = [
-        {title: "My dashboard", href: dashboard_path},
+        {title: 'My dashboard', href: dashboard_path},
         {
-            title: "For clients",
+            title: 'For clients',
             subitems: [
-                {title: "Testing services", href: testing_services_path},
-                {title: "Devices", href: devices_path},
-                {title: "How it works", href: how_it_works_path},
-                {title: "Pricing", href: pricing_path},
-                {title: "FAQ", href: faq_path}
+                {title: 'Testing services', href: testing_services_path},
+                {title: 'Devices', href: devices_path},
+                {title: 'How it works', href: how_it_works_path},
+                {title: 'Pricing', href: pricing_path},
+                {title: 'FAQ', href: faq_path}
             ]
         },
-        {title: "About us", href: about_path},
-        {title: "Contact us", href: contact_path}
+        {title: 'About us', href: about_path},
+        {title: 'Contact us', href: contact_path}
     ]
 
     if current_user
@@ -95,7 +97,6 @@ class ApplicationController < ActionController::Base
     @banner ||= @page_instance.try(:banner)
   end
 
-
   def developer_machine?
     ActionMailer::Base.default_url_options[:host].scan(/localhost/).any?
   end
@@ -105,13 +106,12 @@ class ApplicationController < ActionController::Base
   end
 
   def render_not_found
-    render template: "errors/not_found.html.slim", layout: 'not_found'
+    render template: 'errors/not_found.html.slim', layout: 'not_found'
   end
 
   helper_method :developer_machine?, :server_machine?
 
   helper_method :menu_items
-
 
   #before_action :redirect_to_without_slash
   def redirect_to_without_slash
@@ -121,11 +121,15 @@ class ApplicationController < ActionController::Base
     if ends_with_slash && !is_root
       redirect_to url[0, url.length - 1], status: 301
     end
+  end
 
+  def respond_with_navigational(*args, &block)
+    respond_with(*args) do |format|
+      format.any(*navigational_formats, &block)
+    end
+  end
 
-    # if ends_with_slash && (params[:format].blank? || params[:format].to_s != 'html' )
-    #   str = request.original_url
-    #   redirect_to str[0, str.length - 1]
-    # end
+  def navigational_formats
+    @navigational_formats ||= Devise.navigational_formats.select{ |format| Mime::EXTENSION_LOOKUP[format.to_s] }
   end
 end

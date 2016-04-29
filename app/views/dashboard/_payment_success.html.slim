@@ -1,0 +1,16 @@
+.popup.confirmation-congratulations
+  .form-partial.forgot-password
+    .header
+      .title
+        |Welcome
+    .content
+
+      .form
+        form.forgot-password-form method='post' action=user_password_path novalidate='' show-preloader='' resource='user' show-success=''
+          .form-content
+            .text.semibold.text-center
+              |You have successfully paid for this test.
+
+            .actions
+              .columns.large-8.large-push-2
+                = rf_button(title: 'Start new', svg: 'rf-rocket-up-right', align_content: 'left', full_width: true, href: wizard_path)

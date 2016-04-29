@@ -126,13 +126,13 @@ class WizardController < ApplicationController
 
   def execute_payment
     @payment = Payment.find(params[:paymentId])
+    @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
+    @test = Wizard::Test.find(@payment_request.test_id)
     if @payment.execute(payer_id: params[:PayerID])
-      @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
-      @test = Wizard::Test.find(@payment_request.test_id)
       @test.paid!
-      redirect_to dashboard_project_path(id: @test.id), notice: "Thank You! We will test Your project."
+      respond_with_navigational{ redirect_to(dashboard_project_path(id: @test.id), flash: {payment_success: true}) }
     else
-      redirect_to dashboard_project_path(id: @test.id), alert: "Ooops..! #{@payment.error.inspect}"
+      respond_with_navigational{ redirect_to(dashboard_project_path(id: @test.id), flash: {payment_fail: true, errors: @payment.error}) }
     end
   end
 
