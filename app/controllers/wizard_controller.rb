@@ -14,6 +14,10 @@ class WizardController < ApplicationController
         step_disabled_unless_active_or_proceeded: false
     }
 
+    banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-wizard.png')
+    @banner = Banner.new
+    @banner.attach_background_image(banner_url)
+
     if !@project.completed?
       set_page_metadata("wizard")
       @head_title = @project.project_name
@@ -42,8 +46,6 @@ class WizardController < ApplicationController
   def new
     @head_title = "Wizard"
     @project = Wizard::Test.new
-    #last_test = Wizard::Test.last
-    #id =  last_test.id + 1
     id = rand(1000)
     @project.project_name = "Test ##{id}"
     @project.methodology_type ||= "exploratory"
@@ -61,9 +63,7 @@ class WizardController < ApplicationController
     @wizard_options = {
         step_disabled_unless_active_or_proceeded: false
     }
-
     set_page_metadata("wizard")
-
     render "new"
   end
 

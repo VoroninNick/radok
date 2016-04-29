@@ -1,13 +1,7 @@
 - cache('app/views/pages/testing_services.html.slim') do
 
   .page
-    .page-banner-wrap
-      .page-banner style="background-image: url(#{asset_path('banners/radok-web-banner-testing-services.png')})"
-        .row
-          .inner
-            .description-block
-              div class="title" The level of testing you need
-
+    = render "page_banner"
     #testing_services-page-content-rows.page-content-rows
       #testing_services__what-we-do.page-content-row-wrap
         .row

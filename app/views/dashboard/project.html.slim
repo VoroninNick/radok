@@ -1,59 +1,61 @@
-.row
-  .columns.large-12.project-name-row
-    .h2.project-name
-      = @project.project_name
-    - if @project.completed?
-      - if @project.successful?
-        .status-completed.status-successfull
-          = image_tag("rf-icon-ok.svg")
+.page
+  = render 'page_banner'
+  .row
+    .columns.large-12.project-name-row
+      .h2.project-name
+        = @project.project_name
+      - if @project.completed?
+        - if @project.successful?
+          .status-completed.status-successfull
+            = image_tag("rf-icon-ok.svg")
+        - else
+          .status-completed.status-fail
+            = image_tag("close.svg")
       - else
-        .status-completed.status-fail
-          = image_tag("close.svg")
-    - else
-      .status-fail
-    .download-report
-      - if @project.report.try(:exists?)
-        a href=@project.report.url
-          = embedded_svg_from_assets("file-download")
-          span.report-name
-            = @project.report_file_name
+        .status-fail
+      .download-report
+        - if @project.report.try(:exists?)
+          a href=@project.report.url
+            = embedded_svg_from_assets("file-download")
+            span.report-name
+              = @project.report_file_name
 
-.row.project-short-info
-  - if @project.user
-    .columns.large-4.project-short-info-column.managed-by
+  .row.project-short-info
+    - if @project.user
+      .columns.large-4.project-short-info-column.managed-by
+        .inner
+          .managed-by-header
+            |Managed by
+          .managed-by-avatar
+            - if @project.user.try{|u| u.avatar.exists?(:profile_image) }
+              img src=@project.user.avatar.url(:profile_image)
+            - else
+              = image_tag("profile_image.jpg")
+
+          .managed-by-name
+            = @project.user.name_or_username
+    .columns.large-4.project-short-info-column.total-cost
       .inner
-        .managed-by-header
-          |Managed by
-        .managed-by-avatar
-          - if @project.user.try{|u| u.avatar.exists?(:profile_image) }
-            img src=@project.user.avatar.url(:profile_image)
-          - else
-            = image_tag("profile_image.jpg")
-
-        .managed-by-name
-          = @project.user.name_or_username
-  .columns.large-4.project-short-info-column.total-cost
-    .inner
-      .total-cost-header
-        |Total cost
-      .total-cost-value
-        |$&nbsp;
-        span animate-number="" value=@project.price(true)
-          = 0
-  .columns.large-4.project-short-info-column.project-progress
-    .inner
-      .project-progress-header
-        |Project progress
-      .project-progress-value
-        = render "project_progress", percent: @project.percent_completed_counter
+        .total-cost-header
+          |Total cost
+        .total-cost-value
+          |$&nbsp;
+          span animate-number="" value=@project.price(true)
+            = 0
+    .columns.large-4.project-short-info-column.project-progress
+      .inner
+        .project-progress-header
+          |Project progress
+        .project-progress-value
+          = render "project_progress", percent: @project.percent_completed_counter
 
 
-.row
-  - if @project.admin_comment.present?
-    .columns.large-12
-      h1
-        |Admin comment:
-    .columns.large-12
-      = raw @project.admin_comment
-    .clearfix
-  = render "project_super_full_summary", project: @project
+  .row
+    - if @project.admin_comment.present?
+      .columns.large-12
+        h1
+          |Admin comment:
+      .columns.large-12
+        = raw @project.admin_comment
+      .clearfix
+    = render "project_super_full_summary", project: @project

@@ -16,7 +16,6 @@
 #  updated_at                    :datetime         not null
 #  title_html_tag                :string
 #
-
 class Banner < ActiveRecord::Base
   attr_accessible *attribute_names
 
@@ -29,5 +28,12 @@ class Banner < ActiveRecord::Base
 
   def set_default_title_html_tag
     self.title_html_tag = "div" if self.title_html_tag.blank?
+  end
+
+  def attach_background_image(file_url)
+    file = File.open(file_url)
+    self.background_image = file
+    file.close
+    self.save!
   end
 end
