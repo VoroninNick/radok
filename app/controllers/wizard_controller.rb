@@ -68,11 +68,17 @@ class WizardController < ApplicationController
   def create
     @test = Wizard::Test.create(test_params)
     @test.user_id = current_user.try(&:id)
-    if @test.save && current_user.nil?
-      id = @test.id
-      session[:tests] = [id] unless session[:tests]
-      session[:tests] << id if !session[:tests].include?(id) && session[:tests]
-    elsif @test.save && current_user
+    if @test.save
+      if current_user.nil?
+        id = @test.id
+        if !session[:tests]
+          session[:tests] = [id]
+        else
+          if !session[:tests].include?(id)
+            session[:tests] << id
+          end
+        end
+      end
       render inline: @test.to_builder.target!, status: 201
     end
   end

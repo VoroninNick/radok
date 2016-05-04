@@ -168,7 +168,7 @@ class Wizard::Test < ActiveRecord::Base
 
   def pi__project_name
     name = self['project_name']
-    "Test ##{id}" if name.blank?
+    "Test ##{self.id}" if name.blank?
   end
 
   def project_name
