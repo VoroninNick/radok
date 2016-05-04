@@ -152,7 +152,7 @@ window.step_types = {
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
       auth_required = project.authentication_required
-      auth_not_required = project.authentication_required == 'false' || 'null'
+      auth_not_required = project.authentication_required == 'false' || project.authentication_required == 'null'
       credentials_valid = project.auth_login.length > 0 && project.auth_password.length > 0
       auth_valid = auth_required && credentials_valid || auth_not_required
       contact_name_valid = validateName(project.contact_person_name)
