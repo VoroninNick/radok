@@ -53,6 +53,7 @@ form for="project" url=wizard_path method="post" json="{}"
       .wizard-step-content
         .label
           |On what platforms would you like your product to be tested?
+          span.star
         .blue-header
           |Platform / Testers per platform
         .input.platforms-input data-name="On what platforms would you like your product to be tested?" as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms" platforms-by-product-type=@platform_ids_by_product_type.to_json
@@ -267,6 +268,7 @@ form for="project" url=wizard_path method="post" json="{}"
       .wizard-step-content
         .label id="test-url-or-files-label"
           |Please provide the URL or file to be tested
+          span.star
 
         .columns.large-7.small-padding-right-0 style="padding-left: 0; "
           .input.url model="project.project_url" as="url"
@@ -306,7 +308,9 @@ form for="project" url=wizard_path method="post" json="{}"
             input type="radio" value="true" id="project_authentication_required_true" name="project_authentication_required" checked=('checked' if @project.authentication_required?)
             label.custom-radio-button for="project_authentication_required_true"
             label for="project_authentication_required_true"
-              |Yes, here they are:
+              |Yes, here they are
+            p.help
+              |You will need to provide a username and a password to access Your project.
 
           .nested-input-group
             .input.string.project-auth-login.input-with-indent model="project.auth_login" as="string"
