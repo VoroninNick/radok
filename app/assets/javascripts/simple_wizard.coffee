@@ -154,10 +154,10 @@ window.step_types = {
       if project.authentication_required == 'true'
         auth_not_required = false
         auth_required = true
+        credentials_valid = (project.auth_login.length > 0) && (project.auth_password.length > 0)
       else
         auth_not_required = true
         auth_required = false
-      credentials_valid = (project.auth_login.length > 0) && (project.auth_password.length > 0)
       auth_valid = auth_required && credentials_valid || auth_not_required
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)

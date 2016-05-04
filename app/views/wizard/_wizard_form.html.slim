@@ -1,7 +1,7 @@
 - content_for :javascript do
   = javascript_include_tag 'wizard_js'
 
-.wizard-controller ng-controller="Wizard"
+#wizard-controller ng-controller="Wizard" data-hour-price="#{hour_price}"
 form for="project" url=wizard_path method="post" json="{}"
   fieldset.wizard-step step="1"
 

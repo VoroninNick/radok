@@ -1,7 +1,7 @@
 class ImportClients < ActiveRecord::Migration
   def up
     execute(<<-SQL)
-      DELETE FROM banners;
+      DELETE FROM clients;
 
       INSERT INTO clients (id, name, logo_file_name, logo_content_type, logo_file_size, logo_updated_at, sorting_position, client_url, created_at, updated_at) VALUES(1,'Apple','apple.svg','image/svg+xml',1015,'2016-02-11 16:19:27.747270',1,'http://apple.com','2016-02-11 16:19:28.135299','2016-02-11 16:43:02.755970');
       INSERT INTO clients (id, name, logo_file_name, logo_content_type, logo_file_size, logo_updated_at, sorting_position, client_url, created_at, updated_at) VALUES(2,'Microsoft','microsoft.svg','image/svg+xml',7097,'2016-02-11 16:20:10.370279',2,'http://microsoft.com','2016-02-11 16:20:10.679088','2016-02-11 16:43:02.765669');
