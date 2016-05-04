@@ -1057,7 +1057,7 @@ validate_methodology_type = ()->
     else
       $test_case_files_input.addClass('invalid-required invalid')
 
-$('body').on 'change code-change keyup keypress', '#project_auth_login, #project_auth_password', ()->
+$('body').on 'change code-change keyup', '#project_auth_login, #project_auth_password', ()->
   validate_auth_credentials(this)
 
 validate_auth_credentials =(that) ->
@@ -1080,8 +1080,6 @@ show_or_hide_auth_credentials_inputs = ()->
 
   if requires_auth
     $credentials_inputs.removeClass('hide')
-    validate_auth_credentials('#project_auth_login')
-    validate_auth_credentials('#project_auth_password')
   else
     $credentials_inputs.addClass('hide')
 
