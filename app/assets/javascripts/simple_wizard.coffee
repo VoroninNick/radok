@@ -475,9 +475,7 @@ $('body').on 'change dom_change keyup keydown', '.platform .option-count input',
   $error = $('#platforms-empty-error')
   if project.total_price > 0
     $error.fadeOut()
-    console.log project.total_price
   else
-    console.log 'error'
     $error.fadeIn()
 
 $('body').on 'change.project.test_platforms_bindings', (e)->
@@ -1285,7 +1283,10 @@ validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/
   return (name && re.test(name) && name.length <= 100) || (name.length == 0) || !name
 
-$('body').on 'upload_files.test_files delete_files.test_files change.project.project_url', ()->
+$('body').on 'upload_files.test_files delete_files.test_files', ()->
+  validate_project_access_test_url_and_files()
+
+$('body').on 'change keyup keydown dom_change', "[model='project.project_url'] input", ()->
   validate_project_access_test_url_and_files()
 
 $('body').on 'upload_files.test_case_files delete_files.test_case_files', ()->
