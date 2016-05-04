@@ -471,10 +471,13 @@ $('body').on 'change.project.total_price', ()->
   $('[data-bind=total_price]').text(price)
   showStepsProgress()
 
+$('body').on 'change dom_change keyup keydown', '.platform .option-count input', ()->
   $error = $('#platforms-empty-error')
-  if price > 0
+  if project.total_price > 0
     $error.fadeOut()
+    console.log project.total_price
   else
+    console.log 'error'
     $error.fadeIn()
 
 $('body').on 'change.project.test_platforms_bindings', (e)->

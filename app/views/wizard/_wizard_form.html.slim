@@ -1,7 +1,7 @@
 - content_for :javascript do
   = javascript_include_tag 'wizard_js'
 
-#wizard-controller ng-controller="Wizard" data-hour-price="#{hour_price}"
+.wizard-controller ng-controller='Wizard'
 form for="project" url=wizard_path method="post" json="{}"
   fieldset.wizard-step step="1"
 
@@ -250,6 +250,7 @@ form for="project" url=wizard_path method="post" json="{}"
         .product-main-components
           .label
             |What are the product's main components?
+            span.star
           p.help
             |Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
 
