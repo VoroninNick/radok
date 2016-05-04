@@ -12,26 +12,21 @@
 #
 
 class FaqArticlesController < ApplicationController
+  before_action :set_page_banner, only: [:index, :show]
   def index
     init_articles
-    #@article = @faq_articles.published.first
     article_url_fragment = FaqArticle.published.pluck(:url_fragment).first
-    #render "index"
     redirect_to faq_article_path(id: article_url_fragment), status: 302
   end
 
   def show
     init_articles
-    #@article = @faq_articles.select{|a| a[:id] == params[:id].to_i}.first || @faq_articles.first
     @article = @faq_articles.where(url_fragment: params[:id]).first
     set_page_metadata(@article)
-    @banner = Pages::FaqIndex.first.try(&:banner)
-
-    render "index"
+    render 'index'
   end
 
   def init_articles
-    #@faq_articles = FaqArticle.published.pluck(:id, :name, :content).map{|arr| {id: arr[0], name: arr[1], content: arr[2]} }
     @faq_articles = FaqArticle.published
   end
 
@@ -39,9 +34,13 @@ class FaqArticlesController < ApplicationController
     if request.post?
       @faq_request = FaqRequest.create!(params[:faq_request])
       FaqRequestMailer.new_request(@faq_request).deliver
-      render json: { result: "successfully rendered", code: 200 }
+      render json: { result: 'successfully rendered', code: 200 }
     else
-      render json: { result: "error", code: 500 }
+      render json: { result: 'error', code: 500 }
     end
+  end
+  def set_page_banner
+    @banner = Banner.find_by(page_id: 11)
+    super
   end
 end

@@ -4,6 +4,7 @@ class ImportPagesToDb < ActiveRecord::Migration
       DELETE FROM pages;
 
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(1,'Pages::HowItWorks',NULL,'','/crowdsourced-testing-process','2015-09-23 18:51:14.000694','2016-02-11 17:26:38.191345');
+      INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(3,'Pages::About',NULL,'','/crowdsourced-company-about','2015-09-23 19:19:13.558410','2016-02-11 16:25:47.315818');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(4,'Pages::Contact',NULL,'','/crowdsourced-testing-contact','2015-09-23 19:19:54.261268','2015-10-14 15:49:22.574697');
       INSERT INTO pages (id, type, name, content, url, created_at, updated_at) VALUES(5,'Pages::Pricing',NULL,'<div class="page-content-rows" id="pricing-page-content-rows">
                 <div class="page-content-row-wrap">

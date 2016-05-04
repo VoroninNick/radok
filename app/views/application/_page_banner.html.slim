@@ -4,9 +4,9 @@
       .row
         .inner
           .description-block
-            = content_tag(@banner.title_html_tag, @banner.title, class: "title")
+            = content_tag(@banner.title_html_tag, @banner.title, class: 'title')
             .description
               = @banner.description
             - if @banner.button_label.present? && @banner.button_url.present?
               .button-container
-                = rf_button title: @banner.button_label, href: @banner.button_url, full_width: true, svg: "rf-rocket-up-right.svg"
+                = rf_button title: @banner.button_label, href: @banner.button_url, full_width: true, svg: 'rf-rocket-up-right.svg'

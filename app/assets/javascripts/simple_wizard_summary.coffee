@@ -23,11 +23,11 @@ init_wizard_summary_fixed = ()->
   else
     transform_px = 0
 
-  min_indent_from_header = 128
+  min_indent_from_header = 96
   min_scroll_top_for_transform = $("#header").height() + min_indent_from_header
 
   if transform_px == 0 && summary_fixed_rel_bottom > window_height && scroll_top >= min_scroll_top_for_transform
-    transform_px = window_height - summary_fixed_rel_bottom
+    transform_px = window_height - summary_fixed_rel_bottom - $('#header').height()
 
   if transform_px != 0
     $summary_fixed.css({transform: "translateY(#{transform_px}px)"})

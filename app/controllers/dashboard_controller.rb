@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
   before_action :check_user
+  before_action :set_page_banner, only: [:index, :project]
 
   def index
     user_tests = current_user.tests
@@ -12,7 +13,6 @@ class DashboardController < ApplicationController
       @finished_projects_groups = a.each_slice((a.size/2.to_f).round).to_a
     end
     set_page_metadata('dashboard')
-    set_page_banner
   end
 
   def project
@@ -22,5 +22,10 @@ class DashboardController < ApplicationController
 
   def check_user
     redirect_to new_user_session_path unless current_user
+  end
+
+  def set_page_banner
+    @banner = Banner.find(2)
+    super
   end
 end

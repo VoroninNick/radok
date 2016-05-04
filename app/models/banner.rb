@@ -16,7 +16,6 @@
 #  updated_at                    :datetime         not null
 #  title_html_tag                :string
 #
-
 class Banner < ActiveRecord::Base
   attr_accessible *attribute_names
 
