@@ -472,6 +472,9 @@ $('body').on 'change.project.total_price', ()->
   showStepsProgress()
 
 $('body').on 'change dom_change keyup keydown', '.platform .option-count input', ()->
+  validate_empty_testers_count()
+
+validate_empty_testers_count = ()->
   $error = $('#platforms-empty-error')
   if project.total_price > 0
     $error.fadeOut()
@@ -1080,8 +1083,10 @@ show_or_hide_auth_credentials_inputs = ()->
 
   if requires_auth
     $credentials_inputs.removeClass('hide')
+    $input.addClass('invalid')
   else
     $credentials_inputs.addClass('hide')
+    $input.removeClass('invalid')
 
 show_or_hide_auth_test_driven_development_inputs = ()->
   methodology_type = $("[model*='project.methodology_type'] input:checked").val() == 'true'
@@ -1271,15 +1276,15 @@ validateURL = (url) ->
 
 validateEmail = (email) ->
   re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2,6})?)$/i
-  return (re.test(email) && email.length <= 255) || (email.length == 0) || !email
+  return (re.test(email) && email.length <= 255) || (email && email.length == 0) || !email
 
 validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
-  return (re.test(number) && number.length <= 20) || (number.length == 0) || !number
+  return (re.test(number) && number.length <= 20) || (number && number.length == 0) || !number
 
 validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/
-  return (name && re.test(name) && name.length <= 100) || (name.length == 0) || !name
+  return (name && re.test(name) && name.length <= 100) || (name && name.length == 0) || !name
 
 $('body').on 'upload_files.test_files delete_files.test_files', ()->
   validate_project_access_test_url_and_files()
@@ -1416,6 +1421,11 @@ $('body .promo-code-field .cancel-promo-code').on 'click', (e)->
 $('.checkout-button, .confirm-button-container').on 'click', (e)->
   $button = $(this)
   $invalid_test_steps = get_test_invalid_steps()
+  validate_auth_credentials('#project_auth_login')
+  validate_auth_credentials('#project_auth_password')
+  validate_empty_testers_count()
+  validate_project_access_test_url_and_files()
+
   if !is_valid_project($invalid_test_steps)
     $popup = $('#invalid_fields_popup')
     openPopup($popup)
