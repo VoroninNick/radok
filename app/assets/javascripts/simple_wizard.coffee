@@ -151,9 +151,13 @@ window.step_types = {
     checkIsCompleted : ()->
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
-      auth_required = project.authentication_required
-      auth_not_required = project.authentication_required == 'false' || project.authentication_required == 'null'
-      credentials_valid = project.auth_login.length > 0 && project.auth_password.length > 0
+      if project.authentication_required == 'true'
+        auth_not_required = false
+        auth_required = true
+      else
+        auth_not_required = true
+        auth_required = false
+      credentials_valid = (project.auth_login.length > 0) && (project.auth_password.length > 0)
       auth_valid = auth_required && credentials_valid || auth_not_required
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)
@@ -1268,11 +1272,11 @@ validateURL = (url) ->
 
 validateEmail = (email) ->
   re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2,6})?)$/i
-  return (re.test(email) && email.length <= 255) || email.length == 0 || !email
+  return (re.test(email) && email.length <= 255) || (email.length == 0) || !email
 
 validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
-  return (re.test(number) && number.length <= 20) || number.length == 0 || !number
+  return (re.test(number) && number.length <= 20) || (number.length == 0) || !number
 
 validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/

@@ -426,7 +426,7 @@ validateCredentials = (username) ->
   re = /^[\w]+$/
   match = re.test(username)
   max = username.length <= 100
-  min = username.length >= 8
+  min = username.length >= 5
   return (match: match, max: max, min: min)
 
 validateAddress = (address) ->
