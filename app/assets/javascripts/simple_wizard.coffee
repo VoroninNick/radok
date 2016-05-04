@@ -155,7 +155,7 @@ window.step_types = {
         auth_not_required = false
         auth_required = true
         credentials_valid = (project.auth_login.length > 0) && (project.auth_password.length > 0)
-      else
+      else if project.authentication_required == 'false'
         auth_not_required = true
         auth_required = false
       auth_valid = auth_required && credentials_valid || auth_not_required
@@ -395,6 +395,8 @@ update_price = ()->
   project.test_platforms_bindings = test_platforms_bindings
   project.total_price = total_price
   project.selected_platforms = selected_platforms
+  project.authentication_required = $("[model*='project.authentication_required'] input:checked").val() || false
+  console.log 'project.authentication_required', project.authentication_required
 
   $platforms_field.trigger('change.project.total_testers_count')
   $platforms_field.trigger('change.project.test_platforms_bindings')
