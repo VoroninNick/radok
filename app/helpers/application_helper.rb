@@ -138,8 +138,12 @@ module ApplicationHelper
         options[:invalid_message] = "Please, enter a valid email"
       elsif options[:validation].include?("phone")
         options[:invalid_message] = "Please, enter a valid phone number"
-      elsif(options[:validation].include?("name") || options[:validation].include?("address"))
+      elsif (options[:validation].include?("username") || options[:validation].include?("password"))
+        options[:invalid_message] = "Can contain only letters and digits"
+      elsif (options[:validation].include?("name") || options[:validation].include?("address"))
         options[:invalid_message] = "Can contain letters, hyphens, apostrophes"
+      elsif options[:validation].include?("sign_in")
+        options[:invalid_message] = "Provide valid name or email"
       end
     end
 
@@ -164,7 +168,7 @@ module ApplicationHelper
       content_tag(:label, taken_message, class: "hide error taken") +
       content_tag(:label, required_message, class: "hide error required") +
       content_tag(:label, invalid_message, class: "hide error invalid") +
-      content_tag(:label, class: "hide error unconfirmed") do content_tag(:span, "Please confirm your email") + link_to("resend instructions", "#", class: "resend_me_instructions") end +
+      content_tag(:label, class: "hide error unconfirmed") do content_tag(:span, "Please confirm your email") + link_to("Resend instructions", "", class: "resend_me_instructions") end +
       content_tag(:label, options[:label], class: "field-label") +
       content_tag(:div, nil, class: "input-border-wrap") +
 

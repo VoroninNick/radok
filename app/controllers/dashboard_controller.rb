@@ -1,10 +1,11 @@
 class DashboardController < ApplicationController
   before_action :check_user
-  # before_action :set_page_banner, only: [:index, :project]
+  before_action :set_page_banner, only: [:index, :project]
 
   def index
     user_tests = current_user.tests
     @drafts = user_tests.drafts
+    @unpaid = user_tests.unpaid_projects
     @in_progress_tests = user_tests.processing_projects
     @finished_projects = user_tests.tested_projects
     a = @finished_projects.to_a
@@ -23,11 +24,8 @@ class DashboardController < ApplicationController
     redirect_to new_user_session_path unless current_user
   end
 
-  # def set_page_banner
-  #   banner_url = Rails.root.join('fixtures', 'images', 'radok-web-banner-dashboard.png')
-  #   # @banner = Banner.new(title: 'Review Your project', description: 'We always provide up-to-date information about all of Your projects.')
-  #   @banner = Banner.new
-  #   @banner.attach_background_image(banner_url)
-  #   super
-  # end
+  def set_page_banner
+    @banner = Banner.find(2)
+    super
+  end
 end

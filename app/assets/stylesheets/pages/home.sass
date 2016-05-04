@@ -5,6 +5,25 @@ $banner-title-color: #e6e7e9
 #home-controller
   color: $description-text-gray-color
   line-height: 1.4
+  #home-menu
+    > .columns
+      padding: 0
+      height: 100px
+      line-height: 100px
+
+  #home-slider-carousel
+    .owl-item:nth-child(2)
+      .layer
+        &:nth-child(1) // notebook
+          img
+            transform: translate(2%, 7%)
+        &:nth-child(2) // planet
+          img
+            transform: translate(3%, -15%)
+
+    &:not(.owl-carousel)
+      li:not(:first-child)
+        display: none
 
 #home-banner
   height: $home-banner-height
@@ -162,6 +181,7 @@ $banner-title-color: #e6e7e9
     width: 200px
     height: 200px
     display: inline-block
+
   @media #{$small-only}
     .title
       line-height: 4rem
@@ -333,7 +353,6 @@ button.start-now-button, button.schedule-call-button
   @media #{$medium-down}
     button[href="/ordering-crowdsourced-testing"]
       margin-top: 72px !important
-
 
 #home-banner
   .owl-wrapper-outer, .owl-wrapper, .owl-item, .home-parallax-banner

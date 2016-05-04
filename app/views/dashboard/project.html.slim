@@ -48,8 +48,6 @@
           |Project progress
         .project-progress-value
           = render "project_progress", percent: @project.percent_completed_counter
-
-
   .row
     - if @project.admin_comment.present?
       .columns.large-12
@@ -59,3 +57,8 @@
         = raw @project.admin_comment
       .clearfix
     = render "project_super_full_summary", project: @project
+
+- if flash[:payment_success]
+  = popup "payment_success", visible: true
+- if flash[:payment_fail]
+  = popup "payment_fail", visible: true, errors: flash[:errors]

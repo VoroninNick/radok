@@ -277,6 +277,10 @@ GEM
       mime-types
     parser (2.3.0.7)
       ast (~> 2.2)
+    paypal-sdk-rest (1.4.4)
+      multi_json (~> 1.0)
+      uuidtools (~> 2.1)
+      xml-simple
     pg (0.18.4)
     pluck_to_hash (0.2.0)
       activerecord (>= 4.0.2)
@@ -447,8 +451,10 @@ GEM
     unicorn (5.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
+    uuidtools (2.1.5)
     warden (1.2.3)
       rack (>= 1.0)
+    xml-simple (1.1.5)
 
 PLATFORMS
   ruby
@@ -494,6 +500,7 @@ DEPENDENCIES
   omniauth-twitter (~> 1.2.1)
   opal (~> 0.9.2)
   paperclip (~> 4.2.1)
+  paypal-sdk-rest
   pg (~> 0.18.4)
   pluck_to_hash (~> 0.2.0)
   protected_attributes (~> 1.0.8)

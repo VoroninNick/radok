@@ -1,15 +1,15 @@
-.page.sign-up.ng-scope ng-controller="SignUpController" ng-include="'/assets/partials/_sign_up_form'"
+.page.sign-up.ng-scope ng-controller='SignUpController' ng-include="'/assets/partials/_sign_up_form'"
   .form-partial.sign-up.ng-scope
     .header
       .title
         | Sign up
     .content
-      form.form.sign-up-form action="/sign-up" novalidate="" method="post" show-preloader="" show-success="" resource="user"
+      form.form.sign-up-form action='/sign-up' novalidate='' method='post' show-preloader='' show-success='' resource='user'
         .form-content
           .oauth-sign-up
             .header
               | Sign up using social networks
-            = render "user_pages/social_icons", links: {facebook: "/users/auth/facebook?sign-in", linkedin: "/users/auth/linkedin?sign-in",  twitter: false,  google_oauth2: "/users/auth/google_oauth2?sign-in", github: "/users/auth/github?sign-in"}
+            = render 'user_pages/social_icons', links: {facebook: '/users/auth/facebook?sign-in', linkedin: '/users/auth/linkedin?sign-in',  twitter: false,  google_oauth2: '/users/auth/google_oauth2?sign-in', github: '/users/auth/github?sign-in'}
             .or
               | or
 
@@ -18,18 +18,18 @@
           .inputs
             .row
               .columns.large-12
-                = rf_input(label: "Username (required)", required: true, name: "user[username]", required_message: "Please type username", taken_message: "Username already in use" )
-                = rf_input(label: "Email (required)", required: true, name: "user[email]", required_message: "Please type email", validation: "email", invalid_message: "Please type valid email", taken_message: "Email already in use", value: @user.email)
-                = rf_input(label: "Password (required)", type: "password", required: true, name: "user[password]", required_message: "Please type password")
-                = rf_input(label: "Re-enter password (required)", type: "password", required: true, name: "user[confirm_password]", validation: "confirm_password", required_message: "These passwords don't match")
-              .columns.large-12.additional-information-slider.opened ng-class=("{opened: show_more == true}") ng-click=("show_more = true")
+                = rf_input(label: 'Username (required)', required: true, name: 'user[username]', required_message: 'Please type username', taken_message: 'Username already in use', validation: 'username')
+                = rf_input(label: 'Email (required)', required: true, name: 'user[email]', required_message: 'Please type email', validation: 'email', invalid_message: 'Please type valid email', taken_message: 'Email already in use', value: @user.email)
+                = rf_input(label: 'Password (required)', type: 'password', required: true, name: 'user[password]', required_message: 'Please, type password', validation: 'password')
+                = rf_input(label: 'Re-enter password (required)', type: 'password', required: true, name: 'user[confirm_password]', validation: 'confirm_password', required_message: 'These passwords don\'t match')
+              .columns.large-12.additional-information-slider.opened ng-class=('{opened: show_more == true}') ng-click=('show_more = true')
                 | Additional information (not necessary)
-              .columns.large-12.additional-inputs ng-show="show_more"
+              .columns.large-12.additional-inputs ng-show='show_more'
                 .row
                   .columns.large-6
-                    = rf_input label: "Full name", name: "user[full_name]", validation: "name"
+                    = rf_input label: 'Full name', name: 'user[full_name]', validation: 'name'
                   .columns.large-6
-                    = rf_input label: "Phone number", name: "user[phone]", validation: "phone", invalid_message: "Please, enter a valid number"
+                    = rf_input label: 'Phone number', name: 'user[phone]', validation: 'phone', invalid_message: 'Please, enter a valid number'
 
           .actions
             .columns.large-5
@@ -38,10 +38,10 @@
                   |I have an account
             .columns.large-7
               .sign-up-button
-                = rf_button title: "CREATE ACCOUNT", class: "sign_up_submit", align_content: "center"
+                = rf_button title: 'CREATE ACCOUNT', class: 'sign_up_submit', align_content: 'center'
 
         .preloader.hide
-          = image_tag("preloader.gif")
+          = image_tag('preloader.gif')
         .success-handler.hide
           p.h4.text-center
             |You have successfully created account.
@@ -50,5 +50,5 @@
 
     .out-of-popup
       .terms-of-use-info
-        | By clicking "Create account" you agree our terms and conditions including our Cookie Policy.&nbsp;
+        | By clicking 'Create account' you agree our terms and conditions including our Cookie Policy.&nbsp;
         a href=terms_of_use_path  Terms of use

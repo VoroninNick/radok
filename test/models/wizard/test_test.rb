@@ -37,6 +37,7 @@
 #  contact_person_email    :string
 #  admin_comment           :text
 #  promo_code_id           :integer
+#  paid_at                 :date
 #
 
 require 'test_helper'

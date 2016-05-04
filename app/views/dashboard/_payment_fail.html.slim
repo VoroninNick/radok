@@ -1,0 +1,23 @@
+.popup.confirmation-congratulations
+  .form-partial.forgot-password
+    .header
+      .title
+        |Welcome
+    .content
+
+      .form
+        form.forgot-password-form method='post' action=user_password_path novalidate='' show-preloader='' resource='user' show-success=''
+          .form-content
+            .text.semibold.text-center
+              |Ooops! Something went wrong during payment process.
+
+            - if !errors.empty?
+              .text.semibold.text-center
+                |You can see errors from PayPal responce below.
+              .row
+                .columns.large-8.small-8
+                  = errors.message
+
+            .actions
+              .columns.large-8.large-push-2
+                = rf_button(title: 'More info', svg: 'rf-rocket-up-right', align_content: 'left', full_width: true, href: "#{errors.information_link}")

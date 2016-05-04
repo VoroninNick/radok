@@ -31,6 +31,7 @@
 #  billing_cvv_number      :string
 #  full_name               :string
 #  subscribed              :boolean
+#  phone                   :string
 #  avatar_file_name        :string
 #  avatar_content_type     :string
 #  avatar_file_size        :integer
@@ -38,7 +39,6 @@
 #  created_at              :datetime
 #  updated_at              :datetime
 #  role                    :string
-#  phone                   :string
 #  provider                :string
 #  uid                     :string
 #  saved_at                :datetime
