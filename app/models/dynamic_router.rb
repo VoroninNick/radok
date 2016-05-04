@@ -37,7 +37,6 @@ class DynamicRouter
         ctrl = page.delete :controller
         action = page.delete :action
         route_name = page.delete :route_name
-        #puts "ctrl_action: #{ctrl}; #{action}"
         page_controller_class_name = "#{ctrl}_controller".classify
         page_controller_class = page_controller_class_name.constantize
         initial_template = "#{ctrl}/#{action}"
@@ -45,7 +44,6 @@ class DynamicRouter
         if !page_controller_class.actions.map(&:to_s).include?(action.to_s)
           action = :default
         end
-        #puts "#{page_url}        =>  #{ctrl}##{action}"
         if !disabled
           match page_url, to: "#{ctrl}##{action}", as: route_name, via: [:get], defaults: { initial_template: initial_template, page_class_name: page_class_name }
         end

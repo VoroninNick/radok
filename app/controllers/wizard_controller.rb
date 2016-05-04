@@ -11,7 +11,7 @@ class WizardController < ApplicationController
     @created = true
     @head_title = "Wizard Test ##{@project.id}"
     @wizard_options = { step_disabled_unless_active_or_proceeded: false }
-
+    @banner = Banner.find(8)
     if !@project.completed?
       set_page_metadata('wizard')
       @head_title = @project.project_name
@@ -49,7 +49,6 @@ class WizardController < ApplicationController
       p.testers_count ||= 0
       @project.platforms << p
     end
-
     @wizard_options = { step_disabled_unless_active_or_proceeded: false }
 
     set_page_metadata('wizard')

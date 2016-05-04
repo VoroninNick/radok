@@ -1,6 +1,7 @@
 .wizard class="#{@wizard_options.try{|hash| hash.keep_if{|k, v|  !!v }.keys.map(&:to_s).map(&:humanize).map(&:parameterize).join(" ")   } }"
   #wizard-controller data-hour-price=WizardSettings.hour_price class="#{'configure-mode' if @project.persisted?}" test-json=(@project.to_json if @project.persisted?) data-product-type-names=@product_type_names data-test-type-names=@test_type_names
-    = render 'page_banner'
+    .page-banner
+      = render 'page_banner'
     #wizard-content
       #wizard-steps
         = render 'wizard_form'
