@@ -36,6 +36,13 @@ class PagesController < ApplicationController
   end
 
   def about
+    @banner = {
+      background_image_url: ActionController::Base.helpers.asset_path('banners/radok-web-banner-about-us.png'),
+      # Rails.root.join('fixtures', 'images', 'radok-web-banner-about-us.png'),
+      title_html_tag: 'h1',
+      title: 'Speed, quality and good reputation',
+      description: 'Its about us'
+    }
     @product_types = Wizard::ProductType.all
     @leaders = nil
     @clients = Client.all.sort_by_sorting_position
