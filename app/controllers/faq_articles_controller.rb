@@ -12,7 +12,6 @@
 #
 
 class FaqArticlesController < ApplicationController
-  before_action :set_page_banner, only: [:index, :show]
   def index
     init_articles
     article_url_fragment = FaqArticle.published.pluck(:url_fragment).first
@@ -38,9 +37,5 @@ class FaqArticlesController < ApplicationController
     else
       render json: { result: 'error', code: 500 }
     end
-  end
-  def set_page_banner
-    @banner = Banner.find_by(page_id: 11)
-    super
   end
 end

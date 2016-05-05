@@ -1,5 +1,7 @@
 .page
-  = render "page_banner"
+  = render 'page_banner', background_image_url: 'banners/device-lab.png',
+                          title: 'Device Lab',
+                          description: 'Test devices'
   #devices-content.page-content-rows
     .page-content-row-wrap
       .row.center-items-vertically.row-reverse

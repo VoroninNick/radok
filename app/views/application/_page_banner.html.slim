@@ -1,12 +1,17 @@
-- if @banner
-  .page-banner-wrap
-    .page-banner style="background-image: url(#{@banner.try{|b| b.background_image.url}})"
-      .row
-        .inner
-          .description-block
-            = content_tag(@banner.title_html_tag, @banner.title, class: 'title')
-            .description
-              = @banner.description
-            - if @banner.button_label.present? && @banner.button_url.present?
-              .button-container
-                = rf_button title: @banner.button_label, href: @banner.button_url, full_width: true, svg: 'rf-rocket-up-right.svg'
+- button_label ||= false
+- button_url ||= false
+- title_html_tag ||= 'div'
+- title ||= ''
+- description ||= ''
+
+.page-banner-wrap
+  .page-banner style='background-image: url("#{asset_path(background_image_url)}")'
+    .row
+      .inner
+        .description-block
+          = content_tag(title_html_tag, title, class: 'title')
+          .description
+            = description
+          - if button_label && button_url
+            .button-container
+              = rf_button title: button_label, href: button_url, full_width: true, svg: 'rf-rocket-up-right.svg'

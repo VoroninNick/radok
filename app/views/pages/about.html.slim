@@ -1,6 +1,9 @@
 - cache('app/views/pages/about.html.slim') do
   .page
-    = render 'page_banner'
+    = render 'page_banner', background_image_url: 'banners/about-us.png',
+                            title_html_tag: 'h1',
+                            title: 'Speed, quality and good reputation',
+                            description: "It's about us"
     #about__who-we-are.page-content-row-wrap.about-row-wrap
       .row.center-items-vertically.row-reverse
         .columns.large-3.medium-3.small-12.image-wrap-outer

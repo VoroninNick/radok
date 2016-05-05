@@ -1,7 +1,8 @@
 - cache('app/views/pages/testing_services.html.slim') do
 
   .page
-    = render "page_banner"
+    = render 'page_banner', background_image_url: 'banners/testing-services.png',
+                            title: 'The level of testing you need'
     #testing_services-page-content-rows.page-content-rows
       #testing_services__what-we-do.page-content-row-wrap
         .row

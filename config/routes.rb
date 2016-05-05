@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     post '', to: 'wizard#create' # , as: 'wizard'
   end
 
+  get '/crowdsourced-testing-cost', to: 'pages#pricing'
   get '/crowdsourced-company-about', to: 'pages#about'
   get 'sitemap', format: :xml, to: 'sitemap#index', as: :sitemap
   get 'mail', to: 'yandex#mail_form'

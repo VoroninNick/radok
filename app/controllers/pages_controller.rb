@@ -14,7 +14,6 @@
 class PagesController < ApplicationController
   include ApplicationHelper
   before_action :set_page_metadata
-  before_action :set_page_banner, except: [:home, :robots_txt]
 
   def self.actions
     self.instance_methods.sort - self.superclass.instance_methods - %w(default set_page_metadata).map(&:to_sym)
@@ -28,7 +27,6 @@ class PagesController < ApplicationController
   end
 
   def pricing
-    render 'default'
   end
 
   def how_it_works
@@ -41,7 +39,6 @@ class PagesController < ApplicationController
     @product_types = Wizard::ProductType.all
     @leaders = nil
     @clients = Client.all.sort_by_sorting_position
-    @banner = Banner.find_by(page_id: 3)
   end
 
   def contact
