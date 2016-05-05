@@ -43,11 +43,11 @@ window.form_types['payment'] = {
     setTimeout(
       ()->
         if xhr.redirect_url
-          window.open(xhr.redirect_url,'_blank')
-          window.location = '/dashboard'
+          window.location.assign(xhr.redirect_url)
         else
           window.location = "/dashboard/project/#{project.id}"
-        $form.closest('.ngdialog').addClass('hide')
+          $form.closest('.ngdialog').addClass('hide')
+          $form.trigger('after_success', arguments)
       ms
     )
 
