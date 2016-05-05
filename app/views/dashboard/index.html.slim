@@ -1,5 +1,11 @@
 .page
-  = render 'page_banner'
+  = render 'page_banner', background_image_url: 'banners/radok-web-banner-dashboard.png',
+                          title_html_tag: 'h1',
+                          title: 'My dashboard',
+                          description: 'See your projects here',
+                          button_label: 'New test',
+                          button_url: '/ordering-crowdsourced-testing'
+
   #dashboard-projects data-wizard-root=wizard_path
     - if !(@drafts.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?))
       .no-projects
