@@ -9,10 +9,7 @@ window.small = (size = 640)->
   ratio = window.devicePixelRatio
   ratio ?= 1
   width = window.innerWidth
-  if width <= size || width / ratio <= size
-    return true
-  else
-    return false
+  return (width <= size || width / ratio <= size)
 
 window.get_model_target = (model)->
   model_keys = model.split('.')
@@ -151,19 +148,16 @@ window.step_types = {
     checkIsCompleted : ()->
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
+      auth_required = false
       if project.authentication_required == 'true'
-        auth_not_required = false
         auth_required = true
         credentials_valid = (project.auth_login.length > 0) && (project.auth_password.length > 0)
-      else
-        auth_not_required = true
-        auth_required = false
-      auth_valid = auth_required && credentials_valid || auth_not_required
+      auth_valid = auth_required && credentials_valid || !auth_required
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
-      return ( url_valid || file_upload_valid ) && auth_valid && contact_person_valid
+      (url_valid || file_upload_valid) && auth_valid && contact_person_valid
   }
 }
 
@@ -521,8 +515,8 @@ $('body').on 'change.project.test_platforms_bindings', (e)->
     $short_summary.find('.current-task').removeClass('hide')
     $short_summary_platforms_block.addClass('hide')
   $platform_rows_block.html(rows)
-  $step = $('[step=2]')
-  check_for_step_completeness.apply($step)
+  check_for_step_completeness.apply($('[step=2]'))
+  check_for_step_completeness.apply($('[step=5]'))
 
   # Full summary
 
