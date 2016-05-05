@@ -5,7 +5,6 @@ class WizardController < ApplicationController
   before_action :authenticate, only: [:dashboard_projects,
                                       :delete_dashboard_project]
   before_action :set_wizard_options, only: [:edit_or_show, :new, :new_and_allow]
-  before_action :set_page_banner, only: [:edit_or_show, :new, :new_and_allow]
 
   def edit_or_show
     @project = Wizard::Test.find(params[:id])
@@ -265,10 +264,5 @@ class WizardController < ApplicationController
     p = params[:payment]
     p[:test_id] = params[:id]
     p
-  end
-
-  def set_page_banner
-    @banner = Banner.find(8)
-    super
   end
 end
