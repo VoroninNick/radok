@@ -126,7 +126,7 @@ window.step_types = {
         $.each project.test_platforms_bindings, () ->
           if this.testers_count > 50
             maximum_testers_reached = true
-      completed = (project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)) && !maximum_testers_reached && valid_comment
+      project.total_price > 0 && project.test_platforms_bindings && project.test_platforms_bindings.length > 0 && !maximum_testers_reached && valid_comment
   }
   'project_info' : {
     checkIsCompleted : ()->
@@ -155,7 +155,7 @@ window.step_types = {
         auth_not_required = false
         auth_required = true
         credentials_valid = (project.auth_login.length > 0) && (project.auth_password.length > 0)
-      else if project.authentication_required == 'false'
+      else
         auth_not_required = true
         auth_required = false
       auth_valid = auth_required && credentials_valid || auth_not_required
@@ -396,7 +396,6 @@ update_price = ()->
   project.total_price = total_price
   project.selected_platforms = selected_platforms
   project.authentication_required = $("[model*='project.authentication_required'] input:checked").val() || false
-  console.log 'project.authentication_required', project.authentication_required
 
   $platforms_field.trigger('change.project.total_testers_count')
   $platforms_field.trigger('change.project.test_platforms_bindings')
@@ -492,7 +491,6 @@ $('body').on 'change.project.test_platforms_bindings', (e)->
     for b in project.test_platforms_bindings
       $options.filter("[platform-subitem-id=#{b.subitem_id}]").removeClass('empty')
 
-  # Short summary
       $input = $options.filter("[platform-subitem-id=#{b.subitem_id}]").find('input')
       if b.testers_count && (b.testers_count > 50)
         reached_maximum = true
@@ -500,6 +498,8 @@ $('body').on 'change.project.test_platforms_bindings', (e)->
         $('#platforms-max-error').fadeIn()
       else
         $('#platforms-max-error').fadeOut()
+
+  # Short summary
 
   $short_summary = $('#wizard-summary')
   $short_summary_platforms_block = $('#wizard-summary .platforms')
@@ -521,6 +521,8 @@ $('body').on 'change.project.test_platforms_bindings', (e)->
     $short_summary.find('.current-task').removeClass('hide')
     $short_summary_platforms_block.addClass('hide')
   $platform_rows_block.html(rows)
+  $step = $('[step=2]')
+  check_for_step_completeness.apply($step)
 
   # Full summary
 
