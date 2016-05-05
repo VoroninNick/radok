@@ -413,20 +413,20 @@ validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/
   match = re.test(name)
   max = name.length <= 100
-  min = name.length >= 8
+  min = name.length >= 5
   return (match: match, max: max, min: min)
 
 validateSignInCredentials = (value) ->
   match = validateCredentials(value).match || validateEmail(value)
   max = value.length <= 255
-  min = value.length >= 6
+  min = value.length >= 5
   return (match: match, max: max, min: min)
 
 validateCredentials = (username) ->
   re = /^[\w]+$/
   match = re.test(username)
   max = username.length <= 100
-  min = username.length >= 8
+  min = username.length >= 5
   return (match: match, max: max, min: min)
 
 validateAddress = (address) ->

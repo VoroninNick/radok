@@ -9,10 +9,7 @@ window.small = (size = 640)->
   ratio = window.devicePixelRatio
   ratio ?= 1
   width = window.innerWidth
-  if width <= size || width / ratio <= size
-    return true
-  else
-    return false
+  return (width <= size || width / ratio <= size)
 
 window.get_model_target = (model)->
   model_keys = model.split('.')
@@ -126,7 +123,7 @@ window.step_types = {
         $.each project.test_platforms_bindings, () ->
           if this.testers_count > 50
             maximum_testers_reached = true
-      completed = (project.total_price > 0 || (project.test_platforms_bindings && project.test_platforms_bindings.length > 0)) && !maximum_testers_reached && valid_comment
+      project.total_price > 0 && project.test_platforms_bindings && project.test_platforms_bindings.length > 0 && !maximum_testers_reached && valid_comment
   }
   'project_info' : {
     checkIsCompleted : ()->
@@ -151,15 +148,16 @@ window.step_types = {
     checkIsCompleted : ()->
       url_valid = (project.project_url && project.project_url.length > 0) && validateURL(project.project_url)
       file_upload_valid = project.test_files && project.test_files.length > 0
-      auth_required = project.authentication_required
-      auth_not_required = project.authentication_required == 'false' || 'null'
-      credentials_valid = project.auth_login.length > 0 && project.auth_password.length > 0
-      auth_valid = auth_required && credentials_valid || auth_not_required
+      auth_required = false
+      if project.authentication_required == 'true'
+        auth_required = true
+        credentials_valid = (project.auth_login.length > 0) && (project.auth_password.length > 0)
+      auth_valid = auth_required && credentials_valid || !auth_required
       contact_name_valid = validateName(project.contact_person_name)
       contact_email_valid = validateEmail(project.contact_person_email)
       contact_phone_valid = validatePhoneNumber(project.contact_person_phone)
       contact_person_valid = contact_name_valid && contact_email_valid && contact_phone_valid
-      return ( url_valid || file_upload_valid ) && auth_valid && contact_person_valid
+      (url_valid || file_upload_valid) && auth_valid && contact_person_valid
   }
 }
 
@@ -391,6 +389,7 @@ update_price = ()->
   project.test_platforms_bindings = test_platforms_bindings
   project.total_price = total_price
   project.selected_platforms = selected_platforms
+  project.authentication_required = $("[model*='project.authentication_required'] input:checked").val() || false
 
   $platforms_field.trigger('change.project.total_testers_count')
   $platforms_field.trigger('change.project.test_platforms_bindings')
@@ -467,8 +466,12 @@ $('body').on 'change.project.total_price', ()->
   $('[data-bind=total_price]').text(price)
   showStepsProgress()
 
+$('body').on 'change dom_change keyup keydown', '.platform .option-count input', ()->
+  validate_empty_testers_count()
+
+validate_empty_testers_count = ()->
   $error = $('#platforms-empty-error')
-  if price > 0
+  if project.total_price > 0
     $error.fadeOut()
   else
     $error.fadeIn()
@@ -482,7 +485,6 @@ $('body').on 'change.project.test_platforms_bindings', (e)->
     for b in project.test_platforms_bindings
       $options.filter("[platform-subitem-id=#{b.subitem_id}]").removeClass('empty')
 
-  # Short summary
       $input = $options.filter("[platform-subitem-id=#{b.subitem_id}]").find('input')
       if b.testers_count && (b.testers_count > 50)
         reached_maximum = true
@@ -490,6 +492,8 @@ $('body').on 'change.project.test_platforms_bindings', (e)->
         $('#platforms-max-error').fadeIn()
       else
         $('#platforms-max-error').fadeOut()
+
+  # Short summary
 
   $short_summary = $('#wizard-summary')
   $short_summary_platforms_block = $('#wizard-summary .platforms')
@@ -511,6 +515,8 @@ $('body').on 'change.project.test_platforms_bindings', (e)->
     $short_summary.find('.current-task').removeClass('hide')
     $short_summary_platforms_block.addClass('hide')
   $platform_rows_block.html(rows)
+  check_for_step_completeness.apply($('[step=2]'))
+  check_for_step_completeness.apply($('[step=5]'))
 
   # Full summary
 
@@ -1052,7 +1058,7 @@ validate_methodology_type = ()->
     else
       $test_case_files_input.addClass('invalid-required invalid')
 
-$('body').on 'change code-change keyup keypress', '#project_auth_login, #project_auth_password', ()->
+$('body').on 'change code-change keyup', '#project_auth_login, #project_auth_password', ()->
   validate_auth_credentials(this)
 
 validate_auth_credentials =(that) ->
@@ -1075,10 +1081,10 @@ show_or_hide_auth_credentials_inputs = ()->
 
   if requires_auth
     $credentials_inputs.removeClass('hide')
-    validate_auth_credentials('#project_auth_login')
-    validate_auth_credentials('#project_auth_password')
+    $input.addClass('invalid')
   else
     $credentials_inputs.addClass('hide')
+    $input.removeClass('invalid')
 
 show_or_hide_auth_test_driven_development_inputs = ()->
   methodology_type = $("[model*='project.methodology_type'] input:checked").val() == 'true'
@@ -1268,17 +1274,20 @@ validateURL = (url) ->
 
 validateEmail = (email) ->
   re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2,6})?)$/i
-  return (re.test(email) && email.length <= 255) || email.length == 0 || !email
+  return (re.test(email) && email.length <= 255) || (email && email.length == 0) || !email
 
 validatePhoneNumber = (number) ->
   re = /^\+(?:[0-9] ?){6,14}[0-9]$/
-  return (re.test(number) && number.length <= 20) || number.length == 0 || !number
+  return (re.test(number) && number.length <= 20) || (number && number.length == 0) || !number
 
 validateName = (name) ->
   re = /^[a-zA-Z\-'\s]+$/
-  return (name && re.test(name) && name.length <= 100) || (name.length == 0) || !name
+  return (name && re.test(name) && name.length <= 100) || (name && name.length == 0) || !name
 
-$('body').on 'upload_files.test_files delete_files.test_files change.project.project_url', ()->
+$('body').on 'upload_files.test_files delete_files.test_files', ()->
+  validate_project_access_test_url_and_files()
+
+$('body').on 'change keyup keydown dom_change', "[model='project.project_url'] input", ()->
   validate_project_access_test_url_and_files()
 
 $('body').on 'upload_files.test_case_files delete_files.test_case_files', ()->
@@ -1410,6 +1419,11 @@ $('body .promo-code-field .cancel-promo-code').on 'click', (e)->
 $('.checkout-button, .confirm-button-container').on 'click', (e)->
   $button = $(this)
   $invalid_test_steps = get_test_invalid_steps()
+  validate_auth_credentials('#project_auth_login')
+  validate_auth_credentials('#project_auth_password')
+  validate_empty_testers_count()
+  validate_project_access_test_url_and_files()
+
   if !is_valid_project($invalid_test_steps)
     $popup = $('#invalid_fields_popup')
     openPopup($popup)

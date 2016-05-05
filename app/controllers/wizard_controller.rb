@@ -5,13 +5,13 @@ class WizardController < ApplicationController
   before_action :authenticate, only: [:dashboard_projects,
                                       :delete_dashboard_project]
   before_action :set_wizard_options, only: [:edit_or_show, :new, :new_and_allow]
+  before_action :set_page_banner, only: [:edit_or_show, :new, :new_and_allow]
 
   def edit_or_show
     @project = Wizard::Test.find(params[:id])
     @created = true
     @head_title = "Wizard Test ##{@project.id}"
     @wizard_options = { step_disabled_unless_active_or_proceeded: false }
-    @banner = Banner.find(8)
     if !@project.completed?
       set_page_metadata('wizard')
       @head_title = @project.project_name
@@ -67,11 +67,9 @@ class WizardController < ApplicationController
   def create
     @test = Wizard::Test.create(test_params)
     @test.user_id = current_user.try(&:id)
-    if @test.save && current_user.nil?
-      id = @test.id
-      session[:tests] = [id] unless session[:tests]
-      session[:tests] << id if !session[:tests].include?(id) && session[:tests]
-    elsif @test.save && current_user
+    if @test.save
+      session[:tests] ||= []
+      session[:tests] << @test.id unless current_user && session[:tests].include?(@test.id)
       render inline: @test.to_builder.target!, status: 201
     end
   end
@@ -267,5 +265,10 @@ class WizardController < ApplicationController
     p = params[:payment]
     p[:test_id] = params[:id]
     p
+  end
+
+  def set_page_banner
+    @banner = Banner.find(8)
+    super
   end
 end
