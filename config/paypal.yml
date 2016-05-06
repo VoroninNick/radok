@@ -1,29 +1,14 @@
 test: &default
 
-  # Credentials for REST APIs
-  client_id: AUscYHOK3bqUHFx8do3Ku7sjquRckl5QlpSAh-CpJrqAN7zC6DQk9c0H7QW6DTQ1ztlSUPKYFsL7i_ru
-  client_secret: EH7xI2LFSxLEj7DYKiXxev9EThAsYtRKCPArbQcIZJYLmzpLPakNyhdj-6qjupR5GnF0pv4N7bdZ84xe
-
-  # Mode can be 'live' or 'sandbox'
+  client_id: AcW2Xt7afrk7vtdDXEVauwvRSL9zLKf2rigMhTSaP-XcOgodqxgWSU-VeeuYJPNweYRTY7u4iFc35UUx
+  client_secret: ECCtQLPE_SwpDiJd08_Bxp3RriVbtCC2BryS5YaLlC0dCnX3jQ0mLkM3ibBc83YZQpKOaqRi30uS0xSn
   mode: sandbox
-
-  # Credentials for Classic APIs
-  # app_id: APP-80W284485P519543T
-  username: cynthia.a.tapper-facilitator_api1.gmail.com
-  password: 6W53XW3PE5ZQMA9T
-  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AJpRF4fXd6DGiif1.6rKyJ7s8.3B
-  # # With Certificate
-  # cert_path: "config/cert_key.pem"
-  sandbox_email_address: cynthia.a.tapper-facilitator@gmail.com
-
-  # # IP Address
-  # ip_address: 127.0.0.1
-  # # HTTP Proxy
-  # http_proxy: http://proxy-ipaddress:3129/
 
 development:
   <<: *default
 
 production:
-  <<: *default
+  # <<: *default
   mode: live
+  client_id: AfUj0ciRxE_8YSkM-B99DIueHo_oWwcgUISYG6yDBZXq_-zz35iNN3A1uYK6yVRulOCT3_uG0s0kW01n
+  client_secret: ELsWIDJV8nirr6hccNv-Uek_Pe97MjcLw6k2h6nvryI7vKRBJQ2ypA8G_TePZRDMNGN3EvDCXUZNJiJm

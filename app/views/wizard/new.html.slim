@@ -1,3 +1,6 @@
+- content_for :wizard do
+  = javascript_include_tag 'wizard_js'
+
 .wizard class="#{@wizard_options.try{|hash| hash.keep_if{|k, v|  !!v }.keys.map(&:to_s).map(&:humanize).map(&:parameterize).join(" ")   } }"
   #wizard-controller data-hour-price="#{hour_price}" class="#{'configure-mode' if @project.persisted?}" test-json=(@project.to_json if @project.persisted?) data-product-type-names=@product_type_names data-test-type-names=@test_type_names
     .page-banner
@@ -88,7 +91,5 @@
                   |
 
 = popup 'payment'
-
 = popup 'invalid_fields'
-
 = popup 'pay_later'
