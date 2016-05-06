@@ -8,7 +8,7 @@ development:
   <<: *default
 
 production:
-  # <<: *default
-  mode: live
-  client_id: AfUj0ciRxE_8YSkM-B99DIueHo_oWwcgUISYG6yDBZXq_-zz35iNN3A1uYK6yVRulOCT3_uG0s0kW01n
-  client_secret: ELsWIDJV8nirr6hccNv-Uek_Pe97MjcLw6k2h6nvryI7vKRBJQ2ypA8G_TePZRDMNGN3EvDCXUZNJiJm
+  <<: *default
+  # mode: live
+  # client_id: AfUj0ciRxE_8YSkM-B99DIueHo_oWwcgUISYG6yDBZXq_-zz35iNN3A1uYK6yVRulOCT3_uG0s0kW01n
+  # client_secret: ELsWIDJV8nirr6hccNv-Uek_Pe97MjcLw6k2h6nvryI7vKRBJQ2ypA8G_TePZRDMNGN3EvDCXUZNJiJm

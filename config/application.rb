@@ -27,7 +27,7 @@ module RadokForce
     config.assets.precompile += %w(modernizr-all.min.js not_found.css mailer.css)
 
     #config.assets.precompile += %w(codemirror.js codemirror/*)
-    config.assets.precompile += %w(templates.css templates.js wizard_js.js)
+    config.assets.precompile += %w(templates.css templates.js wizard_js.js payment_form.js)
 
     # Use Bower packages in assets pipeline
     config.assets.paths << \

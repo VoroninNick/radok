@@ -125,7 +125,7 @@ $map = $('#contact-map map')
 #  generate_controls: false
 #}).Load()
 
-$('body').on 'click', '.delete-draft-button', (event)->
+$('.delete-draft-button').on 'click', (event)->
   event.preventDefault()
   event.stopImmediatePropagation()
   delete_draft_confirmed = confirm('Delete draft comletely?')
@@ -142,6 +142,12 @@ $('body').on 'click', '.delete-draft-button', (event)->
       type: 'delete'
       dataType: 'json'
     )
+
+$('.complete-payment-button').on 'click', (event)->
+  event.preventDefault()
+  $test = $(this).closest('.item')
+  test_id = parseInt($test.attr('data-test-id'))
+  $('#wizard__payment_popup .payment').attr('data-test-id', test_id)
 
 initialize_google_map = ->
   lat = 43.660219

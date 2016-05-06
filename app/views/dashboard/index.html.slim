@@ -109,7 +109,7 @@
                       .actions
                         .delete-draft-button
                           | Delete project
-                        = rf_button title: "Complete", subtitle: "Payment", svg: "rf-rocket-up-right", class: "complete-payment-button"
+                        = rf_button title: "Complete", subtitle: "Payment", svg: "rf-rocket-up-right", class: "complete-payment-button", html: { 'open-popup': 'wizard/payment', 'requires-auth': 'true' }
 
       - if @in_progress_tests.try(&:any?)
         .in-process-tests
@@ -191,4 +191,4 @@
                                 .file-name
                                   = project.report_file_bane
 
-/= popup 'wizard/payment'
+= popup 'wizard/payment'
