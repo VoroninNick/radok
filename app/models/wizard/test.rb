@@ -168,8 +168,10 @@ class Wizard::Test < ActiveRecord::Base
 
   def pi__project_name
     name = self['project_name']
-    name = "Test ##{self.id}" if name.blank?
-    name
+    name = "Test ##{id}" if name.blank?
+    splitted_name = ''
+    splitted_name += name.slice!(0, 20) + ' ' while name.length > 20
+    splitted_name += name
   end
 
   def project_name

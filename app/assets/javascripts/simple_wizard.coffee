@@ -1334,18 +1334,17 @@ $('body').on 'change.project.hours_per_tester', ()->
   $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass('selected')
 
 $('body').on 'change.project.project_name', ()->
-  $summary_project_name = $("[data-bind='project.project_name']").html()
+  $wizard_project_name = $('#project_project_name').val()
+  $summary_project_name = $("[data-bind='project.project_name']")
   start = 0
-  end = 30
+  end = 25
   splitted_name = ""
-  while end < $summary_project_name.length
-    splitted_name += "<span> #{$summary_project_name.slice(start, end)} </span> <br>"
+  while end < $wizard_project_name.length
+    splitted_name += "<span> #{$wizard_project_name.slice(start, end)} </span> <br>"
     start = end + 1
-    end += 30
-  if end >= $summary_project_name.length
-    splitted_name += "<span> #{$summary_project_name.slice(start, $summary_project_name.length - 1)} </span>"
-  if splitted_name.lenght > 30
-    $summary_project_name.html(splitted_name)
+    end += 25
+  splitted_name += "<span> #{$wizard_project_name.slice(start, $wizard_project_name.length - 1)} </span>"
+  $summary_project_name.html(splitted_name)
 
 $('body').on 'keypress', 'input', (e)->
   $input = $(this)
