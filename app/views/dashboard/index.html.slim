@@ -29,7 +29,7 @@
                             .type-of-test-logo class=('ux' if project.usability_test?)
                               = image_tag (project.type_of_test_logo)
                             .project-name
-                              = project.pi__project_name
+                              = project.pi__project_name(20)
                             .steps-completed
                               .progress
                                 - steps_hash = project.proceeded_steps_hash
@@ -84,7 +84,7 @@
                             .type-of-test-logo class=('ux' if project.usability_test?)
                               = image_tag (project.type_of_test_logo)
                             .project-name
-                              = project.pi__project_name
+                              = project.pi__project_name(20)
                             .type-of-test-wrap
                               .type-of-test-icon
                                 .svg-wrap

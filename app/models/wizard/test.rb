@@ -166,16 +166,13 @@ class Wizard::Test < ActiveRecord::Base
     test_type.image.path.split('/').last
   end
 
-  def pi__project_name
+  def pi__project_name(length)
     name = self['project_name']
     name = "Test ##{id}" if name.blank?
     splitted_name = ''
-    splitted_name += name.slice!(0, 20) + ' ' while name.length > 20
+    splitted_name += name.slice!(0, length) + ' ' while name.length > length
     splitted_name += name
-  end
-
-  def project_name
-    pi__project_name
+    splitted_name
   end
 
   def type_of_product
