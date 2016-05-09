@@ -258,19 +258,6 @@ RailsAdmin.config do |config|
     visible false
   end
 
-  config.model Banner do
-    visible false
-
-    nested do
-      field :title
-      field :title_html_tag
-      field :description
-      field :background_image
-      field :button_label
-      field :button_url
-    end
-  end
-
   config.model Page do
     visible false
 
@@ -354,7 +341,6 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      field :banner
       field :seo_tags
       field :sitemap_record
     end
