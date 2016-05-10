@@ -24,5 +24,3 @@
 #= require profile
 #= require dashboard
 #= require mail_form
-#= require payment_form
-
