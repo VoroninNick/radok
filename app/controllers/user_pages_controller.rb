@@ -86,6 +86,9 @@ class UserPagesController < ApplicationController
 
   def update_subscription
     subscribe = params[:subscribe] == 'true'
+    p '==============update_subscription==============='
+    p subscribe
+
     if subscribe
       current_user.subscribe!
     else
