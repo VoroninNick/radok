@@ -562,6 +562,7 @@ window.check_for_step_completeness = ()->
       else
         $step.removeClass('completed')
         $step.trigger('step_uncompleted')
+  enable_checkout_button_if_project_valid()
 
 log_project_main_components = false
 
@@ -1153,6 +1154,7 @@ $('body').on 'change', 'input.file-upload-input', ->
   $input.trigger("upload_files.#{attachment_name}")
   $input.trigger("change.#{model}")
   check_for_step_completeness.apply($step)
+  validate_project_access_test_url_and_files
 
 $('body').on 'click', '.file-upload-files-list .delete', ->
   $file = $(this).closest('.file')

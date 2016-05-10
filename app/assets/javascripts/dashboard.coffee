@@ -143,7 +143,7 @@ $('.delete-draft-button').on 'click', (event)->
       dataType: 'json'
     )
 
-$('.complete-payment-button').on 'click', (event)->
+$('.complete-payment-button, #wizard-full-summary .rf-confirm-button').on 'click', (event)->
   event.preventDefault()
   # $test = $(this).closest('.item')
   test_id = parseInt($(this).attr('data-test-id'))

@@ -62,6 +62,8 @@
       .clearfix
     = render "project_super_full_summary", project: @project
 
+= popup 'wizard/payment'
+
 - if flash[:payment_success]
   = popup "payment_success", visible: true
 - if flash[:payment_fail]

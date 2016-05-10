@@ -182,9 +182,13 @@
             |total
             br
             |cost
-      - if !project.completed?
+      - if !project.paid?
         .columns.large-6
-          = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment", "requires-auth": "true" })
+          = rf_button class: "rf-confirm-button", full_width: true,
+            svg: "rf-rocket-up-right", title: "Confirm",
+            subtitle: "And proceed to payment",
+            html: { "open-popup": "wizard/payment", "requires-auth": "true",
+              'data-test-id': project.id, 'test-total-price': project.total_price }
         .columns.large-6.left style="clear: left;"
           .promo-code-field
             label for="promo_code"

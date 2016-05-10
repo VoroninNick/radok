@@ -17,7 +17,9 @@ window.form_types['payment'] = {
 
   url : ()->
     id = $('#wizard__payment_popup .payment').attr('data-test-id') || project.id
-    $('#wizard__payment_popup .payment').attr('url') + id + $('.payment-form').attr('action')
+    path = $('#wizard__payment_popup .payment').attr('url') || ''
+    action = $('.payment-form').attr('action')
+    path + id + action
 
   serialize : ()->
     $form = $(this)
