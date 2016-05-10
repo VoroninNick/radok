@@ -46,7 +46,8 @@ window.form_types['payment'] = {
         if xhr.redirect_url
           window.location.assign(xhr.redirect_url)
         else
-          window.location = "/dashboard/project/#{project.id}"
+          id = $('#wizard__payment_popup .payment').attr('data-test-id') || project.id
+          window.location = "/dashboard/project/" + id
           $form.closest('.ngdialog').addClass('hide')
           $form.trigger('after_success', arguments)
       ms
