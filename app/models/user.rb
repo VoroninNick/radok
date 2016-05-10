@@ -126,7 +126,7 @@ class User < ActiveRecord::Base
     email = self.email
     list_id = MAILCHIMP_DEFAULT_LIST_ID
     mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
-    mailchimp.lists.subscribe(list_id, email: email)
+    mailchimp.lists.subscribe(list_id, email: email, double_optin: true)
   end
 
   def unsubscribe
@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
     email = self.email
     list_id = MAILCHIMP_DEFAULT_LIST_ID
     mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
-    mailchimp.lists.unsubscribe(list_id, email: email)
+    mailchimp.lists.unsubscribe(list_id, email: email, send_goodbye: true)
   end
 
   def admin?
