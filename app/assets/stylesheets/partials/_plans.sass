@@ -47,6 +47,7 @@
     text-transform: uppercase
   .not-certain
     padding-top: 15px
+    padding-left: 25px
   .content
     height: 390px
     background-color: $white-color
@@ -63,7 +64,10 @@
       .text-center
         padding-bottom: 32px
         padding-top: 20px
-      .header
+        +iphone6plus-landscape
+          padding-bottom: 20px
+        +iphone6-landscape
+          padding-bottom: 20px
       .header
         color: $light-black-color
         text-transform: uppercase
@@ -74,6 +78,11 @@
         .description
           +font-16-light
   &:nth-child(2)
+    .button-container
+      +iphone6-landscape
+        margin-top: 37px
+      +iphone6plus-landscape
+        margin-top: 15px
     .text-content
       .columns
         position: absolute
