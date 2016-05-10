@@ -41,4 +41,4 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
     /javascript:
         $.getJSON("/svg_images", function(data){DATA = data})
     /- if content_for?(:javascript)
-      = content_for :javascript
+      /= content_for :javascript

@@ -1,4 +1,7 @@
-.popup.payment
+- content_for :payment do
+  = javascript_include_tag 'payment_form'
+
+.popup.payment url='/ordering-crowdsourced-testing/'
   .form-partial.payment
     .header
       .title
