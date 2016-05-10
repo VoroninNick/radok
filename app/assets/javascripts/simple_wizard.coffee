@@ -880,12 +880,12 @@ $('body').on 'change.project.current_step_id', ()->
   else
     $prev_step_number.text('')
 
-  if !project.next_step_id
-    $('.rf-next-step-button').hide()
-    $('.rf-go-to-summary-button').fadeIn()
-  else
+  if !!project.next_step_id
     $('.rf-go-to-summary-button').hide()
-    $('.rf-next-step-button').fadeIn()
+    $('.rf-next-step-button').show()
+  else
+    $('.rf-next-step-button').hide()
+    $('.rf-go-to-summary-button').show()
 
   if !!project.current_step_id
     $mini_summary_large_confirm_button = $('#wizard-summary .rf-confirm-button')
@@ -1325,7 +1325,7 @@ $('.wizard-step').on 'disappear', ()->
   active_summary = $wizard_full_summary.filter(':appeared').length > 0
   if active_summary
     project.current_step_id = null
-    project.prev_step_id = project.available_step_ids[project.available_step_ids.length]
+    project.prev_step_id = project.available_step_ids[project.available_step_ids.length - 1]
     project.next_step_id = false
 
 $('body').on 'change.project.hours_per_tester', ()->
