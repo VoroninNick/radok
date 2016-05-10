@@ -86,8 +86,6 @@ class UserPagesController < ApplicationController
 
   def update_subscription
     subscribe = params[:subscribe] == 'true'
-    p '==============update_subscription==============='
-    p subscribe
 
     if subscribe
       current_user.subscribe!
@@ -95,22 +93,20 @@ class UserPagesController < ApplicationController
       current_user.unsubscribe!
     end
 
-    render json: { }, status: 200
+    render json: {}, status: 200
   end
 
   def subscribe
     email = params[:email]
-    u = User.where(email: email).first
-    u ||= User.new(email: email)
-    if u.subscribed?
-      return render json: {subscribed: true}, status: 400
-    end
+    u = User.find_by(email: email) || User.new(email: email)
+    return render json: {subscribed: true}, status: 400 if u.subscribed?
 
     begin
       u.subscribe
     rescue Exception => e
       return render json: { code: e.message }, status: 400
     end
-    return render json: {}, status: 200
+
+    render json: {}, status: 200
   end
 end

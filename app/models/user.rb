@@ -111,32 +111,30 @@ class User < ActiveRecord::Base
     self.role = :user if role.blank?
   end
 
-  def subscribe!(skip_errors = true)
+  def subscribe!
     subscribe
     save!
   end
 
-  def unsubscribe!(skip_errors = true)
+  def unsubscribe!
     unsubscribe
     save!
   end
 
-  def subscribe(skip_errors = true)
+  def subscribe
     self.subscribed = true
     email = self.email
     list_id = MAILCHIMP_DEFAULT_LIST_ID
     mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
     mailchimp.lists.subscribe(list_id, email: email)
-    p '==================== subscribe ======================='
   end
 
-  def unsubscribe(skip_errors = true)
+  def unsubscribe
     self.subscribed = false
     email = self.email
     list_id = MAILCHIMP_DEFAULT_LIST_ID
     mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
     mailchimp.lists.unsubscribe(list_id, email: email)
-    p '==================== unsubscribe ======================='
   end
 
   def admin?
