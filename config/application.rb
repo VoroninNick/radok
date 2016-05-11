@@ -25,17 +25,15 @@ module RadokForce
     config.active_record.raise_in_transactional_callbacks = true
 
     config.assets.precompile += %w(modernizr-all.min.js not_found.css mailer.css)
-
-    #config.assets.precompile += %w(codemirror.js codemirror/*)
+    config.assets.precompile += %w(footable.eot footable.woff footable.ttf footable.svg)
+    # config.assets.precompile += %w(codemirror.js codemirror/*)
     config.assets.precompile += %w(templates.css templates.js wizard_js.js payment_form.js)
 
     # Use Bower packages in assets pipeline
-    config.assets.paths << \
-      Rails.root.join('vendor', 'assets', 'bower_components')
-    config.assets.paths << \
-      Rails.root.join('vendor', 'assets', 'bower_components', 'footable', 'css', 'fonts')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'footable', 'css', 'fonts')
 
-    config.assets.precompile << /.*.(?:eot|svg|ttf|woff|woff2)$/
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf|woff2)$/
 
     PayPal::SDK::Core::Config.load('config/paypal.yml',  ENV['RACK_ENV'] || 'development')
     PayPal::SDK.logger = Logger.new(STDERR)
