@@ -1,5 +1,5 @@
 = stylesheet_link_tag "mailer"
-/= render "users/mailer/styles"
+= render "users/mailer/styles"
 table.body
   tr
     td.center[align="center" valign="top"]
@@ -16,7 +16,7 @@ table.body
                           td.six.sub-columns
                             a href=site_url
                               = image_tag 'new_logo.png', id: 'logo-img'
-                          td.six.sub-columns.last[style="text-align:right; vertical-align:middle;"]
+                          /td.six.sub-columns.last[style="text-align:right; vertical-align:middle;"]
                             span.template-label
                               | BASIC
                           td.expander
