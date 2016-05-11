@@ -25,7 +25,7 @@ module RadokForce
     config.active_record.raise_in_transactional_callbacks = true
 
     config.assets.precompile += %w(modernizr-all.min.js not_found.css mailer.css)
-    config.assets.precompile += %w(footable.eot footable.woff footable.ttf footable.svg)
+
     # config.assets.precompile += %w(codemirror.js codemirror/*)
     config.assets.precompile += %w(templates.css templates.js wizard_js.js payment_form.js)
 

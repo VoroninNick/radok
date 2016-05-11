@@ -244,10 +244,6 @@ class Wizard::Test < ActiveRecord::Base
     report.try(:data_file_name)
   end
 
-  def version_number
-    2.56
-  end
-
   def project_languages
     langs = super.pluck(:name)
     return [Wizard::ProjectLanguage.first.name] if langs.empty?
@@ -280,10 +276,6 @@ class Wizard::Test < ActiveRecord::Base
 
   def intro_step_proceeded?
     false
-  end
-
-  def instructions
-    'hello'
   end
 
   def hours_per_tester
