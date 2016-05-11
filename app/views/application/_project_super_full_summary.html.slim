@@ -101,7 +101,7 @@
           .columns.large-12.property
             .property-label
               |Exploratory instructions:
-            .property-value data-bind="project.project_languages"
+            .property-value data-bind="project.exploratory_instructions"
               = project.exploratory_description
         - else
           .columns.large-12.property
@@ -165,12 +165,6 @@
             |Project access comment:
           .property-value
             = project.project_access_comment
-
-      .columns.large-12.property.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
-        .property-label
-          |You've provided the following instructions:
-        .property-value.instructions
-          = project.instructions
 
       .columns.large-6
         .full-summary-total-cost

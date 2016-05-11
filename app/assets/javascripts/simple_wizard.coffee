@@ -1031,12 +1031,14 @@ show_or_hide_exploratory_instructions_input = ()->
   $input = $('.project_exploratory_instructions_input')
   $file_input = $('.test-case-files-input')
   $test_case_inputs_wrap = $('#test-case-driven-inputs-wrap')
-
+  $full_summary_instructions = $('#wizard-full-summary .exploratory_instructions_block')
   if testing_type == 'exploratory'
     $input.removeClass('hide')
+    $full_summary_instructions.removeClass('hide')
     $test_case_inputs_wrap.addClass('hide')
   else
     $input.addClass('hide')
+    $full_summary_instructions.addClass('hide')
     $test_case_inputs_wrap.removeClass('hide')
 
 validate_methodology_type = ()->
