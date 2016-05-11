@@ -148,4 +148,8 @@ class User < ActiveRecord::Base
   def send_social_welcome_email(provider = nil)
     Users::Mailer.welcome_email(self, provider).deliver
   end
+
+  def send_resubscribe_confirmation
+    ApplicationMailer.confirm_resubscribe(self.email).deliver
+  end
 end

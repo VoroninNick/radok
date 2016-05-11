@@ -3,7 +3,6 @@ class FaqRequestMailer < ApplicationMailer
     to = FormConfigs::FaqRequest.first.try(&:emails) || FormConfigs::FaqRequest.default_emails
     @resource = request
     mail(
-        #template_path: "views/mailers/faq_request",
         template_path: "mailers/faq_request",
         template_name: "faq_request",
         layout: false,
