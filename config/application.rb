@@ -30,10 +30,8 @@ module RadokForce
     config.assets.precompile += %w(templates.css templates.js wizard_js.js payment_form.js)
 
     # Use Bower packages in assets pipeline
-    config.assets.paths << \
-      Rails.root.join('vendor', 'assets', 'bower_components')
-    config.assets.paths << \
-      Rails.root.join('vendor', 'assets', 'bower_components', 'footable', 'css', 'fonts')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'footable', 'css', 'fonts')
 
     config.assets.precompile << /\.(?:svg|eot|woff|ttf|woff2)$/
 
