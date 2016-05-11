@@ -20,7 +20,6 @@ class UserPagesController < ApplicationController
     @user = User.new
     @user.update_attributes(params[:user])
 
-
     I18n.with_locale :json do
       if @user.save
         render "user_pages/show.json"
@@ -88,7 +87,16 @@ class UserPagesController < ApplicationController
     subscribe = params[:subscribe] == 'true'
 
     if subscribe
-      current_user.subscribe!
+      begin
+        current_user.subscribe
+      rescue Exception => e
+        if e.class.name == 'Mailchimp::ListInvalidUnsubMemberError'
+          current_user.send_resubscribe_confirmation
+          current_user.subscribed = true
+        else
+          return render json: { code: e.message }, status: 400
+        end
+      end
     else
       current_user.unsubscribe!
     end
@@ -100,7 +108,6 @@ class UserPagesController < ApplicationController
     email = params[:email]
     u = User.find_by(email: email) || User.new(email: email)
     return render json: {subscribed: true}, status: 400 if u.subscribed?
-
     begin
       u.subscribe
     rescue Exception => e
