@@ -113,7 +113,10 @@
                       .actions
                         .delete-draft-button
                           | Delete project
-                        = rf_button title: "Complete", subtitle: "Payment", svg: "rf-rocket-up-right", class: "complete-payment-button", html: { 'open-popup': 'wizard/payment', 'requires-auth': 'true' }
+                        = rf_button title: "Complete", subtitle: "Payment",
+                          svg: "rf-rocket-up-right", class: "complete-payment-button",
+                          html: { 'open-popup': 'wizard/payment', 'requires-auth': 'true',
+                            'data-test-id': project.id, 'test-total-price': project.total_price }
 
       - if @in_progress_tests.try(&:any?)
         .in-process-tests
