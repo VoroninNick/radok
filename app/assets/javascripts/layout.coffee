@@ -635,7 +635,7 @@ $('body').on 'click', '.schedule-call-button', ->
 $('body').on 'click', '#header-mobile-menu-button-wrap', ()->
   $('body').toggleClass('mobile-menu-opened')
 
-$('body').on 'click change change-code keyup keypress', '#footer-subscribe-input', ()->
+$('body').on 'change change-code keyup keypress', '#footer-subscribe-input', ()->
   $email = $(this).val()
   $subscribe_button = $('#subscribe-button')
   $error = $('#subscribe_form .error-subscribe')
@@ -644,7 +644,7 @@ $('body').on 'click change change-code keyup keypress', '#footer-subscribe-input
     $error.addClass('hide')
   else
     $subscribe_button.attr('disabled', 'true')
-    $error.removeClass('hide')
+    $error.text('Please, enter a valid email').removeClass('hide')
 
 $('.subscribe-block form').on 'after_error', (e, xhr, state, options)->
   response = xhr.responseJSON
@@ -659,9 +659,5 @@ $('.subscribe-block form').on 'after_error', (e, xhr, state, options)->
   if subscribed
     msg = 'This email already subscribed'
 
-  $error = state.$form_content.find('.error')
-  if !$error.length
-    $error = $("<label class='error'>#{msg}</label>")
-    state.$form_content.append($error)
-  else
-    $error.text(msg)
+  $error = state.$form_content.find('.error-subscribe')
+  $error.removeClass('hide').text(msg)

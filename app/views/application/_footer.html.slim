@@ -39,8 +39,7 @@ footer#footer
               |Subscribe for our latest news and updates:
             input#footer-subscribe-input name="email" type="text" placeholder="youremail@mail.com"
             = rf_button(svg: "rf-icon-email", id: "subscribe-button", html: {type: "submit", disabled: "true"})
-            label.error.error-subscribe.hide
-              | Please, enter a valid email
+            .error.error-subscribe.hide
           .preloader.hide
             = image_tag("preloader.gif")
           .success-handler.hide
