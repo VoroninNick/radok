@@ -116,4 +116,16 @@ class UserPagesController < ApplicationController
 
     render json: {}, status: 200
   end
+
+  def subscribe_callback
+    @user = User.find_by(email: params[:data][:email])
+    if params[:type] == 'subscribe'
+      @user.subscribed = true
+      @user.save!
+    elsif params[:type] == 'unsubscribe'
+      @user.subscribed = false
+      @user.save!
+    end
+    render nothing: true
+  end
 end
