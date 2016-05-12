@@ -2,11 +2,20 @@ class RemoveHtmlBlocksFromDb < ActiveRecord::Migration
   def up
     execute(<<-SQL)
       DELETE FROM html_blocks;
+      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(16,'',18,'Pages::SitemapXml','content',NULL);
+      INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(15,'User-agent: *
+      #Disallow: /ordering-crowdsourced-testing
+      Disallow: /dashboard
+      Disallow: /users/
+      Disallow: /sign-up
+      Disallow: /terms-of-use
+      ',15,'Pages::RobotsTxt','content',NULL);
     SQL
   end
 
   def down
     execute(<<-SQL)
+      DELETE FROM html_blocks;
       INSERT INTO html_blocks (id, content, attachable_id, attachable_type, attachable_field_name, key) VALUES(1,'<div class="row">
                 <div class="item">
                   <div class="svg-wrap">
