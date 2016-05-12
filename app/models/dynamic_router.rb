@@ -1,12 +1,6 @@
 class DynamicRouter
   def self.load
     pages = {}
-    Page.all.each do |page|
-      page_route_name = page.type.split("::").last.underscore
-      page_controller = "pages"
-      page_controller_action = page_route_name
-      pages[page_route_name.to_sym] = { url: page.url, route_name: page_route_name, type: page.type, controller: page_controller, action: page_controller_action }
-    end
 
     Pages.all_class_names.each do |page_class_name|
       page_class = page_class_name.constantize
@@ -14,7 +8,6 @@ class DynamicRouter
       page_controller = "pages"
       page_controller_action = page_route_name
       page = pages[page_route_name.to_sym] ||= { route_name: page_route_name, type: page_class_name, controller: page_controller, action: page_controller_action }
-
       page[:url] = page_class.default_url if page[:url].blank?
     end
 
@@ -24,7 +17,6 @@ class DynamicRouter
       page_controller_action = action
       pages[page_route_name.to_sym] ||= { route_name: page_route_name, controller: page_controller, action: page_controller_action }
     end
-
 
     Rails.application.class.routes.draw do
       pages.each do |page_key, page|
