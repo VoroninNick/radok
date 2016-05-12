@@ -330,6 +330,7 @@ $.fn.validateInput = ->
 
   if valid
     if validation_options.indexOf('confirm_password') >= 0
+      $('.error.remote.identical').addClass('hide')
       valid = validateConfirmPassword($rf_input)
     if validation_options.indexOf('email') >= 0
       valid = validateEmail(value)
@@ -342,6 +343,7 @@ $.fn.validateInput = ->
     if validation_options.indexOf('sign_in') >= 0
       result = validateSignInCredentials(value)
     if validation_options.indexOf('password') >= 0
+      $('.error.remote.identical').addClass('hide')
       result = validateCredentials(value)
     if validation_options.indexOf('address') >= 0
       valid = validateAddress(value)
