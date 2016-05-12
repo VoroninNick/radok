@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505101139) do
+ActiveRecord::Schema.define(version: 20160512085645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,21 +27,6 @@ ActiveRecord::Schema.define(version: 20160505101139) do
     t.string   "data_alt"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-  end
-
-  create_table "banners", force: :cascade do |t|
-    t.integer  "page_id"
-    t.string   "title"
-    t.string   "description"
-    t.string   "background_image_file_name"
-    t.string   "background_image_content_type"
-    t.integer  "background_image_file_size"
-    t.datetime "background_image_updated_at"
-    t.string   "button_label"
-    t.string   "button_url"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.string   "title_html_tag"
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|

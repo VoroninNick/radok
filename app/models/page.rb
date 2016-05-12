@@ -14,11 +14,10 @@
 class Page < ActiveRecord::Base
   attr_accessible *attribute_names
   has_seo_tags
-  has_banner
   has_sitemap_record
 
   after_save :reload_routes, if: proc { self.url_changed? }
- 
+
   def self.default_url
     self.name.split("::").last.underscore.humanize.parameterize
   end

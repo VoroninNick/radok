@@ -1,22 +1,14 @@
-require_relative "require_libs"
+require_relative 'require_libs'
 
 def pages_models
-  Dir[Rails.root.join("app/models/pages/*")].map do |p|
-    filename = File.basename(p, ".rb")
-
-    # Exclude pages
-    # TODO: remove html based CMS
-    next if filename == 'home'
-    next if filename == 'about'
-    next if filename == 'testing_services'
-    next if filename == 'terms_of_use'
-
-    "Pages::" + filename.camelize
+  Dir[Rails.root.join('app/models/pages/*')].map do |p|
+    filename = File.basename(p, '.rb')
+    'Pages::' + filename.camelize
   end.compact
 end
 
 def templates_models
-  Dir[Rails.root.join("app/models/templates/*")].map{|p| filename = File.basename(p, ".rb"); "Templates::" + filename.camelize }
+  Dir[Rails.root.join('app/models/templates/*')].map{|p| filename = File.basename(p, '.rb'); "Templates::" + filename.camelize }
 end
 
 def include_pages_models(config)
@@ -31,7 +23,7 @@ def include_models(config, *models)
   models.each do |model|
     config.included_models += [model]
 
-    if !model.instance_of?(Class)
+    unless model.instance_of?(Class)
       Dir[Rails.root.join("app/models/#{model.underscore}")].each do |file_name|
         require file_name
       end
@@ -49,8 +41,8 @@ def content_field(name = :content)
   field name, :text do
     html_attributes do
       {
-        class: "my-codemirror",
-        mode: "slim"
+        class: 'my-codemirror',
+        mode: 'slim'
       }
     end
 
@@ -62,26 +54,23 @@ end
 
 def pages_navigation_label
   navigation_label do
-    I18n.t("admin.navigation_labels.pages")
+    I18n.t('admin.navigation_labels.pages')
   end
 end
 
 def settings_navigation_label
   navigation_label do
-    "Settings"
+    'Settings'
   end
 end
 
 def forms_navigation_label
   navigation_label do
-    "Forms"
+    'Forms'
   end
 end
 
-def page_fields(hide_content = false)
-  field :banner
-  content_field  if !hide_content
-  html_block_fields
+def page_fields
   field :url
   field :seo_tags
   field :sitemap_record
@@ -95,21 +84,21 @@ def configure_codemirror_html_field(name)
     assets do
       {
         mode: "/assets/codemirror/modes/#{mode}.js",
-        theme: "/assets/codemirror/themes/#{theme}.css",
+        theme: "/assets/codemirror/themes/#{theme}.css"
       }
     end
 
     config do
       {
         mode: mode,
-        theme: theme,
+        theme: theme
       }
     end
   end
 end
 
 def configure_html_blocks
-  m = self.abstract_model.model
+  m = abstract_model.model
   if m.respond_to?(:html_block_field_names)
     m.html_block_field_names.each do |name|
     end
@@ -117,7 +106,7 @@ def configure_html_blocks
 end
 
 def html_block_fields
-  m = self.abstract_model.model
+  m = abstract_model.model
   if m.respond_to?(:html_block_field_names)
     m.html_block_field_names.each do |name|
       content_field name.to_sym
@@ -126,7 +115,6 @@ def html_block_fields
 end
 
 RailsAdmin.config do |config|
-
   ## == Devise ==
   config.authenticate_with do
     warden.authenticate! scope: :user
@@ -135,7 +123,9 @@ RailsAdmin.config do |config|
 
   ## == Cancan ==
   config.authorize_with :cancan
-  page_model_names = %w(Contact Dashboard Devices FaqIndex NotFound Pricing Profile RobotsTxt SignIn SignUp SitemapXml TestInfo Wizard).map{|s| "Pages::#{s}" }
+  page_model_names = %w(Contact Dashboard Devices FaqIndex NotFound Pricing
+                        Profile RobotsTxt SignIn SignUp SitemapXml
+                        TestInfo Wizard).map { |s| "Pages::#{s}" }
 
   form_config_models = [
     FormConfigs::ContactFeedback,
@@ -144,7 +134,9 @@ RailsAdmin.config do |config|
     FormConfigs::ScheduleCall
   ]
 
-  only_configurable_models = [*form_config_models, *page_model_names, WizardSettings]
+  only_configurable_models = [*form_config_models,
+                              *page_model_names,
+                              WizardSettings]
   read_only_models = []
 
   config.actions do
@@ -197,24 +189,17 @@ RailsAdmin.config do |config|
 
   include_pages_models(config)
   include_templates_models(config)
-  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement,\
-                 Cms::HtmlBlock, Cms::KeyedHtmlBlock, Banner)
+  include_models(config, Page, Cms::MetaTags, Cms::SitemapElement)
   include_models(config, Client)
   include_models(config, Wizard::PromoCode)
   include_models(config, WizardSettings)
 
   config.model Cms::MetaTags do
-    visible false
+    visible true
 
     field :title
     field :keywords
     field :description
-  end
-
-  config.model Cms::HtmlBlock do
-    visible false
-
-    field :content
   end
 
   config.model WizardSettings do
@@ -271,19 +256,6 @@ RailsAdmin.config do |config|
 
   config.model Cms::FormConfig do
     visible false
-  end
-
-  config.model Banner do
-    visible false
-
-    nested do
-      field :title
-      field :title_html_tag
-      field :description
-      field :background_image
-      field :button_label
-      field :button_url
-    end
   end
 
   config.model Page do
@@ -360,7 +332,6 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      field :banner
       field :seo_tags
       field :sitemap_record
     end
@@ -370,7 +341,6 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      field :banner
       field :seo_tags
       field :sitemap_record
     end
@@ -380,7 +350,6 @@ RailsAdmin.config do |config|
     pages_navigation_label
 
     edit do
-      field :banner
       field :seo_tags
       field :sitemap_record
     end
@@ -497,6 +466,8 @@ RailsAdmin.config do |config|
   config.model Cms::SitemapElement do
     visible false
 
+    field :page_type
+    field :page_id
     field :display_on_sitemap
     field :changefreq
     field :priority
