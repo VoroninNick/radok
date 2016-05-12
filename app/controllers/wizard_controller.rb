@@ -85,8 +85,8 @@ class WizardController < ApplicationController
     @payment = Payment.new({
       intent: 'sale',
       redirect_urls: {
-        return_url: 'http://localhost:3000/payment/execute',
-        cancel_url: "http://localhost:3000/dashboard"
+        return_url: 'http://10g-force.com/payment/execute',
+        cancel_url: "http://10g-force.com/dashboard"
       },
       payer: {
         payment_method: 'paypal'
