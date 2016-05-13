@@ -77,10 +77,13 @@ class Wizard::Test < ActiveRecord::Base
 
   accepts_nested_attributes_for :test_platforms_bindings
 
-  scope :drafts, -> { where('completed_at is null') }
-  scope :unpaid_projects, -> { where('completed_at is not null and paid_at is null') }
-  scope :processing_projects, -> { where('completed_at is not null and paid_at is not null') }
-  scope :tested_projects, -> { where('completed_at is not null and tested_at is not null') }
+  scope :drafts, -> { where('completed_at IS NULL AND paid_at IS NULL') }
+  scope :unpaid_projects, -> { where('completed_at IS NOT NULL AND paid_at IS NULL') }
+  scope :processing_projects, -> { where('paid_at IS NOT NULL AND tested_at IS NULL') }
+  scope :tested_projects, -> { where('paid_at IS NOT NULL AND tested_at IS NOT NULL') }
+
+  after_validation :check_if_test_finished
+  after_validation :check_if_test_paid
 
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
   validates :hours_per_tester, numericality: {in: 1..5 }
@@ -212,6 +215,10 @@ class Wizard::Test < ActiveRecord::Base
     paid_at.present?
   end
 
+  def finished?
+    tested_at.present?
+  end
+
   def localization_test?
     test_type.localization_test?
   end
@@ -242,10 +249,6 @@ class Wizard::Test < ActiveRecord::Base
 
   def report_file_name
     report.try(:data_file_name)
-  end
-
-  def version_number
-    2.56
   end
 
   def project_languages
@@ -280,10 +283,6 @@ class Wizard::Test < ActiveRecord::Base
 
   def intro_step_proceeded?
     false
-  end
-
-  def instructions
-    'hello'
   end
 
   def hours_per_tester
@@ -471,5 +470,19 @@ class Wizard::Test < ActiveRecord::Base
 
   def paid!
     self.update_attributes!(paid_at: DateTime.now, skip_callbacks: true)
+  end
+
+  def finish!
+    self.update_attributes!(tested_at: DateTime.now, skip_callbacks: true)
+  end
+
+  protected
+
+  def check_if_test_finished
+    self.finish! if self.percent_completed == 100 && !self.finished? && self.paid?
+  end
+
+  def check_if_test_paid
+    self.complete! if self.paid? && !self.completed?
   end
 end

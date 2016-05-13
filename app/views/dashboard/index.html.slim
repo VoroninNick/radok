@@ -5,7 +5,7 @@
                           button_label: 'New test',
                           button_url: '/ordering-crowdsourced-testing'
   #dashboard-projects data-wizard-root=wizard_path
-    - if !(@drafts.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?))
+    - unless current_user.tests.try(:any?)
       .no-projects
         .row
           .columns.large-12.header
@@ -113,7 +113,10 @@
                       .actions
                         .delete-draft-button
                           | Delete project
-                        = rf_button title: "Complete", subtitle: "Payment", svg: "rf-rocket-up-right", class: "complete-payment-button", html: { 'open-popup': 'wizard/payment', 'requires-auth': 'true' }
+                        = rf_button title: "Complete", subtitle: "Payment",
+                          svg: "rf-rocket-up-right", class: "complete-payment-button",
+                          html: { 'open-popup': 'wizard/payment', 'requires-auth': 'true',
+                            'data-test-id': project.id, 'test-total-price': project.total_price }
 
       - if @in_progress_tests.try(&:any?)
         .in-process-tests

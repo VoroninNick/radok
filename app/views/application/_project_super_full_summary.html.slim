@@ -101,7 +101,7 @@
           .columns.large-12.property
             .property-label
               |Exploratory instructions:
-            .property-value data-bind="project.project_languages"
+            .property-value data-bind="project.exploratory_instructions"
               = project.exploratory_description
         - else
           .columns.large-12.property
@@ -166,12 +166,6 @@
           .property-value
             = project.project_access_comment
 
-      .columns.large-12.property.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
-        .property-label
-          |You've provided the following instructions:
-        .property-value.instructions
-          = project.instructions
-
       .columns.large-6
         .full-summary-total-cost
           .dollar
@@ -182,9 +176,13 @@
             |total
             br
             |cost
-      - if !project.completed?
+      - if !project.paid?
         .columns.large-6
-          = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: true, html: { "open-popup": "payment", "requires-auth": "true" })
+          = rf_button class: "rf-confirm-button", full_width: true,
+            svg: "rf-rocket-up-right", title: "Confirm",
+            subtitle: "And proceed to payment",
+            html: { "open-popup": "wizard/payment", "requires-auth": "true",
+              'data-test-id': project.id, 'test-total-price': project.total_price }
         .columns.large-6.left style="clear: left;"
           .promo-code-field
             label for="promo_code"

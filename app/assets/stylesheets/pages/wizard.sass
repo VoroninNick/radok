@@ -455,7 +455,7 @@ form[for=project]
     color: $light-gray-text-color
     display: block
   .description
-    color: $light-gray-color
+    color: $dark-gray-color
     +font-12-light-italic
     display: block
     display: none
@@ -1260,8 +1260,13 @@ comment-with-price
 .wizard
   #wizard-full-summary
     padding-right: 30px
-    textarea.instructions
-      max-width: none
+    .instructions
+      max-width: 37.5rem
+      width: 100%
+      max-height: 17.5rem
+      height: 7.5rem
+      border: 1px
+      overflow: hidden
 
 @media #{$small-only}
   #project-test-type
