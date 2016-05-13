@@ -79,8 +79,11 @@ class Wizard::Test < ActiveRecord::Base
 
   scope :drafts, -> { where('completed_at IS NULL AND paid_at IS NULL') }
   scope :unpaid_projects, -> { where('completed_at IS NOT NULL AND paid_at IS NULL') }
-  scope :processing_projects, -> { where('completed_at IS NOT NULL AND paid_at IS NOT NULL') }
+  scope :processing_projects, -> { where('paid_at IS NOT NULL AND tested_at IS NULL') }
   scope :tested_projects, -> { where('paid_at IS NOT NULL AND tested_at IS NOT NULL') }
+
+  after_validation :check_if_test_finished
+  after_validation :check_if_test_paid
 
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
   validates :hours_per_tester, numericality: {in: 1..5 }
@@ -210,6 +213,10 @@ class Wizard::Test < ActiveRecord::Base
 
   def paid?
     paid_at.present?
+  end
+
+  def finished?
+    tested_at.present?
   end
 
   def localization_test?
@@ -463,5 +470,19 @@ class Wizard::Test < ActiveRecord::Base
 
   def paid!
     self.update_attributes!(paid_at: DateTime.now, skip_callbacks: true)
+  end
+
+  def finish!
+    self.update_attributes!(tested_at: DateTime.now, skip_callbacks: true)
+  end
+
+  protected
+
+  def check_if_test_finished
+    self.finish! if self.percent_completed == 100 && !self.finished? && self.paid?
+  end
+
+  def check_if_test_paid
+    self.complete! if self.paid? && !self.completed?
   end
 end
