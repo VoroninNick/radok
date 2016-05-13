@@ -1,12 +1,12 @@
-= stylesheet_link_tag "mailer"
-= render "users/mailer/styles"
+= stylesheet_link_tag 'mailer'
+= render 'users/mailer/styles'
 table.body
   tr
-    td.center[align="center" valign="top"]
+    td.center[align='center' valign='top']
       center
-        table#header-table.row.header[style=""]
+        table#header-table.row.header[style='']
           tr
-            td.center[align="center"]
+            td.center[align='center']
               center
                 table.container
                   tr
@@ -16,7 +16,7 @@ table.body
                           td.six.sub-columns
                             a href=site_url
                               = image_tag 'new_logo.png', id: 'logo-img'
-                          /td.six.sub-columns.last[style="text-align:right; vertical-align:middle;"]
+                          /td.six.sub-columns.last[style='text-align:right; vertical-align:middle;']
                             span.template-label
                               | BASIC
                           td.expander
@@ -35,7 +35,7 @@ table.body
                         td.panel
                           p
                             | Phasellus dictum sapien a neque luctus cursus. Pellentesque sem dolor, fringilla et pharetra vitae.
-                            a[href="#"]
+                            a[href='#']
                               | Click it! »
                         td.expander
               table#footer-table.row.footer
@@ -49,19 +49,19 @@ table.body
                           .social-icons
                             .social-icon
                               a title='Google +' href='https://plus.google.com/109753715460055186428'
-                                = image_tag "rf-social-google-plus.png"
+                                = image_tag 'rf-social-google-plus.png'
                             .social-icon
-                              a title="Facebook" href="https://www.facebook.com/10G-Force-410439735822955/?ref=bookmarks"
-                                = image_tag "rf-social-facebook.png"
+                              a title='Facebook' href='https://www.facebook.com/10G-Force-410439735822955/?ref=bookmarks'
+                                = image_tag 'rf-social-facebook.png'
                             .social-icon
-                              a title="LinkedIn" href="https://www.linkedin.com/grp/home?gid=8415315"
-                                = image_tag "rf-social-linked-in.png"
+                              a title='LinkedIn' href='https://www.linkedin.com/grp/home?gid=8415315'
+                                = image_tag 'rf-social-linked-in.png'
                             .social-icon
-                              a title="Twitter" href="https://twitter.com/10g_force"
-                                = image_tag "rf-social-twitter.png"
+                              a title='Twitter' href='https://twitter.com/10g_force'
+                                = image_tag 'rf-social-twitter.png'
                             .social-icon
-                              a title="Skype" href="skype:force.10g?call"
-                                = image_tag "rf-social-skype.png"
+                              a title='Skype' href="skype:#{skype_login}?call"
+                                = image_tag 'rf-social-skype.png'
 
                         td.expander
                   td.wrapper.last
@@ -74,8 +74,8 @@ table.body
                             | Phone: #{formatted_phone_number}
                           p
                             | Email:
-                            a[href="/cdn-cgi/l/email-protection#1f776c7a737b70715f6b6d7e716b706d317c7072"]
-                              span.__cf_email__[data-cfemail="e08893858c848f8ea09492818e948f92ce838f8d"]
+                            a[href='/cdn-cgi/l/email-protection#1f776c7a737b70715f6b6d7e716b706d317c7072']
+                              span.__cf_email__[data-cfemail='e08893858c848f8ea09492818e948f92ce838f8d']
                                 = email
                         td.expander
               table.row
@@ -83,15 +83,15 @@ table.body
                   td.wrapper.last
                     table.twelve.columns
                       tr
-                        td[align="center"]
+                        td[align='center']
                           center
-                            p[style="text-align:center;"]
-                              a[href="#"]
+                            p[style='text-align:center;']
+                              a[href=terms_url]
                                 | Terms
                               |  |
-                              a[href="#"]
+                              /a[href='#']
                                 | Privacy
                               |  |
-                              a[href="#"]
+                              a[href='http://10g-force.us12.list-manage.com/unsubscribe?u=c0e0cd2c593f5c6fa7ff1dea6&id=cdd32e3a50']
                                 | Unsubscribe
                         td.expander
