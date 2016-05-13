@@ -330,7 +330,7 @@ $.fn.validateInput = ->
 
   if valid
     if validation_options.indexOf('confirm_password') >= 0
-      $('.error.remote.identical').addClass('hide')
+      hideIndenticalPasswordError()
       valid = validateConfirmPassword($rf_input)
     if validation_options.indexOf('email') >= 0
       valid = validateEmail(value)
@@ -343,7 +343,7 @@ $.fn.validateInput = ->
     if validation_options.indexOf('sign_in') >= 0
       result = validateSignInCredentials(value)
     if validation_options.indexOf('password') >= 0
-      $('.error.remote.identical').addClass('hide')
+      hideIndenticalPasswordError()
       result = validateCredentials(value)
     if validation_options.indexOf('address') >= 0
       valid = validateAddress(value)
@@ -432,6 +432,9 @@ validateBillingAddress = (address) ->
   max = address.length <= 200
   min = address.length >= 6
   return (match: true, max: max, min: min)
+
+hideIndenticalPasswordError = () ->
+  $('.error.remote.identical').addClass('hide')
 
 $('body').on 'change blur keyup', 'form .rf-input', (event)->
   $rf_input = $(this)
