@@ -47,9 +47,9 @@ class PagesController < ApplicationController
   def home
     @home_slides = [
       {images: [
-        ActionController::Base.helpers.asset_path('radok-web-banner-layer-1.png'),
-        ActionController::Base.helpers.asset_path('radok-web-banner-layer-2.png'),
-        ActionController::Base.helpers.asset_path('radok-web-banner-layer-3.png')],
+        ActionController::Base.helpers.asset_path('banners/home_page/slide-1-layer-1.png'),
+        ActionController::Base.helpers.asset_path('banners/home_page/slide-1-layer-2.png'),
+        ActionController::Base.helpers.asset_path('banners/home_page/slide-1-layer-3.png')],
         title: 'We test mobile, web apps and games.',
         description: 'Professional crowd testing team are ready to start testing your software product immediately',
         button: {
@@ -61,9 +61,9 @@ class PagesController < ApplicationController
         }
       },
       {images: [
-        ActionController::Base.helpers.asset_path('banners/2/radok-web-banner2-layer-1.png'),
-        ActionController::Base.helpers.asset_path('banners/2/radok-web-banner2-layer-2b.png'),
-        ActionController::Base.helpers.asset_path('banners/2/radok-web-banner2-layer-3b.png')],
+        ActionController::Base.helpers.asset_path('banners/home_page/slide-2-layer-1.png'),
+        ActionController::Base.helpers.asset_path('banners/home_page/slide-2-layer-2.png'),
+        ActionController::Base.helpers.asset_path('banners/home_page/slide-2-layer-3.png')],
         title: 'We have a bunch of different devices to test on',
         description: 'Professional crowd testing team are ready to start testing your software product immediately',
         button: {

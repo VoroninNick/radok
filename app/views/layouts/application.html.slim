@@ -10,6 +10,7 @@ html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
     = stylesheet_link_tag    "application"
     = javascript_include_tag "modernizr-all.min"
     = csrf_meta_tags
+    = render "facebook_pixel"
 
   body#body
     = render "google_tag_manager"

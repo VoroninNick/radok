@@ -5,7 +5,7 @@
                           button_label: 'New test',
                           button_url: '/ordering-crowdsourced-testing'
   #dashboard-projects data-wizard-root=wizard_path
-    - if !(@drafts.try(:any?) || @unpaid.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?))
+    - unless current_user.tests.try(:any?)
       .no-projects
         .row
           .columns.large-12.header
@@ -29,7 +29,7 @@
                             .type-of-test-logo class=('ux' if project.usability_test?)
                               = image_tag (project.type_of_test_logo)
                             .project-name
-                              = project.pi__project_name
+                              = project.pi__project_name(20)
                             .steps-completed
                               .progress
                                 - steps_hash = project.proceeded_steps_hash
@@ -44,7 +44,9 @@
                               .type-of-test
                                 = project.type_of_test
                               .testing-type.pull-right ng-show="project.methodology_type && project.methodology_type.length"
+                                |&nbsp;(
                                 = project.testing_type
+                                |)
                               .clearfix
                             .testers-and-hours
                               .testers
@@ -84,7 +86,7 @@
                             .type-of-test-logo class=('ux' if project.usability_test?)
                               = image_tag (project.type_of_test_logo)
                             .project-name
-                              = project.pi__project_name
+                              = project.pi__project_name(20)
                             .type-of-test-wrap
                               .type-of-test-icon
                                 .svg-wrap
@@ -92,7 +94,9 @@
                               .type-of-test
                                 = project.type_of_test
                               .testing-type.pull-right ng-show="project.methodology_type && project.methodology_type.length"
+                                |&nbsp;(
                                 = project.testing_type
+                                |)
                               .clearfix
                             .testers-and-hours
                               .testers

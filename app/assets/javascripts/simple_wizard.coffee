@@ -881,12 +881,12 @@ $('body').on 'change.project.current_step_id', ()->
   else
     $prev_step_number.text('')
 
-  if !project.next_step_id
-    $('.rf-next-step-button').hide()
-    $('.rf-go-to-summary-button').fadeIn()
-  else
+  if !!project.next_step_id
     $('.rf-go-to-summary-button').hide()
-    $('.rf-next-step-button').fadeIn()
+    $('.rf-next-step-button').show()
+  else
+    $('.rf-next-step-button').hide()
+    $('.rf-go-to-summary-button').show()
 
   if !!project.current_step_id
     $mini_summary_large_confirm_button = $('#wizard-summary .rf-confirm-button')
@@ -1031,12 +1031,14 @@ show_or_hide_exploratory_instructions_input = ()->
   $input = $('.project_exploratory_instructions_input')
   $file_input = $('.test-case-files-input')
   $test_case_inputs_wrap = $('#test-case-driven-inputs-wrap')
-
+  $full_summary_instructions = $('#wizard-full-summary .exploratory_instructions_block')
   if testing_type == 'exploratory'
     $input.removeClass('hide')
+    $full_summary_instructions.removeClass('hide')
     $test_case_inputs_wrap.addClass('hide')
   else
     $input.addClass('hide')
+    $full_summary_instructions.addClass('hide')
     $test_case_inputs_wrap.removeClass('hide')
 
 validate_methodology_type = ()->
@@ -1327,7 +1329,7 @@ $('.wizard-step').on 'disappear', ()->
   active_summary = $wizard_full_summary.filter(':appeared').length > 0
   if active_summary
     project.current_step_id = null
-    project.prev_step_id = project.available_step_ids[project.available_step_ids.length]
+    project.prev_step_id = project.available_step_ids[project.available_step_ids.length - 1]
     project.next_step_id = false
 
 $('body').on 'change.project.hours_per_tester', ()->
@@ -1336,18 +1338,17 @@ $('body').on 'change.project.hours_per_tester', ()->
   $hour_labels.filter("[data-hours=#{project.hours_per_tester}]").addClass('selected')
 
 $('body').on 'change.project.project_name', ()->
-  $summary_project_name = $("[data-bind='project.project_name']").html()
+  $wizard_project_name = $('#project_project_name').val()
+  $summary_project_name = $("[data-bind='project.project_name']")
   start = 0
-  end = 30
+  end = 25
   splitted_name = ""
-  while end < $summary_project_name.length
-    splitted_name += "<span> #{$summary_project_name.slice(start, end)} </span> <br>"
+  while end < $wizard_project_name.length
+    splitted_name += "<span> #{$wizard_project_name.slice(start, end)} </span> <br>"
     start = end + 1
-    end += 30
-  if end >= $summary_project_name.length
-    splitted_name += "<span> #{$summary_project_name.slice(start, $summary_project_name.length - 1)} </span>"
-  if splitted_name.lenght > 30
-    $summary_project_name.html(splitted_name)
+    end += 25
+  splitted_name += "<span> #{$wizard_project_name.slice(start, $wizard_project_name.length - 1)} </span>"
+  $summary_project_name.html(splitted_name)
 
 $('body').on 'keypress', 'input', (e)->
   $input = $(this)

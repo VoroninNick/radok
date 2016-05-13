@@ -166,14 +166,13 @@ class Wizard::Test < ActiveRecord::Base
     test_type.image.path.split('/').last
   end
 
-  def pi__project_name
+  def pi__project_name(length)
     name = self['project_name']
-    name = "Test ##{self.id}" if name.blank?
-    name
-  end
-
-  def project_name
-    pi__project_name
+    name = "Test ##{id}" if name.blank?
+    splitted_name = ''
+    splitted_name += name.slice!(0, length) + ' ' while name.length > length
+    splitted_name += name
+    splitted_name
   end
 
   def type_of_product
@@ -245,10 +244,6 @@ class Wizard::Test < ActiveRecord::Base
     report.try(:data_file_name)
   end
 
-  def version_number
-    2.56
-  end
-
   def project_languages
     langs = super.pluck(:name)
     return [Wizard::ProjectLanguage.first.name] if langs.empty?
@@ -281,10 +276,6 @@ class Wizard::Test < ActiveRecord::Base
 
   def intro_step_proceeded?
     false
-  end
-
-  def instructions
-    'hello'
   end
 
   def hours_per_tester

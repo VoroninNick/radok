@@ -5,6 +5,14 @@
   @media #{$screen} and #{max-res(360/1.5)}
     @content
 
+= iphone6-landscape
+  @media #{$screen} and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2)
+    @content
+
+= iphone6plus-landscape
+  @media #{$screen} and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 3)
+    @content
+
 = user-select
   -ms-user-select: none
   -moz-user-select: none

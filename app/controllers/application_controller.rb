@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   #protect_from_forgery
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :initialize_google_omniauth_state
 
   respond_to :html, :json
 
@@ -127,5 +128,9 @@ class ApplicationController < ActionController::Base
 
   def navigational_formats
     @navigational_formats ||= Devise.navigational_formats.select{ |format| Mime::EXTENSION_LOOKUP[format.to_s] }
+  end
+
+  def initialize_google_omniauth_state
+    session['omniauth.state'] = response.headers['X-CSRF-Token'] = form_authenticity_token
   end
 end

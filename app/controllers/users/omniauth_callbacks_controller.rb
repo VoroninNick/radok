@@ -1,46 +1,24 @@
+# Omniauth Registrations and Sessions
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # You should configure your model like this:
-
-
-  #skip_before_filter
   skip_filter *_process_action_callbacks.map(&:filter)
-
-  # def facebook
-  #   render inline: params.inspect
-  # end
+  skip_before_filter :verify_authenticity_token
 
   def specific_provider(name)
-    #return render inline: params.keys.map(&:to_s).inspect
-    #sign_in = params.keys.map(&:to_s).include?("sign-in")
-    #sign_up = !sign_in
-
     # You need to implement the method below in your model (e.g. app/models/user.rb)
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @user = User.from_omniauth(request.env['omniauth.auth'])
 
-    #return render inline: "provider: #{@user.provider}; uid: #{@user.uid}; persisted: #{@user.persisted?}; email: #{@user.email}; id: #{@user.id}; password: #{@user.password}; first_name: #{@user.first_name}; last_name: #{@user.last_name}; confirmation_required?: #{@user.send(:confirmation_required?).inspect}"
-    #return render inline: request.env["omniauth.auth"].inspect
-    #return render inline: "persisted: #{@user.persisted?.inspect}" + @user.inspect
     if @user.persisted?
       sign_in resource_name, @user
-      redirect_to "/"
-      # sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
-      #set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
-      session["devise.#{name}_data"] = request.env["omniauth.auth"]
-      #redirect_to new_user_registration_url
-      #url_to_redirect = "/sign-up/facebook"
-      #url_to_redirect = "/sign-in/facebook" if sign_in
-
-      #@user.confirmed_at = DateTime.now
+      session["devise.#{name}_data"] = request.env['omniauth.auth']
       @user.skip_confirmation!
       @user.saved_at = DateTime.now
       if @user.save!
         @user.send_social_welcome_email(name)
         sign_in :user, @user
       end
-      redirect_to "/"
-      #redirect_to "/sign-up/#{name}"
     end
+    redirect_to "/"
   end
 
   def facebook
@@ -63,18 +41,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     specific_provider(:github)
   end
 
-
   def redirect_callbacks
-    #return render inline: "hi"
-    # derive target redirect route from 'resource_class' param, which was set
-    # before authentication.
-
-    #devise_mapping = request.env['omniauth.params']['resource_class'].underscore.to_sym
-    #redirect_route = "/#{Devise.mappings[devise_mapping].as_json["path"]}/#{params[:provider]}/callback"
-
-    # preserve omniauth info for success route
-    session['dta.omniauth.auth'] = request.env['omniauth.auth']
-    session['dta.omniauth.params'] = request.env['omniauth.params']
+    session['data.omniauth.auth'] = request.env['omniauth.auth']
+    session['data.omniauth.params'] = request.env['omniauth.params']
 
     redirect_route = "/users/auth/#{params[:provider]}/callback"
     redirect_to redirect_route
@@ -85,16 +54,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def passthru
-    #render inline: "hi"
     return render inline: request.referer
-    super
-
   end
-
 
   # def omniauth_success
   #   # find or create user by provider and provider uid
-  #
   #   @resource = User.where({
   #                                        uid:      auth_hash['uid'],
   #                                        provider: auth_hash['provider']
@@ -104,7 +68,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   #   @client_id = SecureRandom.urlsafe_base64(nil, false)
   #   @token     = SecureRandom.urlsafe_base64(nil, false)
   #   @expiry    = (Time.now + DeviseTokenAuth.token_lifespan).to_i
-  #
   #   @auth_origin_url = generate_url(omniauth_params['auth_origin_url'], {
   #                                                                         token:     @token,
   #                                                                         client_id: @client_id,
@@ -143,25 +106,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   #   respond_to do |format|
   #     format.html { render :layout => "omniauth_response", :template => "devise_token_auth/omniauth_success" }
   #   end
-  # end
-
-
-
-  # You should also create an action method in this controller like this:
-  # def twitter
-  # end
-
-  # More info at:
-  # https://github.com/plataformatec/devise#omniauth
-
-  # GET|POST /resource/auth/twitter
-  # def passthru
-  #   super
-  # end
-
-  # GET|POST /users/auth/twitter/callback
-  # def failure
-  #   super
   # end
 
   # protected

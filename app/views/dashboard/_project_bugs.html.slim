@@ -1,0 +1,48 @@
+- if params['showbugs']
+  #bugs
+    div.title Bugs
+    button.rf-button.rf-button-with-subtitle.rf-button-with-svg.rf-button-raised.rf-button-auto-width.rf-button-svg-size-medium.rf-button-align-content-center.rf-button-size-medium.start-now-button href="/ordering-crowdsourced-testing"
+      .rf-button-content-wrap
+        .rf-button-content
+          .svg-wrap.svg-size-medium
+            = image_tag 'download_white.svg'
+          .button-text-wrap
+            .inner
+              .button-title.ng-binding.ng-scope ng-bind="title()" ng-if="title()"  Download PDF
+              .button-subtitle.ng-binding.ng-scope ng-bind="subtitle()" ng-if="subtitle()" issues in detailed format
+    - @bugs = JSON[File.read(Rails.root.join('fixtures', 'bugzilla_fixtures.json'))]['bugs']
+    div
+      - @bugs.each do |bug|
+        .bug
+          p.summary
+            span.status= bug['status']
+            |&nbsp;
+            span= truncate(bug['summary'], length: 70)
+          p.small-overview
+            - unless bug['url'].blank?
+              span.url
+                | url:&nbsp;
+                b= link_to(truncate(bug['url'], length: 40), bug['url'])
+                | &nbsp;| &nbsp;
+            - unless bug['classification'].blank?
+              span.url
+                | classification:&nbsp;
+                b= bug['classification']
+                | &nbsp;| &nbsp;
+            - unless bug['component'].blank?
+              span.url
+                | component:&nbsp;
+                b= bug['component']
+                | &nbsp;| &nbsp;
+            - unless bug['severity'].blank?
+              span.url
+                | severity:&nbsp;
+                b= bug['severity']
+          p.actions
+            span
+              a href="#"= "Comments(#{rand(40)})"
+            | &nbsp;| &nbsp;
+            span
+              a href="#" View
+              
+          hr

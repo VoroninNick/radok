@@ -7,7 +7,7 @@
   .row
     .columns.large-12.project-name-row
       .h2.project-name
-        = @project.project_name
+        = @project.pi__project_name(35)
       - if @project.completed?
         - if @project.successful?
           .status-completed.status-successfull

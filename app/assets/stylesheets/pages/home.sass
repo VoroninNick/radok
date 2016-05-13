@@ -116,10 +116,21 @@ $banner-title-color: #e6e7e9
         +font-36
         line-height: 36px
 
-  @media #{$screen} and #{max-res(240)}
+  @media #{$screen} and (max-width: 360px)
     .description-block
       .description
         display: none
+      .title
+        height: 180px
+  @media #{$screen} and (min-width: 360px) and (max-width: 1024px)
+    .description-block
+      .description
+        height: 30px
+      .title
+        height: 150px
+
+#home-banner .button-container
+  margin: 45px 0 0 0 !important
 
 .home-parallax-banner
   overflow: hidden !important
@@ -347,12 +358,6 @@ button.start-now-button, button.schedule-call-button
     a
       color: $sky-blue-color
       display: inline
-
-#home-banner .button-container
-  margin: 45px 0 0 0 !important
-  @media #{$medium-down}
-    button[href="/ordering-crowdsourced-testing"]
-      margin-top: 72px !important
 
 #home-banner
   .owl-wrapper-outer, .owl-wrapper, .owl-item, .home-parallax-banner

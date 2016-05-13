@@ -124,6 +124,7 @@ class WizardController < ApplicationController
     @payment_request = PaymentRequest.find_by(payment_id: params[:paymentId])
     @test = Wizard::Test.find(@payment_request.test_id)
     if @payment.execute(payer_id: params[:PayerID])
+      # completed == 'uneditable', changing status, unless it was already changed
       @test.complete! unless test.completed?
       @test.paid!
       respond_with_navigational do
