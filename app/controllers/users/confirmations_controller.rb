@@ -2,7 +2,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # POST /resource/confirmation
   def create
     local_login = params[:user][:login]
-    user = User.where('username = ? or email = ?', local_login, local_login).first
+    user = User.where('username = ? OR email = ?', local_login, local_login).first
     user_params = { email: user.email }
     self.resource = resource_class.send_confirmation_instructions(user_params)
     yield resource if block_given?
@@ -25,9 +25,16 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       anonymous_test_ids = session[:tests]
       test_ids = session[:tests]
       if test_ids.try(&:any?)
-        Wizard::Test.where(id: test_ids).where('user_id is null').update_all(user_id: (resource.id ))
+        Wizard::Test.where(id: test_ids).where('user_id IS NULL').update_all(user_id: (resource.id ))
       end
-      respond_with_navigational(resource) { redirect_to(after_confirmation_path_for(resource_name, resource), flash: {confirmation_congratulations: true, uncompleted_tests: uncompleted_tests, anonymous_test_ids: anonymous_test_ids }) }
+      respond_with_navigational(resource) do
+        redirect_to(after_confirmation_path_for(resource_name, resource),
+                    flash: {
+                      confirmation_congratulations: true,
+                      uncompleted_tests: uncompleted_tests,
+                      anonymous_test_ids: anonymous_test_ids
+                    })
+      end
     else
       respond_with_navigational(resource.errors, status: :unprocessable_entity) { render :new }
     end
