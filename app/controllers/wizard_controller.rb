@@ -85,8 +85,8 @@ class WizardController < ApplicationController
     @payment = Payment.new({
       intent: 'sale',
       redirect_urls: {
-        return_url: request.host_with_port + '/payment/execute',
-        cancel_url: request.host_with_port + '/dashboard'
+        return_url: ENV['payment_execute_host'] + '/payment/execute',
+        cancel_url: ENV['payment_execute_host'] + '/dashboard'
       },
       payer: {
         payment_method: 'paypal'
