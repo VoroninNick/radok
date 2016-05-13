@@ -452,7 +452,7 @@ form[for=project]
     cursor: pointer
   .name
     +font-18
-    color: $light-gray-text-color
+    color: $dark-gray-color
     display: block
   .description
     color: $dark-gray-color
@@ -690,7 +690,7 @@ form[for=project]
       display: block
       top: 0
       opacity: 0
-      color: $light-gray-text-color
+      color: $dark-gray-color
       &:before
         display: block
         font-weight: 600
@@ -709,12 +709,12 @@ form[for=project]
 
   &.empty
     > label, .platform-option-label, .input-wrap input
-      color: $light-gray-text-color
+      color: $dark-gray-color
 
 input, textarea
   +input-base
   +placeholder
-    color: $light-gray-text-color
+    color: $dark-gray-color
     font-style: italic
   &:focus
     outline: none
@@ -817,12 +817,12 @@ checkbox-list
 
 .input
   .description
-    color: $light-gray-text-color
+    color: $dark-gray-color
     +font-12-light-italic
 
 .question
   p.light
-    color: $light-gray-text-color
+    color: $dark-gray-color
     +font-14-light
 
 .selectize-control.multi .selectize-input > div
@@ -881,7 +881,7 @@ body
     text-align: center
     font-size: 0.8rem
     font-weight: 300
-    color: $light-gray-text-color
+    color: $dark-gray-color
 
   .go-back-button
     width: 200px
@@ -976,7 +976,7 @@ body
 
 .wizard-step-footnotes
   +grid-row
-  color: $light-gray-text-color
+  color: $dark-gray-color
   +font-12-light-italic
   .footnote
     +grid-column(12)
@@ -1341,6 +1341,7 @@ comment-with-price
   p
     font-weight: 300
     font-size: $font-size-15
+    color: $dark-gray-color
 
 .your-comment-label
   font-size: $font-size-14 !important
