@@ -29,6 +29,7 @@ class UserPagesController < ApplicationController
     available_providers = [:facebook, :twitter, :linkedin, :google_oauth2]
     unless provider == :any || !provider.to_s.in?(available_providers)
       return session["devise.#{provider}_data"]
+    end
     available_providers.each do |provider_key|
       data = session["devise.#{provider_key}_data"]
       return data if data.present?
@@ -98,8 +99,8 @@ class UserPagesController < ApplicationController
 
   def subscribe_callback
     @user = User.find_by(email: params[:data][:email])
-    @user.subscribed = true if params[:type] == 'subscribe'
-    @user.subscribed = false if params[:type] == 'unsubscribe'
+    @user.subscribed = true if (params[:type] == 'subscribe')
+    @user.subscribed = false if (params[:type] == 'unsubscribe')
     @user.save!
     render nothing: true
   end
