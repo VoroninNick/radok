@@ -479,11 +479,10 @@ class Wizard::Test < ActiveRecord::Base
   protected
 
   def check_if_test_finished
-    self.finish! if (self.percent_completed == 100 && !self.finished? && self.paid?)
+    self.finish! if self.percent_completed == 100 && !self.finished? && self.paid?
   end
 
   def check_if_test_paid
     self.complete! if self.paid? && !self.completed?
   end
-
 end

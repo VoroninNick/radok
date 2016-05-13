@@ -85,8 +85,8 @@ class WizardController < ApplicationController
     @payment = Payment.new({
       intent: 'sale',
       redirect_urls: {
-        return_url: 'http://localhost:3000/payment/execute',
-        cancel_url: "http://localhost:3000/dashboard"
+        return_url: ENV['payment_execute_host'] + '/payment/execute',
+        cancel_url: ENV['payment_execute_host'] + '/dashboard'
       },
       payer: {
         payment_method: 'paypal'
@@ -96,9 +96,8 @@ class WizardController < ApplicationController
           amount: {
             total: @test.total_price,
             currency: 'USD'
-          }
-          # ,
-          # description: 'This is the payment transaction description.'
+          },
+          description: 'This is a payment transaction for 10g-force.com'
         }
       ]})
 
@@ -110,7 +109,7 @@ class WizardController < ApplicationController
         payment_id: @payment.id,
         state: @payment.state,
         email: current_user.email,
-        link: @redirect_url )
+        link: @redirect_url)
 
       WizardMailer.payment_request_admin_notification(@payment_request).deliver
       render json: { payment: @payment.id, redirect_url: @redirect_url }
@@ -125,9 +124,15 @@ class WizardController < ApplicationController
     @test = Wizard::Test.find(@payment_request.test_id)
     if @payment.execute(payer_id: params[:PayerID])
       @test.paid!
-      respond_with_navigational{ redirect_to(dashboard_project_path(id: @test.id), flash: {payment_success: true}) }
+      respond_with_navigational do
+        redirect_to(dashboard_project_path(id: @test.id),
+                    flash: { payment_success: true })
+      end
     else
-      respond_with_navigational{ redirect_to(dashboard_project_path(id: @test.id), flash: {payment_fail: true, errors: @payment.error}) }
+      respond_with_navigational do
+        redirect_to(dashboard_project_path(id: @test.id),
+                    flash: { payment_fail: true, errors: @payment.error })
+      end
     end
   end
 
