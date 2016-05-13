@@ -122,16 +122,12 @@ class User < ActiveRecord::Base
   end
 
   def subscribe
-    self.subscribed = true
-    email = self.email
     list_id = MAILCHIMP_DEFAULT_LIST_ID
     mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
     mailchimp.lists.subscribe(list_id, email: email, double_optin: true)
   end
 
   def unsubscribe
-    self.subscribed = false
-    email = self.email
     list_id = MAILCHIMP_DEFAULT_LIST_ID
     mailchimp = Mailchimp::API.new(MAILCHIMP_API_KEY)
     mailchimp.lists.unsubscribe(list_id, email: email, send_goodbye: true)
