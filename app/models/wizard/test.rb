@@ -77,10 +77,10 @@ class Wizard::Test < ActiveRecord::Base
 
   accepts_nested_attributes_for :test_platforms_bindings
 
-  scope :drafts, -> { where('completed_at is null and paid_at is null') }
-  scope :unpaid_projects, -> { where('completed_at is not null and paid_at is null') }
-  scope :processing_projects, -> { where('completed_at is not null and paid_at is not null') }
-  scope :tested_projects, -> { where('paid_at is not null and tested_at is not null') }
+  scope :drafts, -> { where('completed_at IS NULL AND paid_at IS NULL') }
+  scope :unpaid_projects, -> { where('completed_at IS NOT NULL AND paid_at IS NULL') }
+  scope :processing_projects, -> { where('completed_at IS NOT NULL AND paid_at IS NOT NULL') }
+  scope :tested_projects, -> { where('paid_at IS NOT NULL AND tested_at IS NOT NULL') }
 
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
   validates :hours_per_tester, numericality: {in: 1..5 }
