@@ -11,7 +11,10 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   #config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-  config.mailer_sender = 'partido12@gmail.com'
+  config.mailer_sender = mailer.yandex.email
+
+  config.allow_insecure_sign_in_after_confirmation = true
+  config.allow_insecure_token_lookup = true
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
