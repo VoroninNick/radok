@@ -112,7 +112,6 @@ class WizardController < ApplicationController
         email: current_user.email,
         link: @redirect_url )
 
-      @test.complete!
       WizardMailer.payment_request_admin_notification(@payment_request).deliver
       render json: { payment: @payment.id, redirect_url: @redirect_url }
     else

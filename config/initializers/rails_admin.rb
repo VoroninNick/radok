@@ -521,6 +521,7 @@ RailsAdmin.config do |config|
             bindings[:object].percent_completed_counter
           end
         end
+        field :paid_at
         field :admin_comment, :ck_editor
       end
     end
