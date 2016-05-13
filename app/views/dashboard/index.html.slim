@@ -5,7 +5,7 @@
                           button_label: 'New test',
                           button_url: '/ordering-crowdsourced-testing'
   #dashboard-projects data-wizard-root=wizard_path
-    - if !(@drafts.try(:any?) || @unpaid.try(:any?) || @in_progress_tests.try(:any?) || @finished_projects.try(:any?))
+    - unless current_user.tests.try(:any?)
       .no-projects
         .row
           .columns.large-12.header
