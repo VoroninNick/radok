@@ -82,6 +82,7 @@ Rails.application.configure do
     storage: :s3,
     url: ':s3_domain_url',
     path: '/:class/:attachment/:id_partition/:style/:filename',
+    s3_protocol: :https,
     s3_credentials: {
       bucket: ENV['s3_bucket_name'],
       access_key_id: ENV['aws_access_key_id'],
