@@ -88,4 +88,11 @@ Rails.application.configure do
       secret_access_key: ENV['aws_secret_access_key']
     }
   }
+
+  config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: '[Error]',
+      sender_address: 'info@10g-force.com',
+      exception_recipients: 'errors.10gforce@gmail.com'
+    }
 end
