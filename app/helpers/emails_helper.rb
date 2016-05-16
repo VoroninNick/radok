@@ -1,18 +1,18 @@
 module EmailsHelper
   def email
-    'office@10g-force.com'
+    ENV['mailer.yandex.email']
   end
 
   def phone
-    '+1-514-585-8198'
+    ENV['contact.phone']
   end
 
   def formatted_phone_number
-    '+1-888-535-4852'
+    ENV['contact.phone']
   end
 
   def site_url
-    'http://10g-force.com'
+    ENV['mailer.host']
   end
 
   def terms_url
@@ -20,6 +20,6 @@ module EmailsHelper
   end
 
   def skype_login
-    'force.10g'
+    ENV['contact.skype']
   end
 end
