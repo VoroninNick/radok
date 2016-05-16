@@ -82,8 +82,8 @@ class Wizard::Test < ActiveRecord::Base
   scope :processing_projects, -> { where('paid_at IS NOT NULL AND tested_at IS NULL') }
   scope :tested_projects, -> { where('paid_at IS NOT NULL AND tested_at IS NOT NULL') }
 
-  after_validation :check_if_test_finished
-  after_validation :check_if_test_paid
+  # after_validation :check_if_test_finished
+  # after_validation :check_if_test_paid
 
   validates :exploratory_description, length: { maximum: 2000 }, allow_blank: true
   validates :hours_per_tester, numericality: {in: 1..5 }

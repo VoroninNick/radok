@@ -92,4 +92,5 @@ end
 group :production do
   gem 'execjs'
   gem 'unicorn'
+  gem 'exception_notification', '4.0.0'
 end

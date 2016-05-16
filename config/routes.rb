@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   end
 
   get '/payment/execute', to: 'wizard#execute_payment', as: :execute_payment
-  post '/subscribe/callback', to: 'user_pages#subscribe_callback', as: :subscribe_callback
+  get '/subscribe/callback', to: 'user_pages#subscribe_callback'
+  post '/subscribe/callback', to: 'user_pages#subscribe_callback'
   get 'robots.txt', to: 'pages#robots_txt'
   get 'w', to: 'wizard#new_and_allow'
   get 'user_logged', to: 'user_pages#user_logged', as: :user_logged

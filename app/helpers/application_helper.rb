@@ -18,23 +18,23 @@ module ApplicationHelper
   end
 
   def skype_login
-    'force.10g'
+    ENV['contact.skype']
   end
 
   def twitter_login
-    '10g_force'
+    ENV['contact.twitter_login']
   end
 
   def google_plus_id
-    '109753715460055186428'
+    ENV['contact.google_plus_id']
   end
 
   def facebook_login
-    '10g.force'
+    ENV['contact.facebook_login']
   end
 
   def linkedin_url
-    '//www.linkedin.com/grp/home?gid=8415315'
+    ENV['contact.linkedin_url']
   end
 
   def rf_button(**options)
