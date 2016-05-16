@@ -2,9 +2,9 @@ class WizardController < ApplicationController
   require 'paypal-sdk-rest'
   include PayPal::SDK::REST
 
-  before_action :authenticate, only: [:dashboard_projects,
-                                      :delete_dashboard_project]
-  before_action :set_wizard_options, only: [:edit_or_show, :new, :new_and_allow]
+  # before_action :authenticate, only: [:dashboard_projects,
+                                      # :delete_dashboard_project]
+  # before_action :set_wizard_options, only: [:edit_or_show, :new, :new_and_allow]
 
   def edit_or_show
     @project = Wizard::Test.find(params[:id])

@@ -1,6 +1,6 @@
 .wizard-controller ng-controller='Wizard'
-form for="project" url=wizard_path method="post" json="{}"
-  fieldset.wizard-step step="1"
+form for='project' url=wizard_path method='post' json='{}'
+  fieldset.wizard-step step='1'
 
     #project-product-type
       .columns.large-12.with-distance
@@ -12,12 +12,12 @@ form for="project" url=wizard_path method="post" json="{}"
         - value = product_type.name
         - label = product_type.name
         - image = product_type.image.url(:original)
-        - model = "project.product_type"
-        - name = "project_product_type"
+        - model = 'project.product_type'
+        - name = 'project_product_type'
         - input_id = "project_product_type_#{index + 1}"
         .columns.large-3.small-6.medium-3.text-center
-          .input.image-radio-button class="project_product_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
-            input id=input_id value=value name=name type="radio" checked=("checked" if checked )
+          .input.image-radio-button class="project_product_type #{checked ? 'checked' : 'unchecked'}" as='image-radio-button' model=model image=image label=label value=value
+            input id=input_id value=value name=name type='radio' checked=('checked' if checked )
             label.image-label for=input_id
               img src=image
             label.label for=input_id
@@ -31,29 +31,29 @@ form for="project" url=wizard_path method="post" json="{}"
 
       - @test_types.each_with_index do |test_type, index|
         - checked = @project.test_type.try { |t| t.id == test_type.id } || false
-        - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = "project.test_type"; name = "project_test_type"; input_id = "project_test_type_#{index + 1}"
+        - value = test_type.name; label = test_type.name; image=test_type.image.url(:original); model = 'project.test_type'; name = 'project_test_type'; input_id = "project_test_type_#{index + 1}"
         .columns.small-4.text-center
-          .input.image-radio-button class="project_test_type #{checked ? 'checked' : 'unchecked'}" as="image-radio-button" model=model image=image label=label value=value
-            input id=input_id value=value name=name type="radio" checked=("checked" if checked)
-            label.image-label class=("ux" if test_type.usability_test?) for=input_id
+          .input.image-radio-button class="project_test_type #{checked ? 'checked' : 'unchecked'}" as='image-radio-button' model=model image=image label=label value=value
+            input id=input_id value=value name=name type='radio' checked=('checked' if checked)
+            label.image-label class=('ux' if test_type.usability_test?) for=input_id
               img src=image
             label.label for=input_id
               = label
       .clearfix
-    .button-wrap style="margin: 30px auto 0 auto; position: relative; width: 200px; max-width: 100%;"
-      = rf_button(class: "rf-step-configure-button", full_width: true, svg: "rf-icon-configure", title: "configure", disabled: false)
+    .button-wrap style='margin: 30px auto 0 auto; position: relative; width: 200px; max-width: 100%;'
+      = rf_button(class: 'rf-step-configure-button', full_width: true, svg: 'rf-icon-configure', title: 'configure', disabled: false)
 
   .configuration-steps
-    fieldset.wizard-step step="2" type="platforms" data-name="Platforms step"
+    fieldset.wizard-step step='2' type='platforms' data-name='Platforms step'
       .wizard-step-line
-      .wizard-step-counter data-number="1"
+      .wizard-step-counter data-number='1'
       .wizard-step-content
         .label
           |On what platforms would you like your product to be tested?
           span.star
         .blue-header
           |Platform / Testers per platform
-        .input.platforms-input data-name="On what platforms would you like your product to be tested?" as="platforms" testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model="project.platforms" platforms-by-product-type=@platform_ids_by_product_type.to_json
+        .input.platforms-input data-name='On what platforms would you like your product to be tested?' as='platforms' testers-by-platform=@project.testers_by_platform.to_json options=@platforms_json model='project.platforms' platforms-by-product-type=@platform_ids_by_product_type.to_json
           .clearfix
           - sorted_platform_bindings = @project.testers_by_platform.sort{|a,b| a[:platform_id] <=> a[:platform_id] }
           - Wizard::Platform.roots.each do |platform|
@@ -62,7 +62,7 @@ form for="project" url=wizard_path method="post" json="{}"
               .name.platform-label
                 = platform.name
               .human-svg-wrap.platform-user-icon
-                = image_tag("user-yellow.svg")
+                = image_tag('user-yellow.svg')
               .platform-options
                 - platform.children.each do |c|
                   - binding = sorted_platform_bindings.select { |b| b[:platform_id] == c.id }.first
@@ -77,7 +77,7 @@ form for="project" url=wizard_path method="post" json="{}"
                       label class='increment' for='platform-1-subitem-1'
 
         .hours-per-tester
-           .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=("Time (hours per tester)")
+           .blue-header.ng-binding.ng-scope ng-class=("columns ? 'columns large-false' : ''") text=('Time (hours per tester)')
              | Time (hours per tester)
            p
              | How much effort would you like each tester to spend testing your product?
@@ -88,9 +88,9 @@ form for="project" url=wizard_path method="post" json="{}"
                - html_input_id = "hour-#{hour}"
                - selected = hour == @project.hours_per_tester
                label.hour data-hours=hour for=html_input_id class="#{'selected' if selected}"
-                 input id=html_input_id name="hours_per_tester" type="radio" value=hour model="project.hours_per_tester" data-type="integer"
+                 input id=html_input_id name='hours_per_tester' type='radio' value=hour model='project.hours_per_tester' data-type='integer'
         .clearfix
-        div style="display: block;"
+        div style='display: block;'
           label#platforms-empty-error.error.error-required
             |Please choose at least one tester
           label#platforms-max-error.error.error-max
@@ -99,48 +99,48 @@ form for="project" url=wizard_path method="post" json="{}"
         .clearfix
         label.label.your-comment-label
           |Your comment
-        .input.text.project-platforms-comment_input as="text" model="project.platforms_comment" data-name="Your comment"
-          label.placeholder.hiding-placeholder for="project_platforms_comment"
+        .input.text.project-platforms-comment_input as='text' model='project.platforms_comment' data-name='Your comment'
+          label.placeholder.hiding-placeholder for='project_platforms_comment'
             |Your comments and additional instructions can be here...
-          textarea.set-error id="project_platforms_comment"  maxlength="500" data-field-name="Project platforms comment"
+          textarea.set-error id='project_platforms_comment'  maxlength='500' data-field-name='Project platforms comment'
             = @project.platforms_comment
         div#project_platforms_comment-error
           label.error-max
             |Sorry, but Your comment is too long. Available length is up to 500 charachters.
 
-      .input.image-radio-buttons.required model=""
+      .input.image-radio-buttons.required model=''
 
-    fieldset.wizard-step step="3" type="project_info" data-name="Project info step"
+    fieldset.wizard-step step='3' type='project_info' data-name='Project info step'
       .wizard-step-line
-      .wizard-step-counter data-number="2"
+      .wizard-step-counter data-number='2'
       .wizard-step-content
 
-        label.label for="project_project_name"
+        label.label for='project_project_name'
           |What is the name of this project?
           span.star
 
-        .input.string.has-error-label as="string" model="project.project_name" value=@project.project_name required="true"
-          label.placeholder.hiding-placeholder for="project_project_name"
+        .input.string.has-error-label as='string' model='project.project_name' value=@project.project_name required='true'
+          label.placeholder.hiding-placeholder for='project_project_name'
             |Project name
-          label.error.error-required for="project_project_name"
+          label.error.error-required for='project_project_name'
             |Please enter project name
-          input.set-error type="text" id="project_project_name" value=@project.project_name maxlength="100" data-field-name="Project name"
+          input.set-error type='text' id='project_project_name' value=@project.project_name maxlength='100' data-field-name='Project name'
 
-          div#project_project_name-error for="project_project_name"
+          div#project_project_name-error for='project_project_name'
             label.error-max
           #project_project_name-error
             label.error.error-max
               |Available project name length is up to 100 charachters.
 
-        label.label.with-input-distance for="project_project_version"
+        label.label.with-input-distance for='project_project_version'
           |What is version number of the new release that you'd like us to test?
           span.star
-        .input.string.has-error-label as="string" model="project.project_version" value=@project.project_version required="true"
-          label.placeholder.hiding-placeholder for="project_project_version"
+        .input.string.has-error-label as='string' model='project.project_version' value=@project.project_version required='true'
+          label.placeholder.hiding-placeholder for='project_project_version'
             |Project version
-          label.error.error-required for="project_project_version"
+          label.error.error-required for='project_project_version'
             |Please enter project version
-          input.set-error type="text" id="project_project_version" value=@project.project_version maxlength="20" data-field-name="Project version"
+          input.set-error type='text' id='project_project_version' value=@project.project_version maxlength='20' data-field-name='Project version'
           div#project_project_version-error
             label.error-max
               |Available project version length is up to 20 charachters.
@@ -148,29 +148,29 @@ form for="project" url=wizard_path method="post" json="{}"
         label.label.with-input-distance
           |In what language(s) is the project?
           span.star
-        .input.collection-checkboxes as="collection-checkboxes" id="project_project_languages" model="project.project_languages" min="1" required="true" data-name="Project languages"
+        .input.collection-checkboxes as='collection-checkboxes' id='project_project_languages' model='project.project_languages' min='1' required='true' data-name='Project languages'
           .options
             - @project_languages.each_with_index do |language, index|
               - input_id = "project_project_languages_#{index + 1}"
               span.option
-                input id=input_id type="checkbox" value=language checked=("checked" if @project.project_languages.include?(language))
+                input id=input_id type='checkbox' value=language checked=('checked' if @project.project_languages.include?(language))
                 label.custom-checkbox for=input_id
                 label for=input_id
                   |#{language}
 
             .clearfix
-          label.error.error-required for="project.project_languages"
+          label.error.error-required for='project.project_languages'
             |Please choose one or more languages
 
         label.label.with-input-distance
           |In what language should the bugs be reported?
           span.star
-        .input.collection-radio-buttons.clearfix as="collection-radio-buttons" model="project.report_languages" min="1" required="true"
+        .input.collection-radio-buttons.clearfix as='collection-radio-buttons' model='project.report_languages' min='1' required='true'
           .options
             - @report_languages.each_with_index do |language, index|
               - input_id = "project_report_languages_#{index + 1}"
               span.option
-                input id=input_id type="radio" name="project[report_languages]" value=language checked=("checked" if @project.report_languages.include?(language))
+                input id=input_id type='radio' name='project[report_languages]' value=language checked=('checked' if @project.report_languages.include?(language))
                 label.custom-radio-button for=input_id
                 label for=input_id
                   |#{language}
@@ -181,57 +181,57 @@ form for="project" url=wizard_path method="post" json="{}"
 
         label.label.your-comment-label.with-input-distance.clear
           |Your comment
-        .input.text.project-info-comment_input as="text" model="project.project_info_comment"
-          label.placeholder.hiding-placeholder for="project_info_comment"
+        .input.text.project-info-comment_input as='text' model='project.project_info_comment'
+          label.placeholder.hiding-placeholder for='project_info_comment'
             |Your comments and additional instructions can be here...
-          textarea.set-error id="project_info_comment" maxlength="500" data-field-name="Project information comment"
+          textarea.set-error id='project_info_comment' maxlength='500' data-field-name='Project information comment'
             = @project.project_info_comment
           div#project_info_comment-error
             label.error-max
               |Sorry, but Your comment is too long. Available length is up to 500 charachters.
 
-    fieldset.wizard-step.project-components-step step="4" type="project_components" data-name="Project components step"
+    fieldset.wizard-step.project-components-step step='4' type='project_components' data-name='Project components step'
       .wizard-step-line
-      .wizard-step-counter data-number="3"
+      .wizard-step-counter data-number='3'
       .wizard-step-content
         label.label
           |What methodology are you looking for?
           span.star
 
-        .input.radio-button model="project.methodology_type" as="radio-button"  class="#{@project.exploratory? ? 'checked' : 'unchecked' }" value="exploratory"
-          input type="radio" value="exploratory" id="project_methodology_type_exploratory" name="project_methodology_type" checked=('checked' if @project.exploratory?)
-          label.custom-radio-button for="project_methodology_type_exploratory"
-          label for="project_methodology_type_exploratory"
+        .input.radio-button model='project.methodology_type' as='radio-button'  class="#{@project.exploratory? ? 'checked' : 'unchecked' }" value='exploratory'
+          input type='radio' value='exploratory' id='project_methodology_type_exploratory' name='project_methodology_type' checked=('checked' if @project.exploratory?)
+          label.custom-radio-button for='project_methodology_type_exploratory'
+          label for='project_methodology_type_exploratory'
             |Exploratory
           .help
             |This is unscripted testing. Our testers use your product like any normal user would.
 
         .nested-input-group
-          .input.text.project_exploratory_instructions_input as="text" model="project.exploratory_instructions" data-name="Exploratory instructions"
-            label.placeholder.hiding-placeholder for="project_exploratory_instructions"
+          .input.text.project_exploratory_instructions_input as='text' model='project.exploratory_instructions' data-name='Exploratory instructions'
+            label.placeholder.hiding-placeholder for='project_exploratory_instructions'
               |Please provide testing instructions for the testers here...
-            label.error.error-required for="project_exploratory_instructions"
+            label.error.error-required for='project_exploratory_instructions'
               |Please provide testing instructions for the testers here...
-            textarea.set-error id="project_exploratory_instructions" maxlength="2000" data-field-name="Exploratory instructions"
+            textarea.set-error id='project_exploratory_instructions' maxlength='2000' data-field-name='Exploratory instructions'
               = @project.exploratory_description
             #project_exploratory_instructions-error
               label.error-max
                 |Sorry, but Your description is too long. Available length is up to 2000 charachters.
 
-        .input.radio-button model="project.methodology_type" as="radio-button" class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }" value="test-case-driven"
-          input type="radio" value="test_case_driven" id="methodology_type_test_case_driven" name="project_methodology_type" checked=('checked' if @project.test_case_driven?)
-          label.custom-radio-button for="methodology_type_test_case_driven"
-          label for="methodology_type_test_case_driven"
+        .input.radio-button model='project.methodology_type' as='radio-button' class="#{@project.test_case_driven? ? 'checked' : 'unchecked' }" value='test-case-driven'
+          input type='radio' value='test_case_driven' id='methodology_type_test_case_driven' name='project_methodology_type' checked=('checked' if @project.test_case_driven?)
+          label.custom-radio-button for='methodology_type_test_case_driven'
+          label for='methodology_type_test_case_driven'
             |Test-case driven
           .help
             |You provide a specific list of steps that testers must execute.
 
         .nested-input-group
-          .input.files.test_case_files_input model="project.test_case_files" data-name="Test driven upload"
+          .input.files.test_case_files_input model='project.test_case_files' data-name='Test driven upload'
             div#test-case-driven-inputs-wrap style="#{'' if !@project.test_case_driven?}"
-              input#test_case_files.file-upload-input.set-error list-selector=".test_case_files-list" model="project.test_case_files" data-attachment-name="test_case_files" type="file" multiple="" push="false" trigger-changes="false" data-field-name="Test-case driven upload"
-              = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button", svg: "upload", size: "medium"
-              .file-upload-files-list.test_case_files-list model="project.test_case_files" data-attachment-name="test_case_files"
+              input#test_case_files.file-upload-input.set-error list-selector='.test_case_files-list' model='project.test_case_files' data-attachment-name='test_case_files' type='file' multiple='' push='false' trigger-changes='false' data-field-name='Test-case driven upload'
+              = rf_button title: 'upload files', class: 'rf-upload-button rf-wizard-upload-button rf-test-case-files-upload-button', svg: 'upload', size: 'medium'
+              .file-upload-files-list.test_case_files-list model='project.test_case_files' data-attachment-name='test_case_files'
                 - @project.test_case_files.each do |asset|
                   .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
                     span class='file-name'
@@ -242,7 +242,7 @@ form for="project" url=wizard_path method="post" json="{}"
                 |Please, select a file less than 200 MB
 
               .columns.large-12
-                label#test-case-files-required-error.error.error-required for="test_case_files_input"
+                label#test-case-files-required-error.error.error-required for='test_case_files_input'
                   |Please, upload at least one file
 
         .product-main-components
@@ -252,32 +252,32 @@ form for="project" url=wizard_path method="post" json="{}"
           p.help
             |Optionally, you can provide a list of the main components of your product. This is used to group the bugs around certain aspects of your product. For example, these can be: Homepage, Contact us form, Main menu, Level 1 etc. or UI issues and functional issues.
 
-          .input.tags as="tags" model="project.main_components" required="true" data-name="Project components"
+          .input.tags as='tags' model='project.main_components' required='true' data-name='Project components'
             label.placeholder.hiding-placeholder
               |Type components here, separate by commas...
             label.error.error-required
               |Type components here, separate by &laquo;ENTER&raquo;
-            input type="text" value=@project.main_components.join(",")
+            input type='text' value=@project.main_components.join(',')
 
-    fieldset.wizard-step step="5" type="project_access" data-name="Project access step"
+    fieldset.wizard-step step='5' type='project_access' data-name='Project access step'
       .wizard-step-line
-      .wizard-step-counter data-number="4"
+      .wizard-step-counter data-number='4'
       .wizard-step-content
-        .label id="test-url-or-files-label"
+        .label id='test-url-or-files-label'
           |Please provide the URL or file to be tested
           span.star
 
-        .columns.large-7.small-padding-right-0 style="padding-left: 0; "
-          .input.url model="project.project_url" as="url"
-            input placeholder="http://domain.com" value=@project.project_url validation="url"
-        .columns.large-1 style="text-align: center;"
+        .columns.large-7.small-padding-right-0 style='padding-left: 0; '
+          .input.url model='project.project_url' as='url'
+            input placeholder='http://domain.com' value=@project.project_url validation='url'
+        .columns.large-1 style='text-align: center;'
           span.or
             |or
         .columns.large-4.small-padding-0
-          input#test_files.file-upload-input list-selector=".test_files-list" model="project.test_files" data-attachment-name="test_files" type="file" multiple="" push="false" trigger-changes="false"
-          = rf_button title: "upload files", class: "rf-upload-button rf-wizard-upload-button rf-wizard-test-files-upload-button", svg: "upload", size: "medium"
+          input#test_files.file-upload-input list-selector='.test_files-list' model='project.test_files' data-attachment-name='test_files' type='file' multiple='' push='false' trigger-changes='false'
+          = rf_button title: 'upload files', class: 'rf-upload-button rf-wizard-upload-button rf-wizard-test-files-upload-button', svg: 'upload', size: 'medium'
         .columns.large-12
-          .file-upload-files-list.test_files-list model="project.test_files" data-attachment-name="test_files"
+          .file-upload-files-list.test_files-list model='project.test_files' data-attachment-name='test_files'
             - @project.test_files.each do |asset|
               .file data-id="#{asset.id}" data-file-name="#{asset.data_file_name}"
                 span class='file-name'
@@ -288,38 +288,38 @@ form for="project" url=wizard_path method="post" json="{}"
             |Please, select a file less than 200 MB
 
         .columns.large-12
-          label#test-url-or-files-required-error.error.error-required for="test-url-or-files-label"
+          label#test-url-or-files-required-error.error.error-required for='test-url-or-files-label'
             |Please type url or upload at least one file
 
         .auth-data
           .label
             |Does the product require a username or password to be accessed?
 
-          .input.radio-button model="project.authentication_required" as="radio-button" class="#{(!@project.authentication_required?) ? 'checked' : 'unchecked' }"
-            input type="radio" value="false" id="project_authentication_required_false" name="project_authentication_required" checked=('checked' if !@project.authentication_required?)
-            label.custom-radio-button for="project_authentication_required_false"
-            label for="project_authentication_required_false"
+          .input.radio-button model='project.authentication_required' as='radio-button' class="#{(!@project.authentication_required?) ? 'checked' : 'unchecked' }"
+            input type='radio' value='false' id='project_authentication_required_false' name='project_authentication_required' checked=('checked' if !@project.authentication_required?)
+            label.custom-radio-button for='project_authentication_required_false'
+            label for='project_authentication_required_false'
               |No, it does not require a username or password
 
-          .input.boolean.radio-button as="radio-button" model="project.authentication_required" type="boolean" label="Yes, here they are:" value="true" checked=( 'checked' if @project.authentication_required?)
-            input type="radio" value="true" id="project_authentication_required_true" name="project_authentication_required" checked=('checked' if @project.authentication_required?)
-            label.custom-radio-button for="project_authentication_required_true"
-            label for="project_authentication_required_true"
+          .input.boolean.radio-button as='radio-button' model='project.authentication_required' type='boolean' label='Yes, here they are:' value='true' checked=( 'checked' if @project.authentication_required?)
+            input type='radio' value='true' id='project_authentication_required_true' name='project_authentication_required' checked=('checked' if @project.authentication_required?)
+            label.custom-radio-button for='project_authentication_required_true'
+            label for='project_authentication_required_true'
               |Yes, here they are
             p.help
               |You will need to provide a username and a password to access Your project.
 
           .nested-input-group
-            .input.string.project-auth-login.input-with-indent model="project.auth_login" as="string"
-              label.placeholder.hiding-placeholder for="project_auth_login"
+            .input.string.project-auth-login.input-with-indent model='project.auth_login' as='string'
+              label.placeholder.hiding-placeholder for='project_auth_login'
                 |Username
-              input.set-error type="text" id="project_auth_login" value=@project.auth_login data-field-name="Please, provide authentification username"
+              input.set-error type='text' id='project_auth_login' value=@project.auth_login data-field-name='Please, provide authentification username'
               #project_auth_login_required_true.error
                 |Please, provide a username
-            .input.string.project-auth-password.input-with-indent model="project.auth_password" as="string"
-              label.placeholder.hiding-placeholder for="project_auth_password"
+            .input.string.project-auth-password.input-with-indent model='project.auth_password' as='string'
+              label.placeholder.hiding-placeholder for='project_auth_password'
                 |Password
-              input.set-error type="text" id="project_auth_password" value=@project.auth_password data-field-name="Please, provide authentification password"
+              input.set-error type='text' id='project_auth_password' value=@project.auth_password data-field-name='Please, provide authentification password'
               #project_auth_password_required_true.error
                 |Please, provide a password
         .clearfix
@@ -327,40 +327,40 @@ form for="project" url=wizard_path method="post" json="{}"
         label.label.with-input-distance
           |Contact person
 
-        .input.string.project-contact-person-name.input-with-indent model="project.contact_person_name" as="string"
-          label.placeholder.hiding-placeholder for="project_contact_person_name"
+        .input.string.project-contact-person-name.input-with-indent model='project.contact_person_name' as='string'
+          label.placeholder.hiding-placeholder for='project_contact_person_name'
             |Name
-          input.set-error type="text" id="project_contact_person_name" value=@project.contact_person_name data-field-name="Contact person name" validation="name"
+          input.set-error type='text' id='project_contact_person_name' value=@project.contact_person_name data-field-name='Contact person name' validation='name'
           div#project_contact_person_name-error
             label.error-name
               |Person name can contain up to 100 letters.
 
-        .input.string.project-contact-person-email.input-with-indent model="project.contact_person_email" as="string"
-          label.placeholder.hiding-placeholder for="project_contact_person_email"
+        .input.string.project-contact-person-email.input-with-indent model='project.contact_person_email' as='string'
+          label.placeholder.hiding-placeholder for='project_contact_person_email'
             |Email
-          input.set-error type="text" id="project_contact_person_email" value=@project.contact_person_email data-field-name="Contact person email" validation="email"
+          input.set-error type='text' id='project_contact_person_email' value=@project.contact_person_email data-field-name='Contact person email' validation='email'
           div#project_contact_person_email-error
             label.error-email
               |Please, provide a valid email.
 
-        .input.string.project-contact-person-phone.input-with-indent model="project.contact_person_phone" as="string"
-          label.placeholder.hiding-placeholder for="project_contact_person_phone"
+        .input.string.project-contact-person-phone.input-with-indent model='project.contact_person_phone' as='string'
+          label.placeholder.hiding-placeholder for='project_contact_person_phone'
             |Phone
-          input.set-error type="text" id="project_contact_person_phone" value=@project.contact_person_phone validation="phone" data-field-name="Contact person phone"
+          input.set-error type='text' id='project_contact_person_phone' value=@project.contact_person_phone validation='phone' data-field-name='Contact person phone'
           div#project_contact_person_phone-error
             label.error-phone
               |Please, provide a valid phone number.
 
-        .columns.large-12.small-padding-0 style="padding-left: 0;"
+        .columns.large-12.small-padding-0 style='padding-left: 0;'
           label.label.your-comment-label.with-input-distance
             |Your comment
-          .input.text.project-access-comment_input as="text" model="project.project_access_comment"
-            label.placeholder.hiding-placeholder for="project_access_comment"
+          .input.text.project-access-comment_input as='text' model='project.project_access_comment'
+            label.placeholder.hiding-placeholder for='project_access_comment'
               |Your comments and additional instructions can be here...
-            textarea.set-error id="project_access_comment" maxlength="500" data-field-name="Project access comment"
+            textarea.set-error id='project_access_comment' maxlength='500' data-field-name='Project access comment'
               = @project.project_access_comment
             #project_access_comment-error
               label.error-max
                 |Available comment length is up to 500 charachters.
 
-  = render "project_full_summary", project: @project, hide: @created.blank?
+  = render 'project_full_summary', project: @project, hide: @created.blank?
