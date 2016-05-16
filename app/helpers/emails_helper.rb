@@ -12,7 +12,7 @@ module EmailsHelper
   end
 
   def site_url
-    'http://10g-force.com'
+    'https://10g-force.com'
   end
 
   def terms_url

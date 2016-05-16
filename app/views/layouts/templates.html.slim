@@ -1,44 +1,37 @@
 doctype html
-html data-logged-in=current_user.present?.to_s lang="en" data-hostname=host_name
+html data-logged-in=current_user.present?.to_s lang='en' data-hostname=host_name
   head
-    meta charset="utf-8"
-    meta name="viewport" content="width=device-width, initial-scale=1.0"
-
-    link rel="icon" href="#{asset_path('favicon.ico')}" type="image/x-icon"
+    meta charset='utf-8'
+    meta name='viewport' content='width=device-width, initial-scale=1.0'
+    link rel='icon' href="#{asset_path('favicon.ico')}" type='image/x-icon'
 
     = seo_tags
-
-    = stylesheet_link_tag    "templates"
-    = javascript_include_tag "modernizr-all.min"
+    = stylesheet_link_tag    'templates'
+    = javascript_include_tag 'modernizr-all.min'
 
     /= javascript_include_tag 'ckeditor/ckeditor.js'
     /= csrf_meta_tags
 
   body#body
-    /= render "google_tag_manager"
+    /= render 'google_tag_manager'
     #wrap
       /= render 'header'
       main
         /= content_for?(:admin_layout) ? yield(:admin_layout) : yield
         = yield
 
-
     /= render 'footer'
 
-
-
-    /= popup "user_pages/static_sign_in"
-    /= popup "user_pages/forgot_password"
+    /= popup 'user_pages/static_sign_in'
+    /= popup 'user_pages/forgot_password'
     /- if flash[:confirmation_congratulations] || false
-      = popup "user_pages/confirmation_congratulations", visible: true, uncompleted_tests: flash[:uncompleted_tests], anonymous_test_ids: flash[:anonymous_test_ids]
+      = popup 'user_pages/confirmation_congratulations', visible: true, uncompleted_tests: flash[:uncompleted_tests], anonymous_test_ids: flash[:anonymous_test_ids]
+    /= popup 'user_pages/faq_request_success'
+    /= popup 'wizard/schedule_call', title: @schedule_call_title
 
-    /= popup "user_pages/faq_request_success"
-    /= popup "wizard/schedule_call", title: @schedule_call_title
-
-
-    /script src="http://maps.google.com/maps/api/js?sensor=false&amp;libraries=geometry&amp;v=3.13"
-    = javascript_include_tag "templates"
+    /script src='//maps.google.com/maps/api/js?sensor=false&amp;libraries=geometry&amp;v=3.13'
+    = javascript_include_tag 'templates'
     /javascript:
-        $.getJSON("/svg_images", function(data){DATA = data})
+        $.getJSON('/svg_images', function(data){DATA = data})
     /- if content_for?(:javascript)
       /= content_for :javascript
