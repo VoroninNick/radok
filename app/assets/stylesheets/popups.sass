@@ -25,6 +25,12 @@
     .ngdialog-content
       width: 700px
 
+@media #{$small-only}
+.ngdialog.ngdialog-theme-rf-light-gray
+  width: 100%
+  .ngdialog-content
+    width: calc(100% - 40px)
+
 .form-partial
   > .header
     height: 50px

@@ -88,7 +88,7 @@
         .property-label
           |Here is project url:
         .property-value.text-transform-none data-bind='project.project_url'
-          a href=project.project_access__url
+          a href=project.project_url
             = project.project_access__url
       - if project.exploratory_description && project.methodology_type == 'exploratory'
         .columns.large-12.large-indent.exploratory_instructions_block ng-show='wizard.comment && wizard.comment.length'
