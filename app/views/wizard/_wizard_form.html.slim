@@ -269,7 +269,7 @@ form for='project' url=wizard_path method='post' json='{}'
 
         .columns.large-7.small-padding-right-0 style='padding-left: 0; '
           .input.url model='project.project_url' as='url'
-            input placeholder='http://domain.com' value=@project.project_url validation='url'
+            input id='project_access__url' placeholder='http://domain.com' value=@project.project_url validation='url'
         .columns.large-1 style='text-align: center;'
           span.or
             |or

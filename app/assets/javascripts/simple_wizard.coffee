@@ -1351,6 +1351,19 @@ $('body').on 'change.project.project_name', ()->
   splitted_name += "<span> #{$wizard_project_name.slice(start, $wizard_project_name.length - 1)} </span>"
   $summary_project_name.html(splitted_name)
 
+$('body').on 'change.project.project_access__url', ()->
+  $wizard_project_access__url = $('#project_access__url').val()
+  $summary_access_url = $("[data-bind='project.project_url']")
+  start = 0
+  end = 25
+  splitted_url = ""
+  while end < $wizard_project_access__url.length
+    splitted_url += "<span> #{$wizard_project_access__url.slice(start, end)} </span> <br>"
+    start = end + 1
+    end += 25
+  splitted_url += "<span> #{$wizard_project_access__url.slice(start, $wizard_project_access__url.length - 1)} </span>"
+  $summary_access_url.html(splitted_url)
+
 $('body').on 'keypress', 'input', (e)->
   $input = $(this)
   $wrap = $input.closest('.input')
