@@ -127,6 +127,7 @@ window.step_types = {
   }
   'project_info' : {
     checkIsCompleted : ()->
+      project.project_name = $('#project_project_name').val() if project.project_name == ''
       valid_name = project.project_name && project.project_name.length > 0 && project.project_name.length < 100
       valid_version = project.project_version && project.project_version.length > 0 && project.project_version.length < 20
       valid_project_languages = project.project_languages && project.project_languages.length > 0
