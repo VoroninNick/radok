@@ -26,7 +26,7 @@
 
 class PaymentRequest < ActiveRecord::Base
   attr_accessible *attribute_names
-  belongs_to :test, class: Wizard::Test
+  belongs_to :test, class_name: Wizard::Test
   attr_accessible :test
 
   def self.default_payment_type
