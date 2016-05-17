@@ -11,6 +11,7 @@ html data-logged-in=current_user.present?.to_s lang='en' data-hostname=host_name
     = javascript_include_tag 'modernizr-all.min'
     = csrf_meta_tags
     = render 'facebook_pixel'
+    = render 'smartsupp'
 
   body#body
     = render 'google_tag_manager'
