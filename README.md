@@ -81,7 +81,7 @@ $ rails s
 
 ### Deploy and server commands
 
-0 Pre requirments
+0 Pre requirements
 
 you need to have folder named /pem_keys in the same folder where app directory is stored
 
