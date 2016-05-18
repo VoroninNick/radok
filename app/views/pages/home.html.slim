@@ -1,35 +1,6 @@
 - cache('app/views/pages/home.html.slim') do
-  #home-controller
-
-    #home-banner.banner
-      ul#home-slider-carousel rn-carousel='' rn-carousel-pause-on-hover='' rn-carousel-index='homeBannerCarouselIndex' rn-carousel-auto-slide='2'
-        - @home_slides.each_with_index do |slide, index|
-          li.home-parallax-banner on-finish-render='' parallax-banner=''
-            .scene data-calibrate-x='false' data-calibrate-y='true' data-invert-x='false' data-invert-y='true' data-limit-y='8' id="scene#{index+1}"
-              .layer data-depth='1'
-                img src=slide[:images][0]
-              .layer data-depth='0.3'
-                img src=slide[:images][1]
-              .layer data-depth='0.6'
-                img src=slide[:images][2]
-
-            .description-block
-              - if index > 0
-                .title
-                  = slide[:title]
-              - else
-                h1.title
-                  = slide[:title]
-              .description
-                = slide[:description]
-              .button-container.banner-button-wrap
-                = rf_button(title: slide[:button][:title], align_content: 'left', full_width: true, subtitle: slide[:button][:subtitle], svg: slide[:button][:svg], href: slide[:button][:href])
-                - if !current_user
-                  .sub-button-text
-                    span
-                      |or&nbsp;
-                    a.link href=new_user_session_path open-popup='user_pages__static_sign_in'
-                      |Sign in
+  .page
+    =render 'home_banner'
 
     #home-page-content
       #home-how-it-works.three-images-in-row-wrap

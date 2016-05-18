@@ -34,6 +34,8 @@ html data-logged-in=current_user.present?.to_s lang='en' data-hostname=host_name
     = popup 'wizard/schedule_call', title: @schedule_call_title
 
     script src='//maps.google.com/maps/api/js?sensor=false&amp;libraries=geometry&amp;v=3.13'
+    script#www-widgetapi-script type='text/javascript' src='//s.ytimg.com/yts/jsbin/www-widgetapi-vfl9y3wzY/www-widgetapi.js' async=''
+
     = javascript_include_tag 'application'
     = yield :wizard
     = yield :payment
