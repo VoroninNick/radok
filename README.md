@@ -77,3 +77,42 @@ $ rake db:create && rake db:migrate
 ...
 $ rails s
 ```
+
+
+### Deploy and server commands
+
+0 Pre requirments
+
+you need to have folder named /pem_keys in the same folder where app directory is stored
+
+```
+/pem_keys
+/10g-force
+```
+
+inside `pem_keys` directory, you should have app pem key '10GKEY.pem'
+
+1 key permitions
+
+`$ chmod 600 ../pem_keys/10GKEY.pem`
+
+2. Deploy
+
+```
+$ git checkout master
+$ git pull origin master
+$ git pull origin master
+$ bundle
+$ cap production deploy
+```
+
+2 Logs
+
+```
+$ cap production logs:tail_rails
+# additional logs
+$ cap production logs:tail_unicorn
+# http request logs (NGINX)
+$ cap production logs:nginx_error
+$ cap production logs:nginx_access
+```
