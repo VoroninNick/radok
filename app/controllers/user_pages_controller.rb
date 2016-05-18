@@ -98,10 +98,10 @@ class UserPagesController < ApplicationController
   end
 
   def subscribe_callback
-    if request.post?
-      @user = User.find_by(email: params[:data][:email])
-      @user.subscribed = true if (params[:type] == 'subscribe')
-      @user.subscribed = false if (params[:type] == 'unsubscribe')
+    @user = User.find_by(email: params[:data][:email])
+    if request.post? && !!@user
+      @user.subscribed = true if params[:type] == 'subscribe'
+      @user.subscribed = false if params[:type] == 'unsubscribe'
       @user.save!
     end
     render nothing: true
