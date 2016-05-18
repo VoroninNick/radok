@@ -1,0 +1,41 @@
+#home-banner-wrap
+  #home-banner
+    #home-banner-bg
+    #home-banner-content
+      .slides
+        .slide.slide1
+          span.header
+            | MAKE SURE THAT YOUR APP
+          span.text
+            | WORKS
+          span.text
+            | WELL
+        .slide.slide2
+          span.header
+            | MAKE SURE THAT YOUR APP IS
+          span.text
+            | READY FOR DEPLOYMENT
+        .slide.slide3
+          span.header
+            | MAKE SURE THAT YOUR MOBILE APP
+          span.text
+            | WORKS ON ALL PLATFORMS
+        .slide.slide4
+          span.header
+            | MAKE SURE THAT YOUR NEW RELEASE WILL
+          span.text
+            | NOT AFFECT CORE FUNCTIONALITY
+      .small-text.transparent
+        span.part Find all in your product
+        span.part  before customers do!
+      .button-container.banner-button-wrap
+        .button-outer
+          button.rf-button.rf-button-with-subtitle.rf-button-with-svg.rf-button-raised.rf-button-auto-width.rf-button-svg-size-medium.rf-button-align-content-center.rf-button-size-medium.start-now-button href="/ordering-crowdsourced-testing"
+            .rf-button-content-wrap
+              .rf-button-content
+                .svg-wrap.svg-size-medium
+                  =image_tag 'rf-rocket-up-right.svg'
+                .button-text-wrap
+                  .inner
+                    .button-title.ng-binding.ng-scope ng-bind="title()" ng-if="title()"  Start now!
+                    .button-subtitle.ng-binding.ng-scope ng-bind="subtitle()" ng-if="subtitle()"  no registration required
