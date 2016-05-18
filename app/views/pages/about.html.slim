@@ -1,10 +1,14 @@
-== slim(Pages.about.try(:content), self)
-  #about-content.page-content-rows
+- cache('app/views/pages/about.html.slim') do
+  .page
+    = render 'page_banner', background_image_url: 'banners/about-us.png',
+                            title_html_tag: 'h1',
+                            title: 'Speed, quality and good reputation',
+                            description: "It's about us"
     #about__who-we-are.page-content-row-wrap.about-row-wrap
       .row.center-items-vertically.row-reverse
         .columns.large-3.medium-3.small-12.image-wrap-outer
           .image-wrap.small-text-center
-            img src="/assets/rf-logo-rocket.svg" /
+            = image_tag "rf-logo-rocket.svg"
         .columns.large-8.medium-9.small-12.text-column
           .header.small-text-center
             | Who we are
@@ -23,7 +27,7 @@
             - @product_types.each do |product_type|
               .columns.large-3.small-6.item
                 .image-wrap
-                  = embedded_svg_from_absolute_path(product_type.image.path)
+                  = image_tag product_type.image.url
 
                 .title.ng-binding
                   = product_type.name
@@ -38,7 +42,6 @@
           .columns.large-12.leaders
             .row
 
-
     - if @clients.try(:any?)
       #about__clients.page-content-row-wrap.about-row-wrap
         .row
@@ -52,9 +55,9 @@
               - @clients.each do |client|
                 .columns.large-2.small-4.item
                   a.ng-scope href=client.client_url title=client.name
-                    = embedded_svg_from_absolute_path(client.logo.path)
+                    = image_tag client.logo.url
               .columns.large-2.small-4.item.invitation
                 a href="#"
-                  = embedded_svg_from_assets("question.svg")
+                  = image_tag("question.svg")
 
                   label You could be next!

@@ -11,11 +11,11 @@ class CreateHtmlBlocks < ActiveRecord::Migration
     end
 
 
-    HtmlBlock.create_translation_table!(content: :text) if HtmlBlock.respond_to?(:translates?) && HtmlBlock.translates?
+    Cms::HtmlBlock.create_translation_table!(content: :text) if Cms::HtmlBlock.respond_to?(:translates?) && Cms::HtmlBlock.translates?
   end
 
   def down
-    HtmlBlock.drop_translation_table! if HtmlBlock.respond_to?(:translates?) && HtmlBlock.translates?
+    Cms::HtmlBlock.drop_translation_table! if Cms::HtmlBlock.respond_to?(:translates?) && Cms::HtmlBlock.translates?
 
     drop_table :html_blocks
   end

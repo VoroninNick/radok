@@ -1,25 +1,24 @@
-= html_block_with_fallback(:social_icons)
-  .social-auth-links
-    ul
+.social-auth-links
+  ul
+    li
+      a href=links[:google_oauth2]
+        .social-icon-wrap.ng-scope ng-include="'/assets/rf-social-google-plus.svg'"
+          = image_tag "rf-social-google-plus.svg"
+    li
+      a.facebook-login href=links[:facebook]
+        .social-icon-wrap.ng-scope
+          = image_tag "rf-social-facebook.svg"
+    - if links[:twitter].present?
       li
-        a href=links[:google_oauth2]
-          .social-icon-wrap.ng-scope ng-include="'/assets/rf-social-google-plus.svg'"
-            = embedded_svg_from_assets "rf-social-google-plus"
-      li
-        a.facebook-login href=links[:facebook]
+        a href=links[:twitter] ng-click="authenticate_via_social('twitter')"
           .social-icon-wrap.ng-scope
-            = embedded_svg_from_assets "rf-social-facebook"
-      - if links[:twitter].present?
-        li
-          a href=links[:twitter] ng-click="authenticate_via_social('twitter')"
-            .social-icon-wrap.ng-scope
-              = embedded_svg_from_assets "rf-social-twitter"
+            = image_tag "rf-social-twitter.svg"
+    li
+      a href=links[:linkedin] ng-click="authenticate_via_social('linkedin')"
+        .social-icon-wrap.ng-scope
+          = image_tag "rf-social-linked-in.svg"
+    - if links[:github].present?
       li
-        a href=links[:linkedin] ng-click="authenticate_via_social('linkedin')"
+        a href=links[:github] ng-click="authenticate_via_social('github')"
           .social-icon-wrap.ng-scope
-            = embedded_svg_from_assets "rf-social-linked-in"
-      - if links[:github].present?
-        li
-          a href=links[:github] ng-click="authenticate_via_social('github')"
-            .social-icon-wrap.ng-scope
-              = embedded_svg_from_assets "github"
+            = image_tag "github.svg"

@@ -2,10 +2,9 @@ $(document).on "ready", ()->
 $change_password_form = $("#change-password-form")
 $change_password_form.on "after_error", ()->
 
-
   $input = $change_password_form.find(".rf-input")
   $identical_error = $input.find(".error.identical")
-  if $identical_error.length
+  if $identical_error.length > 1
     $identical_error.removeClass("hide")
 
   else
@@ -16,7 +15,8 @@ $change_password_form.on "after_error", ()->
 
   $input.find(".field-label").addClass("hide")
 
-
 $change_password_form.on "after_success", ()->
   $input = $change_password_form.find(".rf-input")
   $input.addClass("valid").removeClass("invalid")
+  $input.val("")
+  $change_password_form.find(".form-content").removeClass("invisible").removeClass("hide")

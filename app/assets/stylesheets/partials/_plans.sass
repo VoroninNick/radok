@@ -1,202 +1,186 @@
 #home-plans
-	padding-bottom: 115px
+  padding-bottom: 115px
 
 .home-plan
-	.black-bg
-		background-color: $light-black-color
-		height: 145px
-		padding: 0 24px
+  .black-bg
+    background-color: $light-black-color
+    height: 145px
+    padding: 0 24px
+    .currency
+      color: $yellow-orange-color
+      display: inline
+      font-size: 48px
+      vertical-align: 32px
+    .price
+      color: $yellow-orange-color
+      +font-100
+      display: inline
 
+    @media #{$screen} and (max-width: 900px) and (min-width: 641px), #{$screen} and (max-width: 450px)
+      &
+        +flexbox
+      .price-and-text
+      .currency
+        vertical-align: top
+      .price
+        line-height: 4rem
+        font-size: 4rem
+        vertical-align: top
+      .price-per, .not-certain
+        font-size: 1.1rem
+      .question-symbol, .not-certain, .currency, .price, .price-and-text
+        +align-self(center)
 
-		.currency
-			color: $yellow-orange-color
-			display: inline
-			font-size: 48px
-			vertical-align: 32px
-		.price
-			color: $yellow-orange-color
-			+font-100
-			display: inline
+    @media #{$screen} and (max-width: 675px) and (min-width: 641px)
+      .price
+        font-size: 3.3rem
 
-		@media #{$screen} and (max-width: 450px)
-			//.price
-				font-size: 4rem
-				line-height: 4rem
-				vertical-align: top
+  .question-symbol
+    +font-100
+    color: $yellow-orange-color
+    display: inline
+  .price-per, .not-certain
+    display: inline-block
+    +font-26
+    color: white
+    line-height: 32px
+    text-transform: uppercase
+  .not-certain
+    padding-top: 15px
+    padding-left: 25px
+  .content
+    height: 390px
+    background-color: $white-color
+    padding: 0 24px
+    .text-content
+      height: 245px
+      position: relative
+    .sub-button-text
+      text-align: center
+      padding-top: 10px
 
-		@media #{$screen} and (max-width: 900px) and (min-width: 641px), #{$screen} and (max-width: 450px)
-			&
-				+flexbox
-			.price-and-text
-				//padding-top: 35px
-			.currency
-				vertical-align: top
-			.price
-				line-height: 4rem
-				font-size: 4rem
-				vertical-align: top
-			.price-per, .not-certain
-				font-size: 1.1rem
-			.question-symbol, .not-certain, .currency, .price, .price-and-text
-				+align-self(center)
+  &:first-child
+    .content
+      .text-center
+        padding-bottom: 32px
+        padding-top: 20px
+        +iphone6plus-landscape
+          padding-bottom: 20px
+        +iphone6-landscape
+          padding-bottom: 20px
+      .header
+        color: $light-black-color
+        text-transform: uppercase
+        +font-16
+      .text-content
+        .header
+          +font-16-semibold
+        .description
+          +font-16-light
+  &:nth-child(2)
+    .button-container
+      +iphone6-landscape
+        margin-top: 37px
+      +iphone6plus-landscape
+        margin-top: 15px
+    .text-content
+      .columns
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+        margin-top: 15px
 
-		@media #{$screen} and (max-width: 675px) and (min-width: 641px)
-			.price
-				font-size: 3.3rem
-
-
-	.question-symbol
-		+font-100
-		color: $yellow-orange-color
-		display: inline
-	.price-per, .not-certain
-		display: inline-block
-		+font-26
-		color: white
-		line-height: 32px
-		text-transform: uppercase
-
-	.not-certain
-		padding-top: 15px
-
-	.content
-		height: 380px
-		//height: auto
-		background-color: $white-color
-		padding: 0 24px
-
-		.text-content
-			height: 245px
-			position: relative
-
-	&:first-child
-		.content
-			.text-center
-				padding-bottom: 32px
-				padding-top: 20px
-			.header
-			.header
-				color: $light-black-color
-				text-transform: uppercase
-				+font-16
-			.text-content
-				.header
-					+font-16-semibold
-				.description
-					+font-16-light
-	&:nth-child(2)
-		.text-content
-			.columns
-				position: absolute
-				top: 50%
-				left: 50%
-				transform: translate(-50%,-50%)
-				margin-top: 15px
-
-
-	.learn-more
-		//+font-12-light
-		//color: $sky-blue-color
-		//display: bloc
-		//text-decoration: none
-		//text-align: left
-
-
-	@media #{$medium-down}
-		margin-bottom: 30px
-		.price-and-text
-			text-align: center
-		.price-per
-			text-align: left
-
-		&:last-child
-			margin-bottom: 0
-
-
-
-
+  @media #{$medium-down}
+    margin-bottom: 30px
+    .price-and-text
+      text-align: center
+    .price-per
+      text-align: left
+    &:last-child
+      margin-bottom: 0
 
 .home-plan-header
-	background-color: $sky-blue-color
-	color: $light-black-color
-	+font-21
-	text-transform: uppercase
-	text-align: center
-	height: rem-calc(64)
-	line-height: rem-calc(64)
-
-
+  background-color: $sky-blue-color
+  color: $light-black-color
+  +font-21
+  text-transform: uppercase
+  text-align: center
+  height: rem-calc(64)
+  line-height: rem-calc(64)
 
 @media #{$screen} and (max-width: 700px) and (min-width: 641px)
-	.plans-section
-		button.start-now-button
-			label
-				padding-left: 40px
-				.svg-wrap
-					left: -7px
+  .plans-section
+    button.start-now-button
+      label
+        padding-left: 40px
+        .svg-wrap
+          left: -7px
 
 @media #{$small-only}
-	.section-header
-		height: 120px
-		line-height: 120px
+  .section-header
+    height: 120px
+    line-height: 120px
 
+@media #{$xsmall-only}
+  .rf-button-full-width.start-now-button .svg-wrap
+    margin-right: 15px
 
 +iphone5-down
-	.plans-section
-		.text-content
-			> .large-6
-				width: 100%
-				text-align: center
-				margin-bottom: 15px
-		.button-title
-			font-size: 1.5rem
-	.home-plan
-		> .content
-			height: auto
-			padding-bottom: 30px
+  .plans-section
+    .text-content
+      > .large-6
+        width: 100%
+        text-align: center
+        margin-bottom: 15px
+    .button-title
+      font-size: 1.5rem
+  .home-plan
+    > .content
+      height: auto
+      padding-bottom: 30px
+      .text-content
+        height: auto
 
-			.text-content
-				height: auto
+    &:first-child
+      .price-with-currency
+        display: block
+        float: left
+        top: -25px
+        position: relative
+      .price-per
+        display: inline-block
+        float: right
+        position: relative
+        padding-left: 10px
 
-		&:first-child
-			.price-with-currency
-				display: block
-				float: left
-				top: -25px
-				position: relative
+    &:nth-child(2)
+      .text-content
+        float: none !important
+        .columns
+          position: relative
+          left: auto
+          top: auto
+          +transform(none)
+      .text-center
+        padding-top: 20px
+        padding-bottom: 20px
+      .question-symbol
+        left: -20px
+        display: block
+        float: left
+        position: relative
+      .not-certain
+        display: inline-block
+        float: right
+        position: relative
+        padding-top: 0
 
-			.price-per
-				display: inline-block
-				float: right
-				position: relative
-				top: 27px
-
-		&:nth-child(2)
-			.text-content
-				float: none !important
-				.columns
-					position: relative
-					left: auto
-					top: auto
-					+transform(none)
-			.text-center
-				padding-top: 20px
-				padding-bottom: 20px
-
-			.question-symbol
-				left: -20px
-				display: block
-				float: left
-				top: -25px
-				position: relative
-
-			.not-certain
-				display: inline-block
-				float: right
-				position: relative
-				top: 14px
-
+@media #{medium-only}
+  .plans-section
+    .not-certain
+      position: relative
+      top: 15px
 
 li.feedback
-	list-style: none
-
+  list-style: none

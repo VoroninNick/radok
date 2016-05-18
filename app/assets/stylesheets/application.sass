@@ -1,7 +1,6 @@
 @import "app_basic"
 @import "animate.min.css"
 
-
 @import "jquery.tagsinput/src/jquery.tagsinput"
 @import "angular-carousel/dist/angular-carousel.min"
 @import "owl.carousel"
@@ -26,10 +25,6 @@
 @import "partials/feedbacks_carousel"
 @import "partials/three_images_in_row"
 
-
-
-
-
 @import "pages/wizard"
 @import "form_components"
 @import "partials/project_full_summary"
@@ -44,7 +39,7 @@
 @import "pages/pricing"
 @import "pages/testing_services"
 @import "pages/devices"
-@import "pages/bug_list"
+@import "bugs"
 
 
 //@import "test_app.css"
@@ -53,7 +48,6 @@
 	min-height: 200px
 	min-width: 200px
 	background: lightcyan
-
 	.item
 		min-height: 60px
 		min-width: 60px
@@ -71,39 +65,23 @@ hr
 .text-transform-none
 	text-transform: none !important
 
-
 body
 	&.opened-popup
 		overflow: hidden
 
-
-body
-	//height: auto
-	
-	
 #fixed-header
 	position: fixed
 	+transition_all(all 1s)
-#header
 
+#header
 	&.scroll-larger-than-header-height
 		#fixed-header
 			@include transform((translateY(calc(-100% - 10px)) ) )
-	//&.scrolled
-		#fixed-header
-			@include transform(translateY(0))
-	
-
 	&.scrolled, &.visible
 		#fixed-header
 			@include transform(translateY(0))
 
-
-
 input
 	&::-webkit-inner-spin-button, &-webkit-outer-spin-button
-		// display: none; <- Crashes Chrome on hover
 		-webkit-appearance: none
 		margin: 0 // <-- Apparently some margin are still there even though it's hidden
-
-	

@@ -4,6 +4,5 @@ class SitemapController < ApplicationController
     if @content.blank?
       @entries = Cms::SitemapElement.entries([:en])
     end
-
   end
 end

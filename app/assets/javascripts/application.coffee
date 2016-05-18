@@ -16,6 +16,9 @@
 #= require jquery.tagsinput/src/jquery.tagsinput.js
 #= require jquery-serialize-object/dist/jquery.serialize-object.min
 #= require jquery_appear/jquery.appear
+#= require jquery.tubular.1.0-custom
+#= require jquery.lettering
+#= require jquery.textillate
 #= require simpleUpload.min
 #= require jquery.scrolldelta
 #= require jquery.lettering.js
@@ -27,6 +30,7 @@
 #= require dashboard
 #= require mail_form
 #= require payment_form
-#= require buglist
+
 
 #= require home_banner
+

@@ -1,0 +1,39 @@
+mailer:
+  service: smtp
+  host: 10g-force.com
+
+  sandmail:
+    location:  '/usr/sbin/sendmail'
+    arguments: '-i -t'
+
+  yandex:
+    address: 'smtp.yandex.ru'
+    domain: 'yandex.ru'
+    port:    25
+
+    email:   'info@10g-force.com'
+    password: "info12345"
+    authentication: plain
+  gmail:
+    address: "smtp.gmail.com"
+    port: 25
+    domain: "voroninstudio.eu"
+    email: "support@voroninstudio.eu"
+    password: "NewPashaPassword12345"
+    authentication: plain
+omniauth:
+  facebook:
+    app_id: 196514890685884
+    app_secret: b91edd861c35dd1a8bdd0bfbde786922
+  google_oauth2:
+    client_id: "756279470217-t8tc8g8181pv50q9lrs9kp2fdc2vvcb6.apps.googleusercontent.com"
+    client_secret: "d4r2VZWkn1Ljs8bYbVRAHfGF"
+  linkedin:
+    client_id: "777k5im778t3wl"
+    client_secret: "m0O3H4ra8nmgEVpi"
+  twitter:
+    consumer_key: "qa0EG2lZhBMIlPNSw8ZM0ESKT"
+    consumer_secret: "5uS8RFhRbEOEDIXIR7JJzpBlrgCsfYxWZr41yirTqp9uwChqb4"
+  github:
+    client_id: "ac703eaf1c5c12713b10"
+    client_secret: "560f219155e808c2f15387c7ded33c958301bd43"

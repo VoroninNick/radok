@@ -1,8 +1,8 @@
-#wizard-full-summary ng-show="wizard.configure_mode" class=("hide" if defined?(hide) && hide.present?)
+#wizard-full-summary ng-show='wizard.configure_mode' class=('hide' if defined?(hide) && hide.present?)
   #wizard-full-summary-inner
     #wizard-full-summary-header
       .wizard-full-summary-icon
-        = embedded_svg_from_assets("finish_flag")
+        = image_tag('finish_flag.svg')
       .text
         |Summary
     #wizard-full-summary-content.row
@@ -11,26 +11,26 @@
         .property
           .property-label
             |Project name
-          .property-value data-bind="project.project_name"
+          .property-value data-bind='project.project_name'
             = project.project_name
 
         .property
           .property-label
             |Version
-          .property-value data-bind="project.project_version"
+          .property-value data-bind='project.project_version'
             = project.project_version
 
       .columns.large-6
         .property
           .property-label
             |Type of test
-          .property-value data-bind="project.test_type"
+          .property-value data-bind='project.test_type'
             = project.test_type.try &:name
 
         .property
           .property-label
             |Type of product
-          .property-value data-bind="project.product_type"
+          .property-value data-bind='project.product_type'
             = project.product_type.try &:name
       .columns.large-12.large-indent
         .row
@@ -43,7 +43,7 @@
               /- if platform[:testers_count] > 0
                 .platform
                   .platform-svg
-                    = embedded_svg_from_assets(platform[:logo_path])
+                    = image_tag("#{platform[:logo_path]}")
                   .platform-name
                     = platform[:name]
                   .platform-subitems
@@ -57,19 +57,18 @@
           |Your product will be tested by:
         .property-value
           .svg-wrap
-            = embedded_svg_from_assets("user")
+            = image_tag('user-yellow.svg')
           .text
-            span data-bind="project.total_testers_count"
+            span data-bind='project.total_testers_count'
               = project.total_testers_count
             |&thinsp; testers
           br
           .svg-wrap.hour
-            = embedded_svg_from_assets("clock")
+            = image_tag('clock-yellow.svg')
           .text
-            span data-bind="project.hours_per_tester"
+            span data-bind='project.hours_per_tester'
               = project.ps__hours
             |&nbsp; hours each
-
 
       .columns.large-12.large-indent
         hr
@@ -77,26 +76,27 @@
       .columns.large-6
         .property-label
           |Your product is in:
-        .property-value data-bind="project.project_languages"
-          = project.project_languages.join(", ")
+        .property-value data-bind='project.project_languages'
+          = project.project_languages.join(', ')
 
       .columns.large-6
         .property-label
           |Bugs will be reported in:
-        .property-value data-bind="project.report_languages"
-          = project.report_languages.join(", ")
-      .columns.large-12.large-indent ng-show="wizard.url && wizard.url.length"
+        .property-value data-bind='project.report_languages'
+          = project.report_languages.join(', ')
+      .columns.large-12.large-indent ng-show='wizard.url && wizard.url.length'
         .property-label
           |Here is project url:
-        .property-value.text-transform-none data-bind="project.project_url"
-          a href=project.project_access__url
+        .property-value.text-transform-none data-bind='project.project_url'
+          a href=project.project_url
             = project.project_access__url
-      /.columns.large-12.large-indent.exploratory_instructions_block ng-show="wizard.comment && wizard.comment.length"
-        .property-label
-          |You've provided the following instructions:
-        .property-input-value
-          textarea.instructions
-            = project.instructions
+      - if project.exploratory_description && project.methodology_type == 'exploratory'
+        .columns.large-12.large-indent.exploratory_instructions_block ng-show='wizard.comment && wizard.comment.length'
+          .property-label
+            |You've provided the following instructions:
+          .property-input-value
+            textarea.instructions data-bind='project.exploratory_instructions' disabled='disabled'
+              = project.exploratory_description
       .price-and-buttons
         .columns.large-6
           .full-summary-total-cost
@@ -113,28 +113,32 @@
           .promo-code-field class="#{'success' if project.percentage_discount?}"
             label.waiting-preloader
               |Sending promo code...
-            label.field-label for="promo_code"
-              |Promo code
-            label.error.error-invalid for="promo_code"
+            label.field-label for='promo_code'
+              |PROMO CODE
+            label.error.error-invalid for='promo_code'
               |Invalid promo code
             label.success-label
               |You have &thinsp;
-              span.percentage-discount data-bind="project.percentage_discount"
+              span.percentage-discount data-bind='project.percentage_discount'
                 - if project.percentage_discount?
                   = project.percentage_discount
               |% discount!
-            input id="promo_code" type="text" placeholder="XXXX" disabled=("disabled" if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
+            input id='promo_code' type='text' placeholder='XXXX' disabled=('disabled' if project.percentage_discount?) value=(project.promo_code.password if project.percentage_discount?)
 
             button.ok
-              = embedded_svg_from_assets "rf-icon-ok"
+              = image_tag 'rf-icon-ok.svg'
             .cancel-promo-code
-
 
         .clearfix
         - if !project.completed?
           .full-summary-pay-buttons
-            .columns.medium-6.small-margin-bottom-24
-              = rf_button(class: "rf-confirm-button", full_width: true, svg: "rf-rocket-up-right", title: "Confirm", subtitle: "And proceed to payment", disabled: false, html: { "open-popup": "payment", "requires-auth": "true" })
-            .columns.medium-6
-              = rf_button(class: "rf-confirm-button rf-pay-later-button", full_width: true, svg: "rf-rocket-up-right", title: "Pay later", disabled: false, html: { "open-popup": "pay_later" })
+            .columns.medium-6.small-margin-bottom-24.confirm-button-container
+              = rf_button class: 'rf-confirm-button', full_width: true,
+                svg: 'rf-rocket-up-right', title: 'Confirm',
+                subtitle: 'And proceed to payment', disabled: false,
+                html: { 'open-popup': 'payment', 'requires-auth': 'true' }
+            .columns.medium-6.confirm-button-container
+              = rf_button class: 'rf-confirm-button rf-pay-later-button',
+                full_width: true, svg: 'rf-rocket-up-right', title: 'Pay later',
+                disabled: false, html: { 'open-popup': 'pay_later' }
             .clearfix

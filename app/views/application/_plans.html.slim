@@ -1,63 +1,76 @@
 .plans
   .row
-    - if @show_plans_section_header
-      .columns.large-12.section-header
-        |How much does it cost?
+    h2.columns.large-12.section-header
+      | How much does it cost?
     .plans
       .columns.large-6.medium-6.home-plan
         .home-plan-header
-          |Self-driven
+          | Self-driven
         .black-bg
           .price-and-text
-            span.price-with-currency
               .currency
-                |$
+                | $
               .price
                 = hour_price
-            .price-per
-              |/per platform
-              br
-              |/per hour
+              .price-per
+                | /per platform
+                br>/
+                | /per hour
         .content
           .row
             .text-content
               .columns.large-10.large-centered
                 .text-center
-                  |Get your product tested on the most popular browsers, operating systems and mobile devices in your target markets.
+                  | Get your application tested on the most popular browsers, operating systems and mobile devices in your target market.
               .columns.large-6.medium-6.small-6
                 .header
-                  |services:
-                div.description
-                  |Functional, localization, or usability testing
+                  | services:
+                .description
+                  | Functional, localization or usability testing.
               .columns.large-6.medium-6.small-6
                 .header
-                  |platforms:
-                div.description
-                  |We test on every platform, we mean it, everyone you can think of or need!
+                  | platforms:
+                .description
+                  | We test on every platform, we mean it, everyone you can think of or need!
             .columns.large-12.button-container
-              /rf-button align-content="left" full-width="" title="Start now!" subtitle="own package" svg="/assets/rf-rocket-up-right.svg" class="start-now-button"  sref="wizard"
-              /button title="Start now!" subtitle="own package" svg="/assets/rf-rocket-up-right.svg" class="start-now-button"  sref="wizard"
-              = rf_button align_content: "left", full_width: true, title: "Start now!", subtitle: "own package", svg: "rf-rocket-up-right", class: "start-now-button", href: wizard_path
-              .sub-button-text
-                span
-                  |or&nbsp;
-                a.learn-more ui-sref="testing_services" href=testing_services_path
-                  |Learn more
-
+              button.rf-button.rf-button-with-subtitle.rf-button-with-svg.start-now-button.rf-button-raised.rf-button-full-width.rf-button-svg-size-medium.rf-button-align-content-left.rf-button-size-medium.start-now-button angular-ripple="" href="/ordering-crowdsourced-testing"
+                .rf-button-content-wrap
+                  .rf-button-content
+                    .svg-wrap.svg-size-medium
+                      = image_tag 'rf-rocket-up-right.svg'
+                    .button-text-wrap
+                      .inner
+                        .button-title
+                          | Start now!
+                        .button-subtitle
+                          | own package
+            .sub-button-text
+              span or&nbsp;
+              a.learn-more href="/crowdsourced-testing-services" ui-sref="testing_services"  Learn more
       .columns.large-6.medium-6.home-plan
         .home-plan-header
-          |Managed
+          | Managed
         .black-bg
-          .columns.large-2.medium-3.small-2.question-symbol
-            |?
+          .columns.large-2.medium-2.small-2.question-symbol
+            | ?
           .columns.large-10.medium-10.small-10.not-certain
-            |Not certain what is needed for your app or product?
+            | Not certain what is needed for your app or product?
         .content
           .row
-            .columns.text-content
-              .row
-                .columns.large-8.large-centered
-                  .text-center
-                    |We’ll help you define your testing needs for free!
+            .text-content
+              .columns.large-8.large-centered
+                .text-center
+                  | We’ll help you define your testing needs for free!
             .columns.large-12.button-container
-              = rf_button align_content: "left", full_width: true, title: "SCHEDULE", subtitle: "a call", svg: "rf-icon-schedule-a-call", class: "schedule-call-button"
+              rf-button.schedule-call-button align-content="left" full-width="" ng-click="scheduleCall()" subtitle=("a call") svg="/assets/rf-icon-schedule-a-call.svg" title="SCHEDULE"
+              button.rf-button.rf-button-with-subtitle.rf-button-with-svg.schedule-call-button.rf-button-raised.rf-button-full-width.rf-button-svg-size-medium.rf-button-align-content-left.rf-button-size-medium.schedule-call-button angular-ripple=""
+                .rf-button-content-wrap
+                  .rf-button-content
+                    .svg-wrap.svg-size-medium
+                      = image_tag 'call.svg'
+                    .button-text-wrap
+                      .inner
+                        .button-title
+                          | SCHEDULE
+                        .button-subtitle
+                          | a call

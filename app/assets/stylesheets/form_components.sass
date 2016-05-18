@@ -9,63 +9,46 @@
         input
           display: none
 
-
     .wizard-step
       &[step="1"]
         .image-radio-button
           opacity: 0.6
-
           &:hover, &.checked
             opacity: 1
 
     .help
-      color: $light-gray-text-color
+      color: $dark-gray-color
       +font-14-light
+      width: inherit
+      padding-right: 10%
 
     .input
       .placeholder
         font-style: italic
-
-
-
       &.radio-button
         .help
           padding-left: 36px
-
         &:before
           display: none !important
         .custom-radio-button
-
       &.image-radio-button
         .label
           line-height: 25px
       &.string, &.tags
         padding-top: 0px
-
         .placeholder
           top: 30px
-
         &.not-empty, &.focus
           .placeholder
             top: 0
-
       &.url
         input
           width: 100%
           max-width: none
 
-
-
       &.project_exploratory_instructions_input
-        //padding-left: 36px
-        //padding-top: 0px
-
         .placeholder
-          //padding-left: 50px
           top: 30px
-
-
-
         &.not-empty, &.focus
           .placeholder
             top: 0
@@ -74,22 +57,18 @@
         padding-left: 36px
         padding-top: 20px
 
-
-
-
-
-
 #project-test-type
   margin-top: 60px
 
 .product-main-components
   margin-top: 40px
-
   .help
     margin-top: 0
 
 .configuration-steps
   margin-top: 120px
+  @media #{$small-only}, #{$xsmall-only}
+    margin-top: 20px
 
 .platforms-input
   .platform
@@ -101,11 +80,8 @@
   clear: left
   float: left
 
-
 #wizard-controller
   .input.text
     &.project-info-comment_input, &.project-access-comment_input, &.project-platforms-comment_input
       label.placeholder
         top: 0
-
-

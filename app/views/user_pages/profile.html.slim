@@ -14,90 +14,90 @@
             li class="#{'active' if @personal_data_tab_active}"
               a
                 .icon-wrap
-                  = embedded_svg_from_assets "rf-icon-user"
+                  = embedded_svg_from_assets 'rf-icon-user'
                 .text-label
                   |Personal data
-            li class="#{'active' if @password_change_tab_active}"
+            li id="#{'chng-pass_disable' if !!current_user.provider}" class="#{'active' if @password_change_tab_active}"
               a
                 .icon-wrap
-                  = embedded_svg_from_assets "rf-icon-password"
+                  = embedded_svg_from_assets 'rf-icon-password'
                 .text-label
                   |Password change
             li class="#{'active' if @new_letter_tab_active}"
               a
                 .icon-wrap
-                  = embedded_svg_from_assets "rf-icon-email"
+                  = embedded_svg_from_assets 'rf-icon-email'
                 .text-label
                   |Newsletters
-    .profile-tab-contents-row-wrap full-height=""
+    .profile-tab-contents-row-wrap full-height=''
       .row.profile-tab-contents-row
         .columns.large-12
           ul.tab-contents
             li class="#{'active' if @personal_data_tab_active}"
-              form#personal-data.row novalidate="" name="profile_info" method="post" action="/profile"
+              form#personal-data.row novalidate='' name='profile_info' method='post' action='/profile'
                 .columns.large-4.photo-column
                   .photo-header
                   .photo-image-wrap
                     .ready-image
 
-                      input#input-file-uploader type="file" ngf-select=""  name="userAvatarFile" accept="image/*"
+                      input#input-file-uploader type='file' ngf-select=''  name='userAvatarFile' accept='image/*'
                       div.photo-field-label
-                        label for="input-file-uploader"
+                        label for='input-file-uploader'
                           |Your photo
 
                       div
-                        label.image-label for="input-file-uploader" class="#{'hide' unless @user.avatar.exists?}"
-                          img src=(@user.avatar.url(:profile_image) if @user.avatar.exists?(:profile_image))
+                        label.image-label for='input-file-uploader' class="#{'hide' unless @user.avatar.exists?(:profile_image)}"
+                          = image_tag(@user.avatar.url(:profile_image))
 
-                        label.no-image for="input-file-uploader" class="#{'hide' if @user.avatar.exists?(:profile_image)}"
-                          img src="/assets/no_avatar.svg"
+                        label.no-image for='input-file-uploader' class="#{'hide' if @user.avatar.exists?(:profile_image)}"
+                          = image_tag('no_avatar.svg')
                       div
-                        label.change-photo-label for="input-file-uploader"
+                        label.change-photo-label for='input-file-uploader'
                           |Change photo
                   .change-button
                 .columns.large-8.inputs
                   .row
                     .columns.large-6.inputs-group
-                      = rf_input name: "user[username]", label: "Username (required)", required: true, value: @user.username
-                      = rf_input name: "user[email]", required: true, label: "Email (required)", value: @user.email
-                      = rf_input name: "user[full_name]", label: "Full name", value: @user.full_name
-                      = rf_input name: "user[phone]", label: "Phone", value: @user.phone
+                      = rf_input name: 'user[username]', label: 'Username (required)', required: true, value: @user.username, required_message: 'Please type username', taken_message: 'Username already in use', validation: 'username'
+                      = rf_input name: 'user[email]', required: true, label: 'Email (required)', value: @user.email, required_message: 'Please type email', validation: 'email', invalid_message: 'Please type valid email', taken_message: 'Email already in use'
+                      = rf_input name: 'user[full_name]', label: 'Full name', value: @user.full_name, validation: 'name'
+                      = rf_input name: 'user[phone]', label: 'Phone', value: @user.phone, validation: 'phone'
                     .columns.large-6.inputs-group
-                      = rf_input name: "user[country]", label: "Country", value: @user.country
-                      = rf_input name: "user[city]", label: "City", value: @user.city
-                      = rf_input name: "user[zip_code]", label: "ZIP code", value: @user.zip_code
-                      = rf_input name: "user[billing_address]", label: "Billing address", value: @user.billing_address
+                      = rf_input name: 'user[country]', label: 'Country', value: @user.country, validation: 'address'
+                      = rf_input name: 'user[city]', label: 'City', value: @user.city, validation: 'address'
+                      = rf_input name: 'user[zip_code]', label: 'ZIP code', value: @user.zip_code, validation: 'zip_code'
+                      = rf_input name: 'user[billing_address]', label: 'Billing address', value: @user.billing_address, validation: 'billing_address'
 
-                .columns.large-12
+                .columns.large-2.pull-right
                   .delete-account
                     |Delete account
 
             li class="#{'active' if @password_change_tab_active}"
-              form#change-password-form novalidate="" resource="user" action="/users/password" method="post" ajax-method="put" show-preloader="" show-on-success=""
+              form#change-password-form novalidate='' resource='user' action='/users/password' method='post' ajax-method='put' show-preloader='' show-on-success=''
+                .form-message.hide
+                  p.h4.text-center
+                    |You have successfully changed password
                 .form-content
-                  .form-message.hide
-                    p.h4.text-center
-                      |You have successfully changed password
                   .inputs
                     .columns.large-5.large-centered
-                      = rf_input id: "user_password", name: "user[password]", label: "New password", type: "password", required: true, autocomplete: false
+                      = rf_input name: 'user[password]', label: 'New password', type: 'password', required_message: 'Please, type password', required: true, autocomplete: false, validation: 'password'
+                      = rf_input name: 'user[confirm_password]', label: 'Re-enter password (required)', type: 'password', invalid_message: 'These passwords don\'t match', validation: 'confirm_password', required: true, autocomplete: false
                     .clearfix
-
 
                   .actions
                     .columns.large-5.large-centered
-                      = rf_button title: "change password", svg: "rf-icon-password", full_width: true
+                      = rf_button title: 'change password', svg: 'rf-icon-password', full_width: true
                     .clearfix
                 .preloader.hide
-                  = image_tag("preloader.gif")
+                  = image_tag('preloader.gif')
             li class="#{'active' if @new_letter_tab_active}"
               .header.h4
                 |Subscribe for newsletters
               p.large-12
                 |Subscribe to our newsletters and stay updated on the latest developments and special offers!
 
-              form#subscribe-form name="subscribe_form"
-                input#subscribe_form__subscribe type="checkbox" checked=("checked" if @user.subscribed?)
-                label.custom-checkbox for="subscribe_form__subscribe"
-                label for="subscribe_form__subscribe"
+              form#subscribe-form name='subscribe_form'
+                input#subscribe_form__subscribe type='checkbox' checked=('checked' if @user.subscribed?)
+                label.custom-checkbox for='subscribe_form__subscribe'
+                label for='subscribe_form__subscribe'
                   |I want to receive newsletters

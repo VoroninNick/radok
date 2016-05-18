@@ -11,4 +11,12 @@ class ApplicationMailer < ActionMailer::Base
   default from: "10G-Force team <info@10g-force.com>"
   layout 'users/mailer'
 
+  def confirm_resubscribe(email, opts={})
+    mail(
+        template_path: "mailers",
+        template_name: "mailchimp_subscribe",
+        to: email,
+        subject: "10G Force subscribe request"
+    )
+  end
 end

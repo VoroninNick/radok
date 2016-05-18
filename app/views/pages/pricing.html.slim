@@ -1,0 +1,48 @@
+#pricing-page-content-rows.page-content-rows.page
+  = render 'page_banner', background_image_url: 'banners/pricing.png',
+                          title: 'Economic software testing solution',
+                          title_html_tag: 'h1',
+                          description: 'Select the testing solutions that meet Your needs'
+  .page-content-row-wrap
+    .plans-section
+      = render "plans"
+
+  .page-content-row-wrap
+    #pricing__features
+      h2.section-header
+        | The advantages of our crowdsource testing
+      .features
+        .row
+          .item.columns.large-6.medium-6
+            .image-wrap-outer
+              = image_tag 'rf-functional-test.svg'
+
+            .header
+              | Personalised
+            .description
+              | All of our services are on demand, and it’s up to you whether you choose a full-package or just a few of them.
+          .item.columns.large-6.medium-6
+            .image-wrap-outer
+              = image_tag 'rf-functional-test.svg'
+
+            .header
+              | Budget-friendly
+            .description
+              | You stay in charge of your budget by being able to see the total cost right away. No hidden fees, we promise.
+        .row
+          .item.columns.large-6.medium-6
+            .image-wrap-outer
+              = image_tag 'rf-functional-test.svg'
+
+            .header
+              | Risk-free
+            .description
+              | If ever, for any reason, you are not completely satisfied with our services, please contact us and we''ll make it right. If we can''t make it right, we''ll refund your money. Customer satisfaction is our #1 priority.
+          .item.columns.large-6.medium-6
+            .image-wrap-outer
+              = image_tag 'rf-functional-test.svg'
+
+            .header
+              | Flexible packages
+            .description
+              | We’re best in what we do, that’s why you’ll get your results in 48 hours. If you are a lucky owner or manager of a complex product, we’ll take a little more time to make you happy. Our testers will provide you with clear and comprehensive reports in a convenient form, using the same bug-tracking system you do.

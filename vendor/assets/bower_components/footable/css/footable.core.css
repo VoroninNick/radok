@@ -1,25 +1,23 @@
 @font-face {
   font-family: 'footable';
-  src: url('fonts/footable.eot');
-  src: url('fonts/footable.eot?#iefix') format('embedded-opentype'), url('fonts/footable.woff') format('woff'), url('fonts/footable.ttf') format('truetype'), url('fonts/footable.svg#footable') format('svg');
+  src: font-url('fonts/footable.eot?#iefix') format('embedded-opentype'), font-url('fonts/footable.woff') format('woff'), font-url('fonts/footable.ttf') format('truetype'), font-url('fonts/footable.svg#footable') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   @font-face {
     font-family: 'footable';
-    src: url('fonts/footable.svg#footable') format('svg');
+    src: font-url('fonts/footable.svg#footable') format('svg');
     font-weight: normal;
     font-style: normal;
   }
 }
 .footable {
   width: 100%;
-  /** SORTING **/
-
-  /** PAGINATION **/
-
 }
+/** SORTING **/
+
+/** PAGINATION **/
 .footable.breakpoint > tbody > tr.footable-detail-show > td {
   border-bottom: none;
 }

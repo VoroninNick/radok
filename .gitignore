@@ -5,12 +5,17 @@ capybara-*.html
 /tmp
 /db/*.sqlite3
 /db/*.sqlite3-journal
+/public/assets
 /public/system
 /coverage/
 /spec/tmp
 **.orig
 rerun.txt
 pickle-email-*.html
+
+/config/database.yml
+
+.DS_Store
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
@@ -35,13 +40,11 @@ config/secrets.yml
 # Ignore pow environment settings
 .powenv
 
-/public
+
 #/vendor
 /.idea
 
 /config/settings
 
-
-
-# allow vendor assets
-#!/vendor/assets
+# Ignore application configuration
+/config/application.yml
