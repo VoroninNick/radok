@@ -1,0 +1,44 @@
+#home-banner-wrap
+  #home-banner
+    #home-banner-bg
+      video autoplay="" muted="" loop="" width="2000" src="http://r1---sn-p5qlsnee.googlevideo.com/videoplayback?id=o-AAc8iSwsCvt9spVoO9m1jHYom1WFUI48Bib562-NN7P3&pl=21&mm=31&mn=sn-p5qlsnee&ip=192.95.32.135&ms=au&fexp=9406003%2C9415951%2C9416126%2C9416312%2C9416891%2C9422596%2C9424333%2C9428398%2C9428742%2C9429017%2C9431012%2C9431677%2C9431685%2C9433045%2C9433096%2C9433186%2C9433946%2C9433998%2C9435025%2C9435853%2C9436447%2C9436954&mt=1463584065&sparams=dur%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cnh%2Cpl%2Cratebypass%2Csource%2Cupn%2Cexpire&mv=m&initcwndbps=208750&lmt=1462977810744354&upn=QHx4XveEmjA&source=youtube&itag=18&signature=786E5CE786AD2239833D1952FCC913A441BC85C5.73FA4BF1E85109CE2899C79CA5F6C732BDD2FF07&mime=video%2Fmp4&key=yt6&nh=IgpwcjAzLmlhZDA3KgkxMjcuMC4wLjE&sver=3&ipbits=0&dur=13.119&ratebypass=yes&expire=1463605909&title=10G-Force+team"
+    #home-banner-content
+      .slides
+        .slide.slide1
+          span.header
+            | MAKE SURE THAT YOUR APP
+          span.text
+            = raw "WORKS <br/>WELL"
+            /|Works
+            /br
+            /|WELL
+
+        .slide.slide2
+          span.header
+            | MAKE SURE THAT YOUR APP IS
+          span.text
+            | READY FOR DEPLOYMENT
+        .slide.slide3
+          span.header
+            | MAKE SURE THAT YOUR MOBILE APP
+          span.text
+            | WORKS ON ALL PLATFORMS
+        .slide.slide4
+          span.header
+            | MAKE SURE THAT YOUR NEW RELEASE WILL
+          span.text
+            | NOT AFFECT CORE FUNCTIONALITY
+      .small-text.transparent
+        |Find all in your product before customers do!
+      .button-container.banner-button-wrap
+        .button-outer
+          = rf_button(title: "START NOW!", align_content: "left", full_width: true, subtitle: ("no registration required" unless current_user), svg: "rf-rocket-up-right.svg", href: wizard_path)
+          /button.rf-button.rf-button-with-subtitle.rf-button-with-svg.rf-button-raised.rf-button-auto-width.rf-button-svg-size-medium.rf-button-align-content-center.rf-button-size-medium.start-now-button href="/ordering-crowdsourced-testing"
+            .rf-button-content-wrap
+              .rf-button-content
+                .svg-wrap.svg-size-medium
+                  img  src=asset_path("rf-rocket-up-right.svg")
+                .button-text-wrap
+                  .inner
+                    .button-title  Start now!
+                    .button-subtitle  no registration required

@@ -6,62 +6,10 @@
         height: 100px
         line-height: 100px
 
-    #home-slider-carousel
-      .owl-item:nth-child(2)
-        .layer
-          &:nth-child(1) // notebook
-            img
-              transform: translate(2%, 7%)
-          &:nth-child(2) // planet
-            img
-              transform: translate(3%, -15%)
-
-      &:not(.owl-carousel)
-        li:not(:first-child)
-          display: none
-
-  #home-banner.banner
-
-    ul#home-slider-carousel  rn-carousel="" rn-carousel-pause-on-hover="" rn-carousel-index="homeBannerCarouselIndex" rn-carousel-auto-slide="3"
-      - @home_slides.each_with_index do |slide, index|
-        li.home-parallax-banner on-finish-render="" parallax-banner=""
-          .scene data-calibrate-x="false" data-calibrate-y="true" data-invert-x="false" data-invert-y="true" data-limit-y="8" id="scene#{index+1}"
-            .layer data-depth="1"
-              img src=slide[:images][0]
-            .layer data-depth="0.3"
-              img src=slide[:images][1]
-            .layer data-depth="0.6"
-              img src=slide[:images][2]
 
 
-          .description-block
-            = html_block_with_fallback "banner_#{index + 1}_title_with_description", true
-              - if index > 0
-                .title
-                  = slide[:title]
-              - else
-                h1.title
-                  = slide[:title]
-              .description
-                = slide[:description]
-            .button-container.banner-button-wrap
-              = rf_button(title: slide[:button][:title], align_content: "left", full_width: true, subtitle: slide[:button][:subtitle], svg: slide[:button][:svg], href: slide[:button][:href])
-              /rf-button align-content="left" full-width="" title="{{slide.button.title}}" subtitle="{{slide.button.subtitle}}" svg="{{slide.button.svg}}" class="start-now-button" sref="{{slide.button.sref}}"
-              - if !current_user
-                .sub-button-text
-                  span
-                    |or&nbsp;
-                  a.link ng-click="openSignInDialog()" href="/users/sign_in" open-popup="user_pages__static_sign_in"
-                    |Sign in
-
-    /- if @home_slides.length > 1
-      #home-slider-bullets
-        ul
-          - @home_slides.each_with_index do |slide, index|
-            li class=("active" if index == 0) ng-class="$parent.homeBannerCarouselIndex == $index ? 'active' : 'inactive'"
-              |●
-
-
+  /= render "home_slider"
+  = render "home_banner"
 
 
   #home-page-content
