@@ -21,10 +21,16 @@
 #= require jquery.textillate
 #= require simpleUpload.min
 #= require jquery.scrolldelta
+#= require jquery.lettering.js
+#= require jquery.textillate.js
 #= require functions
 #= require layout
 #= require fixed_header
 #= require profile
 #= require dashboard
 #= require mail_form
-#= require home_page_banner
+#= require payment_form
+
+
+#= require home_banner
+
