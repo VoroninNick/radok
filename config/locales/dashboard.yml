@@ -1,0 +1,10 @@
+en:
+  dashboard:
+    bug-list:
+      severity: "Severity"
+      severity_keys:
+        critical: "critical"
+        major: "major"
+        normal: "normal"
+        minor: "minor"
+        enhancement: "enh"

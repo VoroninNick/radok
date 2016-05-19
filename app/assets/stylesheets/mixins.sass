@@ -13,10 +13,10 @@
   @media #{$screen} and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 3)
     @content
 
-= user-select
-  -ms-user-select: none
-  -moz-user-select: none
-  -webkit-user-select: none
+= user-select($value: none)
+  -ms-user-select: $value
+  -moz-user-select: $value
+  -webkit-user-select: $value
 
 = wizard-input-placeholder
   +input-placeholder

@@ -1,0 +1,38 @@
+.breadcrumbs
+	+grid-row
+	padding: 10px 15px
+
+
+
+.breadcrumb
+	color: $gray-text-color
+	font-size: 0.8rem
+	display: inline-block
+
+	&, &:after
+		height: 24px
+		line-height: 24px
+		vertical-align: top
+
+	svg
+		//display: block
+		fill: $gray-text-color
+
+	&:after
+		display: inline-block
+		content: "/"
+		margin: 0 5px
+
+
+	&:first-child
+		&:after
+			content: "//"
+
+	&:last-child
+		&:after
+			content: none
+
+	&.active
+		color: $light-black-color
+		cursor: default
+		text-decoration: none

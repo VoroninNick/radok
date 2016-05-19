@@ -4,6 +4,7 @@
                           description: 'See your projects here',
                           button_label: 'New test',
                           button_url: '/ordering-crowdsourced-testing'
+  = render "breadcrumbs"
   .row
     .columns.large-12.project-name-row
       .h2.project-name
@@ -19,10 +20,12 @@
         .status-fail
       .download-report
         - if @project.report.try(:exists?)
-          a href=@project.report.url
-            = embedded_svg_from_assets("file-download")
-            span.report-name
-              = @project.report_file_name
+          = rf_button title: "bugfix report #123", href: @project.report.url, svg: "bug.svg", size: :small, svg_size: :small, class: "rf-button-download-pdf"
+      p
+        a href="#"
+          |Show older
+
+
 
   .row.project-short-info
     - if @project.user

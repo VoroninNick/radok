@@ -1,0 +1,136 @@
+
+
+
+.rf-button.rf-button-size-small.rf-button-download-pdf
+	padding: 0 10px 0 0
+	.svg-wrap
+		margin-right: 10px
+
+.page.bug-list
+	.bug-list-header-row
+		margin-top: 40px
+		margin-bottom: 56px
+
+	.bug-list-name
+		margin: 0 0 20px 0
+
+
+.severity-number
+	display: inline-block
+	width: 30px
+	height: 30px
+	line-height: 30px
+	text-align: center
+	color: white
+	font-weight: 700
+	font-size: 18px
+
+
+.severity
+	svg
+		fill: white
+		background: $fire-orange-color
+.severity-minor
+	.severity-number
+		background: $sky-blue-color
+.severity-normal
+	.severity-number
+		background: lightgreen
+.severity-major
+	.severity-number
+		background: orange
+.severity-enhancement
+	.severity-number
+		background: #3a945b
+
+.bug-list-table-wrap
+	margin: 30px 0 0 0
+
+	.table
+		th
+			padding: 0 15px
+			font-size: 16px
+			text-shadow: none
+			height: 40px
+			line-height: 40px
+			position: relative
+			overflow: hidden
+
+			&.severity
+				min-width: 105px
+
+		tr
+			cursor: pointer
+
+		.footable-sort-indicator
+			position: absolute
+			font-size: 12px
+
+
+
+
+		.attachments-and-comments
+			min-width: 100px
+
+			.part
+				display: inline-block
+				margin-right: 15px
+				&:last-child
+					margin-right: 0
+
+			svg
+				display: inline-block
+				vertical-align: top
+				width: 18px
+				height: 18px
+				fill: $dark-gray-color
+
+			span
+				line-height: 18px
+				vertical-align: top
+				display: inline-block
+
+			.blank
+				opacity: 0.7
+
+
+.bug-header-row
+	margin-top: 40px
+	margin-bottom: 56px
+
+	.bug-id
+		color: $fire-orange-color
+	.bug-title
+		font-size: 36px
+		margin-top: 20px
+
+
+.page.bug
+	+content-text
+
+.bug-info-panel
+	.h3
+		color: $fire-orange-color
+		text-transform: uppercase
+		font-weight: 500
+		font-size: 14px
+
+	.slider-panel-content
+		.columns
+			margin-top: 15px
+		p
+			margin: 8px 0
+
+			&.blank
+				opacity: 0.8
+				font-style: italic
+
+
+.attachments-panel
+	.slider-panel-content
+		padding: 15px
+.attachment
+	display: inline-block
+	float: left
+	width: grid-calc(2, 12)
+	padding: 15px

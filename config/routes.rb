@@ -53,8 +53,18 @@ Rails.application.routes.draw do
   get '/crowdsourced-testing-faq', to: 'faq_articles#index', as: :faq
   get '/crowdsourced-testing-faq/:id', to: 'faq_articles#show', as: :faq_article
 
-  get 'dashboard', to: 'dashboard#index'
-  get 'dashboard/project/:id', to: 'dashboard#project', as: :dashboard_project
+  scope "dashboard", controller: "dashboard" do
+    root action: 'index', as: :dashboard
+    scope 'project/:project_id' do
+      root action: 'project', as: :dashboard_project
+      scope "bug-list" do
+        root action: "project_bug_list", as: :dashboard_project_bug_list
+        get ":bug_id", action: "project_bug", as: :dashboard_project_bug
+      end
+
+    end
+  end
+
 
   DynamicRouter.load unless ARGV.grep(/(assets:(precompile|clean))|(db:migrate)/).any?
 

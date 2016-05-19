@@ -53,3 +53,4 @@ asset "jquerymy"
 asset "jquery.scrollend"
 
 asset "codemirror"
+asset "lightgallery", '1.2.14'

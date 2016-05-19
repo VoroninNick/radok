@@ -45,6 +45,7 @@
     "footable": "latest",
     "jquerymy": "latest",
     "jquery.scrollend": "latest",
-    "codemirror": "latest"
+    "codemirror": "latest",
+    "lightgallery": "1.2.14"
   }
 }

@@ -23,6 +23,7 @@
 #= require jquery.scrolldelta
 #= require jquery.lettering.js
 #= require jquery.textillate.js
+#= require lightgallery/dist/js/lightgallery-all.min
 #= require functions
 #= require layout
 #= require fixed_header
@@ -34,3 +35,4 @@
 
 #= require home_banner
 
+#= require buglist

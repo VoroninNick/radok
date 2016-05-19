@@ -1,0 +1,13 @@
+- if @breadcrumbs.try(:any?)
+  .breadcrumbs
+    - @breadcrumbs.each do |b|
+      - active = b[:active].present?
+      - url = b[:url]
+      - icon = b[:icon]
+      - text = b[:text]
+
+      a.breadcrumb href=url class=("active" if active )
+        - if icon
+          = embedded_svg_from_assets(icon)
+        - else
+          = text

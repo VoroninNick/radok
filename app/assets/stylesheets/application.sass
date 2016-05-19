@@ -12,6 +12,10 @@
 @import "layout"
 @import "popups"
 
+@import "lightgallery.config"
+@import "lightgallery/src/sass/lightgallery"
+@import "lightgallery.custom"
+
 @import "components/ripple"
 @import "components/breadcrumbs"
 @import "components/slider_panel"
@@ -39,7 +43,8 @@
 @import "pages/pricing"
 @import "pages/testing_services"
 @import "pages/devices"
-@import "bugs"
+@import "pages/bug_list"
+//@import "bugs"
 
 
 //@import "test_app.css"
@@ -57,7 +62,7 @@
 		background: lightpink
 
 label
-	+user-select
+	+user-select(none)
 
 hr
 	border-color: rgba(#222, 0.05)

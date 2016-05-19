@@ -1,0 +1,122 @@
+.page.bug
+  = render 'page_banner', background_image_url: 'banners/dashboard.png',
+           title: 'My dashboard',
+           description: 'See your projects here',
+           button_label: 'New test',
+           button_url: wizard_path
+  = render "breadcrumbs"
+  .row
+    .columns.large-12.bug-header-row
+      .h2.bug-id
+        |Bug ##{@bug[:id]}
+      .h2.bug-title
+        = @bug[:title]
+
+      p
+        a href=dashboard_project_bug_list_path(@project)
+          |< Return to bug list
+  .row
+    .columns.large-12
+      .slider-panel.opened
+        .slider-panel-header
+          = embedded_svg_from_assets("bug.svg")
+          span
+            |Bug details
+        .slider-panel-content
+          .properties-table.banner-details-table
+            table
+              tbody
+                tr
+                  td
+                    |Found in version
+                  td
+                    = @bug[:version]
+                tr
+                  td
+                    | Project's component
+                  td
+                    = @bug[:component]
+                tr
+                  td
+                    |Type
+                  td
+                    = @bug[:type]
+                tr
+                  td
+                    |Created at
+                  td
+                    = @bug[:created_at]
+
+
+          .properties-table.banner-details-table
+            table
+              tbody
+                tr
+                  td
+                    |Reporter
+                  td
+                    |Bughunter 12345
+                tr
+                  td
+                    | Severity
+                  td
+                    = render "severity_value", bug: @bug, severity_symbols: @severity_symbols
+
+                tr
+                  td
+                    |Reproducibility
+                  td
+                    |Always
+                tr
+                  td
+                  td
+
+
+    .columns.large-12
+      .slider-panel.bug-info-panel.opened
+        .slider-panel-header
+          = embedded_svg_from_assets("bug-info.svg")
+          span
+            |Bug information
+        .slider-panel-content
+          .columns.large-12
+            .h3
+              |Description
+            p
+              |Born in a small town near Sonoma, California[a] and raised in Sacramento, Chastain is reticent to publicly discuss aspects of her troubled childhood. She developed an interest in acting from a young age, and as a teenager, she made her professional stage debut as Juliet in a 1998 production of Romeo and Juliet. She went on to study acting at the Juilliard School, after which she was signed on for a talent holding deal with the television producer John Wells. She was a guest star on several television shows, including ER and Law & Order: Trial by Jury, for much of the 2000s, and she also took on roles in the stage productions of The Cherry Orchard in 2004 and Salome in 2006.
+          .columns.large-6
+            .h3
+              |Expected results
+            p
+              |Born in a small town near Sonoma, California[a] and raised in Sacramento, Chastain is reticent to publicly discuss aspects of her troubled childhood. She developed an interest in acting from a young age, and as a teenager, she made her professional stage debut as Juliet in a 1998 production of Romeo and Juliet. She went on to study acting at the Juilliard School, after which she was signed on for a talent holding deal with the television producer John Wells.
+            p
+              |She was a guest star on several television shows, including ER and Law & Order: Trial by Jury, for much of the 2000s, and she also took on roles in the stage productions of The Cherry Orchard in 2004 and Salome in 2006.
+            ul
+              li
+                |List item 1
+              li
+                |List item 2
+
+            p
+              |Born in a small town near Sonoma, California[a] and raised in Sacramento
+            ol
+              li
+                |List item 1
+              li
+                |list item 2
+          .columns.large-6
+            .h3
+              |Steps to reproduce
+            p.blank
+              |No steps to reproduce
+
+    .columns.large-12
+      .slider-panel.attachments-panel.opened
+        .slider-panel-header
+          = embedded_svg_from_assets("bug-info.svg")
+          span
+            |Attachments
+        .slider-panel-content.attachments
+          - 10.times do |i|
+            a.attachment href="http://placehold.it/800x800&text=image #{i+1}"
+              img src="http://placehold.it/120x120&text=image #{i+1}"

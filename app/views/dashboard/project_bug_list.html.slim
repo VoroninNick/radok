@@ -1,0 +1,72 @@
+.page.bug-list
+  = render 'page_banner', background_image_url: 'banners/dashboard.png',
+           title: 'My dashboard',
+           description: 'See your projects here',
+           button_label: 'New test',
+           button_url: wizard_path
+  = render "breadcrumbs"
+  .row
+    .columns.large-12.bug-list-header-row
+      .h2.bug-list-name
+        = @bag_list_title
+      div
+        = rf_button title: "download pdf", href: "#", svg: "file_types/pdf.svg", size: :small, svg_size: :small, class: "rf-button-download-pdf"
+      p
+        a href="#"
+          |Older versions
+
+  .row
+    .columns.large-12
+      .bug-list-table-wrap
+        table.footable.table
+          thead
+            tr
+              th data-sort-initial="asceding"
+                |#
+              th
+                |Title
+              th.severity
+                |Severity
+              th data-type="display_size"
+                |Component
+              th
+                |Version
+              th
+                |Platform
+              th.attachments-and-comments data-sortable="false"
+                |&nbsp;
+          tbody
+            - @bugs.each do |bug|
+              tr url=dashboard_project_bug_path(@project, bug[:id])
+                td
+                  = bug[:id]
+                td
+                  = bug[:title]
+                td
+                  - severity_key = bug[:severity]
+                  .severity class="severity-#{severity_key}"
+                    - severity_obj = @severity_symbols[severity_key]
+                    - if severity_obj.is_a?(Hash) && (severity_icon = severity_obj[:icon])
+                      = embedded_svg_from_assets(severity_icon)
+                    - else
+                      .severity-number
+                        = severity_obj
+                    = t("dashboard.bug-list.severity_keys.#{severity_key}")
+
+
+
+                td
+                  = bug[:component]
+                td
+                  = bug[:version]
+                td
+                  = bug[:platform]
+                td.attachments-and-comments
+                  a.part.attachments class=("blank" if  bug[:attachments].blank?) href=dashboard_project_bug_path(@project, bug[:id], anchor: "attachments")
+                    = embedded_svg_from_assets("attachment.svg")
+                    span
+                      = bug[:attachments].count
+                  a.part.comments class=("blank" if  bug[:comments].blank?) href=dashboard_project_bug_path(@project, bug[:id], anchor: "comments")
+                    = embedded_svg_from_assets("comment.svg")
+                    span
+                      = bug[:comments].count

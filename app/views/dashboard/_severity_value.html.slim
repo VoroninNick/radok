@@ -1,0 +1,9 @@
+- severity_key = bug[:severity]
+.severity class="severity-#{severity_key}"
+  - severity_obj = severity_symbols[severity_key]
+  - if severity_obj.is_a?(Hash) && (severity_icon = severity_obj[:icon])
+    = embedded_svg_from_assets(severity_icon)
+  - else
+    .severity-number
+      = severity_obj
+  = t("dashboard.bug-list.severity_keys.#{severity_key}")
