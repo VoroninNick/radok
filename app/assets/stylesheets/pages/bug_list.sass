@@ -129,8 +129,76 @@
 .attachments-panel
 	.slider-panel-content
 		padding: 15px
+
+
+
 .attachment
 	display: inline-block
 	float: left
 	width: grid-calc(2, 12)
 	padding: 15px
+
+
+#post-comment-button
+	padding-left: 0
+	padding-right: 45px
+
+	.svg-wrap
+		margin-right: 10px
+
+
+.comments-panel
+	font-size: 14px
+	.slider-panel-content
+		padding: 25px 20px
+	.new-comment-form
+		form
+			+flexbox
+		textarea
+			min-height: 36px
+			box-sizing: border-box
+			width: 100%
+			display: block
+			max-width: none
+			resize: none
+		button
+			vertical-align: top
+			margin-left: 6px
+
+	.comment
+		font-size: 14px
+		position: relative
+		padding: 10px 0 10px 50px
+		border-bottom: 1px solid $light-gray-color
+
+		.comment
+			border-bottom: none
+
+		.author-avatar
+			position: absolute
+			left: 0
+		.comment-info
+
+
+		.author-name
+			color: $fire-orange-color
+			font-weight: 500
+
+		.actions
+			.separator
+				display: inline-block
+				margin: 0 5px
+				&:after
+					content: ""
+					display: inline-block
+					width: 2px
+					background: $inactive-button-text-color
+					height: 16px
+					position: relative
+					top: 4px
+
+
+.comment-box
+	.comments
+		margin: 20px 0 0 0
+

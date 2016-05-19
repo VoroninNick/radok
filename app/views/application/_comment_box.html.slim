@@ -1,0 +1,7 @@
+.comment-box
+  .new-comment-form
+    form action="comment" method="post"
+      textarea#comment-text name="comment[text]" rows="1" placeholder="Join the discussion..."
+      = rf_button(svg: "comment", size: "small", svg_size: "small", title: "Post", id: "post-comment-button", html: {type: "submit", disabled: "true"})
+  .comments
+    = render "comment", has_child: true

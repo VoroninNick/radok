@@ -1,0 +1,21 @@
+.comment
+  .author-avatar
+    img src="http://placehold.it/40x40&text=image"
+  .comment-info
+    .auction-name-and-date
+    .author-name
+      |Bughunter 12345
+    .text
+      |Born in a small town near Sonoma, California[a] and raised in Sacramento, Chastain is reticent to publicly discuss aspects of her troubled childhood.
+    .actions
+      a href="#"
+        |Reply
+      .separator
+      a href="#"
+        |Edit
+      .separator
+      a href="#"
+        |Delete
+
+  - if defined?(has_child) && has_child
+    = render "comment"
