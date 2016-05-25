@@ -70,11 +70,11 @@ class DashboardController < ApplicationController
     @severity_symbols = {minor: 1, normal: 2, major: 3, critical: {icon: "severity_icons/critical.svg"}, enhancement: 0}
     components = ["Admin console"]
     [
-        {id: 1, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.", severity: :major, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: [] },
-        {id: 2, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.", severity: :minor, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []},
-        {id: 3, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.", severity: :normal, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []},
-        {id: 4, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.", severity: :enhancement, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []},
-        {id: 5, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.", severity: :critical, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []}
+        {id: 1, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.2", severity: :major, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: [] },
+        {id: 2, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.3", severity: :minor, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []},
+        {id: 3, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.4", severity: :normal, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []},
+        {id: 4, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.5", severity: :enhancement, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []},
+        {id: 5, title: "Bulletin board, projects, resources and activities covering a wide range of Wikipedia areas.1", severity: :critical, component: components[0], version: "1.0.1", platform: "Win/IE10", attachments: [], comments: []}
     ]
   end
 end

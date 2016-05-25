@@ -21,19 +21,19 @@
         table.footable.table
           thead
             tr
-              th data-sort-initial="asceding"
+              th data-sort-initial="asceding" data-hide="phone,tablet"
                 |#
-              th
+              th data-toggle="true"
                 |Title
               th.severity
                 |Severity
-              th data-type="display_size"
+              th data-type="display_size" data-hide="phone,tablet"
                 |Component
-              th
+              th data-hide="phone,tablet"
                 |Version
-              th
+              th data-hide="phone,tablet"
                 |Platform
-              th.attachments-and-comments data-sortable="false"
+              th.attachments-and-comments data-sort-ignore="true" data-hide="phone,tablet"
                 |&nbsp;
           tbody
             - @bugs.each do |bug|
@@ -62,11 +62,11 @@
                 td
                   = bug[:platform]
                 td.attachments-and-comments
-                  a.part.attachments class=("blank" if  bug[:attachments].blank?) href=dashboard_project_bug_path(@project, bug[:id], anchor: "attachments")
+                  a.attachments-and-comments-part.attachments class=("blank" if  bug[:attachments].blank?) href=dashboard_project_bug_path(@project, bug[:id], anchor: "attachments")
                     = embedded_svg_from_assets("attachment.svg")
                     span
                       = bug[:attachments].count
-                  a.part.comments class=("blank" if  bug[:comments].blank?) href=dashboard_project_bug_path(@project, bug[:id], anchor: "comments")
+                  a.attachments-and-comments-part.comments class=("blank" if  bug[:comments].blank?) href=dashboard_project_bug_path(@project, bug[:id], anchor: "comments")
                     = embedded_svg_from_assets("comment.svg")
                     span
                       = bug[:comments].count

@@ -603,6 +603,11 @@ $(document).on 'ready', ->
       display_size: (cell)->
         return $(cell).text()
     },
+    breakpoints: {
+      phone: 640,
+      tablet: 1024,
+      desktop: 1025
+    },
     sorters: {
       alpha: window.footable.options.sorters.alpha, # default alpha & numeric sorters
       numeric: window.footable.options.sorters.numeric,
@@ -627,7 +632,10 @@ $(document).on 'ready', ->
         if (a < b)
           return -1
         return 1;
-    }
+    },
+    calculateWidthOverride: ()->
+      return {width: $(window).width()};
+
   })
 
 $('body').on 'click', '.return_to_wizard', (e)->

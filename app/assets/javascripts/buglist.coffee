@@ -1,4 +1,8 @@
-$(".bug-list-table-wrap").on "click", "tr", ()->
+$(".bug-list-table-wrap").on "click", "tr", (e)->
+  $target = $(e.target)
+  target_toggle = $target.filter(".footable-toggle").length > 0
+  if target_toggle
+    return
   url = $(this).attr("url")
   window.location = url
 
